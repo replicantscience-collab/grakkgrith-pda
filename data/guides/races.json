@@ -1,0 +1,192 @@
+{
+  "schema": "grakkgrith-guide",
+  "schemaVersion": 1,
+  "_about": "Sideways Shops' guide to the races of Adyta: the in-world voice. Game rules come from data/rules.json; this file holds what the shop says, plus card art. Lifespans come from the poster and the rulebook; 'source' says which.",
+  "publisher": {
+    "name": "Sideways Shops",
+    "owners": [
+      "Eko",
+      "Pulse"
+    ],
+    "tagline": "More worlds. More friends. Same chaos."
+  },
+  "title": "Guides on the Races",
+  "subtitle": "For the extra-dimensional traveler",
+  "art": {
+    "poster": "art/sideways-shops/races-poster.jpg",
+    "header": "art/sideways-shops/races-header.jpg"
+  },
+  "greeting": "Hey there, traveler! New to Adyta? Roughly between dimensions? Or just curious? You're in the right place, friend!",
+  "asides": [
+    "Knowledge is a kind of magic.",
+    "Do not confuse years lived with wisdom acquired."
+  ],
+  "lineageNote": {
+    "title": "Not species: lineage classes",
+    "subtitle": "Not interchangeable!",
+    "items": [
+      "Fae",
+      "Infernal",
+      "Draconic",
+      "Visceral"
+    ]
+  },
+  "races": {
+    "Goblin": {
+      "card": "art/sideways-shops/races/goblin.jpg",
+      "lifespan": "Up to 60 years",
+      "lifespanSource": "poster",
+      "blurb": "Quick, creative, and full of chaotic joy. Goblins build, tinker, and turn \"problem\" into \"opportunity.\"",
+      "traits": [
+        "Scrappy",
+        "Inventive",
+        "Loyal",
+        "Mischievous"
+      ]
+    },
+    "Orc": {
+      "card": "art/sideways-shops/races/orc.jpg",
+      "lifespan": null,
+      "lifespanSource": null,
+      "blurb": "Strong, resilient, and deeply communal. Orcs value honor, protection, and the bonds of family.",
+      "traits": [
+        "Resilient",
+        "Steadfast",
+        "Protective",
+        "Loyal"
+      ]
+    },
+    "Human": {
+      "card": "art/sideways-shops/races/human.jpg",
+      "lifespan": "70–85 years",
+      "lifespanSource": "poster",
+      "blurb": "Adaptable, curious, and endlessly creative. Humans bring variety, innovation, and a drive to belong.",
+      "traits": [
+        "Adaptable",
+        "Resourceful",
+        "Social",
+        "Determined"
+      ]
+    },
+    "Dwarf": {
+      "card": "art/sideways-shops/races/dwarf.jpg",
+      "lifespan": "150–200 years",
+      "lifespanSource": "rulebook",
+      "blurb": "Steady, skilled, and fiercely loyal. Dwarves build, craft, and keep things running.",
+      "traits": [
+        "Hardworking",
+        "Reliable",
+        "Stubborn",
+        "Proud"
+      ],
+      "artNote": "Card art shows \"?\" for lifespan; the rulebook says 150–200 years."
+    },
+    "Elf": {
+      "card": "art/sideways-shops/races/elf.jpg",
+      "lifespan": "400–600 years",
+      "lifespanSource": "both",
+      "blurb": "Wise, perceptive, and attuned to magic. Elves value beauty, knowledge, and the long view.",
+      "traits": [
+        "Intuitive",
+        "Creative",
+        "Graceful",
+        "Thoughtful"
+      ]
+    },
+    "Fairy": {
+      "card": null,
+      "lifespan": "Ageless",
+      "lifespanSource": "rulebook",
+      "blurb": "Charming, sharp, and never quite what you expected. Fairies read a room before you've finished walking into it, and they always know when a promise breaks.",
+      "traits": [
+        "Perceptive",
+        "Charming",
+        "Fae",
+        "Promise-bound"
+      ]
+    },
+    "Halfling (Fenn)": {
+      "card": "art/sideways-shops/races/halfling.jpg",
+      "lifespan": "80–120 years",
+      "lifespanSource": "poster",
+      "blurb": "Friendly, clever, and quick on their feet. Fenn find joy in good food, great company, and a little adventure.",
+      "traits": [
+        "Charming",
+        "Resourceful",
+        "Cunning",
+        "Optimistic"
+      ],
+      "cardName": "Fenn / Halfling"
+    },
+    "Troll": {
+      "card": "art/sideways-shops/races/troll.jpg",
+      "lifespan": "180–260 years",
+      "lifespanSource": "both",
+      "blurb": "Tall, powerful, and deeply perceptive. Trolls value nature, tradition, and the stories in the world.",
+      "traits": [
+        "Patient",
+        "Strong",
+        "Spiritual",
+        "Loyal"
+      ]
+    },
+    "Kobold": {
+      "card": "art/sideways-shops/races/kobold.jpg",
+      "lifespan": "40–60 years",
+      "lifespanSource": "poster",
+      "blurb": "Bold, inventive, and full of energy. Kobolds thrive in crews, on projects, and in tight spaces.",
+      "traits": [
+        "Clever",
+        "Energetic",
+        "Loyal",
+        "Tenacious"
+      ]
+    },
+    "Cinderfolk": {
+      "card": "art/sideways-shops/races/cinderfolk.jpg",
+      "lifespan": "60–90 years",
+      "lifespanSource": "both",
+      "blurb": "Resilient, passionate, and in tune with fire. Cinderfolk bring warmth, creativity, and a spark to every space.",
+      "traits": [
+        "Passionate",
+        "Adaptable",
+        "Creative",
+        "Resilient"
+      ]
+    },
+    "Slimefolk": {
+      "card": "art/sideways-shops/races/slimefolk.jpg",
+      "lifespan": "120–180 years",
+      "lifespanSource": "both",
+      "blurb": "Fluid, expressive, and endlessly curious. Slimefolk are intelligent, emotional, and can take many forms.",
+      "traits": [
+        "Adaptable",
+        "Empathetic",
+        "Creative",
+        "Playful"
+      ]
+    }
+  },
+  "tips": {
+    "title": "Traveler tips",
+    "items": [
+      "Age is not the same as maturity.",
+      "Ask before assuming.",
+      "Culture, law, and biology are different things.",
+      "Be respectful of personal space and boundaries.",
+      "Some races live in cycles, not straight lines.",
+      "When in doubt: ask, listen, and learn."
+    ]
+  },
+  "notes": {
+    "title": "A few extra notes",
+    "items": [
+      "Lifespans are ranges, not rules.",
+      "Maturity, adulthood, and reproduction don't always line up.",
+      "Some individuals mature earlier or later due to environment, health, or magic.",
+      "Not all cultures use the same definition of \"adulthood.\"",
+      "This guide is for traveler reference only and is not a substitute for local law."
+    ],
+    "signoff": "Be kind."
+  }
+}

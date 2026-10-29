@@ -9,9 +9,13 @@ The companion web app for GRAKKGRITH, the Adyta tabletop RPG: character setup, c
 | `index.html` | The shell: top nav, World pages (Start, City, Missions, Factions, Lore, Logs), campaign State, district dossiers, map viewer |
 | `apps/creator.html` | Character Setup: races, classes, subclasses, origins, lives, gear, attribute points |
 | `apps/explore.html` | Explore: the city and district maps, places, travel, and where your character is right now |
+| `apps/guide.html` | Guides: Sideways Shops' guide to the races (card wall, tap a card for the full entry) |
 | `apps/player.html` | Character Sheet: wounds, stress, inventory, rolls, downtime, grith, Heat |
 | `data/rules.json` | **The rules.** Races, classes, subclasses, origins, lives, skills, street magic tags, territories, starting loadouts, Shade workings, downtime actions. Both the creator and the sheet read this one file. |
 | `data/places.json` | **The map.** Districts, places, pins, routes and travel times, tram hours, and the Adyta clock |
+| `data/guides/races.json` | What Sideways Shops says about each race: blurbs, traits, lifespans, card art, tips. Game numbers come from `rules.json`. |
+| `art/sideways-shops/` | Guide art. Race cards are cut from the Sideways Shops poster; replace a card's image to re-render it. |
+| `fonts/` | Fonts bundled for offline use, with their licenses |
 | `data/rulebook-reference.json` | Facts copied from the rulebook that `rules.json` is checked against |
 | `tools/check-rules.mjs` | The rules check (see below) |
 | `maps/official/` | Official maps used by Explore: the city, Low Halo, Ember Court, Market Ring, Dockside |
