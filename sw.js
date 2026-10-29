@@ -1,7 +1,8 @@
-// GRAKKGRITH Service Worker v43
-// Caches the interactive mission world interface for offline use. Cache busts on version bump.
+// GRAKKGRITH Service Worker v44
+// Caches the app for offline use. Cache busts on version bump.
+// Maps are not downloaded up front: each one is saved the first time you open it (see fetch below).
 
-const CACHE_NAME = 'grakkgrith-v43';
+const CACHE_NAME = 'grakkgrith-v44';
 const ASSETS = [
   './',
   './index.html',
@@ -31,22 +32,10 @@ const ASSETS = [
   './art/sideways-shops/races/cinderfolk.jpg',
   './art/sideways-shops/races/slimefolk.jpg',
   './data/places.json',
-  './maps/official/adyta-city.jpg',
-  './maps/official/low-halo.jpg',
-  './maps/official/ember-court.jpg',
-  './maps/official/market-ring.jpg',
-  './maps/official/dockside.jpg',
   './manifest.json',
   './icons/icon-192.png',
   './icons/icon-512.png',
   './icons/apple-touch-icon.png',
-  './maps/adyta-city-map.jpg',
-  './maps/adyta-pda-city-atlas.jpg',
-  './maps/low-halo-district-map.png',
-  './maps/low-halo-ember-court-spread.png',
-  './maps/ember-court-district-map.png',
-  './maps/sewers-town-district-map.png',
-  './maps/sewers-town-district-map-deeper.png',
   './trip_chirp_field_kit_thumb.jpg'
 ];
 

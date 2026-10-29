@@ -71,7 +71,8 @@ Changes stay in your browser until you do step 3.
 ## Changing anything else
 
 - **Bump the cache** whenever you change a file: edit `CACHE_NAME` in `sw.js` (`grakkgrith-v41` → `grakkgrith-v42`) so installed copies pick up the update.
-- **Adding a file** that should work offline: add it to the `ASSETS` list in `sw.js`.
+- **Adding a file** that should work offline: add it to the `ASSETS` list in `sw.js`. Maps and other big images stay off that list; they are saved the first time someone opens them, so a first visit stays small (about 2 MB).
+- **New map art:** save it as JPG (quality around 85), not PNG. A map PNG is 3 MB or more; the JPG looks the same at a fifth of the size.
 
 ## Moving characters from the old Seele version
 
