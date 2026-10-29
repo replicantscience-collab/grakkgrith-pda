@@ -106,6 +106,7 @@ for (const r of W.routes) {
   for (const end of [r.a, r.b]) if (!W.districts[end]) bad('places.routes', `unknown district ${end}`);
   if (!(r.walk > 0)) bad('places.routes', `${r.a}–${r.b} needs a walk time`);
 }
+for (const p of W.places) if (p.brand && !(W.brands || {})[p.brand]) bad(`places.places.${p.id}`, `unknown brand ${p.brand}`);
 if (!placeIds.has(W.start.place) || !W.districts[W.start.district]) bad('places.start', 'start place or district not found');
 if (Number.isNaN(Date.parse(W.clock.anchorReal)) || Number.isNaN(Date.parse(W.clock.anchorAdyta + 'Z'))) bad('places.clock', 'anchors must be dates');
 

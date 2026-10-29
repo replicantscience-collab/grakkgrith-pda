@@ -392,7 +392,10 @@ function openPlace(id) {
   const target = p ? { district: p.district, place: p.id } : { district: id };
   const here = presence.location, isHere = !presence.transit && here.district === target.district && (p ? here.place === p.id : !here.place || true);
   let h = `<h2>${esc(p ? p.name : d.name)}</h2><div class="kind">${p ? `${esc(TYPE_LABEL[p.type] || p.type)} in ${esc(d.name)}` : esc(d.layer === 'underground' ? 'Underground district' : 'District')}</div>`;
+  const brand = p?.brand && W.brands?.[p.brand];
+  if (p?.entrance) h += `<p class="note">${esc(p.entrance)}</p>`;
   h += `<p>${esc(p ? p.blurb : d.tagline)}</p>`;
+  if (brand?.about) h += `<p class="note">${esc(brand.about)}</p>`;
   if (p?.sign) h += `<div class="sign">${p.sign.map((l, i) => `<${i ? 'span' : 'b'}>${esc(l)}</${i ? 'span' : 'b'}>`).join('')}</div>`;
   if (p?.note) h += `<p class="note">${esc(p.note)}</p>`;
   if (p?.details) h += p.details.map(s => `<details class="more"><summary>${esc(s.title)}</summary><ul>${s.items.map(i => `<li>${esc(i)}</li>`).join('')}</ul></details>`).join('');
@@ -424,8 +427,8 @@ function openPlace(id) {
   if (p && view.map !== p.pin?.map && p.pin) h += `<button class="act" type="button" id="showOnMap"><b>Show on the map</b><span>${esc(W.maps[p.pin.map].short)}</span></button>`;
   h += '</div>';
   if (p) {
-    const twins = places.filter(o => o.id !== p.id && o.name === p.name);
-    if (twins.length) h += `<p class="note">Also at:</p><ul class="others">${twins.map(o => `<li><button type="button" data-goto="${o.id}">${esc(o.name)}, ${esc(district(o.district).name)}</button></li>`).join('')}</ul>`;
+    const twins = places.filter(o => o.id !== p.id && (p.brand ? o.brand === p.brand : o.name === p.name));
+    if (twins.length) h += `<p class="note">${p.brand ? 'Other ways in:' : 'Also at:'}</p><ul class="others">${twins.map(o => `<li><button type="button" data-goto="${o.id}">${esc(o.entrance ? o.entrance.split(':')[0] : o.name)}, ${esc(district(o.district).name)}</button></li>`).join('')}</ul>`;
   }
   if (!p && !d.map) h += `<p class="note">No district map yet. When one is added, its places show up here.</p>`;
   if (presence.log?.length) h += `<div class="log">Recent movements<ol>${presence.log.slice(0, 5).map(l => `<li>${fmtTime(l.at)}: ${esc(l.text)}</li>`).join('')}</ol></div>`;
