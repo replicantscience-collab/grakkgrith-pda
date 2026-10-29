@@ -98,6 +98,14 @@ button:focus-visible,[tabindex]:focus-visible{outline:2px solid var(--sodium);ou
 .field{display:grid;gap:4px;margin:8px 0}
 .field label{color:var(--ash);font-size:13px}
 .field input,.field select,.field textarea{font:inherit;color:var(--chalk);background:var(--asphalt);border:1px solid var(--kerb);border-radius:8px;padding:8px 10px}
+.route{padding:10px 0;border-top:1px solid var(--kerb)}
+.route b{font:600 17px/1.2 var(--display)}
+.routeFields{display:flex;gap:10px;align-items:center;margin:6px 0;flex-wrap:wrap}
+.routeFields label{color:var(--ash);font-size:13px;display:flex;gap:6px;align-items:center}
+.routeFields input[type=number]{width:62px}
+.route input{font:inherit;color:var(--chalk);background:var(--asphalt);border:1px solid var(--kerb);border-radius:8px;padding:6px 8px}
+.route .via{width:100%}
+.route .ok{color:var(--teal)}
 .toast{position:fixed;left:50%;bottom:24px;pointer-events:none;transform:translateX(-50%);z-index:9;padding:9px 14px;border-radius:10px;background:var(--sodium);color:var(--asphalt);font-weight:700;display:none}
 .toolbar{position:absolute;left:12px;top:12px;z-index:2;display:flex;gap:6px}
 .toolbar button{padding:7px 12px;border-radius:10px;background:rgba(22,26,31,.9);border:1px solid var(--kerb);font:600 15px/1 var(--display)}
@@ -443,17 +451,53 @@ $('editBtn').onclick = () => {
 };
 $('shareBtn').onclick = openEditorPanel;
 function openEditorPanel() {
-  const n = Object.keys(edits.changed).length + edits.added.length + edits.removed.length;
+  const n = Object.keys(edits.changed).length + edits.added.length + edits.removed.length + Object.keys(edits.routes || {}).length + Object.keys(edits.cityPins || {}).length;
   $('sheetBody').innerHTML = `<h2>Editing pins</h2><div class="kind">${esc(W.maps[view.map].title)}</div>
     <p>Drag any pin to where the place really is. Tap an empty spot to add a place. Tap a pin to rename or remove it.</p>
     <p class="note">Your changes are saved in this browser only. To share them, download <code>places.json</code> and replace <code>data/places.json</code> in the repo.</p>
     <div class="actions"><button class="act go" type="button" id="dlPlaces"><b>Download places.json</b><span>${n} change${n === 1 ? '' : 's'}</span></button>
+    <button class="act" type="button" id="editRoutes"><b>Travel times</b><span>${W.routes.filter(r => r.estimate).length} of ${W.routes.length} still estimates</span></button>
     <button class="act" type="button" id="copyPlaces"><b>Copy places.json</b><span>For pasting into GitHub</span></button>
     <button class="act" type="button" id="discardEdits" ${n ? '' : 'disabled'}><b>Discard my changes</b><span>Back to the shared pins</span></button></div>`;
   setPanel(true);
+  $('editRoutes').onclick = openRoutesPanel;
   $('dlPlaces').onclick = () => { const a = document.createElement('a'); a.href = URL.createObjectURL(new Blob([exportJson()], { type: 'application/json' })); a.download = 'places.json'; a.click(); };
   $('copyPlaces').onclick = () => navigator.clipboard.writeText(exportJson()).then(() => toast('places.json copied.'), () => toast('Copy failed. Use Download instead.'));
-  $('discardEdits').onclick = () => { if (!confirm('Discard all your pin changes?')) return; edits = { changed: {}, added: [], removed: [] }; save(EDITS_KEY, edits); mergePlaces(); showMap(view.map); openEditorPanel(); };
+  $('discardEdits').onclick = () => { if (!confirm('Discard all your pin changes?')) return; edits = { changed: {}, added: [], removed: [], routes: {}, cityPins: {} }; save(EDITS_KEY, edits); location.reload(); };
+}
+/* Route sheet: every official route, its times, and whether the times are confirmed. */
+const routeKey = r => r.a + '|' + r.b;
+function applyRouteEdit(r, e) {
+  r.walk = e.walk; if (e.tram == null) delete r.tram; else r.tram = e.tram; r.via = e.via;
+  if (e.estimate) r.estimate = true; else delete r.estimate;
+}
+function openRoutesPanel() {
+  const rows = [...W.routes].sort((x, y) => (y.estimate ? 1 : 0) - (x.estimate ? 1 : 0) || district(x.a).name.localeCompare(district(y.a).name));
+  const num = v => v == null ? '' : v;
+  $('sheetBody').innerHTML = `<h2>Travel times</h2><div class="kind">${W.routes.filter(r => r.estimate).length} of ${W.routes.length} are still estimates</div>
+    <p class="note">Minutes on foot and by tram, district to district. Leave tram empty if no tram runs there. Tick Confirmed once the time is real. Changes save as you type; share them with Download places.json.</p>
+    <button class="act" type="button" id="backToEditor"><b>Back to pin editing</b><span></span></button>
+    ${rows.map(r => `<div class="route" data-key="${esc(routeKey(r))}">
+      <b>${esc(district(r.a).name)} ↔ ${esc(district(r.b).name)}</b>
+      <div class="routeFields">
+        <label>Walk <input type="number" min="1" inputmode="numeric" data-f="walk" value="${num(r.walk)}"></label>
+        <label>Tram <input type="number" min="1" inputmode="numeric" data-f="tram" value="${num(r.tram)}" placeholder="none"></label>
+        <label class="ok"><input type="checkbox" data-f="confirmed" ${r.estimate ? '' : 'checked'}> Confirmed</label>
+      </div>
+      <input class="via" data-f="via" value="${esc(r.via)}" placeholder="Way: street, bridge, tunnel, landmark…" aria-label="Way for ${esc(district(r.a).name)} to ${esc(district(r.b).name)}">
+    </div>`).join('')}`;
+  setPanel(true);
+  $('backToEditor').onclick = openEditorPanel;
+  $('sheetBody').querySelectorAll('.route').forEach(row => {
+    const r = W.routes.find(x => routeKey(x) === row.dataset.key);
+    row.addEventListener('change', () => {
+      const f = n => row.querySelector(`[data-f="${n}"]`);
+      const walk = Math.max(1, Math.round(+f('walk').value || r.walk)), tram = f('tram').value === '' ? null : Math.max(1, Math.round(+f('tram').value));
+      const e = { walk, tram, via: f('via').value.trim(), estimate: !f('confirmed').checked };
+      applyRouteEdit(r, e); (edits.routes ||= {})[routeKey(r)] = e; save(EDITS_KEY, edits);
+      toast('Travel time saved.');
+    });
+  });
 }
 function exportJson() { const out = { ...W, places: places.map(({ ...p }) => { if (p.pin) { p.pin = { ...p.pin }; delete p.pin.approx; if (byId[p.id]?.pin?.approx && !edits.changed[p.id]?.pin) p.pin.approx = true; } return p; }) }; return JSON.stringify(out, null, 2) + '\n'; }
 function changePlace(id, patch) {
@@ -513,8 +557,9 @@ function tick() { if (settleTransit()) { render(); if (selected) openPlace(selec
     W = window.GRAKK_PLACES || await fetch('../data/places.json').then(r => { if (!r.ok) throw new Error(r.status); return r.json(); });
   } catch (e) { $('where').innerHTML = '<b>Map data missing</b><span>Could not load data/places.json.</span>'; return; }
   clockOffset = Date.parse(W.clock.anchorAdyta + 'Z') - Date.parse(W.clock.anchorReal);
-  edits = Object.assign({ changed: {}, added: [], removed: [], cityPins: {} }, load(EDITS_KEY, {}));
+  edits = Object.assign({ changed: {}, added: [], removed: [], cityPins: {}, routes: {} }, load(EDITS_KEY, {}));
   for (const [id, pin] of Object.entries(edits.cityPins || {})) if (W.districts[id]) W.districts[id].cityPin = pin;
+  for (const r of W.routes) { const e = (edits.routes || {})[routeKey(r)]; if (e) applyRouteEdit(r, e); }
   mergePlaces();
   presence = load(PRESENCE_KEY, null);
   if (!presence || !W.districts[presence.location?.district]) presence = { location: { ...W.start }, transit: null, log: [] };
