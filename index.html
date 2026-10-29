@@ -81,7 +81,8 @@ const OLD_TOOL_KEYS=['grakkgrith_character_tool_v7_state','grakkgrith_character_
 const decodeBase64Utf8=b64=>new TextDecoder('utf-8').decode(Uint8Array.from(atob(b64),c=>c.charCodeAt(0)));
 // Creator and Player live in ./apps/ as their own files (they were base64-embedded in the Seele build).
 let CREATOR_HTML='',PLAYER_HTML='';
-const appsReady=Promise.all([fetch('./apps/creator.html').then(r=>r.text()),fetch('./apps/player.html').then(r=>r.text())]).then(([c,p])=>{CREATOR_HTML=c;PLAYER_HTML=p});
+// Both apps read their rules from data/rules.json; the shell injects it so the blob-loaded pages don't have to fetch it.
+const appsReady=Promise.all([fetch('./apps/creator.html').then(r=>r.text()),fetch('./apps/player.html').then(r=>r.text()),fetch('./data/rules.json').then(r=>r.json())]).then(([c,p,rules])=>{const tag='<script>window.GRAKK_RULES='+JSON.stringify(rules).replace(/</g,'\\u003c')+'<\/script>';const inject=h=>h.replace(/<head[^>]*>/i,m=>m+tag);CREATOR_HTML=inject(c);PLAYER_HTML=inject(p)});
 const frame=document.getElementById('frame'),statusEl=document.getElementById('status'),notice=document.getElementById('notice');
 let mode='',playerReady=false,pendingState=null,currentUrl='',acceptPlayerState=false;
 function esc(v){return String(v??'').replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]))}
