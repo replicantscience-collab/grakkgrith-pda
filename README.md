@@ -55,6 +55,8 @@ It compares `rules.json` with the rulebook facts in `data/rulebook-reference.jso
 
 Explore puts your character somewhere in Adyta. Tap a place for its details, then travel there: on foot, or by tram while the trams run (the last one leaves at 12:17 AM). Travel takes Adyta time, and your character is in transit until they arrive, even if you close the app.
 
+**Your location is part of your character.** Where you are, any trip in progress, and your recent movements are saved in the character file (`world.presence`), so the sheet's **Backup** carries them to another device and a new character starts fresh at Static Square. Pin and travel-time edits are not part of a character; share those with **Download places.json**.
+
 **The Adyta clock** runs at real speed with a fixed offset, set in `data/places.json` under `clock`: at `anchorReal` it was `anchorAdyta` in Adyta.
 
 **Fixing pins.** Pins sit at the left edge of each map label. Dashed pins were placed by eye and may be slightly off. To fix any pin:

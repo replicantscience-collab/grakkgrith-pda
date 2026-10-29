@@ -148,7 +148,25 @@ button:focus-visible,[tabindex]:focus-visible{outline:2px solid var(--sodium);ou
 <script>
 'use strict';
 /* ---------- Storage ---------- */
-const PRESENCE_KEY = 'grakkgrith_world_presence_v1';
+const PRESENCE_KEY = 'grakkgrith_world_presence_v1';   // used only when no character exists yet
+/* Where your in-world self is lives inside the character file (state.world.presence), so it is saved,
+   exported, and imported with the character, and a new character starts fresh. */
+function loadPresence() {
+  const s = load(TOOL_KEY, null);
+  if (s && typeof s === 'object') {
+    if (s.world?.presence) return s.world.presence;
+    // First run after this change: adopt the location this browser already had, once.
+    const legacy = load(PRESENCE_KEY, null);
+    if (legacy && !s.world?.adoptedLegacy) { s.world = { ...(s.world || {}), presence: legacy, adoptedLegacy: true }; save(TOOL_KEY, s); return legacy; }
+    return null;
+  }
+  return load(PRESENCE_KEY, null);
+}
+function savePresence() {
+  const s = load(TOOL_KEY, null);   // read fresh: the sheet may have saved since we last looked
+  if (s && typeof s === 'object') { s.world = { ...(s.world || {}), presence }; save(TOOL_KEY, s); }
+  else save(PRESENCE_KEY, presence);
+}
 const EDITS_KEY = 'grakkgrith_places_edits_v1';
 const TOOL_KEY = 'grakkgrith_character_tool_v8_state';
 const load = (k, d) => { try { const v = JSON.parse(localStorage.getItem(k)); return v ?? d; } catch (e) { return d; } };
@@ -248,20 +266,20 @@ function startTrip(target, opt) {
   const now = adytaNow();
   presence.transit = { from: { ...presence.location }, to: target, mode: opt.mode, departs: now, arrives: now + opt.minutes * 60000, legs: opt.legs };
   logMove(`Left ${locationLabel(presence.location)} for ${locationLabel(target)} (${opt.label.toLowerCase()}, ${fmtDur(opt.minutes)})`);
-  save(PRESENCE_KEY, presence); render(); openPlace(target.place || target.district);
+  savePresence(); render(); openPlace(target.place || target.district);
   toast(`On the way. Arriving ${fmtTime(presence.transit.arrives)}.`);
 }
 function turnBack() {
   const t = presence.transit, now = adytaNow(), spent = now - t.departs;
   presence.transit = { from: t.to, to: t.from, mode: t.mode, departs: now, arrives: now + spent, legs: [] };
   logMove(`Turned back toward ${locationLabel(t.from)}`);
-  save(PRESENCE_KEY, presence); render();
+  savePresence(); render();
 }
 function settleTransit() {
   const t = presence.transit; if (!t || adytaNow() < t.arrives) return false;
   presence.location = t.to; presence.transit = null;
   logMove(`Arrived at ${locationLabel(t.to)}`, t.arrives);
-  save(PRESENCE_KEY, presence);
+  savePresence();
   toast(`You're at ${locationLabel(presence.location)}.`);
   return true;
 }
@@ -576,14 +594,15 @@ function tick() { if (settleTransit()) { render(); if (selected) openPlace(selec
   for (const [id, pin] of Object.entries(edits.cityPins || {})) if (W.districts[id]) W.districts[id].cityPin = pin;
   for (const r of W.routes) { const e = (edits.routes || {})[routeKey(r)]; if (e) applyRouteEdit(r, e); }
   mergePlaces();
-  presence = load(PRESENCE_KEY, null);
+  presence = loadPresence();
   if (!presence || !W.districts[presence.location?.district]) presence = { location: { ...W.start }, transit: null, log: [] };
   if (presence.location.place && !byId[presence.location.place]) presence.location.place = null;
-  settleTransit(); save(PRESENCE_KEY, presence);
+  settleTransit(); savePresence();
   renderBoard();
   const startD = district((presence.transit?.to || presence.location).district);
   showMap(startD.map && W.maps[startD.map] ? startD.map : 'adyta-city', (presence.transit?.to || presence.location).place);
   setInterval(tick, 5000);
+  addEventListener('storage', e => { if (e.key === TOOL_KEY || e.key === PRESENCE_KEY) { const p = loadPresence(); if (p) { presence = p; render(); } } });
   window.GRAKK_EXPLORE = { get presence() { return presence; }, planTrip, startTrip, adytaNow, tramRunning, route, places: () => places };
 })();
 </script>
