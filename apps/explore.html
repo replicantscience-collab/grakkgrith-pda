@@ -107,6 +107,13 @@ button:focus-visible,[tabindex]:focus-visible{outline:2px solid var(--sodium);ou
 .route input{font:inherit;color:var(--chalk);background:var(--asphalt);border:1px solid var(--kerb);border-radius:8px;padding:6px 8px}
 .route .via{width:100%}
 .route .ok{color:var(--teal)}
+.sign{margin:0 0 12px;padding:10px 12px;border:1px dashed var(--sodium-dim);border-radius:6px;transform:rotate(-.6deg)}
+.sign b{display:block;font:700 20px/1.1 var(--display);color:var(--sodium)}
+.sign span{display:block;margin-top:4px;font-size:13px;color:var(--ash)}
+.more{margin:6px 0;border-top:1px solid var(--kerb);padding-top:6px}
+.more summary{cursor:pointer;font:600 17px/1.4 var(--display)}
+.more ul{margin:6px 0 4px;padding-left:20px}
+.more li{margin:2px 0}
 .toast{position:fixed;left:50%;bottom:24px;pointer-events:none;transform:translateX(-50%);z-index:9;padding:9px 14px;border-radius:10px;background:var(--sodium);color:var(--asphalt);font-weight:700;display:none}
 .toolbar{position:absolute;left:12px;top:12px;z-index:2;display:flex;gap:6px}
 .toolbar button{padding:7px 12px;border-radius:10px;background:rgba(22,26,31,.9);border:1px solid var(--kerb);font:600 15px/1 var(--display)}
@@ -386,6 +393,9 @@ function openPlace(id) {
   const here = presence.location, isHere = !presence.transit && here.district === target.district && (p ? here.place === p.id : !here.place || true);
   let h = `<h2>${esc(p ? p.name : d.name)}</h2><div class="kind">${p ? `${esc(TYPE_LABEL[p.type] || p.type)} in ${esc(d.name)}` : esc(d.layer === 'underground' ? 'Underground district' : 'District')}</div>`;
   h += `<p>${esc(p ? p.blurb : d.tagline)}</p>`;
+  if (p?.sign) h += `<div class="sign">${p.sign.map((l, i) => `<${i ? 'span' : 'b'}>${esc(l)}</${i ? 'span' : 'b'}>`).join('')}</div>`;
+  if (p?.note) h += `<p class="note">${esc(p.note)}</p>`;
+  if (p?.details) h += p.details.map(s => `<details class="more"><summary>${esc(s.title)}</summary><ul>${s.items.map(i => `<li>${esc(i)}</li>`).join('')}</ul></details>`).join('');
   if (p?.proposed) h += `<p class="note">Proposed on the map. Not running yet.</p>`;
   if (p?.pin?.approx) h += `<p class="note">This pin is approximate. Use Edit pins to put it in the right spot.</p>`;
   h += '<div class="actions">';

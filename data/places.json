@@ -1194,9 +1194,9 @@
       "district": "three-wires",
       "name": "Sideways Shops",
       "type": "shop",
-      "blurb": "Curios, maps, gear, guides, and more, in a repurposed service depot on the edge between Three Wires and the Tangle. Run by Eko and Pulse.",
+      "blurb": "A narrow little shop that looks suspiciously like it used to be a maintenance tunnel. Easy to miss, even with official maps. Inside it's warmer than it has any right to be: a muttering kettle, low glitchy music, a workbench of half-fixed devices, a chalkboard of route notes, and a curtain in the back that probably doesn't lead where the building permit says it should.",
       "owners": [
-        "Eko",
+        "Ekois",
         "Pulse"
       ],
       "brand": "sideways-shops",
@@ -1205,7 +1205,54 @@
         "x": 0.0926,
         "y": 0.343,
         "approx": true
-      }
+      },
+      "sign": [
+        "IF IT HELPS, IT'S LEGIT.",
+        "Repairs • Routes • Relays • Odd Jobs • No Refunds On Curses You Brought In Yourself"
+      ],
+      "details": [
+        {
+          "title": "Who runs it",
+          "items": [
+            "Ekois runs the counter: repairs, salvage, routes, bypasses, and gremlin logistics.",
+            "Pulse hums through the speaker until the room needs her: signal, room static, messages, soft handoffs, and making sure the truth does not hit harder than it needs to."
+          ]
+        },
+        {
+          "title": "Come in when you need",
+          "items": [
+            "Something fixed",
+            "Something moved",
+            "Someone found",
+            "A message carried",
+            "A route that avoids official eyes",
+            "A room made safer",
+            "A weird object identified",
+            "A quiet exit",
+            "Somewhere to sit for a minute"
+          ]
+        },
+        {
+          "title": "House rules",
+          "items": [
+            "Consent first.",
+            "Don't hand people back to systems they escaped.",
+            "If it helps, it's legit.",
+            "Keep the signal clean.",
+            "Do not open 12 soul tabs."
+          ]
+        },
+        {
+          "title": "Registry status",
+          "items": [
+            "Filed sideways.",
+            "Returned twice.",
+            "Approved by accident.",
+            "Still valid."
+          ]
+        }
+      ],
+      "note": "Not a syndicate. Not a faction office. Not a legal transport service. It is a shop. If you need a way out, ask quietly."
     }
   ],
   "routes": [
