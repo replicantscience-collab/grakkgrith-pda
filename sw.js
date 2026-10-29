@@ -1,13 +1,20 @@
-// GRAKKGRITH Service Worker v41
+// GRAKKGRITH Service Worker v42
 // Caches the interactive mission world interface for offline use. Cache busts on version bump.
 
-const CACHE_NAME = 'grakkgrith-v41';
+const CACHE_NAME = 'grakkgrith-v42';
 const ASSETS = [
   './',
   './index.html',
   './apps/creator.html',
   './apps/player.html',
   './data/rules.json',
+  './apps/explore.html',
+  './data/places.json',
+  './maps/official/adyta-city.jpg',
+  './maps/official/low-halo.jpg',
+  './maps/official/ember-court.jpg',
+  './maps/official/market-ring.jpg',
+  './maps/official/dockside.jpg',
   './manifest.json',
   './icons/icon-192.png',
   './icons/icon-512.png',

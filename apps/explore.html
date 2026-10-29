@@ -1,0 +1,531 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Explore Adyta</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Saira+Condensed:wght@500;600;700&family=Atkinson+Hyperlegible:wght@400;700&display=swap">
+<style>
+:root{
+  --asphalt:#0e1114; --asphalt2:#161a1f; --kerb:#252b32;
+  --sodium:#f2a93b; --sodium-dim:#8a6224;
+  --teal:#3fb8a6; --brake:#e0483a;
+  --chalk:#e9e2d3; --ash:#9a958b;
+  --display:'Saira Condensed','Arial Narrow',sans-serif;
+  --body:'Atkinson Hyperlegible',system-ui,sans-serif;
+}
+*{box-sizing:border-box}
+html,body{margin:0;height:100%;background:var(--asphalt);color:var(--chalk);font:15px/1.45 var(--body)}
+button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
+button:focus-visible,[tabindex]:focus-visible{outline:2px solid var(--sodium);outline-offset:2px}
+.app{display:grid;grid-template-rows:auto auto 1fr;height:100%}
+
+/* Status strip: the transit-board moment */
+.board{display:grid;grid-template-columns:auto 1fr auto;align-items:center;gap:14px;padding:10px 14px;background:var(--asphalt2);border-bottom:1px solid var(--kerb)}
+.clock{font:700 34px/1 var(--display);letter-spacing:.02em;color:var(--sodium);font-variant-numeric:tabular-nums}
+.clock small{display:block;font:500 13px/1.2 var(--body);color:var(--ash);letter-spacing:0;margin-top:3px}
+.where{min-width:0}
+.where b{display:block;font:600 19px/1.15 var(--display);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.where span{color:var(--ash);font-size:13px}
+.where .moving{color:var(--sodium)}
+.tram{font:600 15px/1.15 var(--display);text-align:right;color:var(--teal)}
+.tram.closed{color:var(--brake)}
+.tram small{display:block;font:400 12px/1.2 var(--body);color:var(--ash)}
+.progress{grid-column:1/-1;height:3px;background:var(--kerb);border-radius:2px;overflow:hidden;display:none}
+.progress i{display:block;height:100%;width:0;background:var(--sodium)}
+.moving-now .progress{display:block}
+
+/* Map switcher */
+.maps{display:flex;gap:6px;overflow-x:auto;padding:8px 12px;border-bottom:1px solid var(--kerb);scrollbar-width:none}
+.maps::-webkit-scrollbar{display:none}
+.maps button{flex:0 0 auto;padding:6px 12px;border-radius:999px;border:1px solid var(--kerb);color:var(--ash);font:600 15px/1 var(--display)}
+.maps button[aria-pressed=true]{color:var(--asphalt);background:var(--sodium);border-color:var(--sodium)}
+.maps button.here::after{content:'';display:inline-block;width:7px;height:7px;border-radius:50%;background:var(--sodium);margin-left:7px;vertical-align:1px}
+.maps button[aria-pressed=true].here::after{background:var(--asphalt)}
+
+/* Map viewport */
+.stage{position:relative;overflow:hidden;touch-action:none;background:#05070a;cursor:grab}
+.stage.dragging{cursor:grabbing}
+.world{position:absolute;left:0;top:0;transform-origin:0 0;will-change:transform}
+.world img{display:block;user-select:none;-webkit-user-drag:none}
+.pin{position:absolute;transform:translate(-50%,-50%);width:22px;height:22px;border-radius:50%;
+  background:rgba(14,17,20,.72);border:2px solid var(--chalk);box-shadow:0 0 0 3px rgba(14,17,20,.55)}
+.pin::after{content:'';position:absolute;inset:5px;border-radius:50%;background:var(--chalk)}
+.pin.district{width:30px;height:30px;border-color:var(--teal)}
+.pin.district::after{background:var(--teal)}
+.pin.unpinned{border-style:dashed;opacity:.85}
+.pin.selected{border-color:var(--sodium);box-shadow:0 0 0 3px rgba(14,17,20,.55),0 0 0 7px rgba(242,169,59,.35)}
+.pin.selected::after{background:var(--sodium)}
+.pin.you{width:34px;height:34px;border-color:var(--sodium);background:var(--sodium)}
+.pin.you::after{inset:9px;background:var(--asphalt)}
+@media (prefers-reduced-motion:no-preference){ .pin.you{animation:beacon 2.4s ease-out infinite} }
+@keyframes beacon{0%{box-shadow:0 0 0 0 rgba(242,169,59,.55)}70%{box-shadow:0 0 0 16px rgba(242,169,59,0)}100%{box-shadow:0 0 0 0 rgba(242,169,59,0)}}
+.pin.dest{border-color:var(--sodium);border-style:dashed}
+.editing .pin{cursor:move}
+.zoom{position:absolute;right:12px;bottom:12px;display:grid;gap:6px;z-index:2}
+.zoom button{width:40px;height:40px;border-radius:10px;background:rgba(22,26,31,.9);border:1px solid var(--kerb);font:700 20px/1 var(--display)}
+.hint{position:absolute;left:12px;bottom:12px;z-index:2;max-width:60%;padding:7px 10px;border-radius:8px;background:rgba(22,26,31,.9);color:var(--ash);font-size:13px;pointer-events:none}
+
+/* Place panel: bottom sheet on phones, side panel on wide screens */
+.sheet{position:fixed;left:0;right:0;bottom:0;z-index:5;max-height:62%;overflow:auto;background:var(--asphalt2);border-top:1px solid var(--kerb);
+  border-radius:16px 16px 0 0;padding:16px 16px calc(18px + env(safe-area-inset-bottom));transform:translateY(105%);transition:transform .22s ease}
+.sheet.open{transform:none}
+@media (min-width:900px){
+  .app.panel-open .stage{margin-right:380px}
+  .app.panel-open .toast{margin-left:-190px}
+  .sheet{left:auto;top:0;width:380px;max-height:none;border-radius:0;border-top:0;border-left:1px solid var(--kerb);transform:translateX(105%)}
+  .sheet.open{transform:none}
+}
+@media (prefers-reduced-motion:reduce){.sheet{transition:none}}
+.sheet .close{position:absolute;right:10px;top:10px;width:34px;height:34px;border-radius:8px;color:var(--ash);font-size:22px}
+.sheet h2{margin:0 40px 2px 0;font:700 28px/1.05 var(--display)}
+.sheet .kind{color:var(--ash);font-size:13px;margin-bottom:10px}
+.sheet p{margin:0 0 12px;max-width:60ch}
+.sheet .note{color:var(--ash);font-size:13px}
+.actions{display:grid;gap:8px;margin:14px 0}
+.act{display:flex;justify-content:space-between;align-items:center;gap:10px;padding:11px 14px;border-radius:10px;border:1px solid var(--kerb);text-align:left}
+.act b{font:600 18px/1.1 var(--display)}
+.act span{color:var(--ash);font-size:13px;text-align:right}
+.act.go{border-color:var(--sodium);background:rgba(242,169,59,.10)}
+.act.go b{color:var(--sodium)}
+.act:disabled{opacity:.45;cursor:not-allowed}
+.others{margin:10px 0 0;padding:0;list-style:none}
+.others li{margin:4px 0}
+.others button{color:var(--teal);text-decoration:underline;text-underline-offset:3px}
+.log{margin:16px 0 0;padding:12px 0 0;border-top:1px solid var(--kerb);color:var(--ash);font-size:13px}
+.log ol{margin:6px 0 0;padding-left:18px}
+.field{display:grid;gap:4px;margin:8px 0}
+.field label{color:var(--ash);font-size:13px}
+.field input,.field select,.field textarea{font:inherit;color:var(--chalk);background:var(--asphalt);border:1px solid var(--kerb);border-radius:8px;padding:8px 10px}
+.toast{position:fixed;left:50%;bottom:24px;pointer-events:none;transform:translateX(-50%);z-index:9;padding:9px 14px;border-radius:10px;background:var(--sodium);color:var(--asphalt);font-weight:700;display:none}
+.toolbar{position:absolute;left:12px;top:12px;z-index:2;display:flex;gap:6px}
+.toolbar button{padding:7px 12px;border-radius:10px;background:rgba(22,26,31,.9);border:1px solid var(--kerb);font:600 15px/1 var(--display)}
+.toolbar button[aria-pressed=true]{border-color:var(--brake);color:var(--brake)}
+@media (max-width:620px){
+  .board{grid-template-columns:1fr auto;row-gap:6px}
+  .where{grid-column:1/-1;grid-row:2}
+  .clock{font-size:28px}.where b{font-size:17px}
+  .sheet{max-height:52%}
+}
+</style>
+</head>
+<body>
+<div class="app" id="app">
+  <header class="board" id="board" aria-live="polite">
+    <div class="clock" id="clock">--:--<small id="date"></small></div>
+    <div class="where" id="where"><b>Loading Adyta…</b></div>
+    <div class="tram" id="tram"></div>
+    <div class="progress"><i id="progressBar"></i></div>
+  </header>
+  <nav class="maps" id="mapTabs" aria-label="Maps"></nav>
+  <main class="stage" id="stage">
+    <div class="world" id="world"><img id="mapImg" alt=""></div>
+    <div class="toolbar"><button id="youBtn" type="button">Find me</button><button id="editBtn" type="button" aria-pressed="false">Edit pins</button><button id="shareBtn" type="button" hidden>Share pins</button></div>
+    <div class="zoom"><button id="zin" type="button" aria-label="Zoom in">+</button><button id="zout" type="button" aria-label="Zoom out">−</button><button id="zfit" type="button" aria-label="Fit map">⤢</button></div>
+    <div class="hint" id="hint"></div>
+  </main>
+</div>
+<aside class="sheet" id="sheet" aria-label="Place details"><button class="close" id="sheetClose" type="button" aria-label="Close">×</button><div id="sheetBody"></div></aside>
+<div class="toast" id="toast" role="status"></div>
+
+<script>
+'use strict';
+/* ---------- Storage ---------- */
+const PRESENCE_KEY = 'grakkgrith_world_presence_v1';
+const EDITS_KEY = 'grakkgrith_places_edits_v1';
+const TOOL_KEY = 'grakkgrith_character_tool_v8_state';
+const load = (k, d) => { try { const v = JSON.parse(localStorage.getItem(k)); return v ?? d; } catch (e) { return d; } };
+const save = (k, v) => { try { localStorage.setItem(k, JSON.stringify(v)); } catch (e) {} };
+const $ = id => document.getElementById(id);
+const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+
+let W, places, byId, edits;           // world data, merged places, lookup, local pin edits
+let presence;                          // where your in-world self is
+let view = { map: 'adyta-city', scale: 1, x: 0, y: 0 };
+let selected = null, editing = false;
+
+/* ---------- Adyta clock ----------
+   Adyta time runs at the same speed as real time, offset from it. Internally an Adyta moment is a
+   millisecond count read with UTC getters, so 22:38 always means 22:38 in Adyta. */
+let clockOffset = 0;
+const adytaNow = () => Date.now() + clockOffset;
+const minutesOfDay = ms => { const d = new Date(ms); return d.getUTCHours() * 60 + d.getUTCMinutes(); };
+function fmtTime(ms) { const d = new Date(ms); let h = d.getUTCHours(); const m = String(d.getUTCMinutes()).padStart(2, '0'); const ap = h < 12 ? 'AM' : 'PM'; h = h % 12 || 12; return `${h}:${m} ${ap}`; }
+function fmtDate(ms) { return new Date(ms).toLocaleDateString('en-US', { timeZone: 'UTC', weekday: 'long', month: 'long', day: 'numeric' }); }
+function fmtDur(min) { min = Math.max(0, Math.round(min)); if (min < 60) return `${min} min`; const h = Math.floor(min / 60), m = min % 60; return m ? `${h} hr ${m} min` : `${h} hr`; }
+const hm = s => { const [h, m] = s.split(':').map(Number); return h * 60 + m; };
+function tramRunning(ms) {
+  const t = minutesOfDay(ms), last = hm(W.transit.tram.lastDeparture), first = hm(W.transit.tram.firstDeparture);
+  return last < first ? !(t >= last && t < first) : (t >= first && t < last);
+}
+function minutesToLastTram(ms) { const t = minutesOfDay(ms), last = hm(W.transit.tram.lastDeparture); return (last - t + 1440) % 1440; }
+
+/* ---------- Data ---------- */
+function mergePlaces() {
+  const base = W.places.map(p => ({ ...p, pin: p.pin ? { ...p.pin } : null }));
+  const out = [];
+  for (const p of base) {
+    if (edits.removed.includes(p.id)) continue;
+    const e = edits.changed[p.id];
+    out.push(e ? { ...p, ...e, pin: e.pin ?? p.pin } : p);
+  }
+  for (const p of edits.added) out.push(p);
+  places = out; byId = Object.fromEntries(places.map(p => [p.id, p]));
+}
+const district = id => W.districts[id];
+const placesOn = mapId => places.filter(p => p.pin && p.pin.map === mapId);
+const placeName = id => byId[id]?.name || district(id)?.name || id;
+function locationLabel(loc) {
+  if (!loc) return 'Nowhere yet';
+  const d = district(loc.district), p = loc.place && byId[loc.place];
+  return p ? `${p.name}, ${d.name}` : d.name;
+}
+
+/* ---------- Travel ---------- */
+function pinDistanceMinutes(a, b) {
+  const pa = byId[a]?.pin, pb = byId[b]?.pin;
+  if (!pa || !pb || pa.map !== pb.map) return W.travel.withinDistrictMinutes;
+  const d = Math.hypot(pa.x - pb.x, pa.y - pb.y);
+  return Math.max(2, Math.round(2 + d * W.travel.acrossDistrictMapMinutes));
+}
+// Shortest path between districts. useTram: take the tram on any leg that has one while it is running.
+function route(fromD, toD, useTram, departMs) {
+  const dist = { [fromD]: 0 }, prev = {}, seen = new Set();
+  const edges = {};
+  for (const r of W.routes) {
+    (edges[r.a] ||= []).push(r); (edges[r.b] ||= []).push(r);
+  }
+  while (true) {
+    let u = null; for (const k in dist) if (!seen.has(k) && (u === null || dist[k] < dist[u])) u = k;
+    if (u === null) return null;
+    if (u === toD) break;
+    seen.add(u);
+    for (const r of edges[u] || []) {
+      const v = r.a === u ? r.b : r.a;
+      const tramOk = useTram && r.tram != null && tramRunning(departMs + dist[u] * 60000);
+      const cost = tramOk ? r.tram : r.walk;
+      if (dist[v] === undefined || dist[u] + cost < dist[v]) { dist[v] = dist[u] + cost; prev[v] = { from: u, r, mode: tramOk ? 'tram' : 'walk', cost }; }
+    }
+  }
+  const legs = []; let cur = toD;
+  while (cur !== fromD) { const p = prev[cur]; legs.unshift({ from: p.from, to: cur, mode: p.mode, minutes: p.cost, via: p.r.via, estimate: p.r.estimate }); cur = p.from; }
+  return { minutes: dist[toD], legs };
+}
+function planTrip(target) {   // target: {district, place?}
+  const here = presence.location, now = adytaNow();
+  if (presence.transit) return [];
+  if (here.district === target.district) {
+    if (here.place === target.place) return [];
+    const m = target.place && here.place ? pinDistanceMinutes(here.place, target.place) : W.travel.withinDistrictMinutes;
+    return [{ mode: 'walk', label: 'Walk', minutes: m, legs: [{ from: here.district, to: target.district, mode: 'walk', minutes: m }] }];
+  }
+  const tail = target.place ? W.travel.withinDistrictMinutes : 0;
+  const opts = [];
+  const walk = route(here.district, target.district, false, now);
+  if (walk) opts.push({ mode: 'walk', label: 'Walk', minutes: walk.minutes + tail, legs: walk.legs });
+  const tram = route(here.district, target.district, true, now);
+  if (tram && tram.legs.some(l => l.mode === 'tram') && tram.minutes < (walk?.minutes ?? Infinity)) opts.push({ mode: 'tram', label: 'Tram and walk', minutes: tram.minutes + tail, legs: tram.legs });
+  return opts.sort((a, b) => a.minutes - b.minutes);
+}
+function startTrip(target, opt) {
+  const now = adytaNow();
+  presence.transit = { from: { ...presence.location }, to: target, mode: opt.mode, departs: now, arrives: now + opt.minutes * 60000, legs: opt.legs };
+  logMove(`Left ${locationLabel(presence.location)} for ${locationLabel(target)} (${opt.label.toLowerCase()}, ${fmtDur(opt.minutes)})`);
+  save(PRESENCE_KEY, presence); render(); openPlace(target.place || target.district);
+  toast(`On the way. Arriving ${fmtTime(presence.transit.arrives)}.`);
+}
+function turnBack() {
+  const t = presence.transit, now = adytaNow(), spent = now - t.departs;
+  presence.transit = { from: t.to, to: t.from, mode: t.mode, departs: now, arrives: now + spent, legs: [] };
+  logMove(`Turned back toward ${locationLabel(t.from)}`);
+  save(PRESENCE_KEY, presence); render();
+}
+function settleTransit() {
+  const t = presence.transit; if (!t || adytaNow() < t.arrives) return false;
+  presence.location = t.to; presence.transit = null;
+  logMove(`Arrived at ${locationLabel(t.to)}`, t.arrives);
+  save(PRESENCE_KEY, presence);
+  toast(`You're at ${locationLabel(presence.location)}.`);
+  return true;
+}
+function logMove(text, at) { (presence.log ||= []).unshift({ at: at ?? adytaNow(), text }); presence.log = presence.log.slice(0, 30); }
+
+/* ---------- Status strip ---------- */
+function renderBoard() {
+  const now = adytaNow();
+  $('clock').innerHTML = `${fmtTime(now)}<small>${esc(fmtDate(now))} · Adyta</small>`;
+  const t = presence.transit, me = characterName();
+  $('board').classList.toggle('moving-now', !!t);
+  if (t) {
+    const left = (t.arrives - now) / 60000, pct = Math.min(100, 100 * (now - t.departs) / (t.arrives - t.departs || 1));
+    $('where').innerHTML = `<b>${esc(me)} → ${esc(locationLabel(t.to))}</b><span class="moving">${t.mode === 'tram' ? 'On the tram' : 'Walking'} · arrives ${fmtTime(t.arrives)} (${fmtDur(left)})</span>`;
+    $('progressBar').style.width = pct + '%';
+  } else {
+    $('where').innerHTML = `<b>${esc(me)}</b><span>${esc(locationLabel(presence.location))}</span>`;
+  }
+  const tr = $('tram');
+  if (tramRunning(now)) {
+    const m = minutesToLastTram(now);
+    tr.className = 'tram'; tr.innerHTML = m <= 120 ? `Last tram in ${fmtDur(m)}<small>Leaves ${fmtTime(Date.UTC(2000, 0, 1, ...W.transit.tram.lastDeparture.split(':').map(Number)))}, both directions</small>` : `Trams running<small>Last tram ${fmtTime(Date.UTC(2000, 0, 1, ...W.transit.tram.lastDeparture.split(':').map(Number)))}</small>`;
+  } else {
+    tr.className = 'tram closed'; tr.innerHTML = `No trams<small>Back around ${fmtTime(Date.UTC(2000, 0, 1, ...W.transit.tram.firstDeparture.split(':').map(Number)))}</small>`;
+  }
+}
+function characterName() { const s = load(TOOL_KEY, null); return s?.character?.name || 'Your operative'; }
+
+/* ---------- Map tabs ---------- */
+function renderTabs() {
+  const hereMap = district(presence.location.district)?.map;
+  $('mapTabs').innerHTML = Object.entries(W.maps).map(([id, m]) =>
+    `<button type="button" data-map="${id}" aria-pressed="${id === view.map}" class="${id === hereMap ? 'here' : ''}">${esc(m.short)}</button>`).join('');
+  $('mapTabs').querySelectorAll('button').forEach(b => b.onclick = () => showMap(b.dataset.map));
+}
+
+/* ---------- Map viewer ---------- */
+const stage = $('stage'), world = $('world'), img = $('mapImg');
+function applyView() { world.style.transform = `translate(${view.x}px,${view.y}px) scale(${view.scale})`; }
+function fit() {
+  const m = W.maps[view.map], sw = stage.clientWidth, sh = stage.clientHeight;
+  view.scale = Math.min(sw / m.width, sh / m.height); view.x = (sw - m.width * view.scale) / 2; view.y = (sh - m.height * view.scale) / 2; applyView();
+}
+function zoomAt(factor, cx, cy) {
+  const m = W.maps[view.map], min = Math.min(stage.clientWidth / m.width, stage.clientHeight / m.height) * 0.9, max = 4;
+  const s = Math.min(max, Math.max(min, view.scale * factor)); factor = s / view.scale;
+  view.x = cx - (cx - view.x) * factor; view.y = cy - (cy - view.y) * factor; view.scale = s; applyView();
+}
+function centerOn(x, y, scale) {
+  const m = W.maps[view.map]; if (scale) view.scale = scale;
+  view.x = stage.clientWidth / 2 - x * m.width * view.scale; view.y = stage.clientHeight / 2 - y * m.height * view.scale; applyView();
+}
+function showMap(mapId, focus) {
+  view.map = mapId; const m = W.maps[mapId];
+  img.src = '../' + m.image; img.width = m.width; img.height = m.height; img.alt = m.title;
+  world.style.width = m.width + 'px'; world.style.height = m.height + 'px';
+  renderPins(); renderTabs(); fit();
+  if (focus) { const p = pinFor(focus); if (p) centerOn(p.x, p.y, Math.max(view.scale, 1.4 * Math.min(stage.clientWidth / m.width, stage.clientHeight / m.height))); }
+  $('hint').textContent = editing ? 'Drag a pin to move it. Tap an empty spot to add a place.' : (m.kind === 'city' ? 'Tap a district to see it or travel there.' : 'Tap a place for details. Drag to pan, pinch or scroll to zoom.');
+}
+function pinFor(id) {   // a place's pin on the current map, or a district's pin on the city map
+  const p = byId[id]; if (p?.pin?.map === view.map) return p.pin;
+  const d = district(id); if (d && view.map === 'adyta-city') return d.cityPin;
+  return null;
+}
+function renderPins() {
+  world.querySelectorAll('.pin').forEach(n => n.remove());
+  const m = W.maps[view.map], here = presence.location, dest = presence.transit?.to;
+  const items = m.kind === 'city'
+    ? Object.entries(W.districts).filter(([, d]) => d.cityPin).map(([id, d]) => ({ id, name: d.name, pin: d.cityPin, cls: 'district', you: here.district === id && !presence.transit, dest: dest?.district === id }))
+    : placesOn(view.map).map(p => ({ id: p.id, name: p.name, pin: p.pin, cls: p.pin.approx ? 'unpinned' : '', you: here.place === p.id && !presence.transit, dest: dest?.place === p.id }));
+  for (const it of items) {
+    const b = document.createElement('button'); b.type = 'button';
+    b.className = `pin ${it.cls} ${it.you ? 'you' : ''} ${it.dest ? 'dest' : ''} ${selected === it.id ? 'selected' : ''}`;
+    b.style.left = it.pin.x * m.width + 'px'; b.style.top = it.pin.y * m.height + 'px';
+    b.title = it.name; b.setAttribute('aria-label', it.name + (it.you ? ' (you are here)' : ''));
+    b.dataset.id = it.id;
+    b.addEventListener('click', e => { e.stopPropagation(); if (dragMoved) return; openPlace(it.id); });
+    if (editing) b.addEventListener('pointerdown', startPinDrag);
+    world.appendChild(b);
+  }
+}
+
+/* Pan / zoom with mouse, touch and wheel */
+let pointers = new Map(), panStart = null, pinchStart = null, dragMoved = false;
+stage.addEventListener('pointerdown', e => {
+  if (e.target.closest('.zoom,.toolbar,.pin')) return;
+  stage.setPointerCapture(e.pointerId); pointers.set(e.pointerId, { x: e.clientX, y: e.clientY }); dragMoved = false;
+  if (pointers.size === 1) panStart = { x: e.clientX, y: e.clientY, vx: view.x, vy: view.y };
+  if (pointers.size === 2) { const [a, b] = [...pointers.values()]; pinchStart = { d: Math.hypot(a.x - b.x, a.y - b.y), s: view.scale }; }
+});
+stage.addEventListener('pointermove', e => {
+  if (!pointers.has(e.pointerId)) return; pointers.set(e.pointerId, { x: e.clientX, y: e.clientY });
+  if (pointers.size === 2 && pinchStart) {
+    const [a, b] = [...pointers.values()], r = stage.getBoundingClientRect();
+    zoomAt(pinchStart.s * Math.hypot(a.x - b.x, a.y - b.y) / pinchStart.d / view.scale, (a.x + b.x) / 2 - r.left, (a.y + b.y) / 2 - r.top); dragMoved = true;
+  } else if (panStart) {
+    const dx = e.clientX - panStart.x, dy = e.clientY - panStart.y;
+    if (Math.abs(dx) + Math.abs(dy) > 4) { dragMoved = true; stage.classList.add('dragging'); }
+    view.x = panStart.vx + dx; view.y = panStart.vy + dy; applyView();
+  }
+});
+const endPointer = e => {
+  const wasTap = pointers.size === 1 && !dragMoved;
+  pointers.delete(e.pointerId); if (pointers.size < 2) pinchStart = null;
+  if (!pointers.size) { panStart = null; stage.classList.remove('dragging'); if (wasTap && editing && e.type === 'pointerup') addPlaceAt(e); }
+};
+stage.addEventListener('pointerup', endPointer); stage.addEventListener('pointercancel', endPointer);
+stage.addEventListener('wheel', e => { e.preventDefault(); const r = stage.getBoundingClientRect(); zoomAt(e.deltaY < 0 ? 1.15 : 1 / 1.15, e.clientX - r.left, e.clientY - r.top); }, { passive: false });
+$('zin').onclick = () => zoomAt(1.3, stage.clientWidth / 2, stage.clientHeight / 2);
+$('zout').onclick = () => zoomAt(1 / 1.3, stage.clientWidth / 2, stage.clientHeight / 2);
+$('zfit').onclick = fit;
+$('youBtn').onclick = findMe;
+window.addEventListener('resize', () => fit());
+function findMe() {
+  const loc = presence.transit ? presence.transit.to : presence.location, d = district(loc.district);
+  if (d.map && W.maps[d.map]) showMap(d.map, loc.place || null); else showMap('adyta-city', loc.district);
+  openPlace(loc.place || loc.district);
+}
+
+/* ---------- Place / district panel ---------- */
+const TYPE_LABEL = { venue: 'Venue', shop: 'Shop', food: 'Food', landmark: 'Landmark', transit: 'Transit stop', housing: 'Housing', civic: 'Civic and legal', corporate: 'Corporate', industrial: 'Industrial', street: 'Street', market: 'Market', sacred: 'Sacred place', district: 'District' };
+function openPlace(id) {
+  selected = id; renderPins();
+  const p = byId[id], d = p ? district(p.district) : district(id);
+  if (!d) return;
+  const target = p ? { district: p.district, place: p.id } : { district: id };
+  const here = presence.location, isHere = !presence.transit && here.district === target.district && (p ? here.place === p.id : !here.place || true);
+  let h = `<h2>${esc(p ? p.name : d.name)}</h2><div class="kind">${p ? `${esc(TYPE_LABEL[p.type] || p.type)} in ${esc(d.name)}` : esc(d.layer === 'underground' ? 'Underground district' : 'District')}</div>`;
+  h += `<p>${esc(p ? p.blurb : d.tagline)}</p>`;
+  if (p?.proposed) h += `<p class="note">Proposed on the map. Not running yet.</p>`;
+  if (p?.pin?.approx) h += `<p class="note">This pin is approximate. Use Edit pins to put it in the right spot.</p>`;
+  h += '<div class="actions">';
+  if (editing && p) {
+    h += editForm(p);
+  } else if (presence.transit) {
+    const t = presence.transit;
+    h += `<div class="act"><b>On the way to ${esc(locationLabel(t.to))}</b><span>Arrives ${fmtTime(t.arrives)}</span></div>`;
+    h += `<button class="act" type="button" id="turnBack"><b>Turn back</b><span>Head back to ${esc(locationLabel(t.from))}</span></button>`;
+  } else if (p ? (here.place === p.id) : (here.district === id && !here.place)) {
+    h += `<div class="act go"><b>You are here</b><span>${fmtTime(adytaNow())}</span></div>`;
+  } else {
+    const opts = planTrip(target);
+    if (!opts.length) h += `<div class="act"><b>No known route</b><span>Nobody has mapped a way there yet.</span></div>`;
+    opts.forEach((o, i) => {
+      const est = o.legs.some(l => l.estimate) ? ' · estimate' : '';
+      h += `<button class="act ${i === 0 ? 'go' : ''}" type="button" data-opt="${i}"><b>${esc(o.label)}</b><span>${fmtDur(o.minutes)} · arrive ${fmtTime(adytaNow() + o.minutes * 60000)}${est}</span></button>`;
+    });
+    if (opts[0]?.legs.length > 1 || (opts[0] && opts[0].legs[0]?.to !== here.district)) {
+      const legs = opts[0].legs.filter(l => l.from !== l.to);
+      if (legs.length) h += `<p class="note">Route: ${legs.map(l => esc(district(l.to).name) + (l.via ? ` (${esc(l.via)})` : '')).join(' → ')}</p>`;
+    }
+    if (here.district === target.district) h += `<p class="note">You're in ${esc(d.name)} now.</p>`;
+  }
+  if (!p && d.map && W.maps[d.map] && view.map !== d.map) h += `<button class="act" type="button" id="openMap"><b>Open the ${esc(d.name)} map</b><span>${placesOn(d.map).length} places</span></button>`;
+  if (p && view.map !== p.pin?.map && p.pin) h += `<button class="act" type="button" id="showOnMap"><b>Show on the map</b><span>${esc(W.maps[p.pin.map].short)}</span></button>`;
+  h += '</div>';
+  if (p) {
+    const twins = places.filter(o => o.id !== p.id && o.name === p.name);
+    if (twins.length) h += `<p class="note">Also at:</p><ul class="others">${twins.map(o => `<li><button type="button" data-goto="${o.id}">${esc(o.name)}, ${esc(district(o.district).name)}</button></li>`).join('')}</ul>`;
+  }
+  if (!p && !d.map) h += `<p class="note">No district map yet. When one is added, its places show up here.</p>`;
+  if (presence.log?.length) h += `<div class="log">Recent movements<ol>${presence.log.slice(0, 5).map(l => `<li>${fmtTime(l.at)}: ${esc(l.text)}</li>`).join('')}</ol></div>`;
+  $('sheetBody').innerHTML = h; setPanel(true); keepVisible(id);
+  const opts = (!editing && !presence.transit) ? planTrip(target) : [];
+  $('sheetBody').querySelectorAll('[data-opt]').forEach(b => b.onclick = () => startTrip(target, opts[+b.dataset.opt]));
+  $('sheetBody').querySelectorAll('[data-goto]').forEach(b => b.onclick = () => { const o = byId[b.dataset.goto]; showMap(o.pin.map, o.id); openPlace(o.id); });
+  $('turnBack') && ($('turnBack').onclick = turnBack);
+  $('openMap') && ($('openMap').onclick = () => { showMap(d.map); openPlace(id); });
+  $('showOnMap') && ($('showOnMap').onclick = () => { showMap(p.pin.map, p.id); openPlace(p.id); });
+  if (editing && p) wireEditForm(p);
+}
+// On phones the sheet covers the lower half; slide the map so the selected pin sits above it.
+function keepVisible(id) {
+  if (innerWidth >= 900) return; const pin = pinFor(id); if (!pin) return;
+  requestAnimationFrame(() => {
+    const m = W.maps[view.map], s = stage.getBoundingClientRect(), sheetTop = innerHeight - $('sheet').offsetHeight; // final position, not mid-animation
+    const visibleH = Math.max(120, sheetTop - s.top), py = view.y + pin.y * m.height * view.scale, px = view.x + pin.x * m.width * view.scale;
+    if (py < 40 || py > visibleH - 30) view.y += visibleH / 2 - py;
+    if (px < 30 || px > s.width - 30) view.x += s.width / 2 - px;
+    applyView();
+  });
+}
+function setPanel(open) { const was = $('app').classList.contains('panel-open'); $('sheet').classList.toggle('open', open); $('app').classList.toggle('panel-open', open); if (was !== open && innerWidth >= 900) { const dx = open ? -190 : 190; view.x += dx; applyView(); } }
+$('sheetClose').onclick = () => { setPanel(false); selected = null; renderPins(); };
+document.addEventListener('keydown', e => { if (e.key === 'Escape') $('sheetClose').click(); });
+
+/* ---------- Pin editor ---------- */
+$('editBtn').onclick = () => {
+  editing = !editing; $('editBtn').setAttribute('aria-pressed', editing); $('app').classList.toggle('editing', editing);
+  $('editBtn').textContent = editing ? 'Done editing' : 'Edit pins';
+  $('shareBtn').hidden = !editing;
+  showMap(view.map);
+  if (editing && innerWidth >= 900) openEditorPanel(); else { setPanel(false); selected = null; renderPins(); }
+};
+$('shareBtn').onclick = openEditorPanel;
+function openEditorPanel() {
+  const n = Object.keys(edits.changed).length + edits.added.length + edits.removed.length;
+  $('sheetBody').innerHTML = `<h2>Editing pins</h2><div class="kind">${esc(W.maps[view.map].title)}</div>
+    <p>Drag any pin to where the place really is. Tap an empty spot to add a place. Tap a pin to rename or remove it.</p>
+    <p class="note">Your changes are saved in this browser only. To share them, download <code>places.json</code> and replace <code>data/places.json</code> in the repo.</p>
+    <div class="actions"><button class="act go" type="button" id="dlPlaces"><b>Download places.json</b><span>${n} change${n === 1 ? '' : 's'}</span></button>
+    <button class="act" type="button" id="copyPlaces"><b>Copy places.json</b><span>For pasting into GitHub</span></button>
+    <button class="act" type="button" id="discardEdits" ${n ? '' : 'disabled'}><b>Discard my changes</b><span>Back to the shared pins</span></button></div>`;
+  setPanel(true);
+  $('dlPlaces').onclick = () => { const a = document.createElement('a'); a.href = URL.createObjectURL(new Blob([exportJson()], { type: 'application/json' })); a.download = 'places.json'; a.click(); };
+  $('copyPlaces').onclick = () => navigator.clipboard.writeText(exportJson()).then(() => toast('places.json copied.'), () => toast('Copy failed. Use Download instead.'));
+  $('discardEdits').onclick = () => { if (!confirm('Discard all your pin changes?')) return; edits = { changed: {}, added: [], removed: [] }; save(EDITS_KEY, edits); mergePlaces(); showMap(view.map); openEditorPanel(); };
+}
+function exportJson() { const out = { ...W, places: places.map(({ ...p }) => { if (p.pin) { p.pin = { ...p.pin }; delete p.pin.approx; if (byId[p.id]?.pin?.approx && !edits.changed[p.id]?.pin) p.pin.approx = true; } return p; }) }; return JSON.stringify(out, null, 2) + '\n'; }
+function changePlace(id, patch) {
+  const added = edits.added.find(p => p.id === id);
+  if (added) Object.assign(added, patch); else edits.changed[id] = { ...(edits.changed[id] || {}), ...patch };
+  save(EDITS_KEY, edits); mergePlaces();
+}
+let pinDrag = null;
+function startPinDrag(e) {
+  e.stopPropagation(); const el = e.currentTarget; el.setPointerCapture(e.pointerId); dragMoved = false;
+  pinDrag = { el, id: el.dataset.id, sx: e.clientX, sy: e.clientY, l: parseFloat(el.style.left), t: parseFloat(el.style.top) };
+  el.onpointermove = ev => { const dx = (ev.clientX - pinDrag.sx) / view.scale, dy = (ev.clientY - pinDrag.sy) / view.scale; if (Math.abs(dx) + Math.abs(dy) > 3) dragMoved = true; el.style.left = pinDrag.l + dx + 'px'; el.style.top = pinDrag.t + dy + 'px'; };
+  el.onpointerup = () => {
+    el.onpointermove = el.onpointerup = null;
+    if (dragMoved) {
+      const m = W.maps[view.map], x = +(parseFloat(el.style.left) / m.width).toFixed(4), y = +(parseFloat(el.style.top) / m.height).toFixed(4);
+      if (m.kind === 'city') { W.districts[pinDrag.id].cityPin = { x, y }; edits.cityPins = { ...(edits.cityPins || {}), [pinDrag.id]: { x, y } }; save(EDITS_KEY, edits); }
+      else changePlace(pinDrag.id, { pin: { map: view.map, x, y } });
+      toast('Pin moved.'); setTimeout(() => { dragMoved = false; }, 0);
+    }
+    pinDrag = null;
+  };
+}
+function addPlaceAt(e) {
+  const m = W.maps[view.map]; if (m.kind === 'city') { toast('Districts can be moved, not added, on the city map.'); return; }
+  const r = stage.getBoundingClientRect(), x = (e.clientX - r.left - view.x) / view.scale / m.width, y = (e.clientY - r.top - view.y) / view.scale / m.height;
+  if (x < 0 || y < 0 || x > 1 || y > 1) return;
+  const name = prompt('Name of the new place:'); if (!name) return;
+  const id = (m.district + '--' + name.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '')) + (byId[m.district + '--' + name.toLowerCase().replace(/[^a-z0-9]+/g, '-')] ? '-' + Date.now().toString(36) : '');
+  edits.added.push({ id, district: m.district, name, type: 'landmark', blurb: '', pin: { map: view.map, x: +x.toFixed(4), y: +y.toFixed(4) } });
+  save(EDITS_KEY, edits); mergePlaces(); renderPins(); openPlace(id);
+}
+function editForm(p) {
+  return `<div class="field"><label for="eName">Name</label><input id="eName" value="${esc(p.name)}"></div>
+  <div class="field"><label for="eType">Type</label><select id="eType">${Object.entries(TYPE_LABEL).filter(([k]) => k !== 'district').map(([k, v]) => `<option value="${k}" ${p.type === k ? 'selected' : ''}>${v}</option>`).join('')}</select></div>
+  <div class="field"><label for="eBlurb">Description</label><textarea id="eBlurb" rows="3">${esc(p.blurb)}</textarea></div>
+  <button class="act go" type="button" id="eSave"><b>Save place</b><span></span></button>
+  <button class="act" type="button" id="eDelete"><b>Remove place</b><span>From this map</span></button>`;
+}
+function wireEditForm(p) {
+  $('eSave').onclick = () => { changePlace(p.id, { name: $('eName').value.trim() || p.name, type: $('eType').value, blurb: $('eBlurb').value.trim() }); renderPins(); toast('Place saved.'); openPlace(p.id); };
+  $('eDelete').onclick = () => {
+    if (!confirm(`Remove ${p.name}?`)) return;
+    const i = edits.added.findIndex(a => a.id === p.id); if (i >= 0) edits.added.splice(i, 1); else edits.removed.push(p.id);
+    delete edits.changed[p.id]; save(EDITS_KEY, edits); mergePlaces(); openEditorPanel(); renderPins();
+  };
+}
+
+/* ---------- Misc ---------- */
+function toast(t) { const el = $('toast'); el.textContent = t; el.style.display = 'block'; clearTimeout(toast.t); toast.t = setTimeout(() => el.style.display = 'none', 2600); }
+function render() { renderBoard(); renderTabs(); renderPins(); }
+function tick() { if (settleTransit()) { render(); if (selected) openPlace(selected); } else renderBoard(); }
+
+/* ---------- Start ---------- */
+(async function start() {
+  try {
+    W = window.GRAKK_PLACES || await fetch('../data/places.json').then(r => { if (!r.ok) throw new Error(r.status); return r.json(); });
+  } catch (e) { $('where').innerHTML = '<b>Map data missing</b><span>Could not load data/places.json.</span>'; return; }
+  clockOffset = Date.parse(W.clock.anchorAdyta + 'Z') - Date.parse(W.clock.anchorReal);
+  edits = Object.assign({ changed: {}, added: [], removed: [], cityPins: {} }, load(EDITS_KEY, {}));
+  for (const [id, pin] of Object.entries(edits.cityPins || {})) if (W.districts[id]) W.districts[id].cityPin = pin;
+  mergePlaces();
+  presence = load(PRESENCE_KEY, null);
+  if (!presence || !W.districts[presence.location?.district]) presence = { location: { ...W.start }, transit: null, log: [] };
+  if (presence.location.place && !byId[presence.location.place]) presence.location.place = null;
+  settleTransit(); save(PRESENCE_KEY, presence);
+  renderBoard();
+  const startD = district((presence.transit?.to || presence.location).district);
+  showMap(startD.map && W.maps[startD.map] ? startD.map : 'adyta-city', (presence.transit?.to || presence.location).place);
+  setInterval(tick, 5000);
+  window.GRAKK_EXPLORE = { get presence() { return presence; }, planTrip, startTrip, adytaNow, tramRunning, route, places: () => places };
+})();
+</script>
+</body>
+</html>

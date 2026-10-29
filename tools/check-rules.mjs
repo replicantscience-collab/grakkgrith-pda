@@ -2,7 +2,7 @@
 // Checks data/rules.json against data/rulebook-reference.json (facts copied from the rulebook)
 // and checks rules.json for internal consistency. No dependencies: `node tools/check-rules.mjs`.
 // Exit code 1 if anything is wrong, so CI can block a bad change.
-import { readFileSync } from 'node:fs';
+import { readFileSync, existsSync } from 'node:fs';
 
 const load = p => JSON.parse(readFileSync(new URL('../' + p, import.meta.url), 'utf8'));
 const rules = load('data/rules.json');
@@ -84,9 +84,35 @@ for (const [cls, c] of Object.entries(rules.classes))
 const ids = new Set();
 for (const t of rules.territories) { if (ids.has(t.id)) bad('territories', `duplicate id ${t.id}`); ids.add(t.id); }
 
+// --- Explore map: data/places.json ------------------------------------------------
+const W = load('data/places.json');
+const inUnit = v => typeof v === 'number' && v >= 0 && v <= 1;
+for (const [id, m] of Object.entries(W.maps)) {
+  if (!existsSync(new URL('../' + m.image, import.meta.url))) bad(`places.maps.${id}`, `image ${m.image} not found`);
+  if (m.kind === 'district' && !W.districts[m.district]) bad(`places.maps.${id}`, `unknown district ${m.district}`);
+}
+for (const [id, d] of Object.entries(W.districts)) {
+  if (d.map && !W.maps[d.map]) bad(`places.districts.${id}`, `unknown map ${d.map}`);
+  if (d.cityPin && !(inUnit(d.cityPin.x) && inUnit(d.cityPin.y))) bad(`places.districts.${id}.cityPin`, 'must be between 0 and 1');
+}
+const placeIds = new Set();
+for (const p of W.places) {
+  if (placeIds.has(p.id)) bad('places.places', `duplicate id ${p.id}`); placeIds.add(p.id);
+  if (!W.districts[p.district]) bad(`places.places.${p.id}`, `unknown district ${p.district}`);
+  if (p.pin && !W.maps[p.pin.map]) bad(`places.places.${p.id}`, `unknown map ${p.pin.map}`);
+  if (p.pin && !(inUnit(p.pin.x) && inUnit(p.pin.y))) bad(`places.places.${p.id}.pin`, 'must be between 0 and 1');
+}
+for (const r of W.routes) {
+  for (const end of [r.a, r.b]) if (!W.districts[end]) bad('places.routes', `unknown district ${end}`);
+  if (!(r.walk > 0)) bad('places.routes', `${r.a}–${r.b} needs a walk time`);
+}
+if (!placeIds.has(W.start.place) || !W.districts[W.start.district]) bad('places.start', 'start place or district not found');
+if (Number.isNaN(Date.parse(W.clock.anchorReal)) || Number.isNaN(Date.parse(W.clock.anchorAdyta + 'Z'))) bad('places.clock', 'anchors must be dates');
+
 // --- Report -------------------------------------------------------------------
 if (problems.length) {
   console.error(`rules.json vs ${ref.rulebook}: ${problems.length} problem(s)\n` + problems.map(p => '  - ' + p).join('\n'));
   process.exit(1);
 }
-console.log(`rules.json matches ${ref.rulebook}: ${races.length} races, ${Object.keys(rules.classes).length} classes, ${Object.keys(rules.origins).length} origins, ${Object.keys(rules.lives).length} lives. No problems.`);
+console.log(`rules.json matches ${ref.rulebook}: ${races.length} races, ${Object.keys(rules.classes).length} classes, ${Object.keys(rules.origins).length} origins, ${Object.keys(rules.lives).length} lives.`);
+console.log(`places.json is consistent: ${Object.keys(W.maps).length} maps, ${Object.keys(W.districts).length} districts, ${W.places.length} places, ${W.routes.length} routes.`);

@@ -8,11 +8,14 @@ The companion web app for GRAKKGRITH, the Adyta tabletop RPG: character setup, c
 | --- | --- |
 | `index.html` | The shell: top nav, World pages (Start, City, Missions, Factions, Lore, Logs), campaign State, district dossiers, map viewer |
 | `apps/creator.html` | Character Setup: races, classes, subclasses, origins, lives, gear, attribute points |
+| `apps/explore.html` | Explore: the city and district maps, places, travel, and where your character is right now |
 | `apps/player.html` | Character Sheet: wounds, stress, inventory, rolls, downtime, grith, Heat |
 | `data/rules.json` | **The rules.** Races, classes, subclasses, origins, lives, skills, street magic tags, territories, starting loadouts, Shade workings, downtime actions. Both the creator and the sheet read this one file. |
+| `data/places.json` | **The map.** Districts, places, pins, routes and travel times, tram hours, and the Adyta clock |
 | `data/rulebook-reference.json` | Facts copied from the rulebook that `rules.json` is checked against |
 | `tools/check-rules.mjs` | The rules check (see below) |
-| `maps/` | City atlas and district maps (Low Halo, Ember Court, Sewers) |
+| `maps/official/` | Official maps used by Explore: the city, Low Halo, Ember Court, Market Ring, Dockside |
+| `maps/` | Older street-layer maps used by the City page (Low Halo, Ember Court, Sewers) |
 | `icons/`, `manifest.json` | PWA install icons and metadata |
 | `sw.js` | Service worker: offline cache |
 
@@ -43,6 +46,23 @@ It compares `rules.json` with the rulebook facts in `data/rulebook-reference.jso
 **When the rulebook changes:** update `rulebook-reference.json` first. The check then lists exactly what `rules.json` still needs.
 
 **Renaming something players may have saved** (a subclass, origin, or life): add the old name to an `aliases` list on the entry so existing characters keep working. See `LHL Courier` for an example.
+
+## The Explore map
+
+Explore puts your character somewhere in Adyta. Tap a place for its details, then travel there: on foot, or by tram while the trams run (the last one leaves at 12:17 AM). Travel takes Adyta time, and your character is in transit until they arrive, even if you close the app.
+
+**The Adyta clock** runs at real speed with a fixed offset, set in `data/places.json` under `clock`: at `anchorReal` it was `anchorAdyta` in Adyta.
+
+**Fixing pins.** Pins sit at the left edge of each map label. Dashed pins were placed by eye and may be slightly off. To fix any pin:
+1. In Explore, tap **Edit pins**.
+2. Drag pins where they belong, tap an empty spot to add a place, or tap a pin to rename or remove it.
+3. Tap **Share pins**, then **Download places.json**, and replace `data/places.json` in the repo with it.
+
+Changes stay in your browser until you do step 3.
+
+**Re-rendered a map?** Replace the image in `maps/official/` (same file name), then fix the pins as above.
+
+**Travel times** marked "estimate" aren't printed on any map. Edit `routes` in `places.json` (`walk` and `tram` are minutes) when the real numbers are known.
 
 ## Changing anything else
 
