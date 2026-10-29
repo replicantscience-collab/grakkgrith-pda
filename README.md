@@ -27,7 +27,7 @@ Then open http://localhost:8000.
 
 ## Changing it
 
-- **Bump the cache** whenever you change a file: edit `CACHE_NAME` in `sw.js` (`grakkgrith-v39` → `grakkgrith-v40`) so installed copies pick up the update.
+- **Bump the cache** whenever you change a file: edit `CACHE_NAME` in `sw.js` (`grakkgrith-v40` → `grakkgrith-v41`) so installed copies pick up the update.
 - **Adding a file** that should work offline: add it to the `ASSETS` list in `sw.js`.
 
 ## Moving characters from the old Seele version
@@ -40,6 +40,4 @@ Recovered on 2026-10-29 from the published Seele AI build (service worker v38). 
 
 ## Known gaps against the First Edition v1.47 rulebook
 
-- Fairy is missing from the race list (10 of 11 races).
-- The Advocate subclass still says "FCA"; the rulebook calls it APA.
 - Not built yet: the Arcane Heart / Magical Veins casting engine, Vampire Vitality, Afflictions, Mixed Heritage, Called Shots.
