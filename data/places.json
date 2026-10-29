@@ -1,7 +1,7 @@
 {
   "schema": "grakkgrith-places",
   "schemaVersion": 1,
-  "_about": "Districts, places, and routes for the Explore map. Pins are fractions of the map image (0-1). Edit with Explore > Edit pins, then download places.json and replace this file. routes: walk/tram are minutes; estimate means the time is not printed on a map.",
+  "_about": "Districts, places, and routes for the Explore map. Pins are fractions of the map image (0-1). Edit with Explore > Edit pins, then download places.json and replace this file. routes: walk/tram are minutes; estimate means the time is not printed on a map. Optional per route: walkRange/tramRange [min,max], goblin (minutes by goblin rooftop and tunnel routes, for the Runner view), source.",
   "clock": {
     "anchorReal": "2026-10-29T20:13:00Z",
     "anchorAdyta": "2026-10-29T22:38:00",
@@ -17,7 +17,8 @@
   },
   "travel": {
     "withinDistrictMinutes": 5,
-    "acrossDistrictMapMinutes": 15
+    "acrossDistrictMapMinutes": 15,
+    "_about": "Places pinned on the city map (no district map yet) count as in their district; travel inside a district takes withinDistrictMinutes."
   },
   "start": {
     "district": "low-halo",
@@ -1187,6 +1188,24 @@
         "x": 0.8739,
         "y": 0.6727
       }
+    },
+    {
+      "id": "three-wires--sideways-shops",
+      "district": "three-wires",
+      "name": "Sideways Shops",
+      "type": "shop",
+      "blurb": "Curios, maps, gear, guides, and more, in a repurposed service depot on the edge between Three Wires and the Tangle. Run by Eko and Pulse.",
+      "owners": [
+        "Eko",
+        "Pulse"
+      ],
+      "brand": "sideways-shops",
+      "pin": {
+        "map": "adyta-city",
+        "x": 0.0926,
+        "y": 0.343,
+        "approx": true
+      }
     }
   ],
   "routes": [
@@ -1423,10 +1442,23 @@
     {
       "a": "the-tangle",
       "b": "low-halo",
-      "walk": 20,
-      "tram": null,
-      "via": "",
-      "estimate": true
+      "walk": 60,
+      "tram": 30,
+      "via": "through Three Wires and the industrial corridors",
+      "walkRange": [
+        45,
+        90
+      ],
+      "tramRange": [
+        20,
+        40
+      ],
+      "goblin": 20,
+      "goblinRange": [
+        15,
+        30
+      ],
+      "source": "World Anvil: Adyta, The Tangle"
     },
     {
       "a": "three-wires",
@@ -1506,6 +1538,15 @@
       "walk": 45,
       "tram": null,
       "via": "where maps stop",
+      "estimate": true
+    },
+    {
+      "a": "low-halo",
+      "b": "three-wires",
+      "walk": 45,
+      "tram": 22,
+      "goblin": 15,
+      "via": "industrial corridors toward the Tangle edge",
       "estimate": true
     }
   ]

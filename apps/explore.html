@@ -53,6 +53,8 @@ button:focus-visible,[tabindex]:focus-visible{outline:2px solid var(--sodium);ou
 .pin::after{content:'';position:absolute;inset:5px;border-radius:50%;background:var(--chalk)}
 .pin.district{width:30px;height:30px;border-color:var(--teal)}
 .pin.district::after{background:var(--teal)}
+.pin.place-on-city{border-color:var(--sodium)}
+.pin.place-on-city::after{background:var(--sodium)}
 .pin.unpinned{border-style:dashed;opacity:.85}
 .pin.selected{border-color:var(--sodium);box-shadow:0 0 0 3px rgba(14,17,20,.55),0 0 0 7px rgba(242,169,59,.35)}
 .pin.selected::after{background:var(--sodium)}
@@ -322,7 +324,8 @@ function renderPins() {
   world.querySelectorAll('.pin').forEach(n => n.remove());
   const m = W.maps[view.map], here = presence.location, dest = presence.transit?.to;
   const items = m.kind === 'city'
-    ? Object.entries(W.districts).filter(([, d]) => d.cityPin).map(([id, d]) => ({ id, name: d.name, pin: d.cityPin, cls: 'district', you: here.district === id && !presence.transit, dest: dest?.district === id }))
+    ? [...Object.entries(W.districts).filter(([, d]) => d.cityPin).map(([id, d]) => ({ id, name: d.name, pin: d.cityPin, cls: 'district', you: here.district === id && !here.place && !presence.transit, dest: dest?.district === id && !dest.place })),
+       ...placesOn('adyta-city').map(p => ({ id: p.id, name: p.name, pin: p.pin, cls: 'place-on-city' + (p.pin.approx ? ' unpinned' : ''), you: here.place === p.id && !presence.transit, dest: dest?.place === p.id }))]
     : placesOn(view.map).map(p => ({ id: p.id, name: p.name, pin: p.pin, cls: p.pin.approx ? 'unpinned' : '', you: here.place === p.id && !presence.transit, dest: dest?.place === p.id }));
   for (const it of items) {
     const b = document.createElement('button'); b.type = 'button';

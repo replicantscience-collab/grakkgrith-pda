@@ -139,14 +139,14 @@ function showRace(race, scroll) {
   const origins = Object.entries(R.origins).filter(([, o]) => o.race === race).map(([n]) => n);
   const anyOrigins = Object.entries(R.origins).filter(([, o]) => !o.race).map(([n]) => n);
   const subs = Object.entries(R.classes).flatMap(([cls, c]) => (c.subclasses || []).filter(s => s.race === race).map(s => `${s.name} (${cls})`));
-  const lifeSrc = { poster: 'per the Sideways guide', rulebook: 'per the rulebook', both: '' }[g.lifespanSource] || '';
+  const lifeSrc = { poster: 'per the Sideways guide', rulebook: 'per the rulebook', wiki: 'per the Adyta wiki', both: '' }[g.lifespanSource] || '';
   const name = g.cardName || race;
   $('detail').innerHTML = `<article class="tag">
     <button class="close" type="button" id="closeDetail" aria-label="Close ${esc(name)}">×</button>
     <div class="art">${g.card ? `<img src="../${esc(g.card)}" alt="">` : drawnCard(race, g)}${g.artNote ? `<p class="artnote">${esc(g.artNote)}</p>` : ''}</div>
     <div>
       <h2>${esc(name)}</h2>
-      <p class="life">Typical lifespan: <b>${esc(g.lifespan || 'Nobody has asked an orc yet')}</b> ${lifeSrc ? `<span class="muted">(${lifeSrc})</span>` : ''}</p>
+      <p class="life">Typical lifespan: <b>${esc(g.lifespan || 'Unknown')}</b> ${lifeSrc ? `<span class="muted">(${lifeSrc})</span>` : ''}</p>
       <p class="says">${esc(g.blurb)}</p>
       <ul class="chips">${g.traits.map(t => `<li>${esc(t)}</li>`).join('')}</ul>
 
@@ -187,7 +187,7 @@ function render() {
     const g = G.races[r], name = g.cardName || r;
     const label = `${name}. Typical lifespan ${g.lifespan || 'unknown'}. ${g.blurb}`;
     if (!g.card) return `<button class="card drawn" type="button" data-race="${esc(r)}" aria-pressed="false" aria-label="${esc(label)}"><span class="name">${esc(name)}</span><span class="life">Typical lifespan<br>${esc(g.lifespan)}<small>Card art coming soon</small></span></button>`;
-    return `<button class="card" type="button" data-race="${esc(r)}" aria-pressed="false" aria-label="${esc(label)}"><img src="../${esc(g.card)}" alt="">${g.artNote ? `<span class="flag">${r === 'Dwarf' ? 'Lifespan: ' + esc(g.lifespan) : ''}</span>` : ''}</button>`;
+    return `<button class="card" type="button" data-race="${esc(r)}" aria-pressed="false" aria-label="${esc(label)}"><img src="../${esc(g.card)}" alt="">${g.artNote ? `<span class="flag">Lifespan: ${esc(g.lifespan)}</span>` : ''}</button>`;
   }).join('');
   document.querySelectorAll('.card').forEach(c => c.onclick = () => showRace(c.dataset.race, true));
   $('board').innerHTML = `
