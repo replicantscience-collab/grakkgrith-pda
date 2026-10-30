@@ -124,6 +124,8 @@ button:focus-visible,[tabindex]:focus-visible{outline:2px solid var(--sodium);ou
   .clock{font-size:28px}.where b{font-size:17px}
   .sheet{max-height:52%}
 }
+.job{margin:8px 0;padding:8px 10px;border-left:4px solid var(--sodium);background:rgba(242,169,59,.1)}
+.job b{color:var(--sodium)}
 </style>
 </head>
 <body>
@@ -278,6 +280,8 @@ function turnBack() {
 function settleTransit() {
   const t = presence.transit; if (!t || adytaNow() < t.arrives) return false;
   presence.location = t.to; presence.transit = null;
+  // Arrivals are kept so other screens (Runner deliveries) can tell where you've been, even after you've moved on.
+  (presence.arrivals ||= []).unshift({ at: t.arrives, district: t.to.district, place: t.to.place || null }); presence.arrivals = presence.arrivals.slice(0, 40);
   logMove(`Arrived at ${locationLabel(t.to)}`, t.arrives);
   savePresence();
   toast(`You're at ${locationLabel(presence.location)}.`);
@@ -403,6 +407,8 @@ function findMe() {
 
 /* ---------- Place / district panel ---------- */
 const TYPE_LABEL = { venue: 'Venue', shop: 'Shop', food: 'Food', landmark: 'Landmark', transit: 'Transit stop', housing: 'Housing', civic: 'Civic and legal', corporate: 'Corporate', industrial: 'Industrial', street: 'Street', market: 'Market', sacred: 'Sacred place', district: 'District' };
+/* Runner deliveries in progress (from the Workshop), so the map can say where to pick up and drop off. */
+function activeDeliveries() { const s = load(TOOL_KEY, null); return ((s && s.make && s.make.artifacts) || []).filter(a => a.status === 'active' && a.delivery).map(a => a.delivery); }
 function openPlace(id) {
   selected = id; renderPins();
   const p = byId[id], d = p ? district(p.district) : district(id);
@@ -414,6 +420,7 @@ function openPlace(id) {
   if (p?.entrance) h += `<p class="note">${esc(p.entrance)}</p>`;
   h += `<p>${esc(p ? p.blurb : d.tagline)}</p>`;
   if (brand?.about) h += `<p class="note">${esc(brand.about)}</p>`;
+  if (p) for (const job of activeDeliveries()) { if (job.from.place === p.id && job.stage === 'pickup') h += `<p class="job"><b>Pick up here:</b> ${esc(job.cargo.name)} for ${esc(job.to.name)}, due ${fmtTime(job.due)}.</p>`; if (job.to.place === p.id && job.stage === 'carrying') h += `<p class="job"><b>Drop off here:</b> ${esc(job.cargo.name)} from ${esc(job.from.name)}, due ${fmtTime(job.due)}.</p>`; }
   if (p?.sign) h += `<div class="sign">${p.sign.map((l, i) => `<${i ? 'span' : 'b'}>${esc(l)}</${i ? 'span' : 'b'}>`).join('')}</div>`;
   if (p?.note) h += `<p class="note">${esc(p.note)}</p>`;
   if (p?.details) h += p.details.map(s => `<details class="more"><summary>${esc(s.title)}</summary><ul>${s.items.map(i => `<li>${esc(i)}</li>`).join('')}</ul></details>`).join('');
@@ -600,7 +607,9 @@ function tick() { if (settleTransit()) { render(); if (selected) openPlace(selec
   settleTransit(); savePresence();
   renderBoard();
   const startD = district((presence.transit?.to || presence.location).district);
-  showMap(startD.map && W.maps[startD.map] ? startD.map : 'adyta-city', (presence.transit?.to || presence.location).place);
+  const go = new URLSearchParams(location.search).get('go'), goPlace = go && byId[go];   // opened from a delivery: show that place
+  if (goPlace) { const gm = goPlace.pin && W.maps[goPlace.pin.map] ? goPlace.pin.map : 'adyta-city'; showMap(gm, goPlace.id); openPlace(goPlace.id); }
+  else showMap(startD.map && W.maps[startD.map] ? startD.map : 'adyta-city', (presence.transit?.to || presence.location).place);
   setInterval(tick, 5000);
   addEventListener('storage', e => { if (e.key === TOOL_KEY || e.key === PRESENCE_KEY) { const p = loadPresence(); if (p) { presence = p; render(); } } });
   window.GRAKK_EXPLORE = { get presence() { return presence; }, planTrip, startTrip, adytaNow, tramRunning, route, places: () => places };

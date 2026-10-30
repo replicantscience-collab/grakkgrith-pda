@@ -175,6 +175,14 @@ try {
       const s = await ST(), a = (s.make && s.make.artifacts || [])[0];
       return (a && a.recipe === 'route-sheet' && a.creator.name === 'Smoke Runner' && a.location.district === 'low-halo' && s.downtime.actionsRemaining === 1 && await f.evaluate(() => document.querySelectorAll('.work .letter').length) === 1) || JSON.stringify(a).slice(0, 120);
     });
+    await step('a Runner takes a delivery and Explore shows the pickup', async () => {
+      await f.click('.recipe[data-recipe="delivery-run"]'); const n = await f.$$eval('[data-take]', b => b.length);
+      await f.click('[data-take] >> nth=0'); await page.waitForTimeout(400);
+      const a = (await ST()).make.artifacts.find(x => x.delivery); if (!a) return `board had ${n} jobs; none taken`;
+      await f.click('.work [data-go] >> nth=0'); await page.waitForTimeout(1800); const ex = frame(page);
+      const url = await ex.evaluate(() => location.search), note = await ex.evaluate(() => (document.querySelector('#sheetBody .job') || {}).textContent || '');
+      return (n === 3 && url.includes(encodeURIComponent(a.delivery.from.place)) && /Pick up here/.test(note)) || `jobs ${n}, url ${url}, note "${note}"`;
+    });
     // Mixed Heritage (Ch. 15) and Afflictions (Ch. 20) in Character Setup and on the sheet.
     await step('Mixed Heritage and Affliction rules hold in Character Setup', async () => {
       await page.evaluate(() => document.getElementById('creatorBtn').click()); await page.waitForTimeout(1200); f = frame(page);

@@ -93,6 +93,7 @@
     const m = ensure(s), out = [], wk = WK(), week = wk ? wk.weekIndex(aMs) : Math.floor(aMs / (7 * DAY));
     for (const a of m.artifacts) {
       if (a.status !== 'active') continue;
+      if (a.delivery) { settleDelivery(s, M, a, aMs, out); continue; }
       if (a.expires != null && aMs >= a.expires) { a.status = 'expired'; a.events.unshift({ at: a.expires, text: 'Expired.' }); out.push(a);
         if (wk) wk.inform(s, a.expires, 'Workshop', `${a.name} has run out`, `${a.name}${a.location && a.location.label ? ` in ${a.location.label}` : ''} stopped working.${a.kind === 'placed' ? ' Make a new one or let it go.' : ''}`); continue; }
       if (a.kind === 'placed' && a.permission === 'none') {
@@ -164,6 +165,73 @@
   function apaFiling(s) { return ensure(s).artifacts.find(a => a.recipe === 'apa-filing' && a.status === 'active') || null; }
   function spendApaFiling(s, aMs, noticeTitle) { const a = apaFiling(s); if (!a) return 0; use(s, a.id, aMs); a.events.unshift({ at: aMs, text: `Attached to "${noticeTitle}": +2 dice on the appeal.` }); return 2; }
 
-  const api = { ensure, recipe, recipesFor, downtimeLeft, preview, make, settle, use, maintain, salePrice, sell, complete, retire, rule, apaFiling, spendApaFiling, watcher, discoveryChance };
+  /* ---------- Runner deliveries: real runs on the Explore map ---------- */
+  const H = 3600000;
+  function seeded(seed) { let a = seed >>> 0; return () => { a = (a + 0x6D2B79F5) >>> 0; let t = a; t = Math.imul(t ^ (t >>> 15), t | 1); t ^= t + Math.imul(t ^ (t >>> 7), t | 61); return ((t ^ (t >>> 14)) >>> 0) / 4294967296; }; }
+  function hash(str) { let h = 2166136261; for (const c of String(str)) { h ^= c.charCodeAt(0); h = Math.imul(h, 16777619); } return h >>> 0; }
+  const pick = (rng, list) => list[Math.floor(rng() * list.length)];
+  const between = (rng, [a, b]) => a + Math.floor(rng() * (b - a + 1));
+  /* The board refreshes every few Adyta hours and is the same for this character until it does. */
+  function board(s, M, PL, aMs) {
+    const D = M.deliveries, slot = Math.floor(aMs / (D.refreshHours * H)), m = ensure(s), taken = new Set(m.takenJobs || []);
+    const rng = seeded(hash(`${(s.character && s.character.name) || ''}|${slot}`)), places = PL.places.filter(p => PL.districts[p.district]), out = [];
+    for (let i = 0; i < D.boardSize; i++) {
+      const from = pick(rng, places); let to = null;
+      const cross = rng() < 0.7;
+      for (let k = 0; k < 20 && !to; k++) { const c = pick(rng, places); if (c.id !== from.id && (cross ? c.district !== from.district : c.district === from.district)) to = c; }
+      if (!to) to = places.find(p => p.id !== from.id);
+      const cargo = pick(rng, D.cargo), under = [from, to].some(p => PL.districts[p.district].layer === 'underground');
+      const pay = Math.round((between(rng, from.district === to.district ? D.pay.sameDistrict : D.pay.crossDistrict) + (under ? D.pay.underground : 0)) * cargo.payMult / 5) * 5;
+      const hours = between(rng, D.deadlineHours), id = `job-${slot}-${i}`;
+      const spot = p => ({ district: p.district, place: p.id, name: p.name, districtName: PL.districts[p.district].name });
+      out.push({ id, from: spot(from), to: spot(to), cargo, pay, hours, taken: taken.has(id) });
+    }
+    return out;
+  }
+  function here(s, aMs) { const pr = s.world && s.world.presence; if (!pr) return null; const t = pr.transit; return t && aMs >= t.arrives ? t.to : t ? null : pr.location; }
+  function take(s, M, PL, jobId, aMs) {
+    if ((s.character && s.character.class) !== 'Runner') return { ok: false, msg: 'Delivery runs are Runner work.' };
+    const job = board(s, M, PL, aMs).find(j => j.id === jobId); if (!job || job.taken) return { ok: false, msg: 'That job is gone.' };
+    if (downtimeLeft(s) < M.downtimeCost) return { ok: false, msg: 'No downtime actions left this gap. A delivery is a Side Job.' };
+    const m = ensure(s), who = (s.character && s.character.name) || 'Someone';
+    spendDowntime(s, M.downtimeCost); m.takenJobs = [jobId, ...(m.takenJobs || [])].slice(0, 30);
+    const a = { id: `a-${aMs.toString(36)}-${m.artifacts.length}`, recipe: 'delivery-run', name: `${job.cargo.name}: ${job.from.name} to ${job.to.name}`, kind: 'job', class: 'Runner',
+      creator: { name: who, class: 'Runner' }, owner: who, target: job.from.name, costs: { downtime: M.downtimeCost, credits: 0, stress: 0 },
+      location: { district: job.from.district, label: job.from.districtName }, visibility: null, permission: null, created: aMs, expires: null, uses: null, value: 0,
+      legality: job.cargo.legality, permissions: { use: 'owner', transfer: false }, effect: recipe(M, 'delivery-run').effect, status: 'active', roll: null,
+      ruling: { needed: false, status: 'none' }, delivery: { ...job, due: aMs + job.hours * H, stage: 'pickup', taken: aMs }, events: [] };
+    a.events.unshift({ at: aMs, text: `Took the job: ${job.cargo.name} from ${job.from.name} (${job.from.districtName}) to ${job.to.name} (${job.to.districtName}) for ${job.pay} cr. Due in ${job.hours} hours. Side Job: 1 downtime action.` });
+    m.artifacts.unshift(a); const h = here(s, aMs); if (h && h.place === job.from.place) pickUp(a, aMs, 'You were already there.');
+    return { ok: true, artifact: a, msg: a.delivery.stage === 'carrying' ? 'Picked up on the spot. Get it to the drop-off.' : `Head to ${job.from.name} to pick it up.` };
+  }
+  function pickUp(a, at, why) { a.delivery.stage = 'carrying'; a.delivery.pickedAt = at; a.location = { district: a.delivery.to.district, label: a.delivery.to.districtName }; a.events.unshift({ at, text: `Picked up at ${a.delivery.from.name}.${why ? ' ' + why : ''}` }); }
+  /* Arrivals come from Explore (presence.arrivals); the current spot counts too. */
+  function settleDelivery(s, M, a, aMs, out) {
+    const D = M.deliveries, d = a.delivery, wk = WK(), pr = (s.world && s.world.presence) || {};
+    const arrivals = [...(pr.arrivals || [])].filter(x => x.at >= d.taken).sort((x, y) => x.at - y.at);
+    const now = here(s, aMs); if (now && now.place) arrivals.push({ at: aMs, district: now.district, place: now.place });
+    for (const v of arrivals) {
+      if (d.stage === 'pickup' && v.place === d.from.place) pickUp(a, v.at);
+      else if (d.stage === 'carrying' && v.place === d.to.place && v.at >= (d.pickedAt || 0)) {
+        const late = v.at > d.due, tooLate = v.at > d.due + D.lateGraceHours * H || (late && d.cargo.noLate);
+        const pay = tooLate ? 0 : Math.round(d.pay * (late ? D.latePay : 1));
+        if (pay) setCredits(s, credits(s) + pay);
+        a.status = pay ? 'completed' : 'failed'; d.stage = 'delivered'; d.deliveredAt = v.at;
+        a.events.unshift({ at: v.at, text: `Delivered to ${d.to.name}${late ? ' late' : ' on time'}. ${pay ? `Paid ${pay} cr.` : 'They won\'t pay for it now.'}` });
+        if (wk) wk.inform(s, v.at, d.from.name, pay ? `Delivery paid: ${pay} cr` : 'Delivery refused', pay ? `${d.cargo.name} reached ${d.to.name}${late ? ' late. Half pay.' : ' on time.'}` : `${d.cargo.name} reached ${d.to.name} too late to matter.`);
+        out.push(a); return;
+      }
+    }
+    const limit = d.cargo.noLate ? d.due : d.due + D.lateGraceHours * H;
+    if (aMs > limit) {
+      a.status = 'failed'; const sealed = d.cargo.legality === 'restricted' && d.stage === 'carrying';
+      if (sealed) addHeat(s, D.failHeat);
+      a.events.unshift({ at: limit, text: `Never delivered.${sealed ? ` Sealed cargo went missing with your name on it: Heat +${D.failHeat}.` : ''}` });
+      if (wk) wk.inform(s, limit, d.from.name, 'Delivery failed', `${d.cargo.name} for ${d.to.name} never arrived.${sealed ? ` Whoever sealed it wants to know where it went. Heat +${D.failHeat}.` : ''}`);
+      out.push(a);
+    }
+  }
+
+  const api = { ensure, board, take, here, recipe, recipesFor, downtimeLeft, preview, make, settle, use, maintain, salePrice, sell, complete, retire, rule, apaFiling, spendApaFiling, watcher, discoveryChance };
   root.GRAKK_MAKE = api;
 })(typeof window !== 'undefined' ? window : globalThis);

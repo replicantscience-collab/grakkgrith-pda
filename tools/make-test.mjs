@@ -78,5 +78,35 @@ ok('a listing records its price bonus', L.bonus > 0);
 s = char('Warden'); r = MK.make(s, M, 'apa-filing', { target: 'Crew' }, T0, six);
 ok('a Warden filing adds +2 to an APA appeal once', MK.spendApaFiling(s, T0, 'Test') === 2 && MK.spendApaFiling(s, T0, 'Test') === 0);
 
+// Runner deliveries: take a job, walk it in Explore, get paid on arrival
+const PL = json('places.json'), H = 3600000;
+const job = (s, pred) => MK.board(s, M, PL, T0).find(pred || (() => true));
+s = char('Runner'); s.world = { presence: { location: { district: 'low-halo', place: 'low-halo--static-square' }, transit: null, arrivals: [] } };
+const b1 = MK.board(s, M, PL, T0), b2 = MK.board(s, M, PL, T0 + 60000);
+ok('the board is the same until it refreshes', JSON.stringify(b1) === JSON.stringify(b2) && b1.length === M.deliveries.boardSize);
+ok('pickup and drop-off are different places', b1.every(j => j.from.place !== j.to.place));
+ok('only Runners take delivery runs', MK.take(char('Ghost'), M, PL, b1[0].id, T0).ok === false);
+let j = b1.find(x => !x.cargo.noLate) || b1[0]; r = MK.take(s, M, PL, j.id, T0); let d = r.artifact.delivery;
+ok('taking a job is a Side Job: 1 downtime action', r.ok && s.downtime.actionsRemaining === 1);
+ok('a taken job leaves the board', MK.board(s, M, PL, T0).find(x => x.id === j.id).taken === true);
+const arrive = (place, at) => { const p = PL.places.find(x => x.id === place); s.world.presence.arrivals.unshift({ at, district: p.district, place }); s.world.presence.location = { district: p.district, place }; };
+arrive(j.to.place, T0 + H); MK.settle(s, M, W, T0 + H, never);
+ok('arriving at the drop-off without the parcel does nothing', d.stage === 'pickup' && r.artifact.status === 'active');
+arrive(j.from.place, T0 + 2 * H); arrive(j.to.place, T0 + 2.5 * H); MK.settle(s, M, W, T0 + 2.6 * H, never);
+if (!j.cargo.noLate && j.hours >= 3) ok('on-time delivery pays in full', r.artifact.status === 'completed' && s.coins.credits === String(200 + j.pay), `${r.artifact.status} ${s.coins.credits}`);
+ok('payment arrives as Mail', s.week.mail.some(m => /Delivery paid/.test(m.title)));
+// Late, very late, sealed
+const runner = () => { const t = char('Runner'); t.world = { presence: { location: { district: 'low-halo', place: 'low-halo--static-square' }, transit: null, arrivals: [] } }; return t; };
+const forced = (t, cargoId) => { const jb = MK.board(t, M, PL, T0)[0]; const a2 = MK.take(t, M, PL, jb.id, T0).artifact; a2.delivery.cargo = M.deliveries.cargo.find(c => c.id === cargoId); return a2; };
+const arriveT = (t, place, at) => { const p = PL.places.find(x => x.id === place); t.world.presence.arrivals.unshift({ at, district: p.district, place }); t.world.presence.location = { district: p.district, place }; };
+s = runner(); let A = forced(s, 'parcel'); arriveT(s, A.delivery.from.place, T0 + H); arriveT(s, A.delivery.to.place, A.delivery.due + H); MK.settle(s, M, W, A.delivery.due + 2 * H, never);
+ok('late delivery pays half', A.status === 'completed' && s.coins.credits === String(200 + Math.round(A.delivery.pay * 0.5)), s.coins.credits);
+s = runner(); A = forced(s, 'time-critical'); arriveT(s, A.delivery.from.place, T0 + H); arriveT(s, A.delivery.to.place, A.delivery.due + 60000); MK.settle(s, M, W, A.delivery.due + H, never);
+ok('time-critical and late pays nothing', A.status === 'failed' && s.coins.credits === '200');
+s = runner(); A = forced(s, 'sealed'); arriveT(s, A.delivery.from.place, T0 + H); MK.settle(s, M, W, A.delivery.due + 13 * H, never);
+ok('sealed cargo never delivered: Heat +1', A.status === 'failed' && s.stats.heat === '1');
+s = runner(); A = forced(s, 'sealed'); MK.settle(s, M, W, A.delivery.due + 13 * H, never);
+ok('never picked up: no Heat for cargo you never held', A.status === 'failed' && s.stats.heat === '0');
+
 console.log(fails ? `${passes} passed, ${fails} failed.` : `${passes} make checks passed.`);
 process.exit(fails ? 1 : 0);

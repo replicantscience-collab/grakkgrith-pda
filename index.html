@@ -176,7 +176,7 @@ function enhanceCityAtlas(){
 }
 function toast(t){notice.textContent=t;notice.style.display='block';clearTimeout(toast.t);toast.t=setTimeout(()=>notice.style.display='none',3200)}
 function clearAllData(){pendingState=null;acceptPlayerState=false;playerReady=false;const keys=[TOOL_KEY,...OLD_TOOL_KEYS,'adyta_offline_inventory_v44_shared','adyta_offline_inventory_v43_shared','adyta_offline_inventory_v42_shared','grakkgrith_character_creator_v2','grakkgrith_character_creator_v1'];for(const k of keys){try{localStorage.removeItem(k)}catch(e){}}}
-window.addEventListener('message',e=>{const m=e.data||{};if(m.type==='grakkgrith-week-changed'){tickWeek();return}
+window.addEventListener('message',e=>{const m=e.data||{};if(m.type==='grakkgrith-week-changed'){tickWeek();return}if(m.type==='grakkgrith-open-explore'){showExplore(m.place);return}
  if(m.type==='grakkgrith-character-complete'){setState(m.state);showCharacterHub();toast('Character created. Hub is ready.')}
  else if(m.type==='grakkgrith-player-ready'){playerReady=true;const s=getState()||pendingState;/* saved copy first: Explore may have changed it since pendingState was set */if(s)frame.contentWindow.postMessage({type:'grakkgrith-load-state',state:s},'*');acceptPlayerState=true;statusEl.textContent='';updateCharacterBadge()}
  else if(m.type==='grakkgrith-player-state'){if(playerReady&&acceptPlayerState)setState(m.state)}
@@ -189,7 +189,7 @@ window.addEventListener('message',e=>{const m=e.data||{};if(m.type==='grakkgrith
 });
 document.getElementById('worldBtn').onclick=()=>showWorld();
 // Explore is a real page (not a generated document), so it loads straight from apps/.
-function showExplore(){if(currentUrl){URL.revokeObjectURL(currentUrl);currentUrl=''}mode='explore';frame.src='./apps/explore.html';setActiveShell('explore');statusEl.textContent=''}
+function showExplore(go){if(currentUrl){URL.revokeObjectURL(currentUrl);currentUrl=''}mode='explore';frame.src='./apps/explore.html'+(go?'?go='+encodeURIComponent(go):'');setActiveShell('explore');statusEl.textContent=''}
 document.getElementById('exploreBtn').onclick=()=>showExplore();
 // Mail & Bills (apps/week.html): rent on the Adyta clock and Heat mail. The shell keeps the clock running
 // in the background (not while the sheet or Setup is open, so it never saves over their unsaved edits).

@@ -7,17 +7,40 @@
     "item": "A thing you carry, use, give, or sell.",
     "service": "Work done for a specific person.",
     "contract": "An offer other players or NPCs can take up.",
-    "filing": "Paperwork the city has to answer. Official changes wait for a ruling."
+    "filing": "Paperwork the city has to answer. Official changes wait for a ruling.",
+    "job": "Work you take on and carry out in the world, on the Adyta clock."
   },
   "visibility": {
-    "public": { "name": "Public", "text": "Anyone passing can see it. Best reach; easiest to find.", "discovery": 0.5 },
-    "discreet": { "name": "Discreet", "text": "Tucked away. Locals who look will find it.", "discovery": 0.2 },
-    "hidden": { "name": "Hidden", "text": "Only those who know where to look.", "discovery": 0.08 }
+    "public": {
+      "name": "Public",
+      "text": "Anyone passing can see it. Best reach; easiest to find.",
+      "discovery": 0.5
+    },
+    "discreet": {
+      "name": "Discreet",
+      "text": "Tucked away. Locals who look will find it.",
+      "discovery": 0.2
+    },
+    "hidden": {
+      "name": "Hidden",
+      "text": "Only those who know where to look.",
+      "discovery": 0.08
+    }
   },
   "permission": {
-    "own": { "name": "My own place", "authorized": true },
-    "granted": { "name": "The owner said yes", "authorized": true },
-    "none": { "name": "Nobody asked", "authorized": false, "text": "Unauthorized. Each week there is a chance whoever watches the place finds it: Heat +1, a notice, and it is removed." }
+    "own": {
+      "name": "My own place",
+      "authorized": true
+    },
+    "granted": {
+      "name": "The owner said yes",
+      "authorized": true
+    },
+    "none": {
+      "name": "Nobody asked",
+      "authorized": false,
+      "text": "Unauthorized. Each week there is a chance whoever watches the place finds it: Heat +1, a notice, and it is removed."
+    }
   },
   "watchers": {
     "_default": "The property owner",
@@ -27,46 +50,440 @@
     "central-core": "Crownline Infrastructure",
     "noble-heights": "Bastion Dynamics",
     "grand-academy": "Grand Academy security",
-    "watchedBonus": ["new-halo", "crownline-industrials", "governance-district", "central-core", "noble-heights"],
+    "watchedBonus": [
+      "new-halo",
+      "crownline-industrials",
+      "governance-district",
+      "central-core",
+      "noble-heights"
+    ],
     "watchedBonusChance": 0.2
   },
   "market": {
-    "street": { "name": "Sell on the street", "share": 1.0, "text": "Full price. Selling restricted work in the open is a witnessed sale: Heat +1." },
-    "fence": { "name": "Through a fence", "share": 0.6, "text": "60% of the price. No questions, no Heat." },
+    "street": {
+      "name": "Sell on the street",
+      "share": 1.0,
+      "text": "Full price. Selling restricted work in the open is a witnessed sale: Heat +1."
+    },
+    "fence": {
+      "name": "Through a fence",
+      "share": 0.6,
+      "text": "60% of the price. No questions, no Heat."
+    },
     "brokerBonusPerSuccess": 0.15
   },
   "recipes": [
-    { "id": "doorway-ward", "class": "Shade", "kind": "placed", "name": "Doorway Ward", "summary": "A protective sigil set into a door or lintel, like the ward marks all through Ember Court.", "working": "seal-threshold", "roll": { "attribute": "spark", "skill": "ward", "difficulty": 2 }, "costs": { "credits": 10, "stress": 1 }, "lifeDays": 7, "maintain": true, "placement": true, "legality": "lawful", "value": 0,
-      "effect": "Anything hostile crossing this threshold spends an extra Action to do it, and you know it happened.", "notes": "Ward Keeper: keeps working between sessions without recasting; Maintain extends it a week at no Stress.", "adjudication": "auto" },
-    { "id": "alarm-sigils", "class": "Shade", "kind": "item", "name": "Alarm Sigils (3)", "summary": "Three sigil stickers. Stick one on a door or window and you know when it's crossed for the scene.", "working": "alarm", "roll": { "attribute": "spark", "skill": "ward", "difficulty": 1 }, "costs": { "credits": 15, "stress": 1 }, "uses": 3, "lifeDays": 14, "legality": "lawful", "value": 25,
-      "effect": "One use: for a scene, you know when the marked door or window is crossed.", "sizzle": "Stuck on chrome or live tech it can SIZZLE: 1-in-6 something malfunctions.", "adjudication": "auto" },
-    { "id": "medkit", "class": "Wrench", "kind": "item", "name": "Medkit, basic", "summary": "The book's basic medkit, built from parts instead of bought.", "roll": { "attribute": "wit", "skill": "medic", "difficulty": 1 }, "costs": { "credits": 20 }, "uses": 1, "lifeDays": null, "legality": "lawful", "value": 60,
-      "effect": "Move the Wound Track up one step. One Action.", "adjudication": "auto" },
-    { "id": "gear-mod", "class": "Wrench", "kind": "item", "name": "Gear Mod", "summary": "Rework a weapon or armor piece to Specialized quality.", "roll": { "attribute": "wit", "skill": "repair", "difficulty": 2 }, "costs": { "credits": 60 }, "options": ["+1 absorption in one category", "AP 1", "Reliable", "Concealable", "Remove a penalty tag"], "lifeDays": null, "legality": "lawful", "value": 120,
-      "effect": "The piece gains one Tier 4 improvement (from the book's quality list).", "adjudication": "auto" },
-    { "id": "repair-order", "class": "Wrench", "kind": "service", "name": "Repair Order", "summary": "Fix someone's degraded armor or broken gear.", "roll": { "attribute": "wit", "skill": "repair", "difficulty": 1 }, "costs": { "credits": 10 }, "target": true, "lifeDays": 7, "legality": "lawful", "value": 40,
-      "effect": "Restore one degraded armor piece or broken item for the named character.", "adjudication": "auto" },
-    { "id": "sticker-run", "class": "Signal", "kind": "placed", "name": "Signal Sticker Run", "summary": "A run of stickers across a district: a message, a symbol, a QR-ish thing that goes somewhere.", "roll": { "attribute": "savvy", "skill": "perform", "difficulty": 1 }, "costs": { "credits": 20 }, "lifeDays": 7, "placement": true, "defaultVisibility": "public", "legality": "lawful", "value": 0,
-      "effect": "While it's up: +1 die on Network and Streetwise in that district, and locals have heard your message.", "adjudication": "auto" },
-    { "id": "broadcast-spot", "class": "Signal", "kind": "service", "name": "Broadcast Spot", "summary": "A short pirate broadcast slot you can run for yourself or sell to someone.", "roll": { "attribute": "spark", "skill": "perform", "difficulty": 2 }, "costs": { "credits": 30 }, "target": true, "lifeDays": 2, "legality": "restricted", "value": 100,
-      "effect": "One message reaches a district's listeners. Unlicensed: Velvet Signal and Crownline both listen for these.", "adjudication": "auto" },
-    { "id": "route-sheet", "class": "Runner", "kind": "item", "name": "Route Sheet", "summary": "A hand-drawn sheet of public routes through a district.", "roll": { "attribute": "wit", "skill": "navigate", "difficulty": 1 }, "costs": { "credits": 5 }, "placement": true, "placementLabel": "Which district", "lifeDays": 30, "legality": "lawful", "value": 30,
-      "effect": "+1 die on Navigate in that district for whoever carries it.", "notes": "Public routes only. Threkktun never goes on a sheet.", "adjudication": "auto" },
-    { "id": "delivery-slot", "class": "Runner", "kind": "contract", "name": "Delivery Slot", "summary": "Post an open courier slot. Someone books it, you run it, you get paid.", "roll": null, "costs": {}, "placement": true, "placementLabel": "Where you pick up", "lifeDays": 3, "legality": "lawful", "value": 0, "pay": [40, 120],
-      "effect": "When it's booked and run, you're paid. Running it is a Side Job and may cost Heat depending on what's in the bag.", "adjudication": "auto" },
-    { "id": "cover-papers", "class": "Ghost", "kind": "item", "name": "Cover Papers", "summary": "A cover identity good enough for a casual check.", "roll": { "attribute": "savvy", "skill": "deceive", "difficulty": 2 }, "costs": { "credits": 40 }, "uses": 1, "lifeDays": 30, "legality": "restricted", "value": 150,
-      "effect": "Passes a casual check once. It fails an ACR lookup, and a failed lookup is Heat +1.", "adjudication": "auto" },
-    { "id": "registry-change", "class": "Ghost", "kind": "filing", "name": "Registry Change", "summary": "Propose a change to someone's official record.", "roll": null, "costs": { "credits": 80 }, "target": true, "lifeDays": null, "legality": "restricted", "value": 0,
-      "effect": "If the ruling goes your way, the Civil Registry now says what you made it say.", "adjudication": "ruling", "rulingNote": "The city decides whether an official record changes. You propose; the session runner (or the GM) rules." },
-    { "id": "market-listing", "class": "Broker", "kind": "contract", "name": "Market Listing", "summary": "Put something on the market for someone (yourself included) and take a cut.", "roll": { "attribute": "savvy", "skill": "negotiate", "difficulty": 1 }, "costs": {}, "target": true, "lifeDays": 7, "legality": "lawful", "value": 0, "commission": 0.1,
-      "effect": "Each success adds 15% to the sale price. You take 10% of whatever it sells for.", "adjudication": "auto" },
-    { "id": "introduction", "class": "Broker", "kind": "service", "name": "Introduction", "summary": "Put two parties in a room who would never have found each other.", "roll": { "attribute": "savvy", "skill": "network", "difficulty": 2 }, "costs": { "credits": 20 }, "target": true, "lifeDays": 14, "legality": "lawful", "value": 80,
-      "effect": "The named character's next Work a Contact with that faction gets +2 dice.", "adjudication": "auto" },
-    { "id": "apa-filing", "class": "Warden", "kind": "filing", "name": "APA Filing", "summary": "Paperwork prepared in advance, ready to throw at a notice.", "roll": { "attribute": "wit", "skill": "persuade", "difficulty": 1 }, "costs": { "credits": 10 }, "uses": 1, "target": true, "lifeDays": 14, "legality": "lawful", "value": 60,
-      "effect": "Attach to any appealable notice (yours or a crewmate's): that APA appeal rolls +2 dice.", "adjudication": "auto" },
-    { "id": "formal-complaint", "class": "Warden", "kind": "filing", "name": "Formal Complaint", "summary": "A complaint against an institution, through proper channels, with your name on it.", "roll": null, "costs": { "credits": 20 }, "target": true, "lifeDays": null, "legality": "lawful", "value": 0,
-      "effect": "If it lands, an institution has to answer for something on the record.", "adjudication": "ruling", "rulingNote": "Whether an institution answers is a ruling. You file; the session runner (or the GM) decides what comes back." },
-    { "id": "protection-contract", "class": "Striker", "kind": "contract", "name": "Protection Contract", "summary": "Cover a person or a place for a week.", "roll": { "attribute": "muscle", "skill": "intimidate", "difficulty": 1 }, "costs": {}, "target": true, "placement": true, "placementLabel": "Where (if a place)", "lifeDays": 7, "legality": "lawful", "value": 0, "pay": [60, 150],
-      "effect": "The first threat against them this week meets you first. Lawful work: Heat only comes from what happens if it turns violent.", "adjudication": "auto" }
-  ]
+    {
+      "id": "doorway-ward",
+      "class": "Shade",
+      "kind": "placed",
+      "name": "Doorway Ward",
+      "summary": "A protective sigil set into a door or lintel, like the ward marks all through Ember Court.",
+      "working": "seal-threshold",
+      "roll": {
+        "attribute": "spark",
+        "skill": "ward",
+        "difficulty": 2
+      },
+      "costs": {
+        "credits": 10,
+        "stress": 1
+      },
+      "lifeDays": 7,
+      "maintain": true,
+      "placement": true,
+      "legality": "lawful",
+      "value": 0,
+      "effect": "Anything hostile crossing this threshold spends an extra Action to do it, and you know it happened.",
+      "notes": "Ward Keeper: keeps working between sessions without recasting; Maintain extends it a week at no Stress.",
+      "adjudication": "auto"
+    },
+    {
+      "id": "alarm-sigils",
+      "class": "Shade",
+      "kind": "item",
+      "name": "Alarm Sigils (3)",
+      "summary": "Three sigil stickers. Stick one on a door or window and you know when it's crossed for the scene.",
+      "working": "alarm",
+      "roll": {
+        "attribute": "spark",
+        "skill": "ward",
+        "difficulty": 1
+      },
+      "costs": {
+        "credits": 15,
+        "stress": 1
+      },
+      "uses": 3,
+      "lifeDays": 14,
+      "legality": "lawful",
+      "value": 25,
+      "effect": "One use: for a scene, you know when the marked door or window is crossed.",
+      "sizzle": "Stuck on chrome or live tech it can SIZZLE: 1-in-6 something malfunctions.",
+      "adjudication": "auto"
+    },
+    {
+      "id": "medkit",
+      "class": "Wrench",
+      "kind": "item",
+      "name": "Medkit, basic",
+      "summary": "The book's basic medkit, built from parts instead of bought.",
+      "roll": {
+        "attribute": "wit",
+        "skill": "medic",
+        "difficulty": 1
+      },
+      "costs": {
+        "credits": 20
+      },
+      "uses": 1,
+      "lifeDays": null,
+      "legality": "lawful",
+      "value": 60,
+      "effect": "Move the Wound Track up one step. One Action.",
+      "adjudication": "auto"
+    },
+    {
+      "id": "gear-mod",
+      "class": "Wrench",
+      "kind": "item",
+      "name": "Gear Mod",
+      "summary": "Rework a weapon or armor piece to Specialized quality.",
+      "roll": {
+        "attribute": "wit",
+        "skill": "repair",
+        "difficulty": 2
+      },
+      "costs": {
+        "credits": 60
+      },
+      "options": [
+        "+1 absorption in one category",
+        "AP 1",
+        "Reliable",
+        "Concealable",
+        "Remove a penalty tag"
+      ],
+      "lifeDays": null,
+      "legality": "lawful",
+      "value": 120,
+      "effect": "The piece gains one Tier 4 improvement (from the book's quality list).",
+      "adjudication": "auto"
+    },
+    {
+      "id": "repair-order",
+      "class": "Wrench",
+      "kind": "service",
+      "name": "Repair Order",
+      "summary": "Fix someone's degraded armor or broken gear.",
+      "roll": {
+        "attribute": "wit",
+        "skill": "repair",
+        "difficulty": 1
+      },
+      "costs": {
+        "credits": 10
+      },
+      "target": true,
+      "lifeDays": 7,
+      "legality": "lawful",
+      "value": 40,
+      "effect": "Restore one degraded armor piece or broken item for the named character.",
+      "adjudication": "auto"
+    },
+    {
+      "id": "sticker-run",
+      "class": "Signal",
+      "kind": "placed",
+      "name": "Signal Sticker Run",
+      "summary": "A run of stickers across a district: a message, a symbol, a QR-ish thing that goes somewhere.",
+      "roll": {
+        "attribute": "savvy",
+        "skill": "perform",
+        "difficulty": 1
+      },
+      "costs": {
+        "credits": 20
+      },
+      "lifeDays": 7,
+      "placement": true,
+      "defaultVisibility": "public",
+      "legality": "lawful",
+      "value": 0,
+      "effect": "While it's up: +1 die on Network and Streetwise in that district, and locals have heard your message.",
+      "adjudication": "auto"
+    },
+    {
+      "id": "broadcast-spot",
+      "class": "Signal",
+      "kind": "service",
+      "name": "Broadcast Spot",
+      "summary": "A short pirate broadcast slot you can run for yourself or sell to someone.",
+      "roll": {
+        "attribute": "spark",
+        "skill": "perform",
+        "difficulty": 2
+      },
+      "costs": {
+        "credits": 30
+      },
+      "target": true,
+      "lifeDays": 2,
+      "legality": "restricted",
+      "value": 100,
+      "effect": "One message reaches a district's listeners. Unlicensed: Velvet Signal and Crownline both listen for these.",
+      "adjudication": "auto"
+    },
+    {
+      "id": "route-sheet",
+      "class": "Runner",
+      "kind": "item",
+      "name": "Route Sheet",
+      "summary": "A hand-drawn sheet of public routes through a district.",
+      "roll": {
+        "attribute": "wit",
+        "skill": "navigate",
+        "difficulty": 1
+      },
+      "costs": {
+        "credits": 5
+      },
+      "placement": true,
+      "placementLabel": "Which district",
+      "lifeDays": 30,
+      "legality": "lawful",
+      "value": 30,
+      "effect": "+1 die on Navigate in that district for whoever carries it.",
+      "notes": "Public routes only. Threkktun never goes on a sheet.",
+      "adjudication": "auto"
+    },
+    {
+      "id": "delivery-run",
+      "class": "Runner",
+      "kind": "job",
+      "name": "Delivery Run",
+      "summary": "Take a job off the board: pick it up, carry it across the city in Explore, drop it off before the deadline.",
+      "roll": null,
+      "costs": {},
+      "lifeDays": null,
+      "legality": "lawful",
+      "value": 0,
+      "effect": "Paid on arrival at the drop-off. Late pays half; very late (or a time-critical job that's late at all) pays nothing. Losing sealed cargo is Heat +1.",
+      "adjudication": "auto",
+      "board": true
+    },
+    {
+      "id": "delivery-slot",
+      "class": "Runner",
+      "kind": "contract",
+      "name": "Delivery Slot",
+      "summary": "Post your own open courier slot for crewmates or regulars to book. (Jobs off the city's board are Delivery Runs.)",
+      "roll": null,
+      "costs": {},
+      "placement": true,
+      "placementLabel": "Where you pick up",
+      "lifeDays": 3,
+      "legality": "lawful",
+      "value": 0,
+      "pay": [
+        40,
+        120
+      ],
+      "effect": "When it's booked and run, you're paid. Running it is a Side Job and may cost Heat depending on what's in the bag.",
+      "adjudication": "auto"
+    },
+    {
+      "id": "cover-papers",
+      "class": "Ghost",
+      "kind": "item",
+      "name": "Cover Papers",
+      "summary": "A cover identity good enough for a casual check.",
+      "roll": {
+        "attribute": "savvy",
+        "skill": "deceive",
+        "difficulty": 2
+      },
+      "costs": {
+        "credits": 40
+      },
+      "uses": 1,
+      "lifeDays": 30,
+      "legality": "restricted",
+      "value": 150,
+      "effect": "Passes a casual check once. It fails an ACR lookup, and a failed lookup is Heat +1.",
+      "adjudication": "auto"
+    },
+    {
+      "id": "registry-change",
+      "class": "Ghost",
+      "kind": "filing",
+      "name": "Registry Change",
+      "summary": "Propose a change to someone's official record.",
+      "roll": null,
+      "costs": {
+        "credits": 80
+      },
+      "target": true,
+      "lifeDays": null,
+      "legality": "restricted",
+      "value": 0,
+      "effect": "If the ruling goes your way, the Civil Registry now says what you made it say.",
+      "adjudication": "ruling",
+      "rulingNote": "The city decides whether an official record changes. You propose; the session runner (or the GM) rules."
+    },
+    {
+      "id": "market-listing",
+      "class": "Broker",
+      "kind": "contract",
+      "name": "Market Listing",
+      "summary": "Put something on the market for someone (yourself included) and take a cut.",
+      "roll": {
+        "attribute": "savvy",
+        "skill": "negotiate",
+        "difficulty": 1
+      },
+      "costs": {},
+      "target": true,
+      "lifeDays": 7,
+      "legality": "lawful",
+      "value": 0,
+      "commission": 0.1,
+      "effect": "Each success adds 15% to the sale price. You take 10% of whatever it sells for.",
+      "adjudication": "auto"
+    },
+    {
+      "id": "introduction",
+      "class": "Broker",
+      "kind": "service",
+      "name": "Introduction",
+      "summary": "Put two parties in a room who would never have found each other.",
+      "roll": {
+        "attribute": "savvy",
+        "skill": "network",
+        "difficulty": 2
+      },
+      "costs": {
+        "credits": 20
+      },
+      "target": true,
+      "lifeDays": 14,
+      "legality": "lawful",
+      "value": 80,
+      "effect": "The named character's next Work a Contact with that faction gets +2 dice.",
+      "adjudication": "auto"
+    },
+    {
+      "id": "apa-filing",
+      "class": "Warden",
+      "kind": "filing",
+      "name": "APA Filing",
+      "summary": "Paperwork prepared in advance, ready to throw at a notice.",
+      "roll": {
+        "attribute": "wit",
+        "skill": "persuade",
+        "difficulty": 1
+      },
+      "costs": {
+        "credits": 10
+      },
+      "uses": 1,
+      "target": true,
+      "lifeDays": 14,
+      "legality": "lawful",
+      "value": 60,
+      "effect": "Attach to any appealable notice (yours or a crewmate's): that APA appeal rolls +2 dice.",
+      "adjudication": "auto"
+    },
+    {
+      "id": "formal-complaint",
+      "class": "Warden",
+      "kind": "filing",
+      "name": "Formal Complaint",
+      "summary": "A complaint against an institution, through proper channels, with your name on it.",
+      "roll": null,
+      "costs": {
+        "credits": 20
+      },
+      "target": true,
+      "lifeDays": null,
+      "legality": "lawful",
+      "value": 0,
+      "effect": "If it lands, an institution has to answer for something on the record.",
+      "adjudication": "ruling",
+      "rulingNote": "Whether an institution answers is a ruling. You file; the session runner (or the GM) decides what comes back."
+    },
+    {
+      "id": "protection-contract",
+      "class": "Striker",
+      "kind": "contract",
+      "name": "Protection Contract",
+      "summary": "Cover a person or a place for a week.",
+      "roll": {
+        "attribute": "muscle",
+        "skill": "intimidate",
+        "difficulty": 1
+      },
+      "costs": {},
+      "target": true,
+      "placement": true,
+      "placementLabel": "Where (if a place)",
+      "lifeDays": 7,
+      "legality": "lawful",
+      "value": 0,
+      "pay": [
+        60,
+        150
+      ],
+      "effect": "The first threat against them this week meets you first. Lawful work: Heat only comes from what happens if it turns violent.",
+      "adjudication": "auto"
+    }
+  ],
+  "deliveries": {
+    "status": "draft",
+    "_about": "Runner deliveries are real runs: take a job off the board, walk or tram it in Explore, and get paid when you arrive. A delivery is a Side Job (rulebook downtime action). Pay sits under the book's Minor job band because it's an errand, not a job.",
+    "boardSize": 3,
+    "refreshHours": 6,
+    "deadlineHours": [
+      3,
+      8
+    ],
+    "lateGraceHours": 12,
+    "latePay": 0.5,
+    "pay": {
+      "sameDistrict": [
+        30,
+        50
+      ],
+      "crossDistrict": [
+        60,
+        110
+      ],
+      "underground": 20
+    },
+    "cargo": [
+      {
+        "id": "parcel",
+        "name": "Parcel",
+        "text": "Exactly what the label says.",
+        "payMult": 1,
+        "legality": "lawful"
+      },
+      {
+        "id": "time-critical",
+        "name": "Time-critical",
+        "text": "Meds, a part, a key. Late is as good as never.",
+        "payMult": 1.3,
+        "legality": "lawful",
+        "noLate": true
+      },
+      {
+        "id": "sealed",
+        "name": "Sealed, no questions",
+        "text": "Don't open it. Don't get stopped with it.",
+        "payMult": 1.6,
+        "legality": "restricted"
+      }
+    ],
+    "failHeat": 1
+  }
 }

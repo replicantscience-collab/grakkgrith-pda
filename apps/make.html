@@ -79,6 +79,7 @@ function makerHtml(s) {
   if (!mine.some(r => r.id === form.recipe)) form.recipe = mine[0].id;
   const r = MK.recipe(M, form.recipe);
   let h = `<div class="recipes" role="group" aria-label="What to make">${mine.map(x => `<button class="recipe" data-recipe="${x.id}" aria-pressed="${x.id === form.recipe}"><b>${esc(x.name)}</b><span>${esc(x.summary)}</span><span class="kind">${esc(x.kind)}${x.adjudication === 'ruling' ? ' · needs a ruling' : ''}</span></button>`).join('')}</div>`;
+  if (r.board) return h + boardHtml(s) + othersHtml(cls);
   h += `<div class="form"><div class="full"><label for="fName">Call it</label><input type="text" id="fName" maxlength="60" placeholder="${esc(r.name)}" value="${esc(form.name)}"></div>`;
   if (r.target) h += `<div class="full"><label for="fTarget">For whom</label><input type="text" id="fTarget" maxlength="60" placeholder="A character, a crew, a client" value="${esc(form.target)}"></div>`;
   if (r.options) h += `<div class="full"><label for="fOption">Improvement</label><select id="fOption"><option value="">Choose…</option>${r.options.map(o => `<option ${o === form.option ? 'selected' : ''}>${esc(o)}</option>`).join('')}</select></div>`;
@@ -103,9 +104,17 @@ function makerHtml(s) {
     ${p.adjudication === 'ruling' ? `<p><b style="color:#3a1730">Ruling:</b> ${esc(p.rulingNote)}</p>` : ''}
     ${p.blockers.length ? `<ul class="blockers">${p.blockers.map(b => `<li>${esc(b)}</li>`).join('')}</ul>` : ''}
     <div class="actions"><button class="primary" id="doMake" ${p.ok ? '' : 'disabled'}>${p.adjudication === 'ruling' ? 'Propose it' : 'Make it'}</button></div></article>`;
-  const others = M.recipes.filter(x => x.class !== cls);
-  h += `<details class="others"><summary>What the other classes make</summary><table>${others.map(x => `<tr><td>${esc(x.class)}</td><td><b>${esc(x.name)}</b>. ${esc(x.summary)}</td></tr>`).join('')}</table></details>`;
-  return h;
+  return h + othersHtml(cls);
+}
+function othersHtml(cls) { const others = M.recipes.filter(x => x.class !== cls); return `<details class="others"><summary>What the other classes make</summary><table>${others.map(x => `<tr><td>${esc(x.class)}</td><td><b>${esc(x.name)}</b>. ${esc(x.summary)}</td></tr>`).join('')}</table></details>`; }
+/* Runner delivery board: real runs on the Explore map. */
+function boardHtml(s) {
+  const t = now(), jobs = MK.board(s, M, PLACES, t), left = MK.downtimeLeft(s), next = (Math.floor(t / (M.deliveries.refreshHours * 3600000)) + 1) * M.deliveries.refreshHours * 3600000;
+  return `<p class="note" style="margin-top:14px">${esc(M.deliveries._about)} New jobs ${esc(WK.untilText(next - t).replace(' left', ''))} from now.</p>` + jobs.map(j => `<article class="letter ${j.cargo.legality === 'restricted' ? 'notice' : 'bill'}"><div class="from">${esc(j.from.name)} · ${esc(j.from.districtName)}</div>
+    <h3>${esc(j.cargo.name)} to ${esc(j.to.name)}</h3>${j.cargo.legality === 'restricted' ? '<span class="tag2">restricted</span>' : ''}${j.cargo.noLate ? '<span class="tag2">no late delivery</span>' : ''}
+    <p>${esc(j.cargo.text)}</p><dl class="order" style="display:grid;grid-template-columns:auto 1fr;gap:4px 14px;margin:8px 0"><dt>Pick up</dt><dd>${esc(j.from.name)}, ${esc(j.from.districtName)}</dd><dt>Drop off</dt><dd>${esc(j.to.name)}, ${esc(j.to.districtName)}</dd><dt>Pays</dt><dd><b>${j.pay} cr</b> on arrival</dd><dt>Deadline</dt><dd>${j.hours} Adyta hours once you take it</dd></dl>
+    <div class="actions">${j.taken ? '<span class="stamp read" style="position:static;transform:none">taken</span>' : `<button class="primary" data-take="${j.id}" ${left ? '' : 'disabled'}>Take it</button>`}<button class="ghost" data-go="${j.from.place}">See it on the map</button></div></article>`).join('')
+    + (left ? '' : '<p class="blockers">No downtime actions left this gap. A delivery is a Side Job.</p>');
 }
 
 function workHtml(s) {
@@ -121,10 +130,12 @@ function workHtml(s) {
       if (a.value && a.permissions.transfer) { const st = MK.salePrice(s, M, a, 'street').price, fe = MK.salePrice(s, M, a, 'fence').price; btns += `<button class="primary" data-sell="${a.id}" data-how="street">Sell ${st} cr</button><button class="ghost" data-sell="${a.id}" data-how="fence">Fence ${fe} cr</button>`; }
       if (r.pay) btns += `<input type="number" id="pay-${a.id}" min="${r.pay[0]}" max="${r.pay[1]}" value="${r.pay[0]}" aria-label="What it paid" style="width:110px"><button class="primary" data-complete="${a.id}">Done, got paid</button>`;
     }
-    if (open) btns += `<button class="ghost" data-retire="${a.id}">Retire</button>`;
+    if (a.delivery && a.status === 'active') { const d = a.delivery, tgt = d.stage === 'pickup' ? d.from : d.to; btns = `<button class="primary" data-go="${tgt.place}">${d.stage === 'pickup' ? 'Go to pickup' : 'Go to drop-off'}</button>`; }
+    if (open) btns += `<button class="ghost" data-retire="${a.id}">${a.delivery ? 'Drop the job' : 'Retire'}</button>`;
     return `<article class="letter ${a.status === 'pending' ? 'notice' : 'bill'}">${open ? '' : `<span class="stamp ${a.status === 'sold' || a.status === 'completed' ? 'paid' : a.status === 'removed' || a.status === 'failed' || a.status === 'denied' ? 'unpaid' : 'read'}">${esc(a.status)}</span>`}
       <div class="from">${esc(a.creator.class)} · owned by ${esc(a.owner)}${a.target ? ` · for ${esc(a.target)}` : ''}</div><h3>${esc(a.name)}</h3>${tags}
       ${a.status === 'pending' ? `<p><b>Waiting for a ruling.</b> ${esc(a.ruling.note)}</p>` : `<p>${esc(a.effect)}${a.option ? ` <b>${esc(a.option)}</b>.` : ''}</p>`}
+      ${a.delivery && a.status === 'active' ? `<p><b>${a.delivery.stage === 'pickup' ? `Pick up at ${esc(a.delivery.from.name)} (${esc(a.delivery.from.districtName)})` : `Carrying it to ${esc(a.delivery.to.name)} (${esc(a.delivery.to.districtName)})`}</b> · ${a.delivery.pay} cr</p><span class="due ${a.delivery.due - t < 3600000 ? 'late' : ''}">${esc(WK.untilText(a.delivery.due - t))}</span>` : ''}
       ${a.status === 'active' && a.expires != null ? `<span class="due ${a.expires - t < 86400000 ? 'late' : ''}">${esc(WK.untilText(a.expires - t))}</span>` : ''}
       ${a.roll ? `<div class="roll">${diceHtml(a.roll.dice)} ${a.roll.hits} success${a.roll.hits === 1 ? '' : 'es'}, needed ${a.roll.need}</div>` : ''}
       ${a.ruling && a.ruling.result ? `<p><b>Ruling:</b> ${esc(a.ruling.result)}</p>` : ''}
@@ -152,7 +163,9 @@ function render() {
 
 document.addEventListener('click', e => {
   const b = e.target.closest('button'); if (!b) return; const t = now();
-  if (b.dataset.recipe) { form.recipe = b.dataset.recipe; form.option = ''; form.visibility = ''; render(); }
+  if (b.dataset.take) { const r = act(s => MK.take(s, M, PLACES, b.dataset.take, t)); r && toast(r.msg); }
+  else if (b.dataset.go) { parent.postMessage({ type: 'grakkgrith-open-explore', place: b.dataset.go }, '*'); }
+  else if (b.dataset.recipe) { form.recipe = b.dataset.recipe; form.option = ''; form.visibility = ''; render(); }
   else if (b.id === 'doMake') { const r = act(s => MK.make(s, M, form.recipe, { ...form, districtName: dName(form.district) }, t)); if (r) { toast(r.msg, r.dice); if (r.ok) { form.name = ''; form.target = ''; } } }
   else if (b.dataset.use) { const r = act(s => MK.use(s, b.dataset.use, t)); r && toast(r.msg); }
   else if (b.dataset.lookup) { const r = act(s => MK.use(s, b.dataset.lookup, t, 'lookup')); r && toast(r.msg); }
