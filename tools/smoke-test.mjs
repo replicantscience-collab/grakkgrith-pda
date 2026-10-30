@@ -183,6 +183,11 @@ try {
       const url = await ex.evaluate(() => location.search), note = await ex.evaluate(() => (document.querySelector('#sheetBody .job') || {}).textContent || '');
       return (n === 3 && url.includes(encodeURIComponent(a.delivery.from.place)) && /Pick up here/.test(note)) || `jobs ${n}, url ${url}, note "${note}"`;
     });
+    await step('Pocket Change shows gigs and fits the screen', async () => {
+      await page.evaluate(() => document.getElementById('gigsBtn').click()); await page.waitForTimeout(1500); f = frame(page);
+      const n = await f.$$eval('.gig [data-take]', b => b.length), w = await f.evaluate(() => document.documentElement.scrollWidth - innerWidth);
+      return (n >= 1 && w <= 1) || `${n} gigs to take; ${w}px too wide`;
+    });
     // Mixed Heritage (Ch. 15) and Afflictions (Ch. 20) in Character Setup and on the sheet.
     await step('Mixed Heritage and Affliction rules hold in Character Setup', async () => {
       await page.evaluate(() => document.getElementById('creatorBtn').click()); await page.waitForTimeout(1200); f = frame(page);

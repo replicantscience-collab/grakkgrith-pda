@@ -1,0 +1,122 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Pocket Change</title>
+<link rel="stylesheet" href="../fonts/fonts.css">
+<link rel="stylesheet" href="../art/pda-v1/tokens.css">
+<link rel="stylesheet" href="./screen.css">
+<style>
+/* A corporate app running inside the PDA: Velvet Signal's clean violet gloss, framed by the Sideways kit. */
+.app{max-width:760px;margin:16px auto 0;border:2px solid var(--art-brass-shadow);border-radius:22px;overflow:hidden;background:#f4f0fa;color:#1d1530;box-shadow:0 18px 40px rgba(0,0,0,.55),inset 0 0 0 1px rgba(255,255,255,.4)}
+.appbar{display:flex;align-items:center;gap:12px;padding:16px 18px;background:linear-gradient(135deg,#3b1f6e,#7b3fb8 60%,#c24fa5);color:#fff}
+.logo{display:grid;place-items:center;width:46px;height:46px;flex:none;border-radius:14px;background:#fff;color:#5b2a95;font:800 22px/1 var(--art-ui)}
+.appbar h1{margin:0;color:#fff;font:700 26px/1 var(--art-ui);letter-spacing:.02em;text-shadow:none}
+.appbar p{margin:3px 0 0;font-size:14px;opacity:.9}
+.me{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:1px;background:#ddd3ea;border-bottom:1px solid #ddd3ea}
+.me div{padding:10px 12px;background:#fff}
+.me b{display:block;color:#7a5c9e;font:700 11px/1.2 var(--art-ui);letter-spacing:.1em;text-transform:uppercase}
+.me span{display:block;margin-top:2px;color:#1d1530;font:700 20px/1.2 var(--art-ui)}
+.stars{color:#a35a00;letter-spacing:1px}
+.feed{padding:14px}
+.feed h2{margin:6px 2px 10px;color:#3b1f6e;font:700 16px/1.2 var(--art-ui);letter-spacing:.08em;text-transform:uppercase;text-shadow:none}
+.gig{margin:0 0 12px;padding:14px 16px;border:1px solid #ddd3ea;border-radius:16px;background:#fff;box-shadow:0 2px 8px rgba(59,31,110,.08)}
+.gig h3{margin:0 0 4px;color:#1d1530;font:700 19px/1.2 var(--art-ui);letter-spacing:.01em}
+.gig p{margin:4px 0;color:#4a3d5e;font-size:15px}
+.chips{display:flex;flex-wrap:wrap;gap:6px;margin:8px 0}
+.chip{padding:3px 10px;border-radius:999px;background:#efe8f8;color:#4b2b7a;font:700 12px/1.5 var(--art-ui);letter-spacing:.04em}
+.chip.fit{background:#e4f7dc;color:#2a5a1c}.chip.prem{background:#fff1d6;color:#8a4e00}.chip.risk{background:#fde4e6;color:#9c1f2c}
+.price{display:flex;align-items:baseline;gap:8px;margin-top:6px}
+.price b{color:#1d1530;font:700 24px var(--art-ui)}
+.price small{color:#7a6b8e}
+.gig .actions{margin-top:10px}
+.gig button{border-color:#5b2a95;background:#5b2a95;color:#fff;box-shadow:none;border-radius:999px}
+.gig button.ghost{background:#fff;color:#5b2a95}
+.gig button:disabled{opacity:.4}
+.gig .due{border-color:#5b2a95;color:#5b2a95}
+.gig .due.late{border-color:#b8222e;color:#b8222e}
+.gig.done{opacity:.75}
+.res{font:700 13px var(--art-ui);letter-spacing:.06em;text-transform:uppercase}
+.res.success{color:#2a5a1c}.res.partial{color:#8a4e00}.res.failed,.res.no-show,.res.dropped{color:#9c1f2c}
+.gig .die{border-color:#c9b9de;background:#f4f0fa}.gig .die.hit{background:#5b2a95;border-color:#5b2a95;color:#fff}
+.fine{padding:10px 18px 16px;color:#7a6b8e;font-size:13px}
+.warnbar{margin:0 14px 12px;padding:10px 14px;border-radius:12px;background:#fde4e6;color:#9c1f2c;font-weight:700}
+@media (max-width:520px){.app{border-radius:16px}.me span{font-size:17px}}
+</style>
+</head>
+<body class="pda-art">
+<div class="wrap">
+  <div class="kicker">ADYTA PDA / APPS</div>
+  <p class="muted" id="who" style="margin:6px 0 0">General Side Jobs for anyone. One downtime action each.</p>
+  <div class="app" id="app"></div>
+</div>
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+<script src="./week.js"></script>
+<script src="./make.js"></script>
+<script src="./gigs.js"></script>
+<script>
+'use strict';
+const KEY = 'grakkgrith_character_tool_v8_state';
+const WK = window.GRAKK_WEEK, MK = window.GRAKK_MAKE, GG = window.GRAKK_GIGS, $ = id => document.getElementById(id);
+const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+let G = null, R = null, PL = null, W = null, M = null, CLOCK = null;
+const load = () => { try { return JSON.parse(localStorage.getItem(KEY)); } catch (e) { return null; } };
+const save = s => { try { localStorage.setItem(KEY, JSON.stringify(s)); } catch (e) {} try { parent.postMessage({ type: 'grakkgrith-week-changed' }, '*'); } catch (e) {} };
+const now = () => WK.adytaNow(CLOCK, Date.now());
+const hasChar = s => !!(s && s.character && String(s.character.name || '').trim());
+const diceHtml = d => d.map(x => `<span class="die ${x >= 5 ? 'hit' : ''}">${x}</span>`).join('');
+const cap = t => String(t).replace(/^\w/, c => c.toUpperCase());
+const starsHtml = n => `<span class="stars" aria-label="${n} of 5 stars">${'★'.repeat(Math.round(n))}${'☆'.repeat(5 - Math.round(n))}</span>`;
+function toast(msg, dice) { const t = $('toast'); t.innerHTML = esc(msg) + (dice ? `<div style="margin-top:6px">${diceHtml(dice)}</div>` : ''); t.classList.add('on'); clearTimeout(toast.t); toast.t = setTimeout(() => t.classList.remove('on'), 4600); }
+function settleAll(s) { return WK.settle(s, W, CLOCK, Date.now()).length + MK.settle(s, M, W, now()).length + GG.settle(s, G, now()).length; }
+function act(fn) { const s = load(); if (!hasChar(s)) return; settleAll(s); const r = fn(s); save(s); render(); return r; }
+
+function gigCard(s, j, mine) {
+  const t = now(), where = j.remote ? 'Remote' : `${j.place.name} · ${j.place.districtName}`;
+  const chips = [`<span class="chip">${esc(cap(j.attr))} + ${esc(j.skillName)} · need ${j.difficulty}</span>`, j.fit && `<span class="chip fit">Fits your class +1 die</span>`, j.premium && `<span class="chip prem">Premium</span>`, j.risk && `<span class="chip risk">Risk: ${esc(j.risk.text)}</span>`].filter(Boolean).join('');
+  let actions = '', status = '';
+  if (!mine) actions = j.taken ? '<span class="res">Taken</span>' : `<button data-take="${j.id}" ${GG && MK.downtimeLeft(s) ? '' : 'disabled'}>Take it</button>${j.remote ? '' : `<button class="ghost" data-go="${j.place.place}">Map</button>`}`;
+  else if (j.status === 'active') {
+    const here = GG.there(s, j, t);
+    status = `<span class="due ${j.due - t < 3600000 ? 'late' : ''}">${esc(WK.untilText(j.due - t))}</span>`;
+    actions = `<button data-work="${j.id}" ${here ? '' : 'disabled'}>${here ? 'Do it' : 'Get there first'}</button>${j.remote ? '' : `<button class="ghost" data-go="${j.place.place}">Go there</button>`}<button class="ghost" data-drop="${j.id}">Cancel</button>`;
+  } else status = `<span class="res ${esc(j.result || j.status)}">${esc(j.result === 'success' ? 'Done' : j.result === 'partial' ? 'Half-done' : j.status)}</span> · ${j.paid || 0} cr${j.stars ? ' · ' + starsHtml(j.stars) : ''}`;
+  return `<article class="gig ${mine && j.status !== 'active' ? 'done' : ''}"><h3>${esc(j.title)}</h3><p>${esc(j.blurb)}</p>
+    <div class="chips"><span class="chip">${esc(where)}</span>${chips}</div>
+    <div class="price"><b>${j.net} cr</b><small>${j.gross} posted · ${esc(G.app.owner)} keeps ${j.gross - j.net}</small></div>
+    ${mine ? `<p>${status}</p>` : `<p><small>${j.hours} hours once you take it</small></p>`}
+    ${j.roll ? `<div>${diceHtml(j.roll.dice)}</div>` : ''}<div class="actions">${actions}</div></article>`;
+}
+
+function render() {
+  const s = load();
+  if (!hasChar(s)) { $('who').textContent = 'No character yet. Make one in Character Setup first.'; $('app').innerHTML = ''; return; }
+  const t = now(), b = GG.board(s, G, R, PL, t), g = GG.ensure(s), active = g.jobs.filter(j => j.status === 'active'), past = g.jobs.filter(j => j.status !== 'active').slice(0, 10);
+  $('who').textContent = `${s.character.name} on ${G.app.name}. Each gig is a Side Job: one of your two downtime actions.`;
+  $('app').innerHTML = `<div class="appbar"><div class="logo" aria-hidden="true">¢</div><div><h1>${esc(G.app.name)}</h1><p>${esc(G.app.tagline)} · by ${esc(G.app.owner)}</p></div></div>
+    <div class="me"><div><b>Your rating</b><span>${starsHtml(b.stars)} ${b.stars.toFixed(1)}</span></div><div><b>Downtime left</b><span>${MK.downtimeLeft(s)} / 2</span></div><div><b>New gigs in</b><span>${esc(WK.untilText(b.nextAt - t).replace(' left', ''))}</span></div></div>
+    ${b.low ? `<div class="warnbar" style="margin-top:12px">${esc(G.rating.lowNote)}</div>` : ''}
+    <div class="feed">${active.length ? `<h2>Your gigs</h2>${active.map(j => gigCard(s, j, true)).join('')}` : ''}
+    <h2>Open gigs${b.premium ? ' · premium unlocked' : ''}</h2>${b.gigs.filter(j => !j.taken).map(j => gigCard(s, j, false)).join('') || '<p>You took everything. New gigs soon.</p>'}
+    ${past.length ? `<h2>History</h2>${past.map(j => gigCard(s, j, true)).join('')}` : ''}</div>
+    <div class="fine">${esc(G.app.cutNote)} Draft: the app, its cut and its gigs are proposals, not canon yet.</div>`;
+}
+
+document.addEventListener('click', e => {
+  const b = e.target.closest('button'); if (!b) return; const t = now();
+  if (b.dataset.take) { const r = act(s => GG.take(s, G, R, PL, b.dataset.take, t)); r && toast(r.msg); }
+  else if (b.dataset.work) { const r = act(s => GG.work(s, G, R, b.dataset.work, t)); r && toast(r.msg, r.dice); }
+  else if (b.dataset.drop) { const r = act(s => GG.drop(s, G, b.dataset.drop, t)); r && toast(r.msg); }
+  else if (b.dataset.go) parent.postMessage({ type: 'grakkgrith-open-explore', place: b.dataset.go }, '*');
+});
+
+Promise.all(['gigs', 'rules', 'places', 'week', 'make'].map(n => fetch(`../data/${n}.json`).then(r => r.json()))).then(([g, r, p, w, m]) => {
+  G = g; R = r; PL = p; W = w; M = m; CLOCK = p.clock;
+  const s = load(); if (hasChar(s)) { settleAll(s); save(s); }
+  render(); window.GRAKK_GIGS_READY = true;
+  setInterval(() => { const s = load(); if (hasChar(s) && settleAll(s)) save(s); render(); }, 30000);
+});
+</script>
+</body>
+</html>

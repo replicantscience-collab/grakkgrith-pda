@@ -177,6 +177,17 @@ if (MAKE.recipes.some(r => r.board) && !MAKE.deliveries) bad('make.deliveries', 
 for (const d of Object.keys(MAKE.watchers)) if (!['_default', 'watchedBonus', 'watchedBonusChance'].includes(d) && !PLACES_.districts[d]) bad(`make.watchers.${d}`, 'not a district');
 for (const d of MAKE.watchers.watchedBonus) if (!PLACES_.districts[d]) bad('make.watchers.watchedBonus', `${d} is not a district`);
 
+// --- Pocket Change gigs (data/gigs.json) ---------------------------------------------------
+const GIGS = load('data/gigs.json'), gigIds = new Set();
+for (const g of GIGS.gigs) {
+  if (gigIds.has(g.id)) bad(`gigs.${g.id}`, 'duplicate id'); gigIds.add(g.id);
+  if (!Object.values(rules.skillKeys).includes(g.skill)) bad(`gigs.${g.id}`, `unknown skill ${g.skill}`);
+  if (!['place', 'remote'].includes(g.where)) bad(`gigs.${g.id}`, 'where must be place or remote');
+  if (!(g.pay[0] <= g.pay[1])) bad(`gigs.${g.id}`, 'pay range is backwards');
+  if (g.pay[1] * GIGS.rating.premiumPay > 500) bad(`gigs.${g.id}`, 'tops the book\'s Minor job band (200-500); that is a job, not a gig');
+}
+if (!(GIGS.app.cut > 0 && GIGS.app.cut < 0.5)) bad('gigs.app.cut', 'should be a fraction');
+
 // --- Report -------------------------------------------------------------------
 if (problems.length) {
   console.error(`rules.json vs ${ref.rulebook}: ${problems.length} problem(s)\n` + problems.map(p => '  - ' + p).join('\n'));
@@ -185,4 +196,5 @@ if (problems.length) {
 console.log(`rules.json matches ${ref.rulebook}: ${races.length} races, ${Object.keys(rules.classes).length} classes, ${Object.keys(rules.origins).length} origins, ${Object.keys(rules.lives).length} lives.`);
 console.log(`week.json matches the rulebook's Cost of Living and Heat ladder: ${WEEK.week.housing.length} housing tiers, ${Object.values(WEEK.notices).filter(Array.isArray).flat().length} notices.`);
 console.log(`make.json is consistent: ${MAKE.recipes.length} things to make across ${new Set(MAKE.recipes.map(r => r.class)).size} classes.`);
+console.log(`gigs.json is consistent: ${GIGS.gigs.length} gigs on ${GIGS.app.name}.`);
 console.log(`places.json is consistent: ${Object.keys(W.maps).length} maps, ${Object.keys(W.districts).length} districts, ${W.places.length} places, ${W.routes.length} routes.`);
