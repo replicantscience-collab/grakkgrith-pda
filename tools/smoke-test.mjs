@@ -73,7 +73,12 @@ try {
 
     // Sideways art pass: Start wears the kit; Sideways' commentary and the rulebook stay separate in the guide.
     f = await open('worldBtn', 1200);
-    await step('Start uses the Sideways skin', () => f.evaluate(() => document.body.classList.contains('pda-art') && getComputedStyle(document.querySelector('.title')).fontFamily.includes('Permanent Marker')));
+    await step('Start is the dashboard: Sideways skin, eight cards and the shop banner', () => f.evaluate(() => document.body.classList.contains('pda-art') && getComputedStyle(document.querySelector('.hero h1')).fontFamily.includes('Permanent Marker') && document.querySelectorAll('.grid .card').length === 6 && !!document.querySelector('.shops')));
+    await step('the top bar has eight section tabs, not a wall of them', () => page.evaluate(() => document.querySelectorAll('.sectionNav .secTab').length === 8 && [...document.querySelectorAll('.topbar button')].filter(b => b.offsetParent).length <= 12));
+    await step('a Start card opens its section', async () => { await f.click('.card [data-nav="cityBtn"]'); await page.waitForTimeout(1500); return page.evaluate(() => document.querySelector('.secTab.active').dataset.sec === 'city'); });
+    await step('section tabs show their pages as sub-tabs', async () => { await page.evaluate(() => document.getElementById('sec-missions').click()); await page.waitForTimeout(1200);
+      const subs = await page.$$eval('#subNav .subTab', b => b.map(x => x.textContent)); return (subs.join('|') === 'Contracts|Pocket Change|Radio Sewers') || subs.join('|'); });
+    f = await open('cityBtn', 1500);
     await step('City uses the Sideways skin', async () => { await f.evaluate(() => showPanel('city')); return f.evaluate(() => document.body.classList.contains('pda-art')); });
     await step('Missions and Factions use the Sideways skin', async () => { for (const id of ['missions', 'factions']) { await f.evaluate(id => showPanel(id), id); if (!(await f.evaluate(() => document.body.classList.contains('pda-art')))) return `${id} is unskinned`; } return true; });
     await step('Lore and Logs use the Sideways skin', async () => { for (const id of ['lore', 'downtime']) { await f.evaluate(id => showPanel(id), id); if (!(await f.evaluate(() => document.body.classList.contains('pda-art')))) return `${id} is unskinned`; } return true; });
@@ -120,7 +125,8 @@ try {
     await page.goto(BASE + '/');
     await page.waitForTimeout(1200);
     let f = frame(page);
-    await step('Start offers "Create your character"', async () => /Create your character/.test(await f.evaluate(() => document.querySelector('.hero button.primary').textContent)) && !(await f.evaluate(() => document.querySelector('.ops').innerText)).includes('file found'));
+    await f.waitForFunction(() => window.GRAKK_START_READY);
+    await step('Start offers "Create your character"', async () => /Create your character/.test(await f.evaluate(() => document.querySelector('.hero button.primary').textContent)) && !(await f.evaluate(() => document.querySelector('.note-card').innerText)).includes('Credits'));
     await step('builds a character through every Character Setup step', async () => {
       await f.click('.hero button[data-action="creator"]'); await page.waitForTimeout(1200); f = frame(page);
       for (let guard = 0; guard < 20; guard++) {

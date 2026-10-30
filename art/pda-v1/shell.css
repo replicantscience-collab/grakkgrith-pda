@@ -65,13 +65,40 @@ body.pda-art::before{display:none}
 .pda-art .navPill .mailBadge{display:inline-grid;place-items:center;min-width:20px;height:20px;margin-left:6px;padding:0 5px;border-radius:999px;background:var(--art-magenta);color:#fff;font:700 12px/1 var(--art-ui);vertical-align:middle}
 .pda-art .navPill .mailBadge[hidden]{display:none}
 
-/* Wide screens: fifteen tabs share one row (tighter tabs, no fixed minimum width). */
-@media (min-width:901px){
-  .pda-art .mainNav{flex-wrap:nowrap;gap:5px}
-  .pda-art .navPill{min-width:0;padding:8px 10px;font-size:14px;letter-spacing:.04em}
-}
-@media (min-width:901px) and (max-width:1280px){
+/* Eight section tabs with icons (art/pda-v1/mockups/start-vision.png), a character chip, and sub-tabs per section. */
+.pda-art .topbar{grid-template-columns:auto minmax(0,1fr) auto;grid-template-areas:"brand nav char" "sub sub sub"}
+.pda-art .brand{grid-area:brand}
+.pda-art .sectionNav{grid-area:nav;flex-wrap:nowrap;justify-content:center;gap:6px}
+.pda-art .charGroup{grid-area:char;position:relative}
+.pda-art .subNav{grid-area:sub}
+.pda-art .secTab{position:relative;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;min-width:96px;min-height:58px;padding:7px 10px 6px;font-size:13px;letter-spacing:.06em}
+.pda-art .secTab .ico{width:24px;height:24px;color:var(--art-brass)}
+.pda-art .secTab.active .ico{color:#fff}
+.pda-art .secTab .mailBadge{position:absolute;top:3px;right:5px;margin:0}
+.pda-art .charChip{display:flex;flex-direction:column;align-items:flex-end;justify-content:center;min-height:44px;padding:6px 12px;border:1px solid var(--art-brass-shadow);border-radius:8px;background:rgba(10,11,22,.75);color:var(--art-cream);cursor:pointer;font:700 11px/1.1 var(--art-ui);letter-spacing:.12em;text-transform:uppercase}
+.pda-art .charChip .chipLabel{color:var(--art-cyan)}
+.pda-art .charChip .miniBadge{max-width:140px;margin-top:3px;overflow:hidden;color:#ffc55f;font:400 17px/1.1 var(--art-title);letter-spacing:.01em;text-transform:none;text-overflow:ellipsis;white-space:nowrap}
+.pda-art .charChip::after{content:none}
+.pda-art .charGroup .navMenu{right:0;left:auto}
+.pda-art .subNav{display:flex;flex-wrap:wrap;gap:6px;justify-content:center;padding-top:8px;border-top:1px solid rgba(215,172,97,.18)}
+.pda-art .subNav[hidden]{display:none}
+.pda-art .subTab{min-height:40px;padding:6px 14px;border:1px solid rgba(118,80,45,.8);border-radius:999px;background:rgba(10,11,22,.75);color:var(--art-cream);font:700 13px/1 var(--art-ui);letter-spacing:.06em;text-transform:uppercase;cursor:pointer}
+.pda-art .subTab:hover{border-color:var(--art-cyan)}
+.pda-art .subTab.active{border-color:var(--art-magenta);background:#2a1230;color:#fff;box-shadow:0 0 12px rgba(239,70,186,.3)}
+.pda-art .subBadge:not(:empty){display:inline-grid;place-items:center;min-width:18px;height:18px;margin-left:6px;padding:0 4px;border-radius:999px;background:var(--art-magenta);color:#fff;font-size:11px}
+.pda-art .subTab:focus-visible,.pda-art .charChip:focus-visible{outline:var(--art-focus);outline-offset:2px}
+@media (min-width:901px) and (max-width:1180px){
   .pda-art .brand small{display:none}
   .pda-art .brand{font-size:21px}
-  .pda-art .navPill{padding:8px 7px;font-size:13px}
+  .pda-art .secTab{min-width:76px;padding:7px 6px 6px;font-size:12px}
+}
+@media (max-width:900px){
+  .pda-art .topbar{grid-template-columns:minmax(0,1fr) auto;grid-template-areas:"brand char" "nav nav" "sub sub"}
+  .pda-art .charGroup{padding-right:12px}
+  .pda-art .sectionNav{justify-content:flex-start}
+  .pda-art .secTab{flex:0 0 auto;min-width:68px;min-height:56px;padding:6px 8px;font-size:12px}
+  .pda-art .subNav{flex-wrap:nowrap;justify-content:flex-start;overflow-x:auto;padding:8px 14px 2px;scrollbar-width:none}
+  .pda-art .subNav::-webkit-scrollbar{display:none}
+  .pda-art .subTab{flex:0 0 auto}
+  .pda-art .charGroup .navMenu{position:fixed;left:0;right:0}
 }
