@@ -1,0 +1,22 @@
+/* SIDEWAYS / ADYTA — additive scoped design tokens; no existing PDA selectors touched. */
+@import url("../../fonts/fonts.css");
+.pda-art{
+  --art-ink:#0a0b16;--art-midnight:#151124;--art-panel:#1d162a;
+  --art-parchment:#ebd39e;--art-parchment-deep:#d4af72;
+  --art-cream:#f7e8c6;--art-brass:#d7ac61;--art-brass-shadow:#76502d;
+  --art-magenta:#ef46ba;--art-cyan:#22dae4;--art-lime:#9af269;
+  --art-violet:#9c68f7;--art-alert:#fc6c74;--art-muted:#bda984;
+  --art-title:"Permanent Marker","Saira Condensed",sans-serif;
+  --art-ui:"Saira Condensed","Arial Narrow",sans-serif;
+  --art-body:"Atkinson Hyperlegible",system-ui,sans-serif;
+  --art-radius:10px;--art-gap:16px;--art-focus:3px solid #22dae4;
+  --art-glow:0 0 20px rgba(239,70,186,.17);
+  color:var(--art-cream);background:#080b16 url("assets/ink-tile.svg") repeat;
+  font-family:var(--art-body);line-height:1.48;
+}
+.pda-art *{box-sizing:border-box;}
+.pda-art :focus-visible{outline:var(--art-focus);outline-offset:3px;}
+.pda-art .art-marker{font-family:var(--art-title);font-weight:400;letter-spacing:.02em}
+.pda-art .art-ui{font-family:var(--art-ui);font-weight:700;letter-spacing:.05em;text-transform:uppercase}
+@media (prefers-reduced-motion:reduce){.pda-art *, .pda-art *::before,.pda-art *::after{transition:none!important;animation:none!important}}
+
