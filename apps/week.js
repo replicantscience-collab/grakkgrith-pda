@@ -148,10 +148,10 @@
     log(s.week, aMs, `Paid ${amt} credits: ${m.title}.`); return { ok: true, msg: `Paid ${amt} credits.` };
   }
   function pool(s, attribute, skill, extra = 0) { return Math.max(1, num(s.stats && s.stats[attribute]) + num(s.skills && s.skills[skill]) + extra); }
-  function appeal(s, W, id, aMs, rng = Math.random) {
+  function appeal(s, W, id, aMs, rng = Math.random, bonus = 0) {
     const m = find(s, id); if (!m || m.status !== 'open' || !m.appeal || m.appealed) return { ok: false, msg: 'This one cannot be appealed.' };
-    const A = W.appeal, warden = (s.character && s.character.class) === 'Warden', dice = rollDice(pool(s, 'savvy', 'persuade', warden ? A.wardenBonus : 0), rng), hits = dice.filter(d => d >= 5).length;
-    m.appealed = true; m.appealRoll = { dice, hits, need: A.difficulty };
+    const A = W.appeal, warden = (s.character && s.character.class) === 'Warden', dice = rollDice(pool(s, 'savvy', 'persuade', (warden ? A.wardenBonus : 0) + bonus), rng), hits = dice.filter(d => d >= 5).length;
+    m.appealed = true; m.appealRoll = { dice, hits, need: A.difficulty, bonus };
     if (hits >= A.difficulty) { m.status = 'voided'; m.closed = aMs; log(s.week, aMs, `APA appeal won (${hits} successes): ${m.title} voided.`); return { ok: true, won: true, dice, hits, msg: `Appeal won with ${hits} successes. Notice voided.` }; }
     log(s.week, aMs, `APA appeal lost (${hits}/${A.difficulty}): ${m.title} stands.`); return { ok: true, won: false, dice, hits, msg: `Appeal lost: ${hits} of ${A.difficulty} successes. The notice stands.` };
   }
@@ -171,6 +171,9 @@
     if (d.amount <= 0) { d.cleared = aMs; log(w, aMs, `Debt to ${d.creditor} cleared.`); w.debts = w.debts.filter(x => x.amount > 0); return { ok: true, msg: `Debt to ${d.creditor} cleared.` }; }
     log(w, aMs, `Paid ${amt} toward ${d.creditor}. ${d.amount} left.`); return { ok: true, msg: `${d.amount} credits still owed.` };
   }
+  /* Plain information (a ward expired, something was found). Nothing to pay; just read it. */
+  function inform(s, aMs, from, title, body) { const w = ensure(s); const m = { id: uid('i', aMs, w.mail.length), kind: 'info', from, title, body, issued: aMs, due: null, status: 'open' }; w.mail.unshift(m); log(w, aMs, `${from}: ${title}.`); return m; }
+  function dismiss(s, id, aMs) { const m = find(s, id); if (!m || m.kind !== 'info' || m.status !== 'open') return { ok: false }; m.status = 'read'; m.closed = aMs; return { ok: true }; }
   function acknowledgeCrisis(s, id, aMs) { const m = find(s, id); if (!m || m.kind !== 'crisis' || m.status !== 'open') return { ok: false }; m.status = 'flagged'; m.closed = aMs; log(s.week, aMs, `Crisis flagged for the session: ${m.title}.`); return { ok: true }; }
   /* Rulebook: Debt costs 1 Stress per session. "Session starting" applies it once. */
   function sessionStart(s, aMs) {
@@ -184,6 +187,6 @@
   function pending(s) { const w = s && s.week; if (!w) return 0; return w.mail.filter(m => m.status === 'open').length; }
   function owed(s) { const w = s && s.week; return w ? w.debts.reduce((a, d) => a + Math.max(0, d.amount), 0) : 0; }
 
-  const api = { DAY, WEEK, clockOffset, adytaNow, weekIndex, weekStart, fmt, untilText, band, heatCap, ensure, billLines, weeklyTotal, settle, pay, appeal, answer, payDebt, acknowledgeCrisis, sessionStart, setCosts, pending, owed, issueNotice };
+  const api = { DAY, WEEK, clockOffset, adytaNow, weekIndex, weekStart, fmt, untilText, band, heatCap, ensure, billLines, weeklyTotal, settle, pay, appeal, answer, payDebt, acknowledgeCrisis, inform, dismiss, sessionStart, setCosts, pending, owed, issueNotice };
   if (typeof module !== 'undefined' && module.exports) module.exports = api; else root.GRAKK_WEEK = api;
 })(typeof window !== 'undefined' ? window : globalThis);

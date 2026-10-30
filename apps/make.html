@@ -1,0 +1,179 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Workshop</title>
+<link rel="stylesheet" href="../fonts/fonts.css">
+<link rel="stylesheet" href="../art/pda-v1/tokens.css">
+<link rel="stylesheet" href="./screen.css">
+<style>
+input[type=text],input[type=number]{min-height:44px;width:100%;padding:8px 10px;border:1px solid rgba(118,80,45,.9);border-radius:6px;background:#0b0c16;color:var(--art-cream);font:16px var(--art-body)}
+input:focus,select:focus{outline:none;border-color:var(--art-cyan);box-shadow:0 0 0 3px rgba(34,218,228,.25)}
+.recipes{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:10px}
+.recipe{display:block;width:100%;text-align:left;text-transform:none;letter-spacing:.02em;padding:12px 14px;border:1px solid rgba(118,80,45,.85);border-left:4px solid var(--art-brass);border-radius:8px;background:rgba(10,11,22,.78);color:var(--art-cream);box-shadow:none}
+.recipe b{display:block;color:#ffe2a8;font:700 18px/1.2 var(--art-ui)}
+.recipe span{display:block;margin-top:3px;color:var(--art-muted);font:400 14px/1.35 var(--art-body)}
+.recipe .kind{display:inline-block;margin-top:6px;color:var(--art-cyan);font:700 11px var(--art-ui);letter-spacing:.1em;text-transform:uppercase}
+.recipe[aria-pressed=true]{border-color:var(--art-magenta);border-left-color:var(--art-magenta);background:#2a1230;box-shadow:0 0 16px rgba(239,70,186,.25)}
+.form{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:4px 14px;margin-top:14px}
+.form .full{grid-column:1/-1}
+.radios{display:flex;flex-wrap:wrap;gap:8px}
+.radios label{display:flex;align-items:center;gap:8px;min-height:44px;margin:0;padding:8px 12px;border:1px solid rgba(118,80,45,.85);border-radius:6px;background:rgba(10,11,22,.7);color:var(--art-cream);font:600 15px var(--art-ui);letter-spacing:.03em;text-transform:none;cursor:pointer}
+.radios input{accent-color:var(--art-magenta);width:18px;height:18px}
+.order{margin-top:16px}
+.order dl{display:grid;grid-template-columns:auto 1fr;gap:4px 14px;margin:8px 0}
+.order dt{color:#7a2f6a;font:700 12px/1.6 var(--art-ui);letter-spacing:.1em;text-transform:uppercase}
+.order dd{margin:0}
+.heatline{display:flex;gap:10px;padding:5px 0;border-bottom:1px dashed rgba(107,75,51,.4)}
+.heatline b{flex:none;min-width:58px;color:#b8222e;font:700 14px var(--art-ui)}
+.heatline b.zero{color:#2f6a2a}
+.blockers{margin:10px 0 0;padding-left:18px;color:#b8222e;font-weight:700}
+.work .letter{margin-bottom:12px}
+.tag2{display:inline-block;margin:0 6px 4px 0;padding:1px 9px;border:1px solid #8a6a48;border-radius:999px;color:#5b4630;font:700 11px/1.6 var(--art-ui);letter-spacing:.08em;text-transform:uppercase}
+.events{margin-top:8px;font-size:14px}
+.events summary{min-height:32px;color:#7a2f6a;font:700 13px var(--art-ui);letter-spacing:.06em;text-transform:uppercase;cursor:pointer}
+.events li{margin:3px 0}
+.others summary{min-height:44px;display:flex;align-items:center;color:var(--art-brass);font:700 15px var(--art-ui);letter-spacing:.06em;text-transform:uppercase;cursor:pointer}
+.others table{width:100%;border-collapse:collapse;font-size:14px}
+.others td{padding:6px 8px 6px 0;border-bottom:1px solid rgba(118,80,45,.35);vertical-align:top}
+.others td:first-child{color:var(--art-cyan);font:700 13px var(--art-ui);letter-spacing:.06em;text-transform:uppercase;white-space:nowrap}
+@media (max-width:860px){.form{grid-template-columns:1fr}}
+</style>
+</head>
+<body class="pda-art">
+<div class="wrap">
+  <div class="kicker">ADYTA PDA / WORKSHOP</div>
+  <h1>Your Workshop</h1>
+  <p class="muted" id="who">Make things the city has to deal with.</p>
+  <div class="strip" id="strip"></div>
+  <div class="cols">
+    <section class="frame" aria-labelledby="makeH"><h2 id="makeH">Make</h2><div id="maker"></div></section>
+    <aside class="work"><section class="frame" aria-labelledby="workH"><h2 id="workH">Your work</h2><div id="work"></div></section></aside>
+  </div>
+</div>
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+<script src="./week.js"></script>
+<script src="./make.js"></script>
+<script>
+'use strict';
+const KEY = 'grakkgrith_character_tool_v8_state';
+const WK = window.GRAKK_WEEK, MK = window.GRAKK_MAKE, $ = id => document.getElementById(id);
+const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+let W = null, CLOCK = null, M = null, PLACES = null;
+const form = { recipe: '', name: '', target: '', option: '', district: '', visibility: '', permission: 'own' };
+const load = () => { try { return JSON.parse(localStorage.getItem(KEY)); } catch (e) { return null; } };
+const save = s => { try { localStorage.setItem(KEY, JSON.stringify(s)); } catch (e) {} try { parent.postMessage({ type: 'grakkgrith-week-changed' }, '*'); } catch (e) {} };
+const now = () => WK.adytaNow(CLOCK, Date.now());
+const hasChar = s => !!(s && s.character && String(s.character.name || '').trim());
+const diceHtml = d => d.map(x => `<span class="die ${x >= 5 ? 'hit' : ''}">${x}</span>`).join('');
+function toast(msg, dice) { const t = $('toast'); t.innerHTML = esc(msg) + (dice ? `<div style="margin-top:6px">${diceHtml(dice)}</div>` : ''); t.classList.add('on'); clearTimeout(toast.t); toast.t = setTimeout(() => t.classList.remove('on'), 4600); }
+function settleAll(s) { return WK.settle(s, W, CLOCK, Date.now()).length + MK.settle(s, M, W, now()).length; }
+function act(fn) { const s = load(); if (!hasChar(s)) return; settleAll(s); const r = fn(s); save(s); render(); return r; }
+const districts = () => Object.entries(PLACES.districts).map(([id, d]) => ({ id, name: d.name })).sort((a, b) => a.name.localeCompare(b.name));
+const dName = id => (PLACES.districts[id] || {}).name || '';
+
+function makerHtml(s) {
+  const cls = s.character.class, mine = MK.recipesFor(M, cls);
+  if (!mine.length) return `<div class="empty">No Make list for ${esc(cls || 'your class')} yet.</div>`;
+  if (!mine.some(r => r.id === form.recipe)) form.recipe = mine[0].id;
+  const r = MK.recipe(M, form.recipe);
+  let h = `<div class="recipes" role="group" aria-label="What to make">${mine.map(x => `<button class="recipe" data-recipe="${x.id}" aria-pressed="${x.id === form.recipe}"><b>${esc(x.name)}</b><span>${esc(x.summary)}</span><span class="kind">${esc(x.kind)}${x.adjudication === 'ruling' ? ' · needs a ruling' : ''}</span></button>`).join('')}</div>`;
+  h += `<div class="form"><div class="full"><label for="fName">Call it</label><input type="text" id="fName" maxlength="60" placeholder="${esc(r.name)}" value="${esc(form.name)}"></div>`;
+  if (r.target) h += `<div class="full"><label for="fTarget">For whom</label><input type="text" id="fTarget" maxlength="60" placeholder="A character, a crew, a client" value="${esc(form.target)}"></div>`;
+  if (r.options) h += `<div class="full"><label for="fOption">Improvement</label><select id="fOption"><option value="">Choose…</option>${r.options.map(o => `<option ${o === form.option ? 'selected' : ''}>${esc(o)}</option>`).join('')}</select></div>`;
+  if (r.placement) h += `<div class="full"><label for="fDistrict">${esc(r.placementLabel || 'Where it goes')}</label><select id="fDistrict"><option value="">Choose a district…</option>${districts().map(d => `<option value="${d.id}" ${d.id === form.district ? 'selected' : ''}>${esc(d.name)}</option>`).join('')}</select></div>`;
+  if (r.kind === 'placed') {
+    const vis = form.visibility || r.defaultVisibility || 'discreet';
+    h += `<div class="full"><label id="visL">How visible</label><div class="radios" role="radiogroup" aria-labelledby="visL">${Object.entries(M.visibility).map(([k, v]) => `<label><input type="radio" name="vis" value="${k}" ${k === vis ? 'checked' : ''}>${esc(v.name)}</label>`).join('')}</div><p class="note">${esc(M.visibility[vis].text)}</p></div>`;
+    h += `<div class="full"><label id="permL">Whose place</label><div class="radios" role="radiogroup" aria-labelledby="permL">${Object.entries(M.permission).map(([k, v]) => `<label><input type="radio" name="perm" value="${k}" ${k === form.permission ? 'checked' : ''}>${esc(v.name)}</label>`).join('')}</div>${M.permission[form.permission].text ? `<p class="note">${esc(M.permission[form.permission].text)}</p>` : ''}</div>`;
+  }
+  h += '</div>';
+  const p = MK.preview(s, M, r.id, { ...form, visibility: form.visibility || r.defaultVisibility });
+  const costs = [`1 downtime action`, p.costs.credits && `${p.costs.credits} cr materials`, p.costs.stress && `${p.costs.stress} Stress`].filter(Boolean).join(' · ');
+  h += `<article class="letter order" aria-label="Work order"><div class="from">Work order · preview</div><h3>${esc(form.name || r.name)}</h3>
+    <dl><dt>Costs</dt><dd>${costs}</dd>
+    <dt>Roll</dt><dd>${p.roll ? `${esc(p.roll.label)}: ${p.roll.pool} dice, need ${p.roll.difficulty} success${p.roll.difficulty > 1 ? 'es' : ''}` : r.adjudication === 'ruling' ? 'None. It goes to a ruling.' : 'None. It just goes up.'}</dd>
+    <dt>Lasts</dt><dd>${esc(p.life)}</dd>
+    <dt>Does</dt><dd>${esc(r.effect)}${r.option ? '' : ''}</dd>
+    ${r.value ? `<dt>Worth</dt><dd>${r.value} cr${r.uses ? ` (${r.uses} use${r.uses > 1 ? 's' : ''})` : ''}</dd>` : ''}
+    ${r.pay ? `<dt>Pays</dt><dd>${r.pay[0]}–${r.pay[1]} cr when it's done</dd>` : ''}
+    ${r.notes ? `<dt>Note</dt><dd>${esc(r.notes)}</dd>` : ''}${r.sizzle ? `<dt>Sizzle</dt><dd>${esc(r.sizzle)}</dd>` : ''}</dl>
+    <div><b style="color:#3a1730">Heat</b>${p.heat.map(x => `<div class="heatline"><b class="${x.amount ? '' : 'zero'}">${x.amount == null ? '?' : x.amount ? '+' + x.amount : '0'}</b><span><i>${esc(x.when)}.</i> ${esc(x.why)}</span></div>`).join('')}</div>
+    ${p.adjudication === 'ruling' ? `<p><b style="color:#3a1730">Ruling:</b> ${esc(p.rulingNote)}</p>` : ''}
+    ${p.blockers.length ? `<ul class="blockers">${p.blockers.map(b => `<li>${esc(b)}</li>`).join('')}</ul>` : ''}
+    <div class="actions"><button class="primary" id="doMake" ${p.ok ? '' : 'disabled'}>${p.adjudication === 'ruling' ? 'Propose it' : 'Make it'}</button></div></article>`;
+  const others = M.recipes.filter(x => x.class !== cls);
+  h += `<details class="others"><summary>What the other classes make</summary><table>${others.map(x => `<tr><td>${esc(x.class)}</td><td><b>${esc(x.name)}</b>. ${esc(x.summary)}</td></tr>`).join('')}</table></details>`;
+  return h;
+}
+
+function workHtml(s) {
+  const list = MK.ensure(s).artifacts; if (!list.length) return '<p class="muted">Nothing made yet. What you make lives here: where it is, who owns it, how long it lasts, and what happened to it.</p>';
+  const t = now(), live = list.filter(a => ['active', 'pending'].includes(a.status)), done = list.filter(a => !['active', 'pending'].includes(a.status)).slice(0, 20);
+  const card = a => {
+    const r = MK.recipe(M, a.recipe) || {}, open = ['active', 'pending'].includes(a.status);
+    const tags = [a.kind, a.location && dName(a.location.district), a.visibility && M.visibility[a.visibility].name, a.permission === 'none' && 'unauthorized', a.legality === 'restricted' && 'restricted'].filter(Boolean).map(x => `<span class="tag2">${esc(x)}</span>`).join('');
+    let btns = '';
+    if (a.status === 'active') {
+      if (a.uses != null) btns += a.recipe === 'cover-papers' ? `<button data-use="${a.id}">Casual check</button><button class="ghost" data-lookup="${a.id}">ACR lookup</button>` : `<button data-use="${a.id}">Use one (${a.uses} left)</button>`;
+      if (r.maintain) btns += `<button data-maintain="${a.id}">Maintain</button>`;
+      if (a.value && a.permissions.transfer) { const st = MK.salePrice(s, M, a, 'street').price, fe = MK.salePrice(s, M, a, 'fence').price; btns += `<button class="primary" data-sell="${a.id}" data-how="street">Sell ${st} cr</button><button class="ghost" data-sell="${a.id}" data-how="fence">Fence ${fe} cr</button>`; }
+      if (r.pay) btns += `<input type="number" id="pay-${a.id}" min="${r.pay[0]}" max="${r.pay[1]}" value="${r.pay[0]}" aria-label="What it paid" style="width:110px"><button class="primary" data-complete="${a.id}">Done, got paid</button>`;
+    }
+    if (open) btns += `<button class="ghost" data-retire="${a.id}">Retire</button>`;
+    return `<article class="letter ${a.status === 'pending' ? 'notice' : 'bill'}">${open ? '' : `<span class="stamp ${a.status === 'sold' || a.status === 'completed' ? 'paid' : a.status === 'removed' || a.status === 'failed' || a.status === 'denied' ? 'unpaid' : 'read'}">${esc(a.status)}</span>`}
+      <div class="from">${esc(a.creator.class)} · owned by ${esc(a.owner)}${a.target ? ` · for ${esc(a.target)}` : ''}</div><h3>${esc(a.name)}</h3>${tags}
+      ${a.status === 'pending' ? `<p><b>Waiting for a ruling.</b> ${esc(a.ruling.note)}</p>` : `<p>${esc(a.effect)}${a.option ? ` <b>${esc(a.option)}</b>.` : ''}</p>`}
+      ${a.status === 'active' && a.expires != null ? `<span class="due ${a.expires - t < 86400000 ? 'late' : ''}">${esc(WK.untilText(a.expires - t))}</span>` : ''}
+      ${a.roll ? `<div class="roll">${diceHtml(a.roll.dice)} ${a.roll.hits} success${a.roll.hits === 1 ? '' : 'es'}, needed ${a.roll.need}</div>` : ''}
+      ${a.ruling && a.ruling.result ? `<p><b>Ruling:</b> ${esc(a.ruling.result)}</p>` : ''}
+      <details class="events"><summary>Record (${a.events.length})</summary><ul>${a.events.map(e => `<li><b>${esc(WK.fmt(e.at))}</b> ${esc(e.text)}</li>`).join('')}</ul><p class="note" style="color:#5b4630">ID ${esc(a.id)} · made by ${esc(a.creator.name)} · ${esc(WK.fmt(a.created))}</p></details>
+      ${btns ? `<div class="actions">${btns}</div>` : ''}</article>`;
+  };
+  return (live.length ? live.map(card).join('') : '<p class="muted">Nothing active.</p>') + (done.length ? `<details class="filed"><summary>Finished (${done.length})</summary>${done.map(card).join('')}</details>` : '');
+}
+
+function render() {
+  const s = load();
+  if (!hasChar(s)) { $('who').textContent = 'No character yet. Make one in Character Setup first.'; ['strip', 'maker', 'work'].forEach(id => $(id).innerHTML = ''); return; }
+  MK.ensure(s);
+  $('who').textContent = `${s.character.name}, ${s.character.class || 'no class'}${s.character.subclass ? ' (' + s.character.subclass + ')' : ''}. Each Make takes one of your two downtime actions.`;
+  const heat = Number(s.stats?.heat || 0);
+  $('strip').innerHTML = `<div class="stat"><b>Downtime</b><span>${MK.downtimeLeft(s)} / 2</span><small>actions left this gap</small></div>
+    <div class="stat"><b>Credits</b><span>${esc(s.coins?.credits || 0)}</span><small>for materials</small></div>
+    <div class="stat ${heat >= 4 ? 'warn' : ''}"><b>Heat</b><span>${heat}</span><small>${esc(W.heatBands.find(b => b.id === WK.band(W, heat)).name)}</small></div>
+    <div class="stat"><b>Stress</b><span>${esc(s.stats?.stress || 0)}</span><small>some work costs it</small></div>
+    <div class="stat"><b>Active</b><span>${MK.ensure(s).artifacts.filter(a => a.status === 'active').length}</span><small>things you've made</small></div>`;
+  const keep = document.activeElement && document.activeElement.id;
+  $('maker').innerHTML = makerHtml(s); $('work').innerHTML = workHtml(s);
+  if (keep && $(keep)) { const el = $(keep); el.focus(); if (el.setSelectionRange && el.value) el.setSelectionRange(el.value.length, el.value.length); }
+}
+
+document.addEventListener('click', e => {
+  const b = e.target.closest('button'); if (!b) return; const t = now();
+  if (b.dataset.recipe) { form.recipe = b.dataset.recipe; form.option = ''; form.visibility = ''; render(); }
+  else if (b.id === 'doMake') { const r = act(s => MK.make(s, M, form.recipe, { ...form, districtName: dName(form.district) }, t)); if (r) { toast(r.msg, r.dice); if (r.ok) { form.name = ''; form.target = ''; } } }
+  else if (b.dataset.use) { const r = act(s => MK.use(s, b.dataset.use, t)); r && toast(r.msg); }
+  else if (b.dataset.lookup) { const r = act(s => MK.use(s, b.dataset.lookup, t, 'lookup')); r && toast(r.msg); }
+  else if (b.dataset.maintain) { const r = act(s => MK.maintain(s, M, b.dataset.maintain, t)); r && toast(r.msg); }
+  else if (b.dataset.sell) { const r = act(s => MK.sell(s, M, b.dataset.sell, b.dataset.how, t)); r && toast(r.msg); }
+  else if (b.dataset.complete) { const amt = ($('pay-' + b.dataset.complete) || {}).value; const r = act(s => MK.complete(s, M, b.dataset.complete, amt, t)); r && toast(r.msg); }
+  else if (b.dataset.retire) { const r = act(s => MK.retire(s, b.dataset.retire, t)); r && toast(r.msg || 'Retired.'); }
+});
+document.addEventListener('input', e => { const map = { fName: 'name', fTarget: 'target' }; if (map[e.target.id]) { form[map[e.target.id]] = e.target.value; render(); } });
+document.addEventListener('change', e => {
+  if (e.target.id === 'fOption') form.option = e.target.value; else if (e.target.id === 'fDistrict') form.district = e.target.value;
+  else if (e.target.name === 'vis') form.visibility = e.target.value; else if (e.target.name === 'perm') form.permission = e.target.value; else return;
+  render();
+});
+
+Promise.all(['week', 'places', 'make'].map(n => fetch(`../data/${n}.json`).then(r => r.json()))).then(([w, p, m]) => {
+  W = w; CLOCK = p.clock; M = m; PLACES = p;
+  const s = load(); if (hasChar(s)) { settleAll(s); save(s); }
+  render(); window.GRAKK_MAKE_READY = true;
+  setInterval(() => { const s = load(); if (hasChar(s) && settleAll(s)) { save(s); render(); } }, 60000);
+});
+</script>
+</body>
+</html>

@@ -155,6 +155,27 @@ for (const [bandId, list] of Object.entries(WEEK.notices)) if (Array.isArray(lis
   if (bandId !== 'crisis' && !n.days) bad(`week.notices.${n.id}`, 'needs a deadline in days');
 }
 
+// --- The Make system (data/make.json) -------------------------------------------------------
+const MAKE = load('data/make.json'), PLACES_ = load('data/places.json');
+for (const cls of Object.keys(rules.classes)) if (!MAKE.recipes.some(r => r.class === cls)) bad('make.recipes', `${cls} has nothing to make`);
+const seenMake = new Set();
+for (const r of MAKE.recipes) {
+  const w = `make.${r.id}`;
+  if (seenMake.has(r.id)) bad(w, 'duplicate id'); seenMake.add(r.id);
+  if (!rules.classes[r.class]) bad(w, `unknown class ${r.class}`);
+  if (!MAKE.kinds[r.kind]) bad(w, `unknown kind ${r.kind}`);
+  if (!['auto', 'ruling'].includes(r.adjudication)) bad(w, 'adjudication must be auto or ruling');
+  if (r.adjudication === 'auto' && !r.roll && !['contract'].includes(r.kind)) bad(w, 'auto work needs a roll (only posted contracts skip it)');
+  if (r.adjudication === 'ruling' && !r.rulingNote) bad(w, 'a ruling needs a note saying who decides');
+  if (r.roll && (!ref.attributes.includes(r.roll.attribute) || !Object.values(rules.skillKeys).includes(r.roll.skill))) bad(w, 'unknown attribute or skill');
+  if (r.working && !rules.shadeWorkings.some(x => x.id === r.working)) bad(w, `unknown Shade working ${r.working}`);
+  if (r.working) { const x = rules.shadeWorkings.find(x => x.id === r.working); if (x && (x.stress !== (r.costs.stress || 0) || x.difficulty !== r.roll.difficulty)) bad(w, `costs should follow the ${x.name} working (Stress ${x.stress}, difficulty ${x.difficulty})`); }
+  if (!['lawful', 'restricted'].includes(r.legality)) bad(w, 'legality must be lawful or restricted');
+  if (r.pay && !(r.pay[0] <= r.pay[1])) bad(w, 'pay range is backwards');
+}
+for (const d of Object.keys(MAKE.watchers)) if (!['_default', 'watchedBonus', 'watchedBonusChance'].includes(d) && !PLACES_.districts[d]) bad(`make.watchers.${d}`, 'not a district');
+for (const d of MAKE.watchers.watchedBonus) if (!PLACES_.districts[d]) bad('make.watchers.watchedBonus', `${d} is not a district`);
+
 // --- Report -------------------------------------------------------------------
 if (problems.length) {
   console.error(`rules.json vs ${ref.rulebook}: ${problems.length} problem(s)\n` + problems.map(p => '  - ' + p).join('\n'));
@@ -162,4 +183,5 @@ if (problems.length) {
 }
 console.log(`rules.json matches ${ref.rulebook}: ${races.length} races, ${Object.keys(rules.classes).length} classes, ${Object.keys(rules.origins).length} origins, ${Object.keys(rules.lives).length} lives.`);
 console.log(`week.json matches the rulebook's Cost of Living and Heat ladder: ${WEEK.week.housing.length} housing tiers, ${Object.values(WEEK.notices).filter(Array.isArray).flat().length} notices.`);
+console.log(`make.json is consistent: ${MAKE.recipes.length} things to make across ${new Set(MAKE.recipes.map(r => r.class)).size} classes.`);
 console.log(`places.json is consistent: ${Object.keys(W.maps).length} maps, ${Object.keys(W.districts).length} districts, ${W.places.length} places, ${W.routes.length} routes.`);

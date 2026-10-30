@@ -164,6 +164,17 @@ try {
       const s = await ST(), notices = s.week.mail.filter(m => m.kind === 'notice').length, paid = s.week.mail.some(m => m.kind === 'bill' && m.status === 'paid');
       return (notices === 1 && paid && await f.evaluate(() => !!document.querySelector('.letter.notice'))) || `notices ${notices}, bill paid ${paid}, heat ${s.stats.heat}`;
     });
+    // The Workshop: a Runner makes a Route Sheet through the UI and gets a full record.
+    await step('Workshop shows the Runner list and fits the screen', async () => {
+      await page.evaluate(() => document.getElementById('makeBtn').click()); await page.waitForTimeout(1500); f = frame(page);
+      const names = await f.$$eval('.recipe b', bs => bs.map(b => b.textContent)); const w = await f.evaluate(() => document.documentElement.scrollWidth - innerWidth);
+      return (names.includes('Route Sheet') && names.includes('Delivery Slot') && w <= 1) || `${names.join(', ')}; ${w}px too wide`;
+    });
+    await step('making a Route Sheet spends a downtime action and records it', async () => {
+      await f.click('.recipe[data-recipe="route-sheet"]'); await f.selectOption('#fDistrict', 'low-halo'); await f.click('#doMake'); await page.waitForTimeout(400);
+      const s = await ST(), a = (s.make && s.make.artifacts || [])[0];
+      return (a && a.recipe === 'route-sheet' && a.creator.name === 'Smoke Runner' && a.location.district === 'low-halo' && s.downtime.actionsRemaining === 1 && await f.evaluate(() => document.querySelectorAll('.work .letter').length) === 1) || JSON.stringify(a).slice(0, 120);
+    });
     // Mixed Heritage (Ch. 15) and Afflictions (Ch. 20) in Character Setup and on the sheet.
     await step('Mixed Heritage and Affliction rules hold in Character Setup', async () => {
       await page.evaluate(() => document.getElementById('creatorBtn').click()); await page.waitForTimeout(1200); f = frame(page);
