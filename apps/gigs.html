@@ -28,7 +28,7 @@
 .chip{padding:3px 10px;border-radius:999px;background:#efe8f8;color:#4b2b7a;font:700 12px/1.5 var(--art-ui);letter-spacing:.04em}
 .chip.fit{background:#e4f7dc;color:#2a5a1c}.chip.prem{background:#fff1d6;color:#8a4e00}.chip.risk{background:#fde4e6;color:#9c1f2c}
 .price{display:flex;align-items:baseline;gap:8px;margin-top:6px}
-.price b{color:#1d1530;font:700 24px var(--art-ui)}
+.price b{color:#1d1530;font:700 24px var(--art-ui);white-space:nowrap}
 .price small{color:#7a6b8e}
 .gig .actions{margin-top:10px}
 .gig button{border-color:#5b2a95;background:#5b2a95;color:#fff;box-shadow:none;border-radius:999px}
@@ -40,6 +40,20 @@
 .res{font:700 13px var(--art-ui);letter-spacing:.06em;text-transform:uppercase}
 .res.success{color:#2a5a1c}.res.partial{color:#8a4e00}.res.failed,.res.no-show,.res.dropped{color:#9c1f2c}
 .gig .die{border-color:#c9b9de;background:#f4f0fa}.gig .die.hit{background:#5b2a95;border-color:#5b2a95;color:#fff}
+.gig.sw{position:relative;border:2px solid #ef46ba;background:#0d0e1c url("../art/pda-v1/assets/ink-tile.svg");color:var(--art-cream);box-shadow:0 0 0 2px rgba(34,218,228,.35),0 6px 18px rgba(239,70,186,.25);transform:rotate(-.4deg)}
+.gig.sw h3{color:#ffc55f;font:400 22px/1.15 var(--art-title);letter-spacing:.01em}
+.gig.sw p{color:var(--art-cream)}
+.gig.sw .price b{color:#ffc55f}.gig.sw .price small,.gig.sw small{color:var(--art-muted)}
+.gig.sw .chip{background:rgba(34,218,228,.14);color:var(--art-cyan)}.gig.sw .chip.risk{background:rgba(252,108,116,.16);color:#ffb3b8}.gig.sw .chip.fit{background:rgba(154,242,105,.14);color:var(--art-lime)}
+.gig.sw .chip.off{background:rgba(239,70,186,.18);color:#ff9ad8}
+.gig.sw button{border-color:var(--art-magenta);background:linear-gradient(180deg,#5a1d47,#2a1230)}
+.gig.sw button.ghost{background:transparent;color:var(--art-cyan);border-color:var(--art-cyan)}
+.gig.sw .due{border-color:var(--art-cyan);color:var(--art-cyan)}
+.swbar{display:flex;align-items:center;gap:10px;margin:-14px -16px 10px;padding:7px 14px;background:repeating-linear-gradient(90deg,rgba(239,70,186,.25) 0 8px,rgba(34,218,228,.18) 8px 16px);color:#fff;font:700 12px/1.3 var(--art-ui);letter-spacing:.1em;text-transform:uppercase;border-radius:14px 14px 0 0}
+.swbar img{width:26px;height:26px;flex:none}
+.gig.sw .die{border-color:#76502d;background:#0b0c16;color:var(--art-cream)}.gig.sw .die.hit{background:var(--art-magenta);border-color:var(--art-magenta)}
+.gig.sw .res{color:var(--art-cyan)}
+@media (prefers-reduced-motion:reduce){.gig.sw{transform:none}}
 .fine{padding:10px 18px 16px;color:#7a6b8e;font-size:13px}
 .warnbar{margin:0 14px 12px;padding:10px 14px;border-radius:12px;background:#fde4e6;color:#9c1f2c;font-weight:700}
 @media (max-width:520px){.app{border-radius:16px}.me span{font-size:17px}}
@@ -74,7 +88,7 @@ function act(fn) { const s = load(); if (!hasChar(s)) return; settleAll(s); cons
 
 function gigCard(s, j, mine) {
   const t = now(), where = j.remote ? 'Remote' : `${j.place.name} · ${j.place.districtName}`;
-  const chips = [`<span class="chip">${esc(cap(j.attr))} + ${esc(j.skillName)} · need ${j.difficulty}</span>`, j.fit && `<span class="chip fit">Fits your class +1 die</span>`, j.premium && `<span class="chip prem">Premium</span>`, j.risk && `<span class="chip risk">Risk: ${esc(j.risk.text)}</span>`].filter(Boolean).join('');
+  const chips = [j.sideways && `<span class="chip off">Off the books · no cut · no stars</span>`, `<span class="chip">${esc(cap(j.attr))} + ${esc(j.skillName)} · need ${j.difficulty}</span>`, j.fit && `<span class="chip fit">Fits your class +1 die</span>`, j.premium && `<span class="chip prem">Premium</span>`, j.risk && `<span class="chip risk">Risk: ${esc(j.risk.text)}</span>`].filter(Boolean).join('');
   let actions = '', status = '';
   if (!mine) actions = j.taken ? '<span class="res">Taken</span>' : `<button data-take="${j.id}" ${GG && MK.downtimeLeft(s) ? '' : 'disabled'}>Take it</button>${j.remote ? '' : `<button class="ghost" data-go="${j.place.place}">Map</button>`}`;
   else if (j.status === 'active') {
@@ -82,9 +96,9 @@ function gigCard(s, j, mine) {
     status = `<span class="due ${j.due - t < 3600000 ? 'late' : ''}">${esc(WK.untilText(j.due - t))}</span>`;
     actions = `<button data-work="${j.id}" ${here ? '' : 'disabled'}>${here ? 'Do it' : 'Get there first'}</button>${j.remote ? '' : `<button class="ghost" data-go="${j.place.place}">Go there</button>`}<button class="ghost" data-drop="${j.id}">Cancel</button>`;
   } else status = `<span class="res ${esc(j.result || j.status)}">${esc(j.result === 'success' ? 'Done' : j.result === 'partial' ? 'Half-done' : j.status)}</span> · ${j.paid || 0} cr${j.stars ? ' · ' + starsHtml(j.stars) : ''}`;
-  return `<article class="gig ${mine && j.status !== 'active' ? 'done' : ''}"><h3>${esc(j.title)}</h3><p>${esc(j.blurb)}</p>
+  return `<article class="gig ${j.sideways ? 'sw' : ''} ${mine && j.status !== 'active' ? 'done' : ''}">${j.sideways ? `<div class="swbar"><img src="../art/pda-v1/assets/sideways-sigil.svg" alt="Sideways">${esc(G.sideways.banner)}</div>` : ''}<h3>${esc(j.title)}</h3><p>${esc(j.blurb)}</p>
     <div class="chips"><span class="chip">${esc(where)}</span>${chips}</div>
-    <div class="price"><b>${j.net} cr</b><small>${j.gross} posted · ${esc(G.app.owner)} keeps ${j.gross - j.net}</small></div>
+    <div class="price"><b>${j.net} cr</b><small>${j.sideways ? `all of it · ${esc(G.app.owner)} keeps nothing, because ${esc(G.app.owner)} doesn't know` : `${j.gross} posted · ${esc(G.app.owner)} keeps ${j.gross - j.net}`}</small></div>
     ${mine ? `<p>${status}</p>` : `<p><small>${j.hours} hours once you take it</small></p>`}
     ${j.roll ? `<div>${diceHtml(j.roll.dice)}</div>` : ''}<div class="actions">${actions}</div></article>`;
 }
@@ -100,7 +114,7 @@ function render() {
     <div class="feed">${active.length ? `<h2>Your gigs</h2>${active.map(j => gigCard(s, j, true)).join('')}` : ''}
     <h2>Open gigs${b.premium ? ' · premium unlocked' : ''}</h2>${b.gigs.filter(j => !j.taken).map(j => gigCard(s, j, false)).join('') || '<p>You took everything. New gigs soon.</p>'}
     ${past.length ? `<h2>History</h2>${past.map(j => gigCard(s, j, true)).join('')}` : ''}</div>
-    <div class="fine">${esc(G.app.cutNote)} Draft: the app, its cut and its gigs are proposals, not canon yet.</div>`;
+    <div class="fine">${esc(G.app.cutNote)}${G.sideways ? ` Some listings are not Velvet's.` : ''} Draft: the app, its cut and its gigs are proposals, not canon yet.</div>`;
 }
 
 document.addEventListener('click', e => {

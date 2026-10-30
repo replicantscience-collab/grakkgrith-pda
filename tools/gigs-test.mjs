@@ -40,5 +40,20 @@ ok('below 2.5 stars only easy gigs show', GG.board(s, G, R, PL, T0).gigs.every(j
 s = char(); s.gigs = { v: 1, ratings: [5, 5, 5, 4], taken: [], jobs: [] };
 ok('4+ stars unlocks premium', GG.board(s, G, R, PL, T0).premium);
 ok('class fit adds a die', (() => { const t = char('Striker'); const j = { attr: 'muscle', skill: 'haul', fit: true }; return GG.pool(t, G, R, j) === 4; })());
+// Sideways rides Velvet's servers
+s = char(); const slots = Array.from({ length: 40 }, (_, i) => GG.board(s, G, R, PL, T0 + i * G.refreshHours * H).gigs.find(j => j.sideways)).filter(Boolean);
+ok('Sideways shows up on some refreshes, not all', slots.length > 8 && slots.length < 32, slots.length);
+ok('Sideways gigs take no cut', slots.every(j => j.net === j.gross));
+ok('shop gigs happen at a Sideways door', slots.filter(j => ['sw-counter', 'sw-returns', 'sw-curtain'].includes(j.gig)).every(j => G.sideways.places.includes(j.place.place)));
+const rated = () => { const t = char(); t.gigs = { v: 1, ratings: [4, 4], taken: [], jobs: [] }; return t; };
+const swAt = i => GG.board(rated(), G, R, PL, T0 + i * G.refreshHours * H);
+const k = Array.from({ length: 40 }, (_, i) => i).find(i => { const j = swAt(i).gigs.find(x => x.sideways); return j && j.remote; });
+if (k != null) {
+  s = rated(); const t = T0 + k * G.refreshHours * H, j = GG.board(s, G, R, PL, t).gigs.find(x => x.sideways);
+  GG.take(s, G, R, PL, j.id, t); r = GG.work(s, G, R, j.id, t, six);
+  ok('a Sideways gig pays in full and leaves your stars alone', r.result === 'success' && GG.rating(s, G) === 4 && s.coins.credits === String(100 + j.gross));
+  s = rated(); GG.take(s, G, R, PL, j.id, t); r = GG.work(s, G, R, j.id, t, one);
+  ok('botching one badly gets Velvet to look: Heat +1, a Trust & Safety letter', s.stats.heat === '1' && s.week.mail.some(m => /Anomalous/.test(m.title)) && GG.rating(s, G) === 4);
+}
 console.log(fails ? `${passes} passed, ${fails} failed.` : `${passes} gig checks passed.`);
 process.exit(fails ? 1 : 0);

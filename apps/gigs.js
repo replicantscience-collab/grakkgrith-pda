@@ -39,6 +39,17 @@
         remote: t.where === 'remote', place: place ? { district: place.district, place: place.id, name: place.name, districtName: PL.districts[place.district].name } : null,
         gross, net: Math.round(gross * (1 - G.app.cut)), hours: between(rng, G.deadlineHours), premium: isPremium, fit: classFit(s, R, attr), taken: taken.has(`gig-${slot}-${i}`) });
     }
+    // Sideways rides Velvet's servers: about half the refreshes carry one of their gigs. No cut, off the books.
+    const SW = G.sideways;
+    if (SW && rng() < SW.chance) {
+      const t = SW.gigs[Math.floor(rng() * SW.gigs.length)], attr = attrFor(R, t.skill), gross = Math.round(between(rng, t.pay) / 5) * 5;
+      const swId = SW.places[Math.floor(rng() * SW.places.length)];
+      const pl = t.where === 'sideways' ? PL.places.find(p => p.id === swId) : t.where === 'place' ? places[Math.floor(rng() * places.length)] : null;
+      const id = `sw-${slot}`;
+      out.splice(Math.floor(rng() * (out.length + 1)), 0, { id, gig: t.id, sideways: true, title: t.title, blurb: t.blurb, skill: t.skill, skillName: skillName(R, t.skill), attr, difficulty: t.difficulty, risk: t.risk || null,
+        remote: t.where === 'remote', place: pl ? { district: pl.district, place: pl.id, name: pl.name, districtName: PL.districts[pl.district].name } : null,
+        gross, net: gross, hours: between(rng, G.deadlineHours), premium: false, fit: classFit(s, R, attr), taken: taken.has(id) });
+    }
     return { gigs: out, stars, premium, low, nextAt: (slot + 1) * G.refreshHours * H };
   }
   function take(s, G, R, PL, id, aMs) {
@@ -57,21 +68,25 @@
     if (!there(s, j, aMs)) return { ok: false, msg: `You need to be at ${j.place.name} first.` };
     const dice = Array.from({ length: pool(s, G, R, j) }, () => 1 + Math.floor(rng() * 6)), hits = dice.filter(d => d >= 5).length;
     const result = hits >= j.difficulty ? 'success' : hits > 0 ? 'partial' : 'fail';
-    const pay = result === 'success' ? j.net : result === 'partial' ? Math.round(j.net * G.partialPay) : 0, stars = G.rating[result];
-    if (pay) setCredits(s, credits(s) + pay); rate(s, G, stars);
+    const pay = result === 'success' ? j.net : result === 'partial' ? Math.round(j.net * G.partialPay) : 0, stars = j.sideways ? 0 : G.rating[result];
+    if (pay) setCredits(s, credits(s) + pay); if (!j.sideways) rate(s, G, stars); else if (result !== 'fail') g.sideways = (g.sideways || 0) + 1;
     j.status = result === 'fail' ? 'failed' : 'done'; j.result = result; j.roll = { dice, hits, need: j.difficulty }; j.paid = pay; j.stars = stars;
-    let msg = result === 'success' ? `Done. Paid ${pay} cr. Five stars.` : result === 'partial' ? `Half-done. Paid ${pay} cr. Three stars.` : 'It went wrong. No pay. One star.';
-    j.events.unshift({ at: aMs, text: `${hits} success${hits === 1 ? '' : 'es'} (needed ${j.difficulty}). ${result === 'success' ? 'Done' : result === 'partial' ? 'Half-done' : 'Failed'}. ${pay} cr. ${stars} star${stars === 1 ? '' : 's'}.` });
+    let msg = j.sideways ? (result === 'success' ? `Done. Paid ${pay} cr, all of it. Velvet didn't see a thing.` : result === 'partial' ? `Half-done. Paid ${pay} cr. Sideways shrugs.` : 'It went sideways. The wrong kind.')
+      : result === 'success' ? `Done. Paid ${pay} cr. Five stars.` : result === 'partial' ? `Half-done. Paid ${pay} cr. Three stars.` : 'It went wrong. No pay. One star.';
+    j.events.unshift({ at: aMs, text: `${hits} success${hits === 1 ? '' : 'es'} (needed ${j.difficulty}). ${result === 'success' ? 'Done' : result === 'partial' ? 'Half-done' : 'Failed'}. ${pay} cr.${j.sideways ? ' Off the books.' : ` ${stars} star${stars === 1 ? '' : 's'}.`}` });
     if (result === 'fail' && j.risk && j.risk.onFail) { addHeat(s, j.risk.onFail); j.events.unshift({ at: aMs, text: `${j.risk.text} Heat +${j.risk.onFail}.` }); msg += ` ${j.risk.text} Heat +${j.risk.onFail}.`; }
-    const wk = WK(); if (wk && pay) wk.inform(s, aMs, G.app.name, `Paid: ${pay} cr`, `"${j.title}" ${result === 'success' ? 'complete' : 'partly complete'}. ${G.app.owner} kept ${Math.round(j.gross * G.app.cut * (result === 'partial' ? G.partialPay : 1))} cr. Rated ${stars} stars.`);
+    const wk = WK();
+    if (j.sideways && result === 'fail' && !(j.risk && j.risk.onFail)) { const A = G.sideways.audit; addHeat(s, A.heat); j.events.unshift({ at: aMs, text: A.text }); msg += ` ${A.text}`; if (wk) wk.inform(s, aMs, A.from, A.title, A.text); }
+    if (wk && pay && j.sideways) wk.inform(s, aMs, G.sideways.name, `Paid: ${pay} cr`, `"${j.title}". No cut. No record. Thanks for the help.`);
+    else if (wk && pay) wk.inform(s, aMs, G.app.name, `Paid: ${pay} cr`, `"${j.title}" ${result === 'success' ? 'complete' : 'partly complete'}. ${G.app.owner} kept ${Math.round(j.gross * G.app.cut * (result === 'partial' ? G.partialPay : 1))} cr. Rated ${stars} stars.`);
     return { ok: true, msg, dice, result };
   }
-  function drop(s, G, id, aMs) { const j = ensure(s).jobs.find(x => x.id === id); if (!j || j.status !== 'active') return { ok: false }; j.status = 'dropped'; rate(s, G, G.rating.noShow); j.events.unshift({ at: aMs, text: `Cancelled. ${G.rating.noShow} star.` }); return { ok: true, msg: 'Cancelled. The app remembers.' }; }
+  function drop(s, G, id, aMs) { const j = ensure(s).jobs.find(x => x.id === id); if (!j || j.status !== 'active') return { ok: false }; j.status = 'dropped'; if (!j.sideways) rate(s, G, G.rating.noShow); j.events.unshift({ at: aMs, text: `Cancelled. ${G.rating.noShow} star.` }); return { ok: true, msg: 'Cancelled. The app remembers.' }; }
   function settle(s, G, aMs) {
     const out = [], wk = WK();
     for (const j of ensure(s).jobs) if (j.status === 'active' && aMs > j.due) {
-      j.status = 'no-show'; rate(s, G, G.rating.noShow); j.events.unshift({ at: j.due, text: `Missed the deadline. ${G.rating.noShow} star.` }); out.push(j);
-      if (wk) wk.inform(s, j.due, G.app.name, 'Gig expired', `"${j.title}" timed out. Your rating took the hit.`);
+      j.status = 'no-show'; if (!j.sideways) rate(s, G, G.rating.noShow); j.events.unshift({ at: j.due, text: j.sideways ? 'Missed the deadline. Sideways noticed.' : `Missed the deadline. ${G.rating.noShow} star.` }); out.push(j);
+      if (wk) wk.inform(s, j.due, j.sideways ? G.sideways.name : G.app.name, 'Gig expired', j.sideways ? `"${j.title}" timed out. Nobody's mad. The kettle is a little mad.` : `"${j.title}" timed out. Your rating took the hit.`);
     }
     return out;
   }

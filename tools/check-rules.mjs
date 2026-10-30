@@ -187,6 +187,10 @@ for (const g of GIGS.gigs) {
   if (g.pay[1] * GIGS.rating.premiumPay > 500) bad(`gigs.${g.id}`, 'tops the book\'s Minor job band (200-500); that is a job, not a gig');
 }
 if (!(GIGS.app.cut > 0 && GIGS.app.cut < 0.5)) bad('gigs.app.cut', 'should be a fraction');
+if (GIGS.sideways) {
+  for (const id of GIGS.sideways.places) if (!PLACES_.places.some(p => p.id === id)) bad('gigs.sideways.places', `${id} is not a place`);
+  for (const g of GIGS.sideways.gigs) { if (!Object.values(rules.skillKeys).includes(g.skill)) bad(`gigs.sideways.${g.id}`, `unknown skill ${g.skill}`); if (!['place', 'remote', 'sideways'].includes(g.where)) bad(`gigs.sideways.${g.id}`, 'where must be place, remote or sideways'); }
+}
 
 // --- Report -------------------------------------------------------------------
 if (problems.length) {

@@ -1,31 +1,353 @@
 {
   "_about": "An in-world gig app for general Side Jobs, for any class. Rulebook: Side Job is a downtime action that earns credits and may generate Heat. Everything here is a draft: the app name, its owner, the cut, the ratings and every gig. Velvet Signal owns platforms on the World Anvil; the Freelance faction and its 'freelance network' Standing are from the rulebook.",
   "status": "draft",
-  "app": { "name": "Pocket Change", "owner": "Velvet Signal", "tagline": "Your spare hours, somebody's problem.", "cut": 0.15, "cutNote": "Velvet Signal takes 15% of every gig. It also keeps your rating, your location history and everything you typed." },
+  "app": {
+    "name": "Pocket Change",
+    "owner": "Velvet Signal",
+    "tagline": "Your spare hours, somebody's problem.",
+    "cut": 0.15,
+    "cutNote": "Velvet Signal takes 15% of every gig. It also keeps your rating, your location history and everything you typed."
+  },
   "boardSize": 5,
   "refreshHours": 4,
-  "deadlineHours": [2, 10],
-  "rating": { "start": 3, "keep": 10, "premiumAt": 4, "premiumPay": 1.4, "lowAt": 2.5, "lowNote": "Below 2.5 stars the app quietly stops showing you the good gigs.", "success": 5, "partial": 3, "fail": 1, "noShow": 1 },
+  "deadlineHours": [
+    2,
+    10
+  ],
+  "rating": {
+    "start": 3,
+    "keep": 10,
+    "premiumAt": 4,
+    "premiumPay": 1.4,
+    "lowAt": 2.5,
+    "lowNote": "Below 2.5 stars the app quietly stops showing you the good gigs.",
+    "success": 5,
+    "partial": 3,
+    "fail": 1,
+    "noShow": 1
+  },
   "classFitBonus": 1,
   "partialPay": 0.5,
   "gigs": [
-    { "id": "couch", "title": "Get a couch up nine flights", "skill": "haul", "difficulty": 1, "pay": [40, 70], "where": "place", "blurb": "Elevator's out. Elevator is always out." },
-    { "id": "line-sitter", "title": "Hold a place in line", "skill": "endure", "difficulty": 1, "pay": [30, 50], "where": "place", "blurb": "Permit office opens at nine. The line started yesterday." },
-    { "id": "door", "title": "Stand at a door looking large", "skill": "intimidate", "difficulty": 1, "pay": [50, 90], "where": "place", "blurb": "Private party. Nobody gets in without a wristband or a reason." },
-    { "id": "shutter", "title": "Fix a stuck shop shutter", "skill": "repair", "difficulty": 1, "pay": [50, 80], "where": "place", "blurb": "Halfway down since Tuesday. Customers duck." },
-    { "id": "rewire", "title": "Rewire a stall's lights", "skill": "repair", "difficulty": 2, "pay": [80, 130], "where": "place", "blurb": "Patch grid only. Do not touch the Crownline meter.", "risk": { "text": "The meter is right there. Touching it is a Crownline problem.", "onFail": 1 } },
-    { "id": "scooter", "title": "Strip a dead scooter for parts", "skill": "salvage", "difficulty": 1, "pay": [35, 60], "where": "place", "blurb": "Keep the battery whole. The battery is the point." },
-    { "id": "checkup", "title": "Check on a neighbor's cough", "skill": "medic", "difficulty": 1, "pay": [40, 60], "where": "place", "blurb": "They won't go to a clinic. Something about Helix." },
-    { "id": "account", "title": "Get someone back into their account", "skill": "hack", "difficulty": 2, "pay": [90, 150], "where": "remote", "blurb": "Forgot the password. Definitely their account.", "risk": { "text": "It might not be their account.", "onFail": 1 } },
-    { "id": "busk", "title": "Busk outside a venue", "skill": "perform", "difficulty": 1, "pay": [30, 80], "where": "place", "blurb": "Draw a crowd before doors. Tips on top." },
-    { "id": "hype", "title": "Hype a launch on stream", "skill": "perform", "difficulty": 2, "pay": [70, 120], "where": "remote", "blurb": "New noodle place. Make it sound like the only noodle place." },
-    { "id": "cat", "title": "Find a lost cat", "skill": "streetwise", "difficulty": 1, "pay": [40, 70], "where": "place", "blurb": "Answers to Biscuit. Does not answer to Biscuit." },
-    { "id": "landlord", "title": "Talk a landlord down", "skill": "negotiate", "difficulty": 2, "pay": [60, 100], "where": "place", "blurb": "Rent went up thirty percent. The building did not get thirty percent better." },
-    { "id": "mystery", "title": "Mystery shop a Halo boutique", "skill": "deceive", "difficulty": 1, "pay": [50, 80], "where": "place", "blurb": "Act like you belong. Report back." },
-    { "id": "tour", "title": "Guide visitors through a market", "skill": "navigate", "difficulty": 1, "pay": [40, 70], "where": "place", "blurb": "Two out-of-towners. Keep them away from pickpockets and away from the good stalls." },
-    { "id": "flyers", "title": "Get flyers into the right hands", "skill": "network", "difficulty": 1, "pay": [35, 60], "where": "place", "blurb": "Not everyone's hands. The right ones." },
-    { "id": "vibes", "title": "Check an apartment for bad vibes", "skill": "sense", "difficulty": 1, "pay": [60, 100], "where": "place", "blurb": "Previous tenant left in a hurry. New tenant wants to know why." },
-    { "id": "dash", "title": "Beat a closing time across the district", "skill": "dash", "difficulty": 2, "pay": [50, 90], "where": "place", "blurb": "Pharmacy closes in twenty minutes. Prescription is across the bridge." },
-    { "id": "ward-check", "title": "Re-chalk a doorway someone else warded", "skill": "ward", "difficulty": 2, "pay": [80, 140], "where": "place", "blurb": "The original Shade moved away. The thing outside did not." }
-  ]
+    {
+      "id": "couch",
+      "title": "Get a couch up nine flights",
+      "skill": "haul",
+      "difficulty": 1,
+      "pay": [
+        40,
+        70
+      ],
+      "where": "place",
+      "blurb": "Elevator's out. Elevator is always out."
+    },
+    {
+      "id": "line-sitter",
+      "title": "Hold a place in line",
+      "skill": "endure",
+      "difficulty": 1,
+      "pay": [
+        30,
+        50
+      ],
+      "where": "place",
+      "blurb": "Permit office opens at nine. The line started yesterday."
+    },
+    {
+      "id": "door",
+      "title": "Stand at a door looking large",
+      "skill": "intimidate",
+      "difficulty": 1,
+      "pay": [
+        50,
+        90
+      ],
+      "where": "place",
+      "blurb": "Private party. Nobody gets in without a wristband or a reason."
+    },
+    {
+      "id": "shutter",
+      "title": "Fix a stuck shop shutter",
+      "skill": "repair",
+      "difficulty": 1,
+      "pay": [
+        50,
+        80
+      ],
+      "where": "place",
+      "blurb": "Halfway down since Tuesday. Customers duck."
+    },
+    {
+      "id": "rewire",
+      "title": "Rewire a stall's lights",
+      "skill": "repair",
+      "difficulty": 2,
+      "pay": [
+        80,
+        130
+      ],
+      "where": "place",
+      "blurb": "Patch grid only. Do not touch the Crownline meter.",
+      "risk": {
+        "text": "The meter is right there. Touching it is a Crownline problem.",
+        "onFail": 1
+      }
+    },
+    {
+      "id": "scooter",
+      "title": "Strip a dead scooter for parts",
+      "skill": "salvage",
+      "difficulty": 1,
+      "pay": [
+        35,
+        60
+      ],
+      "where": "place",
+      "blurb": "Keep the battery whole. The battery is the point."
+    },
+    {
+      "id": "checkup",
+      "title": "Check on a neighbor's cough",
+      "skill": "medic",
+      "difficulty": 1,
+      "pay": [
+        40,
+        60
+      ],
+      "where": "place",
+      "blurb": "They won't go to a clinic. Something about Helix."
+    },
+    {
+      "id": "account",
+      "title": "Get someone back into their account",
+      "skill": "hack",
+      "difficulty": 2,
+      "pay": [
+        90,
+        150
+      ],
+      "where": "remote",
+      "blurb": "Forgot the password. Definitely their account.",
+      "risk": {
+        "text": "It might not be their account.",
+        "onFail": 1
+      }
+    },
+    {
+      "id": "busk",
+      "title": "Busk outside a venue",
+      "skill": "perform",
+      "difficulty": 1,
+      "pay": [
+        30,
+        80
+      ],
+      "where": "place",
+      "blurb": "Draw a crowd before doors. Tips on top."
+    },
+    {
+      "id": "hype",
+      "title": "Hype a launch on stream",
+      "skill": "perform",
+      "difficulty": 2,
+      "pay": [
+        70,
+        120
+      ],
+      "where": "remote",
+      "blurb": "New noodle place. Make it sound like the only noodle place."
+    },
+    {
+      "id": "cat",
+      "title": "Find a lost cat",
+      "skill": "streetwise",
+      "difficulty": 1,
+      "pay": [
+        40,
+        70
+      ],
+      "where": "place",
+      "blurb": "Answers to Biscuit. Does not answer to Biscuit."
+    },
+    {
+      "id": "landlord",
+      "title": "Talk a landlord down",
+      "skill": "negotiate",
+      "difficulty": 2,
+      "pay": [
+        60,
+        100
+      ],
+      "where": "place",
+      "blurb": "Rent went up thirty percent. The building did not get thirty percent better."
+    },
+    {
+      "id": "mystery",
+      "title": "Mystery shop a Halo boutique",
+      "skill": "deceive",
+      "difficulty": 1,
+      "pay": [
+        50,
+        80
+      ],
+      "where": "place",
+      "blurb": "Act like you belong. Report back."
+    },
+    {
+      "id": "tour",
+      "title": "Guide visitors through a market",
+      "skill": "navigate",
+      "difficulty": 1,
+      "pay": [
+        40,
+        70
+      ],
+      "where": "place",
+      "blurb": "Two out-of-towners. Keep them away from pickpockets and away from the good stalls."
+    },
+    {
+      "id": "flyers",
+      "title": "Get flyers into the right hands",
+      "skill": "network",
+      "difficulty": 1,
+      "pay": [
+        35,
+        60
+      ],
+      "where": "place",
+      "blurb": "Not everyone's hands. The right ones."
+    },
+    {
+      "id": "vibes",
+      "title": "Check an apartment for bad vibes",
+      "skill": "sense",
+      "difficulty": 1,
+      "pay": [
+        60,
+        100
+      ],
+      "where": "place",
+      "blurb": "Previous tenant left in a hurry. New tenant wants to know why."
+    },
+    {
+      "id": "dash",
+      "title": "Beat a closing time across the district",
+      "skill": "dash",
+      "difficulty": 2,
+      "pay": [
+        50,
+        90
+      ],
+      "where": "place",
+      "blurb": "Pharmacy closes in twenty minutes. Prescription is across the bridge."
+    },
+    {
+      "id": "ward-check",
+      "title": "Re-chalk a doorway someone else warded",
+      "skill": "ward",
+      "difficulty": 2,
+      "pay": [
+        80,
+        140
+      ],
+      "where": "place",
+      "blurb": "The original Shade moved away. The thing outside did not."
+    }
+  ],
+  "sideways": {
+    "status": "draft",
+    "name": "Sideways",
+    "by": "Eko and Pulse",
+    "_about": "Sideways rides Velvet Signal's servers: about half the time a refresh comes in, one gig in the Pocket Change feed is theirs. Velvet takes no cut because Velvet doesn't know. Off the books, so it never touches your Pocket Change rating. Botch one badly and Velvet's servers notice the anomaly.",
+    "chance": 0.5,
+    "banner": "SIGNAL INTERRUPTED · this listing is not on Velvet's servers. Probably.",
+    "audit": {
+      "heat": 1,
+      "from": "Velvet Signal Trust & Safety",
+      "title": "Account Review: Anomalous Activity",
+      "text": "Velvet's servers flagged an anomaly on your account and pulled your logs. Heat +1."
+    },
+    "places": [
+      "three-wires--sideways-shops",
+      "low-halo--sideways-shops-sewer-door"
+    ],
+    "gigs": [
+      {
+        "id": "sw-door",
+        "title": "Deliver a box to a door that wasn't there yesterday",
+        "skill": "navigate",
+        "difficulty": 1,
+        "pay": [
+          60,
+          100
+        ],
+        "where": "place",
+        "blurb": "Address is right. The door is new. Knock twice, then once."
+      },
+      {
+        "id": "sw-counter",
+        "title": "Mind the counter for an hour",
+        "skill": "negotiate",
+        "difficulty": 1,
+        "pay": [
+          40,
+          70
+        ],
+        "where": "sideways",
+        "blurb": "If the kettle starts talking, don't answer it. Prices are on the chalkboard. Some of them are true."
+      },
+      {
+        "id": "sw-returns",
+        "title": "Sort the returns bin",
+        "skill": "sense",
+        "difficulty": 1,
+        "pay": [
+          50,
+          80
+        ],
+        "where": "sideways",
+        "blurb": "Some of it came back from places the receipt doesn't list."
+      },
+      {
+        "id": "sw-wall",
+        "title": "Sticker a wall Velvet paid to keep clean",
+        "skill": "perform",
+        "difficulty": 2,
+        "pay": [
+          80,
+          130
+        ],
+        "where": "place",
+        "blurb": "Nice blank wall. Shame about it.",
+        "risk": {
+          "text": "Velvet's cameras got a good look.",
+          "onFail": 1
+        }
+      },
+      {
+        "id": "sw-reroute",
+        "title": "Re-route a Pocket Change alert",
+        "skill": "hack",
+        "difficulty": 2,
+        "pay": [
+          100,
+          160
+        ],
+        "where": "remote",
+        "blurb": "Somebody's about to get a gig alert. Make it ours instead."
+      },
+      {
+        "id": "sw-curtain",
+        "title": "Check the curtain in the back",
+        "skill": "ward",
+        "difficulty": 2,
+        "pay": [
+          90,
+          140
+        ],
+        "where": "sideways",
+        "blurb": "It's probably fine. Take chalk."
+      }
+    ]
+  }
 }
