@@ -2340,8 +2340,8 @@
       },
       "Beastkin": {
         "status": "draft",
-        "source": "Draft for Ekois and Nib, built on the Chapter Twenty framework. Shape confirmed by Eko: Beastkin is the family, Lycan is one line in it, Banes go by line, Visceral can be a source. Line names other than Lycan and the numbers still need Nib's sign-off.",
-        "summary": "Beastkin are people whose ancestors were cursed or genetically experimented on, and it surfaces in them. An animal Aspect sits in an already-mortal body; your species stays your species. Lycan is the best-known line. Your bloodline decides your Bane.",
+        "source": "Draft by Eko with Nib's go-ahead, built on the Chapter Twenty framework and kept to the World Anvil (Supernatural Lineage, Fae, Visceral, Corporations, Biotech Retrieval Units). Not in the First Edition rulebook yet.",
+        "summary": "An Affliction, so it is something that happened to a person who already existed: your species, family and lineage stay yours. Beastkin carry an animal Aspect because an ancestor was cursed, Fae-touched, experimented on, or contaminated, and it surfaces in them. Lycan is the best-known line. Your bloodline decides your Bane.",
         "aspects": [
           {
             "name": "Hunter",
@@ -2389,11 +2389,12 @@
         },
         "weakness": {
           "name": "Bane",
-          "text": "Your bloodline sets your Bane: Silver for Lycans, Iron for Fae-cursed lines, a Crownline or Helix deterrent for lab lines. A Bane hit adds one Wound step; direct contact or sustained exposure ends Let It Out and blocks it until the end of your next turn. Never softens with Evolution."
+          "text": "Your bloodline sets your Bane: Silver for Lycans, cold iron for Fae-touched lines, a Crownline or Helix deterrent for lab lines, electrical shock or EMP for Bastion biotech. A Bane hit adds one Wound step; direct contact or sustained exposure ends Let It Out and blocks it until the end of your next turn. Never softens with Evolution.",
+          "deterrentFields": "Crownline and Helix also field area deterrents: sonic emitters, frequency fields, scent sprays. While inside one, every Beastkin's animal senses are overwhelmed (no free read; -1 die to notice or track). If the field matches your Bane, you also cannot use Let It Out and take 1 Stress when it switches on or when you enter it."
         },
         "complication": {
           "name": "Registered Beastkin",
-          "text": "ACR and Animal Control both claim jurisdiction and neither will take responsibility. Any animal attack in the district gets your name on the list."
+          "text": "ACR wants you on the registry and AEM files you under public health; neither will take responsibility for you. Any animal attack in the district puts your name on a list, and Bastion and Helix both read that list."
         },
         "progression": {
           "Dormant": "Senses only; adaptation not online. Instinct is a pull, not a push.",
@@ -2403,15 +2404,16 @@
           "Ascendant": "Capstone shift abilities; under high Stress the GM may direct one action per scene; even brief Bane contact moves the Wound Track."
         },
         "openQuestions": [
-          "What does Nib call the non-Lycan lines? 'Fae-cursed' and 'Lab line' are placeholder names.",
-          "Are there more lines than these four (for example, a Bastion biotech line)?",
-          "Do Crownline and Helix deterrents work like Silver (a hit adds a Wound step), or as area effects such as frequencies and sprays that block Let It Out?"
+          "Do the numbers hold up at the table: Let It Out at 1 Stress, Bane +1 Wound step, deterrent fields at -1 die and 1 Stress?",
+          "Should Lycan or any other line be limited to certain Aspects (for example, Lycan only Hunter or Pack)?",
+          "What does a full shift at Manifest look like?"
         ],
         "banes": [
           "Silver",
-          "Iron",
-          "Crownline deterrent frequency",
-          "Helix deterrent"
+          "Cold iron",
+          "Crownline deterrent",
+          "Helix deterrent",
+          "Electrical (EMP, shock)"
         ],
         "lines": [
           {
@@ -2423,31 +2425,41 @@
             ]
           },
           {
-            "name": "Fae-cursed",
-            "source": "Curse",
-            "text": "An ancestor crossed the Fae and the debt came due in the blood.",
+            "name": "Fae-touched",
+            "source": "Fae",
+            "text": "An ancestor crossed the Fae and the debt came due in the blood. The World Anvil leaves open whether Fae-touched can stand as its own affliction; here it is a Beastkin line.",
             "banes": [
-              "Iron"
+              "Cold iron"
             ]
           },
           {
             "name": "Lab line",
             "source": "Experiment",
-            "text": "Somebody's great-grandparent signed a trial consent form, or didn't. Crownline and Helix both keep deterrents tuned for what came out of it.",
+            "text": "A great-grandparent was a Helix trial subject, by consent form or without one. Crownline and Helix both keep deterrents tuned for what came out of it.",
             "banes": [
-              "Crownline deterrent frequency",
+              "Crownline deterrent",
+              "Helix deterrent"
+            ]
+          },
+          {
+            "name": "Biotech",
+            "source": "Bastion biotech",
+            "text": "Spliced, sampled, or patched with Bastion biotech somewhere up the family tree, from the same program that built the retrieval units. Bastion still wants the samples back.",
+            "banes": [
+              "Electrical (EMP, shock)",
               "Helix deterrent"
             ]
           },
           {
             "name": "Visceral",
-            "source": "Visceral",
-            "text": "It came up through the Visceral side of the family. Pick the Bane with your GM.",
+            "source": "Visceral contamination",
+            "text": "Contamination from the Visceral side of the world, the body refusing ordinary limits. You are still not Slimefolk and not Visceral by lineage. Pick the Bane with your GM.",
             "banes": [
               "Silver",
-              "Iron",
-              "Crownline deterrent frequency",
-              "Helix deterrent"
+              "Cold iron",
+              "Crownline deterrent",
+              "Helix deterrent",
+              "Electrical (EMP, shock)"
             ]
           }
         ]
