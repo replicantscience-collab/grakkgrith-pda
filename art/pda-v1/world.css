@@ -1,0 +1,80 @@
+/* World page skin: the hero, section chips, panel, buttons and cards shared by every World panel that has
+   had its art pass, plus Start's own pieces. The shell adds class pda-art to the World page's body only for
+   panels listed in PDA_ART_PAGES (index.html); page-specific styles live in their own file (city.css).
+   Missions, Factions, Lore, and Logs keep their old look until their pass.
+   Note: Low Halo's own map page also reports data-page="city", so it gets the City treatment.
+   The older "occult caseboard" skin uses !important, so these rules do too, with higher specificity. */
+
+body.pda-art{background:var(--art-ink) url("assets/ink-tile.svg") repeat!important;color:var(--art-cream);font-family:var(--art-body)}
+body.pda-art::before{display:none!important}
+body.pda-art .wrap{max-width:1240px;margin:0 auto;padding:16px clamp(12px,3vw,32px) 48px}
+
+/* Hero: skyline, brass frame, the welcome */
+body.pda-art .hero{position:relative;display:grid;grid-template-columns:minmax(0,1fr) minmax(220px,300px);gap:20px;align-items:center;
+  min-height:300px;padding:clamp(48px,6vw,64px) clamp(30px,6vw,72px) clamp(40px,5vw,56px)!important;border:2px solid var(--art-brass)!important;border-radius:var(--art-radius)!important;
+  background:linear-gradient(90deg,rgba(9,11,27,.92),rgba(10,12,24,.40)),url("assets/district-skyline.svg") center/cover!important;
+  box-shadow:0 9px 30px rgba(0,0,0,.55),var(--art-glow)!important;overflow:hidden}
+body.pda-art .hero::before{content:""!important;position:absolute;inset:0;pointer-events:none;
+  background:url("assets/frame-corners.svg") center/100% 100% no-repeat!important;opacity:.9;border:0!important;transform:none!important}
+body.pda-art .hero::after{content:none!important}
+body.pda-art .hero>*{position:relative;z-index:1}
+body.pda-art #caseStamp{display:none!important}
+body.pda-art .kicker{color:var(--art-cyan)!important;font:700 14px/1.2 var(--art-ui);letter-spacing:.12em;text-transform:uppercase}
+body.pda-art .title{margin:8px 0 14px;color:#ffc55f!important;font:400 clamp(40px,6.5vw,80px)/.95 var(--art-title)!important;
+  text-shadow:4px 5px 0 #48213f!important;letter-spacing:.01em}
+body.pda-art .copy{max-width:34ch;margin:0;color:var(--art-cream)!important;font-size:clamp(16px,2vw,20px);line-height:1.45}
+
+/* Buttons: magenta for the main action, cyan outline for the rest; 48px tall */
+body.pda-art button{min-height:48px;padding:10px 18px!important;border:1px solid var(--art-cyan)!important;border-radius:6px!important;
+  background:#10152a!important;color:var(--art-cyan)!important;font:700 16px/1.1 var(--art-ui)!important;letter-spacing:.06em;text-transform:uppercase;
+  box-shadow:inset 0 0 12px rgba(34,218,228,.15)!important;text-shadow:none!important}
+body.pda-art button:hover{background:#1e2c3a!important;filter:none}
+body.pda-art button.primary{border-color:var(--art-magenta)!important;background:linear-gradient(180deg,#5a1d47,#2a1230)!important;color:#fff!important;
+  box-shadow:0 0 16px rgba(239,70,186,.25),inset 0 0 0 1px rgba(255,255,255,.08)!important}
+body.pda-art button:focus-visible{outline:var(--art-focus)!important;outline-offset:3px}
+body.pda-art .actions{display:flex;flex-wrap:wrap;gap:10px;margin-top:22px}
+
+/* Current operative: a paper note pinned to the hero */
+body.pda-art .ops{transform:rotate(-1.2deg);padding:16px 18px!important;border:1px solid #a97f45!important;border-left:5px solid var(--art-magenta)!important;
+  border-radius:7px!important;background:var(--art-parchment) url("assets/parchment-tile.svg") repeat!important;color:#2c1c18!important;
+  box-shadow:inset 0 0 18px rgba(113,70,25,.2),0 10px 24px rgba(0,0,0,.45)!important}
+body.pda-art .ops strong{display:block;color:#5b254e!important;font:400 22px/1.1 var(--art-title)}
+body.pda-art .ops p{margin:8px 0 0;color:#2c1c18!important;font-size:15px}
+body.pda-art .ops p:nth-of-type(1){font-weight:700;font-size:18px}
+
+/* Section switcher: the old rail becomes one row of chips */
+body.pda-art .dashboard{display:block!important;margin-top:18px}
+body.pda-art .panel{min-width:0}
+body.pda-art .rail{position:static!important;display:flex!important;flex-wrap:wrap;gap:8px;padding:0!important;margin:0 0 14px;
+  border:0!important;background:none!important;box-shadow:none!important}
+body.pda-art .module{width:auto!important;margin:0!important;min-height:44px;padding:8px 14px!important;border:1px solid rgba(118,80,45,.8)!important;
+  border-radius:999px!important;background:rgba(29,22,42,.9)!important;color:var(--art-cream)!important;box-shadow:none!important}
+body.pda-art .module h2{margin:0;color:var(--art-cream)!important;font:700 15px/1 var(--art-ui)!important;letter-spacing:.05em;text-transform:uppercase;text-shadow:none!important}
+body.pda-art .module.active{border-color:var(--art-magenta)!important;background:#2a1230!important}
+body.pda-art .module.active h2{color:#fff!important}
+
+/* Start panel: framed card with two inner panels */
+body.pda-art .panel{position:relative;padding:clamp(16px,3vw,26px)!important;border:2px solid var(--art-brass-shadow)!important;border-radius:var(--art-radius)!important;
+  background:linear-gradient(130deg,#1c1428,#0b0c16)!important;box-shadow:inset 0 0 0 2px rgba(220,180,117,.24),0 8px 22px rgba(0,0,0,.45)!important}
+body.pda-art .panel h1{margin:0 0 14px;color:var(--art-brass)!important;font:400 clamp(28px,4vw,40px)/1.05 var(--art-title)!important;text-shadow:2px 2px 0 #51213d!important}
+body.pda-art .cards{display:grid!important;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:16px!important}
+body.pda-art .mini{padding:16px 18px!important;border:1px solid rgba(215,172,97,.45)!important;border-radius:8px!important;background:rgba(10,11,22,.65)!important}
+body.pda-art .mini::before{content:none!important}
+body.pda-art .mini h3{margin:0 0 4px;color:#ffc55f!important;font:400 24px/1.1 var(--art-title)!important;text-shadow:none!important}
+body.pda-art .mini .actions{margin-top:10px}
+body.pda-art .opbar{margin-top:16px;padding:12px 14px!important;border:1px solid rgba(154,242,105,.45)!important;border-radius:8px!important;
+  background:rgba(154,242,105,.06)!important;color:var(--art-cream)!important;font-size:15px}
+body.pda-art .opbar b{color:var(--art-lime)}
+body.pda-art .footer{color:var(--art-muted)}
+
+@media (max-width:860px){
+  body.pda-art .hero{grid-template-columns:1fr;min-height:0}
+  /* tall on phones: corners via border-image so they keep their shape */
+  body.pda-art .hero::before{inset:4px!important;background:none!important;border:24px solid transparent!important;border-image:url("assets/frame-corners.svg") 90 / 24px / 0 stretch!important}
+  body.pda-art .ops{transform:none}
+  body.pda-art .actions button{flex:1 1 auto}
+  body.pda-art .rail{flex-wrap:nowrap;overflow-x:auto;scrollbar-width:none;margin-left:-2px;padding-bottom:4px!important}
+  body.pda-art .rail::-webkit-scrollbar{display:none}
+  body.pda-art .module{flex:0 0 auto}
+}
+@media (prefers-reduced-motion:reduce){body.pda-art .ops{transform:none}}

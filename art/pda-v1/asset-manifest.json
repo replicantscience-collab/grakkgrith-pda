@@ -1,0 +1,71 @@
+{
+  "pack": "sideways-pda-visual-foundation",
+  "version": "0.1.0",
+  "status": "concept-assets-not-merged-into-live-pda",
+  "assets": [
+    {
+      "file": "assets/parchment-tile.svg",
+      "role": "repeatable parchment background"
+    },
+    {
+      "file": "assets/ink-tile.svg",
+      "role": "repeatable dark UI background"
+    },
+    {
+      "file": "assets/sideways-sigil.svg",
+      "role": "proposed original Sideways spiral sign"
+    },
+    {
+      "file": "assets/third-eye.svg",
+      "role": "doodle eye ornament"
+    },
+    {
+      "file": "assets/crown-doodle.svg",
+      "role": "doodle crown ornament"
+    },
+    {
+      "file": "assets/portal-doodle.svg",
+      "role": "portal ornament"
+    },
+    {
+      "file": "assets/ornament-divider.svg",
+      "role": "horizontal decorative divider"
+    },
+    {
+      "file": "assets/district-skyline.svg",
+      "role": "original illustrative city silhouette, NOT canonical map"
+    },
+    {
+      "file": "assets/frame-corners.svg",
+      "role": "decorative panel frame"
+    },
+    {
+      "file": "assets/stamp-unofficial.svg",
+      "role": "unofficial field guide stamp"
+    },
+    {
+      "file": "assets/nav-tab-idle.svg",
+      "role": "inactive nav backing"
+    },
+    {
+      "file": "assets/nav-tab-active.svg",
+      "role": "active nav backing"
+    }
+  ],
+  "referenceArtAlreadyInRepo": [
+    "../sideways-shops/races-poster.jpg",
+    "../sideways-shops/races/goblin.jpg",
+    "../../maps/low-halo-district-map.jpg"
+  ],
+  "upstream": [
+    "../../data/rules.json",
+    "../../data/places.json",
+    "../../data/guides/races.json"
+  ],
+  "notes": [
+    "No pre-rendered UI text in SVG assets; render titles and stats as accessible HTML.",
+    "Maps and official race facts remain authoritative in existing data; this pack adds only presentation.",
+    "Original sketch/logo treatment is a proposal pending Nib's approval.",
+    "Review responsiveness, image weight, and alternate text before integrating."
+  ]
+}

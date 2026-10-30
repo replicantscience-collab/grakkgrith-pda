@@ -1,0 +1,62 @@
+/* PDA shell (index.html): brand, top nav, Tools menu, toast.
+   Presentation only. Every button keeps its id and click handler; nothing here changes what the nav does.
+   Needs tokens.css first and class="pda-art" on <body>. */
+
+body.pda-art{display:flex;flex-direction:column;height:100%;margin:0;
+  background:var(--art-ink) url("assets/ink-tile.svg") repeat}
+body.pda-art::before{display:none}
+
+/* Top bar */
+.pda-art .topbar{display:grid;grid-template-columns:auto 1fr;align-items:center;gap:6px 18px;
+  padding:10px clamp(12px,2vw,24px);border-bottom:2px solid var(--art-brass-shadow);
+  background:linear-gradient(180deg,rgba(21,17,36,.97),rgba(10,11,22,.97));
+  box-shadow:0 10px 28px rgba(0,0,0,.5),inset 0 -1px 0 rgba(215,172,97,.25)}
+.pda-art .brand{display:flex;align-items:center;gap:10px;color:var(--art-brass);
+  font:400 26px/1 var(--art-title);letter-spacing:.01em;text-shadow:2px 2px 0 #51213d}
+.pda-art .brand::before{content:none}
+.pda-art .brand img{width:40px;height:40px;flex:none;filter:drop-shadow(0 0 8px rgba(164,74,181,.45))}
+.pda-art .brand small{display:block;margin-top:4px;color:var(--art-cyan);font:700 11px/1 var(--art-ui);letter-spacing:.14em;text-shadow:none}
+
+/* Nav tabs: the kit's tab backings, 44px tall so they're easy to hit */
+.pda-art .mainNav{display:flex;flex-wrap:wrap;align-items:center;gap:6px}
+.pda-art .navPill{min-height:44px;min-width:84px;padding:8px 14px;border:0;border-radius:0;box-shadow:none;
+  background:url("assets/nav-tab-idle.svg") center/100% 100% no-repeat;color:var(--art-cream);
+  font:700 15px/1.1 var(--art-ui);letter-spacing:.06em;text-transform:uppercase}
+.pda-art .navPill:hover{filter:brightness(1.18);box-shadow:none}
+.pda-art .navPill.active{background-image:url("assets/nav-tab-active.svg");color:#fff;filter:none}
+.pda-art .navPill:focus-visible,.pda-art .navMenu button:focus-visible{outline:var(--art-focus);outline-offset:2px}
+.pda-art .navToggle::after{color:var(--art-brass)}
+.pda-art .miniBadge{color:var(--art-lime);font:600 10px/1.1 var(--art-ui);letter-spacing:.04em;max-width:96px}
+
+/* Tools menu */
+.pda-art .navMenu{min-width:260px;padding:10px;gap:6px;border:2px solid var(--art-brass-shadow);border-radius:var(--art-radius);
+  background:linear-gradient(160deg,rgba(29,22,42,.99),rgba(10,11,22,.99));box-shadow:0 16px 40px rgba(0,0,0,.6),var(--art-glow)}
+.pda-art .navMenu button{min-height:44px;padding:8px 12px;border:1px solid rgba(118,80,45,.7);border-radius:6px;box-shadow:none;
+  background:rgba(29,22,42,.9);color:var(--art-cream);font:600 16px/1.2 var(--art-ui);letter-spacing:.03em;text-transform:none}
+.pda-art .navMenu button:hover{border-color:var(--art-cyan);filter:none;box-shadow:inset 0 0 12px rgba(34,218,228,.15)}
+.pda-art .navMenu button.danger{border-color:var(--art-alert);color:#ffd9dc;background:rgba(252,108,116,.08)}
+
+/* Content frame and toast */
+.pda-art #frame{background:var(--art-ink)}
+.pda-art .notice{border:1px solid var(--art-magenta);border-radius:var(--art-radius);background:var(--art-panel);color:var(--art-cream);
+  font:15px/1.4 var(--art-body);box-shadow:0 16px 40px rgba(0,0,0,.6),var(--art-glow)}
+
+/* Phones and narrow windows: one row of tabs you swipe sideways, so content starts near the top.
+   The Tools menu opens as a sheet from the bottom (a scrolling row would clip a dropdown). */
+@media (max-width:900px){
+  .pda-art .topbar{grid-template-columns:1fr;gap:8px;padding:8px 0 6px}
+  .pda-art .brand{padding:0 14px;font-size:22px}
+  .pda-art .brand img{width:34px;height:34px}
+  .pda-art .mainNav{display:flex;flex-wrap:nowrap;overflow-x:auto;overscroll-behavior-x:contain;scroll-padding:0 14px;
+    padding:0 14px 6px;gap:6px;scrollbar-width:none}
+  .pda-art .mainNav::-webkit-scrollbar{display:none}
+  .pda-art .navPill{flex:0 0 auto;width:auto;min-width:76px;padding:8px 12px;font-size:15px}
+  .pda-art .navMenu{position:fixed;left:0;right:0;top:auto;bottom:0;min-width:0;max-height:72vh;overflow-y:auto;
+    padding:14px 14px calc(14px + env(safe-area-inset-bottom));border-radius:16px 16px 0 0;border-bottom:0;z-index:30}
+}
+
+/* Touchscreens keep a sticky :hover after a tap, which held the Tools menu open after choosing.
+   On touch, the menu follows focus only: tap Tools to open; choosing or tapping away closes it. */
+@media (hover:none){
+  .pda-art .navGroup:hover:not(:focus-within) .navMenu{display:none}
+}

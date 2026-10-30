@@ -1,0 +1,55 @@
+# Adyta PDA × Sideways Shops — visual foundation v0.1
+
+**Design kit, not a replacement app.** These files add reusable **SVG visual assets**, scoped CSS tokens/components, and a working self-contained HTML preview. The existing game's code, rules, save formats, maps, service worker, and data remain unchanged.
+
+## Preview
+Serve the repository (e.g. `python -m http.server 8000` at root) and open `/art/pda-v1/preview.html`. This is a visual concept built partly on the existing art in `art/sideways-shops/` and `maps/`, not a functioning game page.
+
+## What is included
+- `assets/*.svg`: 12 lightweight original scalable vector assets; **text-free** (except the intentionally lettered unofficial stamp). The district skyline is illustrative, **not** a playable map.
+- `tokens.css`: all additions scoped under `.pda-art`; reuses the repo's bundled fonts (Permanent Marker, Saira Condensed, Atkinson Hyperlegible).
+- `components.css`: hero, tab, paper note, panel, card, divider, sticker, responsive layout styles.
+- `preview.html`: visual checks at desktop and phone sizes.
+- `asset-manifest.json`: asset roles and source-of-truth cautions.
+- `CLAUDE_HANDOFF.md`: integration instructions in small safe slices.
+
+## Boundaries
+The source of truth for game mechanics stays `data/rules.json`; for city/location/travel state it stays `data/places.json`. In-world Sideways commentary belongs to `data/guides/races.json` or a similarly separate commentary layer. Keep character saves, inventory, simulation logic, and map pin transforms unchanged.
+
+The four large rendered concept screenshots from the design discussion are **directional references**; they are not shippable app screens or validated game UI. This kit provides actual reusable assets rather than baking buttons and stats into images.
+
+## Next
+Have Claude start with the **shell + Start + existing Goblin guide**, compare mobile screenshots, and then move to City/Curiosities. Do not replace all routes or the game state at once.
+
+See `CLAUDE_HANDOFF.md`.
+
+
+## Integrated so far (slice 1)
+
+- **Shell** (`index.html` + `shell.css`): brand, nav tabs, Tools menu. On phones the nav is one swipeable row and Tools opens as a sheet from the bottom.
+- **World page** (`world.css`): the hero, section chips, panel, buttons and cards shared by World panels, plus Start's own pieces. It applies only to panels listed in `PDA_ART_PAGES` in `index.html` (the World page sets `body[data-page]`); Missions, Factions, Lore and Logs keep their old look until their own pass. To give a panel its pass: add page-specific CSS (like `city.css`), then add the page to `PDA_ART_PAGES`.
+- **Race guide** (`apps/guide.html`): Sideways' take on stamped paper, the rulebook in a framed panel labelled "From the rulebook". All values still come from `data/guides/races.json` and `data/rules.json`.
+- Offline: the CSS and the SVGs these screens use are pre-cached (about 30 KB).
+
+## Integrated so far (slice 2: City)
+
+- **City** (`city.css`): atlas frame, layer toggles (on = cyan, off = struck through), pin labels (appearance only; positions untouched), the district dossier as a paper field file, district map pages, route board.
+- Fixed two old City bugs: the page was 1188px wide on a 390px phone (a grid track couldn't shrink around the 1120px atlas), and opening City jumped down to District Map Pages.
+- Phones get a compact City hero; the character buttons live on Start and in Tools.
+- Known limit: the 28 atlas pins are about 24px tall. Bigger hit areas would overlap neighbours on this dense map; Explore is the touch-friendly map.
+- Before/after screenshots: `screenshots/` (`compare-*.jpg` are side by side).
+
+Still pending Nib's review: the Sideways sigil as the PDA's brand mark, and the hero copy ("A livin' city in your pocket / Welcome to Adyta"), taken from the kit preview.
+
+## Integrated so far (slice 3: Missions and Factions)
+
+- `board.css`, scoped to `body[data-panel="missions"]` and `body[data-panel="factions"]`. `showPanel` now also sets `body[data-panel]`, so panels that share `data-page="world"` can be skinned one at a time; `PDA_ART_PAGES` matches on either.
+- **Missions:** the three-step loop as numbered cards; the job list as contract tickets (selected = magenta); the open job as a paper contract bulletin over a grid of brief fields.
+- **Factions:** the three blocs each get an edge color (corporate red, civic cyan, commons lime), then the faction and relationship cards.
+- Still on the old look: Lore and Logs (World page), State, and the Character Sheet and inventory (their own app).
+
+## Integrated so far (slice 4: Lore, Logs, State, and the new-player path)
+
+- Lore, Logs (`downtime`) and the State tracker use `board.css`; State is its own page and is tagged `data-panel="state"` by `withPdaArt(html, 'state')`.
+- Forms (Logs, State): cyan labels, 44px inputs, visible focus.
+- Every World panel and the State page now have the art pass. Still on the old look: the Character Hub, Character Setup, the Character Sheet and inventory.

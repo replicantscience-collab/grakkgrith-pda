@@ -1,8 +1,8 @@
-// GRAKKGRITH Service Worker v46
+// GRAKKGRITH Service Worker v50
 // Caches the app for offline use. Cache busts on version bump.
 // Maps are not downloaded up front: each one is saved the first time you open it (see fetch below).
 
-const CACHE_NAME = 'grakkgrith-v46';
+const CACHE_NAME = 'grakkgrith-v50';
 const ASSETS = [
   './',
   './index.html',
@@ -11,6 +11,20 @@ const ASSETS = [
   './data/rules.json',
   './apps/explore.html',
   './apps/guide.html',
+  './art/pda-v1/tokens.css',
+  './art/pda-v1/shell.css',
+  './art/pda-v1/world.css',
+  './art/pda-v1/city.css',
+  './art/pda-v1/board.css',
+  './art/pda-v1/assets/sideways-sigil.svg',
+  './art/pda-v1/assets/nav-tab-idle.svg',
+  './art/pda-v1/assets/nav-tab-active.svg',
+  './art/pda-v1/assets/ink-tile.svg',
+  './art/pda-v1/assets/parchment-tile.svg',
+  './art/pda-v1/assets/frame-corners.svg',
+  './art/pda-v1/assets/district-skyline.svg',
+  './art/pda-v1/assets/ornament-divider.svg',
+  './art/pda-v1/assets/stamp-unofficial.svg',
   './fonts/fonts.css',
   './fonts/atkinson-hyperlegible-latin-400-normal.woff2',
   './fonts/atkinson-hyperlegible-latin-400-italic.woff2',
