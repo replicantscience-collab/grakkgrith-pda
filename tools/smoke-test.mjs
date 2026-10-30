@@ -37,7 +37,8 @@ async function newPage(viewport) {
   const errors = [];
   page.on('pageerror', e => errors.push(e.message));
   page.on('console', m => { if (m.type() === 'error' && !/Failed to load resource/.test(m.text())) errors.push(m.text()); });
-  page.on('requestfailed', r => { if (r.url().startsWith(BASE)) errors.push('missing file: ' + r.url().slice(BASE.length)); });
+  // ERR_ABORTED just means the screen changed before a download finished; real missing files show up as 404s below.
+  page.on('requestfailed', r => { if (r.url().startsWith(BASE) && !/ERR_ABORTED/.test(r.failure()?.errorText || '')) errors.push(`failed to load (${r.failure()?.errorText}): ${r.url().slice(BASE.length)}`); });
   page.on('response', r => { if (r.url().startsWith(BASE) && r.status() >= 400) errors.push(`missing file (${r.status()}): ${r.url().slice(BASE.length)}`); });
   return { ctx, page, errors };
 }
@@ -70,9 +71,15 @@ try {
     await step('Explore shows the Adyta clock', async () => /\d:\d\d [AP]M/.test(await f.evaluate(() => document.getElementById('clock').textContent)));
     await step('Explore can plan a trip', async () => (await f.evaluate(() => window.GRAKK_EXPLORE.planTrip({ district: 'ember-court', place: 'ember-court--the-ninth-circle-ph' }).length)) > 0);
 
+    // Sideways art pass: Start wears the kit; Sideways' commentary and the rulebook stay separate in the guide.
+    f = await open('worldBtn', 1200);
+    await step('Start uses the Sideways skin', () => f.evaluate(() => document.body.classList.contains('pda-art') && getComputedStyle(document.querySelector('.title')).fontFamily.includes('Permanent Marker')));
+    await step('City keeps its own look (skin is Start-only)', async () => { await f.evaluate(() => showPanel('city')); return !(await f.evaluate(() => document.body.classList.contains('pda-art'))); });
+
     // Guides: all 11 races, and a card opens its entry.
     f = await open('guidesBtn', 1200);
     await step('Guides shows 11 races', async () => { const n = await f.evaluate(() => document.querySelectorAll('.card').length); return n === 11 || `found ${n}`; });
+    await step('Guide keeps Sideways commentary and rules apart', async () => { await f.evaluate(() => document.querySelector('[data-race="Goblin"]').click()); return f.evaluate(() => !!document.querySelector('#detail .sideways') && /From the rulebook/i.test(document.querySelector('#detail .rules').innerText) && !document.querySelector('#detail .sideways').innerText.includes('Reflex')); });
     await step('Guides opens a race entry', async () => { await f.evaluate(() => document.querySelector('[data-race="Fairy"]').click()); return /Fae Reading/.test(await f.evaluate(() => document.getElementById('detail').innerText)); });
 
     // City: 28 atlas pins, and a pin opens its dossier.

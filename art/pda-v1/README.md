@@ -23,3 +23,13 @@ Have Claude start with the **shell + Start + existing Goblin guide**, compare mo
 
 See `CLAUDE_HANDOFF.md`.
 
+
+## Integrated so far (slice 1)
+
+- **Shell** (`index.html` + `shell.css`): brand, nav tabs, Tools menu. On phones the nav is one swipeable row and Tools opens as a sheet from the bottom.
+- **Start** (`start.css`): applies only while the Start panel is showing (the World page sets `body[data-page]`); City, Missions, Factions, Lore and Logs keep their old look until their own pass.
+- **Race guide** (`apps/guide.html`): Sideways' take on stamped paper, the rulebook in a framed panel labelled "From the rulebook". All values still come from `data/guides/races.json` and `data/rules.json`.
+- Offline: the CSS and the SVGs these screens use are pre-cached (about 30 KB).
+- Before/after screenshots: `screenshots/` (`compare-*.jpg` are side by side).
+
+Still pending Nib's review: the Sideways sigil as the PDA's brand mark, and the hero copy ("A livin' city in your pocket / Welcome to Adyta"), taken from the kit preview.
