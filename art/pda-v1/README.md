@@ -47,3 +47,9 @@ Still pending Nib's review: the Sideways sigil as the PDA's brand mark, and the 
 - **Missions:** the three-step loop as numbered cards; the job list as contract tickets (selected = magenta); the open job as a paper contract bulletin over a grid of brief fields.
 - **Factions:** the three blocs each get an edge color (corporate red, civic cyan, commons lime), then the faction and relationship cards.
 - Still on the old look: Lore and Logs (World page), State, and the Character Sheet and inventory (their own app).
+
+## Integrated so far (slice 4: Lore, Logs, State, and the new-player path)
+
+- Lore, Logs (`downtime`) and the State tracker use `board.css`; State is its own page and is tagged `data-panel="state"` by `withPdaArt(html, 'state')`.
+- Forms (Logs, State): cyan labels, 44px inputs, visible focus.
+- Every World panel and the State page now have the art pass. Still on the old look: the Character Hub, Character Setup, the Character Sheet and inventory.

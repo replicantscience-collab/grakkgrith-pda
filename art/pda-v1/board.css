@@ -1,17 +1,17 @@
-/* Missions and Factions (World page panels "missions" and "factions"; the shell sets body[data-panel]).
+/* Missions, Factions, Lore, Logs (World page panels; the shell sets body[data-panel]) and the State tracker (its own page, tagged data-panel="state").
    Shared pieces (hero, chips, panel, buttons, cards, opbar) come from world.css.
    Presentation only: job ids, Start Operation, Send To Logs and World Memory behave exactly as before. */
 
-body.pda-art:is([data-panel="missions"],[data-panel="factions"]) .panel>p{max-width:72ch;color:var(--art-cream)!important;font-size:16px}
-body.pda-art:is([data-panel="missions"],[data-panel="factions"]) .panel h3{color:var(--art-brass)!important;font:400 24px/1.15 var(--art-title)!important;text-shadow:none!important}
-body.pda-art:is([data-panel="missions"],[data-panel="factions"]) .tag{display:inline-block;margin:0 6px 6px 0;padding:3px 10px;border:1px solid var(--art-brass)!important;border-radius:999px!important;
+body.pda-art:is([data-panel="missions"],[data-panel="factions"],[data-panel="lore"],[data-panel="downtime"],[data-panel="state"]) .panel>p{max-width:72ch;color:var(--art-cream)!important;font-size:16px}
+body.pda-art:is([data-panel="missions"],[data-panel="factions"],[data-panel="lore"],[data-panel="downtime"],[data-panel="state"]) .panel h3{color:var(--art-brass)!important;font:400 24px/1.15 var(--art-title)!important;text-shadow:none!important}
+body.pda-art:is([data-panel="missions"],[data-panel="factions"],[data-panel="lore"],[data-panel="downtime"],[data-panel="state"]) .tag{display:inline-block;margin:0 6px 6px 0;padding:3px 10px;border:1px solid var(--art-brass)!important;border-radius:999px!important;
   background:rgba(10,11,22,.7)!important;color:var(--art-brass)!important;font:700 12px/1.3 var(--art-ui);letter-spacing:.06em;text-transform:uppercase}
-body.pda-art:is([data-panel="missions"],[data-panel="factions"]) .tag.live{border-color:var(--art-lime)!important;color:var(--art-lime)!important}
-body.pda-art:is([data-panel="missions"],[data-panel="factions"]) .tag.danger{border-color:var(--art-alert)!important;color:#ffb3b8!important}
-body.pda-art:is([data-panel="missions"],[data-panel="factions"]) .mini p,body.pda-art:is([data-panel="missions"],[data-panel="factions"]) .panel li{color:var(--art-cream)!important}
-body.pda-art:is([data-panel="missions"],[data-panel="factions"]) .panel ul{padding-left:20px}
-body.pda-art:is([data-panel="missions"],[data-panel="factions"]) .panel li{margin:6px 0}
-body.pda-art:is([data-panel="missions"],[data-panel="factions"]) .panel li b{color:#ffe2a8}
+body.pda-art:is([data-panel="missions"],[data-panel="factions"],[data-panel="lore"],[data-panel="downtime"],[data-panel="state"]) .tag.live{border-color:var(--art-lime)!important;color:var(--art-lime)!important}
+body.pda-art:is([data-panel="missions"],[data-panel="factions"],[data-panel="lore"],[data-panel="downtime"],[data-panel="state"]) .tag.danger{border-color:var(--art-alert)!important;color:#ffb3b8!important}
+body.pda-art:is([data-panel="missions"],[data-panel="factions"],[data-panel="lore"],[data-panel="downtime"],[data-panel="state"]) .mini p,body.pda-art:is([data-panel="missions"],[data-panel="factions"],[data-panel="lore"],[data-panel="downtime"],[data-panel="state"]) .panel li{color:var(--art-cream)!important}
+body.pda-art:is([data-panel="missions"],[data-panel="factions"],[data-panel="lore"],[data-panel="downtime"],[data-panel="state"]) .panel ul{padding-left:20px}
+body.pda-art:is([data-panel="missions"],[data-panel="factions"],[data-panel="lore"],[data-panel="downtime"],[data-panel="state"]) .panel li{margin:6px 0}
+body.pda-art:is([data-panel="missions"],[data-panel="factions"],[data-panel="lore"],[data-panel="downtime"],[data-panel="state"]) .panel li b{color:#ffe2a8}
 
 /* Mission loop: three numbered steps (it really is a sequence) */
 body.pda-art[data-panel="missions"] .missionPrimer{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px;margin:16px 0}
@@ -57,6 +57,43 @@ body.pda-art[data-panel="factions"] .cards{margin:12px 0 22px}
 body.pda-art[data-panel="factions"] .panel>h3{margin:26px 0 4px}
 
 @media (max-width:860px){
-  body.pda-art:is([data-panel="missions"],[data-panel="factions"]) :is(.missionPrimer,.missionLayout,.briefGrid,.matrix){grid-template-columns:1fr!important}
+  body.pda-art:is([data-panel="missions"],[data-panel="factions"],[data-panel="lore"],[data-panel="downtime"],[data-panel="state"]) :is(.missionPrimer,.missionLayout,.briefGrid,.matrix){grid-template-columns:1fr!important}
   body.pda-art[data-panel="missions"] .briefTop{padding:18px 16px!important}
+}
+
+/* Lore: the three city truths get edge colors like the faction blocs */
+body.pda-art[data-panel="lore"] .matrix{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px;margin:12px 0 22px}
+body.pda-art[data-panel="lore"] .matrix .mini:nth-child(1){border-left:5px solid var(--art-cyan)!important}
+body.pda-art[data-panel="lore"] .matrix .mini:nth-child(2){border-left:5px solid var(--art-lime)!important}
+body.pda-art[data-panel="lore"] .matrix .mini:nth-child(3){border-left:5px solid var(--art-magenta)!important}
+body.pda-art:is([data-panel="lore"],[data-panel="factions"]) .panel>h3{margin:26px 0 4px}
+
+/* Forms (Logs and State) */
+body.pda-art:is([data-panel="missions"],[data-panel="factions"],[data-panel="lore"],[data-panel="downtime"],[data-panel="state"]) label{display:block;margin:12px 0 4px;color:var(--art-cyan);font:700 13px/1.2 var(--art-ui);letter-spacing:.08em;text-transform:uppercase}
+body.pda-art:is([data-panel="missions"],[data-panel="factions"],[data-panel="lore"],[data-panel="downtime"],[data-panel="state"]) :is(input,textarea,select){width:100%;min-height:44px;padding:10px 12px;border:1px solid rgba(118,80,45,.9)!important;border-radius:6px;
+  background:#0b0c16!important;color:var(--art-cream)!important;font:16px/1.4 var(--art-body)}
+body.pda-art:is([data-panel="missions"],[data-panel="factions"],[data-panel="lore"],[data-panel="downtime"],[data-panel="state"]) textarea{min-height:96px;resize:vertical}
+body.pda-art:is([data-panel="missions"],[data-panel="factions"],[data-panel="lore"],[data-panel="downtime"],[data-panel="state"]) :is(input,textarea,select):focus{outline:none;border-color:var(--art-cyan)!important;box-shadow:0 0 0 3px rgba(34,218,228,.25)}
+body.pda-art:is([data-panel="missions"],[data-panel="factions"],[data-panel="lore"],[data-panel="downtime"],[data-panel="state"]) ::placeholder{color:#8d7f66}
+body.pda-art:is([data-panel="missions"],[data-panel="factions"],[data-panel="lore"],[data-panel="downtime"],[data-panel="state"]) textarea[readonly]{background:#10152a!important;border-color:rgba(34,218,228,.45)!important;font-family:ui-monospace,Consolas,monospace;font-size:14px}
+
+/* State tracker page */
+body.pda-art[data-panel="state"] .hero{grid-template-columns:minmax(0,1fr) auto}
+body.pda-art[data-panel="state"] .eyebrow{color:var(--art-cyan)!important;font:700 14px/1.2 var(--art-ui);letter-spacing:.12em;text-transform:uppercase}
+body.pda-art[data-panel="state"] .hero h1{margin:8px 0 10px;color:#ffc55f!important;font:400 clamp(34px,5vw,60px)/1 var(--art-title)!important;text-shadow:4px 5px 0 #48213f!important}
+body.pda-art[data-panel="state"] .hero p{max-width:52ch;color:var(--art-cream)!important}
+body.pda-art[data-panel="state"] .hero .mini{margin-top:12px;padding:6px 12px!important;display:inline-block;color:var(--art-muted)!important}
+body.pda-art[data-panel="state"] .hero .actions{flex-direction:column;align-items:stretch;margin:0}
+body.pda-art[data-panel="state"] .grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px;margin-top:18px}
+body.pda-art[data-panel="state"] .card{padding:18px 20px!important;border:2px solid var(--art-brass-shadow)!important;border-radius:var(--art-radius)!important;
+  background:linear-gradient(130deg,#1c1428,#0b0c16)!important;box-shadow:inset 0 0 0 1px rgba(220,180,117,.18),0 8px 22px rgba(0,0,0,.45)!important}
+body.pda-art[data-panel="state"] .card.wide{grid-column:1/-1}
+body.pda-art[data-panel="state"] .card h2{margin:0 0 4px;color:var(--art-brass)!important;font:400 26px/1.1 var(--art-title)!important;text-shadow:none!important}
+body.pda-art[data-panel="state"] .recap{padding:14px 16px!important;border:1px solid rgba(34,218,228,.45)!important;border-radius:8px;background:#10152a!important;
+  color:var(--art-cream)!important;font:14px/1.5 ui-monospace,Consolas,monospace;white-space:pre-wrap}
+body.pda-art[data-panel="state"] .card::before{content:none!important}
+
+@media (max-width:860px){
+  body.pda-art:is([data-panel="lore"],[data-panel="state"]) :is(.matrix,.grid){grid-template-columns:1fr!important}
+  body.pda-art[data-panel="state"] .hero{grid-template-columns:1fr}
 }

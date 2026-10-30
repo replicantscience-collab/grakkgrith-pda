@@ -76,7 +76,7 @@ try {
     await step('Start uses the Sideways skin', () => f.evaluate(() => document.body.classList.contains('pda-art') && getComputedStyle(document.querySelector('.title')).fontFamily.includes('Permanent Marker')));
     await step('City uses the Sideways skin', async () => { await f.evaluate(() => showPanel('city')); return f.evaluate(() => document.body.classList.contains('pda-art')); });
     await step('Missions and Factions use the Sideways skin', async () => { for (const id of ['missions', 'factions']) { await f.evaluate(id => showPanel(id), id); if (!(await f.evaluate(() => document.body.classList.contains('pda-art')))) return `${id} is unskinned`; } return true; });
-    await step('Lore keeps its own look until its pass', async () => { await f.evaluate(() => showPanel('lore')); return !(await f.evaluate(() => document.body.classList.contains('pda-art'))); });
+    await step('Lore and Logs use the Sideways skin', async () => { for (const id of ['lore', 'downtime']) { await f.evaluate(id => showPanel(id), id); if (!(await f.evaluate(() => document.body.classList.contains('pda-art')))) return `${id} is unskinned`; } return true; });
     await step('Choosing a job opens its contract', async () => { await f.evaluate(() => showPanel('missions')); await f.evaluate(() => document.querySelector('.missionBtn[data-job="routeLock"]').click()); return /Route Lock/.test(await f.evaluate(() => document.getElementById('missionBrief').innerText)); });
 
     // Guides: all 11 races, and a card opens its entry.
@@ -98,6 +98,43 @@ try {
     f = await open('sheetBtn', 1800);
     await step('Character Sheet loads the character', async () => { const v = await f.evaluate(() => document.getElementById('raceSelect')?.value); return v === 'Goblin' || `race shows "${v}"`; });
 
+    check(`${label}: no script errors or missing files`, errors.length === 0, [...new Set(errors)].slice(0, 5).join(' | '));
+    await ctx.close();
+  }
+
+  // The alpha's core loop, as a brand-new player on a phone: nothing saved -> build a character by clicking
+  // through every Character Setup step -> sheet -> walk somewhere in Explore.
+  {
+    const label = 'new player';
+    const { ctx, page, errors } = await newPage({ width: 390, height: 844 });
+    page.on('dialog', d => d.accept());
+    const step = async (name, fn) => { try { const r = await fn(); check(`${label}: ${name}`, r === true, r === false ? '' : String(r)); } catch (e) { check(`${label}: ${name}`, false, e.message.split('\n')[0]); } };
+    await page.goto(BASE + '/');
+    await page.waitForTimeout(1200);
+    let f = frame(page);
+    await step('Start offers "Create your character"', async () => /Create your character/.test(await f.evaluate(() => document.querySelector('.hero button.primary').textContent)) && !(await f.evaluate(() => document.querySelector('.ops').innerText)).includes('file found'));
+    await step('builds a character through every Character Setup step', async () => {
+      await f.click('.hero button[data-action="creator"]'); await page.waitForTimeout(1200); f = frame(page);
+      for (let guard = 0; guard < 20; guard++) {
+        const name = await f.evaluate(() => STEPS[step]);
+        if (name === 'Review') break;
+        if (name === 'Identity') await f.fill('#name', 'Smoke Runner');
+        if (name === 'Race') await f.click('.choice[data-pick="Goblin"]');
+        if (name === 'Origin' || name === 'Life') { await f.click('.choice >> nth=0'); if (await f.$('#grant')) { const o = await f.$eval('#grant', e => [...e.options].map(o => o.value).filter(Boolean)); if (o.length) await f.selectOption('#grant', o[0]); } }
+        if (name === 'Class') { await f.click('.choice[data-pick="Runner"]'); await f.click('.choices >> nth=1 >> .choice >> nth=0'); }
+        if (name === 'Attributes') for (const a of ['reflex', 'reflex', 'reflex', 'wit', 'wit', 'savvy', 'root', 'spark']) await f.click(`[data-attr="${a}"][data-dir="1"]`);
+        if (name === 'Skills') for (let i = 0; i < 6 && (await f.evaluate(() => validate(step).length)); i++) await f.click('input[data-skill]:not(:checked):not(:disabled) >> nth=0');
+        if (name === 'Territory' && await f.$('#grith') && !(await f.$eval('#grith', e => e.value))) { const o = await f.$eval('#grith', e => [...e.options].map(o => o.value).filter(Boolean)); await f.selectOption('#grith', o[0]); }
+        const errs = await f.evaluate(() => validate(step));
+        if (errs.length) return `stuck at ${name}: ${errs[0]}`;
+        await f.click('#next'); await page.waitForTimeout(150);
+      }
+      await f.click('#finishCharacter'); await page.waitForTimeout(1200);
+      const c = await page.evaluate(() => JSON.parse(localStorage.getItem('grakkgrith_character_tool_v8_state')).character);
+      return (c.name === 'Smoke Runner' && c.class === 'Runner' && !!c.subclass) || `saved ${JSON.stringify(c).slice(0, 80)}`;
+    });
+    await step('the sheet shows the new character', async () => { await page.evaluate(() => document.getElementById('sheetBtn').click()); await page.waitForTimeout(1600); return frame(page).evaluate(() => document.body.innerText.includes('Smoke Runner') && document.getElementById('raceSelect').value === 'Goblin'); });
+    await step('Explore can send them somewhere', async () => { await page.evaluate(() => document.getElementById('exploreBtn').click()); await page.waitForTimeout(1500); return frame(page).evaluate(() => { const X = window.GRAKK_EXPLORE, t = { district: 'low-halo', place: 'low-halo--rust-market' }; X.startTrip(t, X.planTrip(t)[0]); return !!JSON.parse(localStorage.getItem('grakkgrith_character_tool_v8_state')).world.presence.transit; }); });
     check(`${label}: no script errors or missing files`, errors.length === 0, [...new Set(errors)].slice(0, 5).join(' | '));
     await ctx.close();
   }
