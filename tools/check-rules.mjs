@@ -94,6 +94,7 @@ for (const s of allSkills) if (!rules.skillKeys[s]) bad('skillKeys', `no key for
       if (a.status === 'rulebook' && !wa.rulebook.includes(n)) bad(`afflictions.${n}`, 'marked rulebook but not in the rulebook; mark it draft');
       const choices = a.adaptation?.choices === 'aspect' ? (a.aspects || []).map(x => x.adaptation) : (a.adaptation?.choices || []);
       for (const ch of choices) if (!ref.attributes.includes(ch)) bad(`afflictions.${n}.adaptation`, `${ch} is not an attribute`);
+      for (const ln of a.lines || []) for (const bn of ln.banes || []) if (!(a.banes || []).includes(bn)) bad(`afflictions.${n}.lines.${ln.name}`, `Bane ${bn} is not in the Bane list`);
       for (const st of Object.keys(a.progression || {})) if (!af.stages.includes(st)) bad(`afflictions.${n}.progression`, `${st} is not a stage`);
     }
   }

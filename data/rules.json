@@ -2340,8 +2340,8 @@
       },
       "Beastkin": {
         "status": "draft",
-        "source": "Draft for Ekois and Nib, built on the Chapter Twenty framework. Not canon until approved.",
-        "summary": "Something with teeth got into you: a bite, a curse, a night in the wrong part of the Hidden Layer, a Visceral contamination. An animal Aspect has taken root in an already-mortal body. Beastkin is the condition; your species stays your species.",
+        "source": "Draft for Ekois and Nib, built on the Chapter Twenty framework. Shape confirmed by Eko: Beastkin is the family, Lycan is one line in it, Banes go by line, Visceral can be a source. Line names other than Lycan and the numbers still need Nib's sign-off.",
+        "summary": "Beastkin are people whose ancestors were cursed or genetically experimented on, and it surfaces in them. An animal Aspect sits in an already-mortal body; your species stays your species. Lycan is the best-known line. Your bloodline decides your Bane.",
         "aspects": [
           {
             "name": "Hunter",
@@ -2389,7 +2389,7 @@
         },
         "weakness": {
           "name": "Bane",
-          "text": "Silver, or a Crownline pest-deterrent frequency (choose one at creation). A Bane hit adds one Wound step; direct contact or sustained exposure ends Let It Out and blocks it until the end of your next turn. Never softens with Evolution."
+          "text": "Your bloodline sets your Bane: Silver for Lycans, Iron for Fae-cursed lines, a Crownline or Helix deterrent for lab lines. A Bane hit adds one Wound step; direct contact or sustained exposure ends Let It Out and blocks it until the end of your next turn. Never softens with Evolution."
         },
         "complication": {
           "name": "Registered Beastkin",
@@ -2403,9 +2403,53 @@
           "Ascendant": "Capstone shift abilities; under high Stress the GM may direct one action per scene; even brief Bane contact moves the Wound Track."
         },
         "openQuestions": [
-          "Is Beastkin the same thing the rulebook calls Lycan, or a wider family that Lycan sits inside (a Hunter Aspect at Manifest)?",
-          "Silver, a pest-deterrent frequency, both, or something else for the Bane?",
-          "Is the Visceral lineage a possible source, or should Beastkin stay strictly something that happened to a mortal?"
+          "What does Nib call the non-Lycan lines? 'Fae-cursed' and 'Lab line' are placeholder names.",
+          "Are there more lines than these four (for example, a Bastion biotech line)?",
+          "Do Crownline and Helix deterrents work like Silver (a hit adds a Wound step), or as area effects such as frequencies and sprays that block Let It Out?"
+        ],
+        "banes": [
+          "Silver",
+          "Iron",
+          "Crownline deterrent frequency",
+          "Helix deterrent"
+        ],
+        "lines": [
+          {
+            "name": "Lycan",
+            "source": "Curse",
+            "text": "The old moon-curse line. The one every Velvet Signal horror stream gets wrong.",
+            "banes": [
+              "Silver"
+            ]
+          },
+          {
+            "name": "Fae-cursed",
+            "source": "Curse",
+            "text": "An ancestor crossed the Fae and the debt came due in the blood.",
+            "banes": [
+              "Iron"
+            ]
+          },
+          {
+            "name": "Lab line",
+            "source": "Experiment",
+            "text": "Somebody's great-grandparent signed a trial consent form, or didn't. Crownline and Helix both keep deterrents tuned for what came out of it.",
+            "banes": [
+              "Crownline deterrent frequency",
+              "Helix deterrent"
+            ]
+          },
+          {
+            "name": "Visceral",
+            "source": "Visceral",
+            "text": "It came up through the Visceral side of the family. Pick the Bane with your GM.",
+            "banes": [
+              "Silver",
+              "Iron",
+              "Crownline deterrent frequency",
+              "Helix deterrent"
+            ]
+          }
         ]
       }
     }
