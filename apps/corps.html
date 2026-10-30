@@ -1,0 +1,59 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>The Corporations</title>
+<link rel="stylesheet" href="../fonts/fonts.css">
+<link rel="stylesheet" href="../art/pda-v1/tokens.css">
+<link rel="stylesheet" href="./screen.css">
+<style>
+.corps{display:grid;gap:18px;margin-top:16px}
+.corp{display:grid;grid-template-columns:minmax(220px,300px) minmax(0,1fr);gap:20px;padding:18px;border:2px solid var(--art-brass-shadow);border-radius:14px;background:linear-gradient(130deg,#1c1428,#0b0c16);box-shadow:0 8px 22px rgba(0,0,0,.45)}
+.poster{position:relative;display:block;width:100%;padding:0;border:1px solid rgba(215,172,97,.5);border-radius:8px;overflow:hidden;background:#05070d;cursor:zoom-in;box-shadow:none}
+.poster img{display:block;width:100%;height:auto}
+.poster .ad{position:absolute;left:8px;top:8px;padding:2px 8px;border-radius:999px;background:rgba(10,11,22,.85);color:var(--art-cyan);font:700 11px/1.6 var(--art-ui);letter-spacing:.1em;text-transform:uppercase}
+.noart{display:grid;place-items:center;aspect-ratio:4/5;border:1px dashed rgba(215,172,97,.5);border-radius:8px;color:var(--art-muted);font:700 14px var(--art-ui);letter-spacing:.08em;text-transform:uppercase;text-align:center;padding:16px}
+.corp h2{margin:0 0 2px;font-size:clamp(26px,3.5vw,36px)}
+.role{color:var(--art-cyan);font:700 15px var(--art-ui);letter-spacing:.06em;text-transform:uppercase}
+.claim{margin:12px 0;padding:10px 14px;border-left:4px solid var(--art-magenta);background:rgba(239,70,186,.08);font-size:18px}
+.claim small{display:block;color:var(--art-muted);font:700 11px var(--art-ui);letter-spacing:.12em;text-transform:uppercase}
+.campaign{display:grid;grid-template-columns:120px minmax(0,1fr);gap:14px;align-items:center;margin-top:12px;padding:10px;border:1px solid rgba(215,172,97,.4);border-radius:8px;background:rgba(10,11,22,.6)}
+.campaign .poster{cursor:zoom-in}
+.src{margin-top:18px;color:var(--art-muted);font-size:13px}
+.src a{color:var(--art-cyan)}
+dialog{max-width:min(92vw,720px);max-height:92vh;padding:0;border:2px solid var(--art-brass);border-radius:12px;background:#05070d;color:var(--art-cream)}
+dialog::backdrop{background:rgba(0,0,0,.8)}
+dialog img{display:block;max-width:100%;max-height:82vh;margin:0 auto}
+dialog p{margin:0;padding:10px 14px;font-size:14px}
+dialog form{position:absolute;top:8px;right:8px}
+@media (max-width:760px){.corp{grid-template-columns:1fr}.poster,.noart{max-width:340px}}
+</style>
+</head>
+<body class="pda-art">
+<div class="wrap">
+  <div class="kicker">ADYTA PDA / FACTIONS</div>
+  <h1>The Corporations</h1>
+  <p class="muted">Five of them. Not a monolith. They compete, they partner, and none of them is ever openly villainous in public.</p>
+  <div class="corps" id="corps"></div>
+  <p class="src" id="src"></p>
+</div>
+<dialog id="big" aria-label="Poster"><form method="dialog"><button aria-label="Close">×</button></form><img id="bigImg" alt=""><p id="bigCap"></p></dialog>
+<script>
+'use strict';
+const $ = id => document.getElementById(id);
+const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+Promise.all([fetch('../data/corporations.json').then(r => r.json()), fetch('../art/pda-v1/imports/manifest.json').then(r => r.json())]).then(([C, A]) => {
+  const art = slug => { const it = A.items.find(i => i.slug === slug && i.kind === 'faction-poster'); return it ? { poster: '../' + C.artBase + it.poster, title: it.title, look: it.visual_identity } : null; };
+  const poster = (slug, name, claim, eager) => { const a = art(slug); return a ? `<button class="poster" data-big="${esc(a.poster)}" data-cap="${esc(`${name} advertising. In-world: what they claim, not what's true. ${C.artStatus}.`)}" aria-label="${esc(name)} poster, open full size"><img src="${esc(a.poster)}" alt="${esc(`${name} advertising poster. ${claim ? 'Headline: ' + claim : ''}`)}" loading="${eager ? 'eager' : 'lazy'}" decoding="async" width="1200" height="1500"><span class="ad">Advert</span></button>` : `<div class="noart">No poster yet<br>${esc(name)}</div>`; };
+  $('corps').innerHTML = C.corporations.map((c, i) => `<article class="corp" id="${c.id}">${poster(c.art, c.name, c.claim, i === 0)}<div>
+    <h2>${esc(c.name)}</h2><div class="role">${esc(c.role)}</div><p>${esc(c.about)}</p>
+    ${c.claim ? `<div class="claim"><small>Their posters say</small>“${esc(c.claim)}”</div>` : ''}
+    ${(c.campaigns || []).map(k => `<div class="campaign">${poster(k.art, k.name, k.claim)}<div><b>${esc(k.name)}</b><p style="margin:4px 0 0">${esc(k.note)}</p>${k.claim ? `<div class="claim"><small>The campaign says</small>“${esc(k.claim)}”</div>` : ''}</div></div>`).join('')}</div></article>`).join('');
+  $('src').innerHTML = `Roles and descriptions from the World Anvil: <a href="${esc(C.source)}" target="_blank" rel="noopener">Corporations</a>. Posters by Pulse: ${esc(C.artStatus.toLowerCase())}.`;
+  document.addEventListener('click', e => { const b = e.target.closest('[data-big]'); if (!b) return; $('bigImg').src = b.dataset.big; $('bigImg').alt = b.querySelector('img').alt; $('bigCap').textContent = b.dataset.cap; $('big').showModal(); });
+  window.GRAKK_CORPS_READY = true;
+});
+</script>
+</body>
+</html>

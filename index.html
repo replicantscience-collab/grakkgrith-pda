@@ -71,7 +71,7 @@ button.primary,.navPill.active{border-color:rgba(184,50,50,.75);background:linea
   <button id="gigsBtn">Pocket Change</button><button id="radioBtn">Radio Sewers</button><button id="guidesBtn">Guides</button><button id="cityBtn">City</button>
   <button id="missionsBtn">Missions</button><button id="factionsBtn">Factions</button><button id="loreBtn">Lore</button><button id="logsBtn">Logs</button><button id="stateBtn">State</button>
   <button id="quickstartBtn">Player Quickstart</button><button id="rulesBtn">Rules Reference</button><button id="fullRulesBtn">Full Rules</button><button id="buildBtn">Build Guide</button>
-  <button id="anchorsBtn">Anchors</button><button id="cyberneticsBtn">Magic and Tech</button><button id="signalStickersBtn">Signal Stickers</button>
+  <button id="anchorsBtn">Anchors</button><button id="cyberneticsBtn">Magic and Tech</button><button id="signalStickersBtn">Signal Stickers</button><button id="corpsBtn">Corporations</button>
  </div>
  <div id="navHelp" aria-live="polite"></div>
  <div id="status"></div>
@@ -127,7 +127,7 @@ const SECTIONS=[
  {id:'guides',pages:[['guides','Species','guidesBtn'],['quickstart','Quickstart','quickstartBtn'],['build','Build guide','buildBtn'],['rules','Rules','rulesBtn'],['fullrules','Full rules','fullRulesBtn']]},
  {id:'city',pages:[['city','Atlas','cityBtn']]},
  {id:'missions',pages:[['missions','Contracts','missionsBtn'],['gigs','Pocket Change','gigsBtn'],['radio','Radio Sewers','radioBtn']]},
- {id:'factions',pages:[['factions','Factions','factionsBtn']]},
+ {id:'factions',pages:[['factions','Factions','factionsBtn'],['corps','Corporations','corpsBtn']]},
  {id:'lore',pages:[['lore','Lore','loreBtn'],['state','Campaign state','stateBtn'],['anchors','Anchors','anchorsBtn'],['cybernetics','Magic & tech','cyberneticsBtn']]},
  {id:'inventory',pages:[['player','Sheet','sheetBtn'],['make','Workshop','makeBtn'],['mail','Mail & bills','mailBtn'],['downtime','Logs','logsBtn'],['signalstickers','Stickers','signalStickersBtn'],['character','Player hub','charHubBtn'],['creator','Setup','creatorBtn']]}];
 const MODE_ALIAS={world:'start',logs:'downtime'},LAST_PAGE={};
@@ -209,6 +209,8 @@ window.addEventListener('message',e=>{const m=e.data||{};if(m.type==='grakkgrith
 /* Start (apps/start.html): the dashboard from the mockup. Its cards ask the shell to open other screens. */
 function showStart(){if(currentUrl){URL.revokeObjectURL(currentUrl);currentUrl=''}mode='start';frame.src='./apps/start.html';setActiveShell('start');statusEl.textContent=''}
 document.getElementById('worldBtn').onclick=()=>showStart();
+function showCorps(){if(currentUrl){URL.revokeObjectURL(currentUrl);currentUrl=''}mode='corps';frame.src='./apps/corps.html';setActiveShell('corps');statusEl.textContent=''}
+document.getElementById('corpsBtn').onclick=()=>showCorps();
 // Explore is a real page (not a generated document), so it loads straight from apps/.
 function showExplore(go){if(currentUrl){URL.revokeObjectURL(currentUrl);currentUrl=''}mode='explore';frame.src='./apps/explore.html'+(go?'?go='+encodeURIComponent(go):'');setActiveShell('explore');statusEl.textContent=''}
 document.getElementById('exploreBtn').onclick=()=>showExplore();

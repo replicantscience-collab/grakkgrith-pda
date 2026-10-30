@@ -120,7 +120,9 @@ function render() {
   const feed = RA.feed(named ? s : {}, D.radio, D.make, D.places, now, 12).filter(x => x.kind === 'rumor' || x.kind === 'headsUp' || x.kind === 'yours').slice(0, 3);
   h += `<article class="card paper"><h2>${icon('rumors')}Recent Rumors</h2><p>What people are saying across Adyta, by way of Radio Sewers.</p><ul class="list">${feed.map(x => `<li class="${x.kind === 'headsUp' ? 'heads' : ''}" style="--dc:${x.kind === 'headsUp' ? '#fc6c74' : '#9af269'}"><span class="dot"></span><span class="t">${esc(x.text)}</span><small>${esc(ago(now - x.at))}</small></li>`).join('') || '<li>Static. Tune in later.</li>'}</ul><button class="go" data-nav="radioBtn">View more rumors <b>›</b></button></article>`;
   // Factions
-  h += `<article class="card" style="--c:#fc6c74"><h2>${icon('factions')}Factions</h2><p>Five corporations, the City Authority, and the Commons. Their goals, and how they see you.</p><div class="banners" aria-hidden="true"><i style="background:#8c1d2a"></i><i style="background:#25458f"></i><i style="background:#1f6b3d"></i><i style="background:#6b2a8a"></i><i style="background:#8a6a1f"></i></div><button class="go" data-nav="factionsBtn" style="margin-top:14px">The three powers <b>›</b></button></article>`;
+  // Pulse's corporate card art: a different corporation's ad each Adyta hour (no animation)
+  const ads = (D.art.items || []).filter(i => i.kind === 'faction-poster'), ad = ads.length ? ads[Math.floor(now / 3600000) % ads.length] : null;
+  h += `<article class="card" style="--c:#fc6c74${ad ? `;--img:url('../art/pda-v1/imports/${ad.card}')` : ''}"><h2>${icon('factions')}Factions</h2><p>Five corporations, the City Authority, and the Commons. Their goals, and how they see you.</p>${ad ? `<p class="tiny" style="margin-top:8px">On the billboards right now: ${esc(ad.title)}.</p>` : ''}<div class="actions" style="margin-top:auto;padding-top:12px"><button class="go" data-nav="factionsBtn" style="margin:0">The three powers <b>›</b></button><button class="go" data-nav="corpsBtn" style="margin:0">Corporations <b>›</b></button></div></article>`;
   // Artifacts: your work, else your class's makes
   let art = [];
   if (named) { art = ((s.make && s.make.artifacts) || []).filter(a => a.status === 'active' && !a.delivery).slice(0, 2).map(a => a.name); if (!art.length) art = MK.recipesFor(D.make, s.character.class).slice(0, 3).map(r => r.name); }
@@ -132,8 +134,8 @@ function render() {
   $('app').innerHTML = h;
 }
 document.addEventListener('click', e => { const b = e.target.closest('button'); if (!b) return; if (b.dataset.nav) nav(b.dataset.nav); else if (b.dataset.go) parent.postMessage({ type: 'grakkgrith-open-explore', place: b.dataset.go }, '*'); });
-Promise.all(['rules', 'places', 'week', 'make', 'gigs', 'radio'].map(n => fetch(`../data/${n}.json`).then(r => r.json()))).then(([rules, places, week, make, gigs, radio]) => {
-  D = { rules, places, week, make, gigs, radio }; render(); window.GRAKK_START_READY = true; setInterval(render, 60000);
+Promise.all([...['rules', 'places', 'week', 'make', 'gigs', 'radio'].map(n => fetch(`../data/${n}.json`).then(r => r.json())), fetch('../art/pda-v1/imports/manifest.json').then(r => r.json()).catch(() => ({ items: [] }))]).then(([rules, places, week, make, gigs, radio, art]) => {
+  D = { rules, places, week, make, gigs, radio, art }; render(); window.GRAKK_START_READY = true; setInterval(render, 60000);
 });
 </script>
 </body>

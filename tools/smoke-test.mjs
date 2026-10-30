@@ -78,6 +78,9 @@ try {
     await step('a Start card opens its section', async () => { await f.click('.card [data-nav="cityBtn"]'); await page.waitForTimeout(1500); return page.evaluate(() => document.querySelector('.secTab.active').dataset.sec === 'city'); });
     await step('section tabs show their pages as sub-tabs', async () => { await page.evaluate(() => document.getElementById('sec-missions').click()); await page.waitForTimeout(1200);
       const subs = await page.$$eval('#subNav .subTab', b => b.map(x => x.textContent)); return (subs.join('|') === 'Contracts|Pocket Change|Radio Sewers') || subs.join('|'); });
+    await step('Corporations shows five, with Pulse\'s posters and New Halo under Crownline', async () => { await page.evaluate(() => document.getElementById('corpsBtn').click()); await page.waitForTimeout(1500); const g = frame(page); await g.waitForFunction(() => window.GRAKK_CORPS_READY);
+      const n = await g.$$eval('.corp', x => x.length), imgs = await g.$$eval('.corp img', x => x.length), nh = await g.evaluate(() => !!document.querySelector('#crownline .campaign')), sub = await page.evaluate(() => document.querySelector('.secTab.active').dataset.sec);
+      return (n === 5 && imgs === 4 && nh && sub === 'factions') || `${n} corps, ${imgs} posters, New Halo under Crownline ${nh}, tab ${sub}`; });
     f = await open('cityBtn', 1500);
     await step('City uses the Sideways skin', async () => { await f.evaluate(() => showPanel('city')); return f.evaluate(() => document.body.classList.contains('pda-art')); });
     await step('Missions and Factions use the Sideways skin', async () => { for (const id of ['missions', 'factions']) { await f.evaluate(id => showPanel(id), id); if (!(await f.evaluate(() => document.body.classList.contains('pda-art')))) return `${id} is unskinned`; } return true; });

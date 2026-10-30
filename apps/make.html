@@ -38,6 +38,10 @@ input:focus,select:focus{outline:none;border-color:var(--art-cyan);box-shadow:0 
 .others table{width:100%;border-collapse:collapse;font-size:14px}
 .others td{padding:6px 8px 6px 0;border-bottom:1px solid rgba(118,80,45,.35);vertical-align:top}
 .others td:first-child{color:var(--art-cyan);font:700 13px var(--art-ui);letter-spacing:.06em;text-transform:uppercase;white-space:nowrap}
+.sheets{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:10px;margin-top:10px}
+.sheets a{display:block;color:var(--art-cream);text-decoration:none;font:700 13px var(--art-ui);letter-spacing:.04em}
+.sheets img{display:block;width:100%;height:auto;border:1px solid rgba(215,172,97,.4);border-radius:8px;background:#05070d}
+.sheets span{display:block;margin-top:4px}
 @media (max-width:860px){.form{grid-template-columns:1fr}}
 </style>
 </head>
@@ -106,7 +110,10 @@ function makerHtml(s) {
     <div class="actions"><button class="primary" id="doMake" ${p.ok ? '' : 'disabled'}>${p.adjudication === 'ruling' ? 'Propose it' : 'Make it'}</button></div></article>`;
   return h + othersHtml(cls);
 }
-function othersHtml(cls) { const others = M.recipes.filter(x => x.class !== cls); return `<details class="others"><summary>What the other classes make</summary><table>${others.map(x => `<tr><td>${esc(x.class)}</td><td><b>${esc(x.name)}</b>. ${esc(x.summary)}</td></tr>`).join('')}</table></details>`; }
+function othersHtml(cls) { const others = M.recipes.filter(x => x.class !== cls); return `<details class="others"><summary>What the other classes make</summary><table>${others.map(x => `<tr><td>${esc(x.class)}</td><td><b>${esc(x.name)}</b>. ${esc(x.summary)}</td></tr>`).join('')}</table></details>` + sheetsHtml(); }
+/* Pulse's Patchkin sticker sheets: a gallery for now. Individual stickers become makeable once their rules exist. */
+function sheetsHtml() { const sheets = ((window.ART && ART.items) || []).filter(i => i.kind === 'sticker-sheet' && !/alt/.test(i.slug)); if (!sheets.length) return '';
+  return `<details class="others"><summary>Patchkin sigil sheets (${sheets.length})</summary><p class="note">Maker art from Sideways. The labels on these are proposals, not rules: a sticker does what its Make says, nothing more.</p><div class="sheets">${sheets.map(i => `<a href="../art/pda-v1/imports/${esc(i.sheet || i.web || '')}" target="_blank" rel="noopener"><img src="../art/pda-v1/imports/${esc(i.sheet || i.web || '')}" alt="${esc(i.title)} sticker sheet" loading="lazy" decoding="async" width="1200" height="1200"><span>${esc(i.title)}</span></a>`).join('')}</div></details>`; }
 /* Runner delivery board: real runs on the Explore map. */
 function boardHtml(s) {
   const t = now(), jobs = MK.board(s, M, PLACES, t), left = MK.downtimeLeft(s), next = (Math.floor(t / (M.deliveries.refreshHours * 3600000)) + 1) * M.deliveries.refreshHours * 3600000;
@@ -181,6 +188,7 @@ document.addEventListener('change', e => {
   render();
 });
 
+fetch('../art/pda-v1/imports/manifest.json').then(r => r.json()).then(a => { window.ART = a; if (M) render(); }).catch(() => {});
 Promise.all(['week', 'places', 'make'].map(n => fetch(`../data/${n}.json`).then(r => r.json()))).then(([w, p, m]) => {
   W = w; CLOCK = p.clock; M = m; PLACES = p;
   const s = load(); if (hasChar(s)) { settleAll(s); save(s); }

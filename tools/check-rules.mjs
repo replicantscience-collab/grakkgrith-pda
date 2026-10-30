@@ -202,6 +202,13 @@ if (!PLACES_.places.some(p => RADIO.support.districts.includes(p.district))) bad
 for (const j of RADIO.support.jobs) if (!Object.values(rules.skillKeys).includes(j.skill)) bad(`radio.support.${j.id}`, `unknown skill ${j.skill}`);
 if (RADIO.support.pay[0] < 100 || RADIO.support.pay[1] > 300) bad('radio.support.pay', "outside the rulebook's 100-300");
 
+// --- Pulse's art pack (art/pda-v1/imports) and the corporations it illustrates ---------------
+const ART = load('art/pda-v1/imports/manifest.json'), CORPS = load('data/corporations.json');
+for (const it of ART.items) for (const k of ['poster', 'card', 'sheet']) if (it[k] && !existsSync(new URL('../art/pda-v1/imports/' + it[k], import.meta.url))) bad(`art.${it.slug}.${k}`, `${it[k]} is missing`);
+const artSlugs = new Set(ART.items.map(i => i.slug));
+for (const c of CORPS.corporations) { if (c.art && !artSlugs.has(c.art)) bad(`corporations.${c.id}`, `no art called ${c.art}`); for (const k of c.campaigns || []) if (k.art && !artSlugs.has(k.art)) bad(`corporations.${c.id}.campaigns`, `no art called ${k.art}`); }
+if (CORPS.corporations.length !== 5) bad('corporations', 'the World Anvil names five corporations');
+
 // --- Report -------------------------------------------------------------------
 if (problems.length) {
   console.error(`rules.json vs ${ref.rulebook}: ${problems.length} problem(s)\n` + problems.map(p => '  - ' + p).join('\n'));
@@ -212,4 +219,5 @@ console.log(`week.json matches the rulebook's Cost of Living and Heat ladder: ${
 console.log(`make.json is consistent: ${MAKE.recipes.length} things to make across ${new Set(MAKE.recipes.map(r => r.class)).size} classes.`);
 console.log(`gigs.json is consistent: ${GIGS.gigs.length} gigs on ${GIGS.app.name}.`);
 console.log(`radio.json is consistent: ${RADIO.slots.length} DJs cover the day; ${RADIO.support.jobs.length} station jobs.`);
+console.log(`Art pack: ${ART.items.length} pieces, all files present; ${CORPS.corporations.length} corporations.`);
 console.log(`places.json is consistent: ${Object.keys(W.maps).length} maps, ${Object.keys(W.districts).length} districts, ${W.places.length} places, ${W.routes.length} routes.`);
