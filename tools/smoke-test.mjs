@@ -75,7 +75,9 @@ try {
     f = await open('worldBtn', 1200);
     await step('Start uses the Sideways skin', () => f.evaluate(() => document.body.classList.contains('pda-art') && getComputedStyle(document.querySelector('.title')).fontFamily.includes('Permanent Marker')));
     await step('City uses the Sideways skin', async () => { await f.evaluate(() => showPanel('city')); return f.evaluate(() => document.body.classList.contains('pda-art')); });
-    await step('Missions keeps its own look until its pass', async () => { await f.evaluate(() => showPanel('missions')); return !(await f.evaluate(() => document.body.classList.contains('pda-art'))); });
+    await step('Missions and Factions use the Sideways skin', async () => { for (const id of ['missions', 'factions']) { await f.evaluate(id => showPanel(id), id); if (!(await f.evaluate(() => document.body.classList.contains('pda-art')))) return `${id} is unskinned`; } return true; });
+    await step('Lore keeps its own look until its pass', async () => { await f.evaluate(() => showPanel('lore')); return !(await f.evaluate(() => document.body.classList.contains('pda-art'))); });
+    await step('Choosing a job opens its contract', async () => { await f.evaluate(() => showPanel('missions')); await f.evaluate(() => document.querySelector('.missionBtn[data-job="routeLock"]').click()); return /Route Lock/.test(await f.evaluate(() => document.getElementById('missionBrief').innerText)); });
 
     // Guides: all 11 races, and a card opens its entry.
     f = await open('guidesBtn', 1200);

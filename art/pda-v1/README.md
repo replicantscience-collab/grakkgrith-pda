@@ -40,3 +40,10 @@ See `CLAUDE_HANDOFF.md`.
 - Before/after screenshots: `screenshots/` (`compare-*.jpg` are side by side).
 
 Still pending Nib's review: the Sideways sigil as the PDA's brand mark, and the hero copy ("A livin' city in your pocket / Welcome to Adyta"), taken from the kit preview.
+
+## Integrated so far (slice 3: Missions and Factions)
+
+- `board.css`, scoped to `body[data-panel="missions"]` and `body[data-panel="factions"]`. `showPanel` now also sets `body[data-panel]`, so panels that share `data-page="world"` can be skinned one at a time; `PDA_ART_PAGES` matches on either.
+- **Missions:** the three-step loop as numbered cards; the job list as contract tickets (selected = magenta); the open job as a paper contract bulletin over a grid of brief fields.
+- **Factions:** the three blocs each get an edge color (corporate red, civic cyan, commons lime), then the faction and relationship cards.
+- Still on the old look: Lore and Logs (World page), State, and the Character Sheet and inventory (their own app).
