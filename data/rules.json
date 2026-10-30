@@ -1897,5 +1897,517 @@
       "name": "Craft",
       "desc": "Wrench only. Build, modify, or prepare equipment for the next job. Record the project and any GM-approved result."
     }
+  },
+  "mixedHeritage": {
+    "_source": "First Edition v1.47, Chapter Fifteen",
+    "summary": "Optional, with GM approval. One body, one primary rules package, one inherited echo, and twice as many ways for the city to misread you. The Primary Species gives the full package; the Secondary Heritage gives one Heritage Mark and a required Social Complication, and no stats, abilities, resistances, or vulnerabilities.",
+    "mortal": [
+      "Goblin",
+      "Orc",
+      "Human",
+      "Elf",
+      "Dwarf",
+      "Halfling (Fenn)",
+      "Troll"
+    ],
+    "lineage": {
+      "Fairy": "Fae",
+      "Cinderfolk": "Infernal",
+      "Kobold": "Kobold lineage",
+      "Slimefolk": "Slimefolk lineage"
+    },
+    "compatibilityNote": "Goblin, Orc, Human, Elf, Dwarf, Halfling and Troll combine freely. Fairy, Kobold, Slimefolk and Cinderfolk ordinarily take Secondary Heritage only from their own lineage; same-lineage or cross-lineage heritage needs GM and canon approval and a custom Heritage Mark.",
+    "marks": {
+      "Goblin": {
+        "marks": [
+          {
+            "name": "Route Instinct",
+            "text": "Once per session, in a district you know, ask the GM for one unofficial exit, service door, shortcut, patrol warning, or maintenance gap. Weaker than full Goblin Routes."
+          },
+          {
+            "name": "Small-Space Nerves",
+            "text": "+1 die once per session when squeezing, hiding, escaping, or acting inside cramped infrastructure."
+          },
+          {
+            "name": "Clan Ear",
+            "text": "Once per session, recognize whether a rumor, warning, street mark, or local phrase sounds like genuine goblin threnn or outsider noise."
+          },
+          {
+            "name": "Reflex Echo",
+            "text": "Once per session, when surprised in close quarters, act before a non-elite NPC who did not specifically prepare for you."
+          },
+          {
+            "name": "Chemical Stomach",
+            "text": "Once per session, ignore a minor bad-air, spoiled-food, weak-chemical, or low-grade contamination effect that would make others hesitate."
+          }
+        ]
+      },
+      "Orc": {
+        "marks": [
+          {
+            "name": "Demonstrated Weight",
+            "text": "Once per session, after succeeding at a physical task, gain +1 die on the next related physical task in the same scene."
+          },
+          {
+            "name": "Direct Read",
+            "text": "Once per session, ask the GM whether a person in front of you is posturing, ready to act, or waiting for someone else to move first."
+          },
+          {
+            "name": "Heavy Frame",
+            "text": "Once per session, reduce the effect of being shoved, knocked down, moved, or crowded by ordinary force."
+          },
+          {
+            "name": "No Empty Threats",
+            "text": "Once per session, +1 die on Intimidate or Negotiate when your statement is plain, direct, and backed by something you have already demonstrated."
+          },
+          {
+            "name": "Work Proven",
+            "text": "Once per session, in an industrial, martial, or labor context, someone takes your competence seriously after you show proof rather than make a claim."
+          }
+        ]
+      },
+      "Human": {
+        "marks": [
+          {
+            "name": "Institutional Familiarity",
+            "text": "Once per session, reduce suspicion in a civic, corporate, or official space where human-coded appearance, paperwork, or speech helps."
+          },
+          {
+            "name": "Paper Trail",
+            "text": "Once per session, know which office, permit, form, desk, or procedure applies to the current civic problem."
+          },
+          {
+            "name": "Default Face",
+            "text": "Once per session, in a crowd where humans are common, avoid being treated as unusual unless your other heritage is obvious."
+          },
+          {
+            "name": "Flexible Habit",
+            "text": "Once per session, +1 die on a skill where you have no rank, if the action is ordinary and not specialized."
+          },
+          {
+            "name": "Civic Memory",
+            "text": "Once per session, recall a basic institutional rule, social expectation, or legal phrase that helps you avoid immediate trouble."
+          }
+        ]
+      },
+      "Elf": {
+        "marks": [
+          {
+            "name": "Old Memory",
+            "text": "Once per session, ask the GM for one old historical, institutional, or magical detail about a place, family, faction, or tradition."
+          },
+          {
+            "name": "Composed Nerves",
+            "text": "Once per session, ignore a minor panic, morale, or fear effect that relies on surprise rather than real threat."
+          },
+          {
+            "name": "Archive Sense",
+            "text": "Once per session, know where a formal record, old document, academic source, or long-term witness might exist."
+          },
+          {
+            "name": "Long Courtesy",
+            "text": "Once per session, +1 die in a formal, academic, old-money, legal, or institutional conversation where etiquette matters."
+          },
+          {
+            "name": "Magical Static",
+            "text": "Once per session, notice that magic has touched a place, object, or person. Presence, not detail."
+          }
+        ]
+      },
+      "Dwarf": {
+        "marks": [
+          {
+            "name": "Material Sense",
+            "text": "Once per session, identify bad metal, poor repair, structural weakness, hidden stress, or a part about to fail."
+          },
+          {
+            "name": "Built Stubborn",
+            "text": "Once per session, ignore one minor environmental penalty from cold, bad footing, unstable ground, vibration, or poor working conditions."
+          },
+          {
+            "name": "Good Work Eye",
+            "text": "Once per session, tell whether something forged, repaired, or built was made properly, cheaply, lovingly, or dangerously."
+          },
+          {
+            "name": "Hold Weight",
+            "text": "Once per session, +1 die on a task involving carrying, holding, bracing, or keeping something from failing."
+          },
+          {
+            "name": "Stronghold Echo",
+            "text": "Once per session, in an industrial, workshop, mining, or forge context, recognize who respects real craft and who is pretending."
+          }
+        ]
+      },
+      "Halfling (Fenn)": {
+        "marks": [
+          {
+            "name": "Easy to Miss",
+            "text": "Once per session, in a crowd or busy public space, avoid casual notice unless you draw attention."
+          },
+          {
+            "name": "Market Ear",
+            "text": "Once per session, know whether a price, offer, or informal deal sounds fair, dangerous, insulting, or too good to be clean."
+          },
+          {
+            "name": "Soft Step",
+            "text": "Once per session, move quietly through a busy or cluttered space without triggering casual noise-based attention."
+          },
+          {
+            "name": "Favor Thread",
+            "text": "Once per session, know someone who knows someone in a trade, market, delivery, or information context. A lead, not a solution."
+          },
+          {
+            "name": "Harmless Read",
+            "text": "Once per session, benefit from being underestimated as background or not worth immediate attention."
+          }
+        ]
+      },
+      "Fairy": {
+        "marks": [
+          {
+            "name": "Room Current",
+            "text": "Once per session, sense the dominant emotional tone of a room without identifying individual thoughts or motives."
+          },
+          {
+            "name": "Promise Prickle",
+            "text": "Once per session, know that someone knowingly broke a promise made in your presence. You learn that the promise was broken, not why."
+          },
+          {
+            "name": "Glamour Echo",
+            "text": "Once per session, alter one minor sensory detail of your appearance, voice, scent, or clothing for a scene. It cannot change body size, create functional equipment, or perfectly impersonate a known person."
+          },
+          {
+            "name": "Wing Catch",
+            "text": "Once per session, arrest a fall, clear a short gap, reach a nearby ledge, or descend safely from a modest height. This is not sustained flight."
+          },
+          {
+            "name": "Threshold Instinct",
+            "text": "Once per session, know whether a nearby doorway, crossing, invitation, or boundary carries supernatural rules, wards, or unusual significance."
+          }
+        ],
+        "note": "Fairy Heritage Marks are available only to a character with permitted Fae-lineage ancestry. They cannot be used by themselves to create an ordinary mortal/Fairy biological pairing. Gremlin ancestry remains a hybrid-derived Fae heritage and requires a canon-supported origin."
+      },
+      "Cinderfolk": {
+        "marks": [
+          {
+            "name": "Ash Sense",
+            "text": "Once per session, sense whether violence, death, contract magic, fire, or heat trauma touched a place recently."
+          },
+          {
+            "name": "Heat Familiar",
+            "text": "Once per session, ignore discomfort from ordinary heat, smoke, ash, warm rooms, or non-damaging flame proximity."
+          },
+          {
+            "name": "Contract Ear",
+            "text": "Once per session, hear the dangerous part of a deal, promise, or obligation before you sign onto it."
+          },
+          {
+            "name": "Ember Face",
+            "text": "Once per session, in Ember Court or an occult trade context, be read as belonging enough to avoid immediate outsider treatment."
+          },
+          {
+            "name": "Threshold Itch",
+            "text": "Once per session, know whether a door, room, shop, or ritual space has rules attached to crossing it."
+          }
+        ],
+        "note": "Cinderfolk Heritage Marks are available only to a character with permitted Infernal-lineage ancestry. They cannot be used to create a mortal/Cinderfolk or cross-lineage biological pairing."
+      },
+      "Troll": {
+        "marks": [
+          {
+            "name": "Deep Sense",
+            "text": "Once per session, sense supernatural wrongness, death pressure, ancestral weight, or spiritual disturbance in broad terms."
+          },
+          {
+            "name": "Heavy Bones",
+            "text": "Once per session, reduce the effect of a minor fall, shove, collision, or impact that would move or drop you."
+          },
+          {
+            "name": "Old Voice",
+            "text": "Once per session, +1 die when speaking calmly in a serious moment where presence, grief, memory, or spiritual weight matters."
+          },
+          {
+            "name": "Layered World",
+            "text": "Once per session, ask whether a place feels spiritually ordinary, disturbed, hungry, watched, dead, or protected."
+          },
+          {
+            "name": "Ancestor Echo",
+            "text": "Once per session, recall a fragment of family or inherited wisdom relevant to death, obligation, shelter, or warning."
+          }
+        ]
+      }
+    },
+    "customMarkRules": "A custom Mark may: give +1 die once per session in a narrow situation; answer one narrow question once per session; reduce one minor consequence once per session; provide a social opening; create a clue or lead; establish a small inherited trait.\n\nA custom Mark may not: copy a full species passive or active; grant full resistance; erase a vulnerability; add stat modifiers; grant constant armor or Defense; grant free spellcasting, cybernetics, or a class feature; or replace Origin, Life, subclass, or skill investment.",
+    "complications": [
+      {
+        "name": "Registry Mismatch",
+        "text": "Your ACR papers, your body, and your community each tell a different story."
+      },
+      {
+        "name": "Read Wrong",
+        "text": "Strangers guess your species incorrectly and treat you by the mistake."
+      },
+      {
+        "name": "Split Claim",
+        "text": "Two communities claim you when it's useful and reject you when it isn't."
+      },
+      {
+        "name": "Passing Cost",
+        "text": "You can pass as one side in some spaces, but it costs trust in others."
+      },
+      {
+        "name": "Family Debt",
+        "text": "One side expects you to honor traditions the other side never accepted."
+      },
+      {
+        "name": "Corporate Interest",
+        "text": "Helix, Crownline, Velvet Signal, or another power treats your mixed status as useful data."
+      },
+      {
+        "name": "Civic Confusion",
+        "text": "ACW or ACR cannot decide which category applies, and the uncertainty turns dangerous."
+      },
+      {
+        "name": "Community Suspicion",
+        "text": "A community that should accept you tests you harder than anyone else."
+      },
+      {
+        "name": "Too Visible",
+        "text": "You cannot pass cleanly as either side. Everyone notices, everyone guesses."
+      },
+      {
+        "name": "Too Invisible",
+        "text": "You pass too well as one side, and people erase the other."
+      },
+      {
+        "name": "Blood Argument",
+        "text": "People treat your heritage as a debate they may have in front of you."
+      },
+      {
+        "name": "Wrong Tradition",
+        "text": "You inherited a tradition without being raised in it, or were raised in it without looking the part."
+      },
+      {
+        "name": "Medical Problem",
+        "text": "Medics, surgeons, and healers do not know which assumptions apply to your body."
+      },
+      {
+        "name": "Standing Drift",
+        "text": "Your Standing moves differently across communities; a favor in one space damages trust in another."
+      },
+      {
+        "name": "Name Problem",
+        "text": "Your name, line, clan mark, or appearance tells a story people keep reading wrong."
+      }
+    ],
+    "registrations": [
+      {
+        "name": "Clean Primary Registration",
+        "text": "ACR lists only the Primary Species; the Secondary is unrecorded or invisible."
+      },
+      {
+        "name": "Clean Mixed Registration",
+        "text": "Records correctly list Mixed Heritage. Rare, and useful."
+      },
+      {
+        "name": "Outdated Registration",
+        "text": "Records use old, hostile, or incomplete terminology."
+      },
+      {
+        "name": "Conflicting Records",
+        "text": "Different civic databases disagree."
+      },
+      {
+        "name": "Corporate Flag",
+        "text": "Helix, Crownline, Bastion, or another corporate system holds a separate classification."
+      },
+      {
+        "name": "Missing Record",
+        "text": "The character lives in community memory but not in clean paperwork."
+      },
+      {
+        "name": "Protected Record",
+        "text": "Someone deliberately shielded or altered the record."
+      },
+      {
+        "name": "Weaponized Record",
+        "text": "Someone uses the mixed classification to deny service, access, work, medical care, or protection."
+      }
+    ],
+    "publicReads": [
+      "As Primary",
+      "As Secondary",
+      "As neither",
+      "As both",
+      "Depends on who is looking"
+    ],
+    "subclassRule": "Primary Species unlocks racial subclasses. With GM approval, and an Origin and Life that back it, you may take your Secondary Heritage's racial subclass eligibility instead. Never both."
+  },
+  "afflictions": {
+    "_source": "First Edition v1.47, Chapter Twenty (framework pitched by Ekois). Beastkin is a draft, not yet in the rulebook.",
+    "summary": "Class answers \"what do you do?\" An Affliction answers \"what has the Hidden Layer done to you?\" It is not a species and not a profession: something that happened to an already-mortal person. Every Affliction has a Passive, an Active, a Compulsion, a Weakness, and an Evolution. Stage advancement is a GM-adjudicated story event, never a Mark spend.",
+    "stages": [
+      "Dormant",
+      "Awakened",
+      "Integrated",
+      "Manifest",
+      "Ascendant"
+    ],
+    "startingStages": [
+      "Dormant",
+      "Awakened"
+    ],
+    "stressRule": "As Stress rises, the Active may strengthen, the Compulsion is more likely to assert itself unprompted, and the Weakness becomes easier to exploit.",
+    "list": {
+      "Vampire": {
+        "status": "rulebook",
+        "source": "Chapter Twenty: Worked Example (first draft, pending playtest)",
+        "summary": "A mortal person of any species carrying a blood-fed magical condition. Blood sustains Vitality, a pool of stolen life force that powers vampiric ability.",
+        "resource": {
+          "name": "Vitality",
+          "rule": "Maximum Vitality = (2 x Wound Track Capacity) + floor(Maximum Magical Veins / 4). Exact per-character totals are confirmed in the post-playtest pass."
+        },
+        "passive": [
+          "Sense living resonance: tell, in general terms, whether a living person is nearby and roughly how many, without a roll.",
+          "Arrested aging: stops aging at the point of turning (civic paperwork lists both ages).",
+          "Resistance: Necrotic (mechanical trait only)."
+        ],
+        "adaptation": {
+          "at": "Awakened",
+          "choices": [
+            "muscle",
+            "reflex",
+            "savvy"
+          ],
+          "rule": "One permanent +1, flat and additive on top of species. The other two come only through Blood Surge."
+        },
+        "active": [
+          {
+            "name": "Feed",
+            "text": "Blood refills Vitality. Legal (city-sanctioned supply), corporate contract (commonly Bastion or Helix), or illegal (hunting)."
+          },
+          {
+            "name": "Blood Surge",
+            "text": "Spend Vitality to briefly push past baseline, including the two Attribute bonuses not taken as the permanent adaptation. Exact costs pending playtest."
+          }
+        ],
+        "compulsion": {
+          "name": "Hunger",
+          "text": "A gradient of remaining Vitality. Stress accelerates the slide; as Stress rises the GM may have Hunger assert itself unprompted.",
+          "ladder": [
+            [
+              "75-100%",
+              "Sated",
+              "Full control; adaptation and Blood Surge work normally"
+            ],
+            [
+              "50-74%",
+              "Hungry",
+              "Blood is distracting; Blood Surge visibly intensifies Hunger"
+            ],
+            [
+              "25-49%",
+              "Starving",
+              "-1 die on all checks; the permanent +1 is suspended; Blood Surge still available"
+            ],
+            [
+              "1-24%",
+              "Feral",
+              "Severe Compulsion; Blood Surge only for pursuing blood, escaping, resisting restraint, or preventing defeat this turn"
+            ],
+            [
+              "0%",
+              "Depleted",
+              "No Vitality abilities and no Attribute enhancement; dormancy, frenzy, or collapse"
+            ]
+          ]
+        },
+        "weakness": {
+          "name": "Sunlight",
+          "text": "Direct, sustained exposure moves the Wound Track once per round, no roll, no Defense. Brief or incidental exposure does not trigger it at Dormant or Awakened (GM call). Never softens with Evolution."
+        },
+        "complication": {
+          "name": "Registered Vampire",
+          "text": "Registered and technically protected under ACR, but any vampiric crime in the district puts you under practical presumption of guilt."
+        },
+        "progression": {
+          "Dormant": "Resonance sense only; adaptation not online; small Vitality pool. Hunger slides slowly.",
+          "Awakened": "Permanent +1 online; Blood Surge; Resistance Necrotic. Full Hunger gradient.",
+          "Integrated": "Longer resonance range, efficient feeding, wider Blood Surge. Hunger intrudes more under Stress. Incidental sunlight imposes a die penalty.",
+          "Manifest": "A new Vitality-powered Active (scope TBD). Deep Hunger can force a Breakdown-like complication. Sustained sunlight moves the Wound Track two steps per round.",
+          "Ascendant": "Capstone Vitality abilities. GM may direct one action per scene under high Stress or deep Hunger. Any direct sunlight moves the Wound Track."
+        }
+      },
+      "Beastkin": {
+        "status": "draft",
+        "source": "Draft for Ekois and Nib, built on the Chapter Twenty framework. Not canon until approved.",
+        "summary": "Something with teeth got into you: a bite, a curse, a night in the wrong part of the Hidden Layer, a Visceral contamination. An animal Aspect has taken root in an already-mortal body. Beastkin is the condition; your species stays your species.",
+        "aspects": [
+          {
+            "name": "Hunter",
+            "text": "Wolf, big cat, hound. Chase, pin, finish.",
+            "adaptation": "muscle"
+          },
+          {
+            "name": "Prey",
+            "text": "Hare, deer, rat. Notice first, run first, survive.",
+            "adaptation": "reflex"
+          },
+          {
+            "name": "Pack",
+            "text": "Dog, hyena, crow. Strength is the group.",
+            "adaptation": "savvy"
+          },
+          {
+            "name": "Den",
+            "text": "Bear, badger, boar. Hold ground, endure, protect the burrow.",
+            "adaptation": "root"
+          }
+        ],
+        "resource": {
+          "name": "The Beast",
+          "rule": "No separate pool. The Beast routes through Stress, as the framework intends: the higher your Stress, the closer it is to the surface."
+        },
+        "passive": [
+          "Animal senses: scent, hearing, or low-light sight (by Aspect). Without a roll, tell whether fear, blood, or a predator is present in the scene, in general terms.",
+          "Pack read: once per scene, know who in the room would fight, flee, or follow if it went bad."
+        ],
+        "adaptation": {
+          "at": "Awakened",
+          "choices": "aspect",
+          "rule": "One permanent +1 from your Aspect (Hunter Muscle, Prey Reflex, Pack Savvy, Den Root), flat and additive on top of species."
+        },
+        "active": [
+          {
+            "name": "Let It Out",
+            "text": "Take 1 Stress to partly shift for a scene: natural weapons (Light, Blade or Impact by Aspect) and +1 die on tracking, chasing, intimidating, or enduring. Visibly not-quite-human while it lasts."
+          }
+        ],
+        "compulsion": {
+          "name": "Instinct",
+          "text": "Your Aspect's instinct presses harder as Stress rises: Hunter chases what runs, Prey bolts when cornered, Pack will not leave its people, Den will not give up ground. At high Stress the GM may have the Instinct take the first beat of your turn."
+        },
+        "weakness": {
+          "name": "Bane",
+          "text": "Silver, or a Crownline pest-deterrent frequency (choose one at creation). A Bane hit adds one Wound step; direct contact or sustained exposure ends Let It Out and blocks it until the end of your next turn. Never softens with Evolution."
+        },
+        "complication": {
+          "name": "Registered Beastkin",
+          "text": "ACR and Animal Control both claim jurisdiction and neither will take responsibility. Any animal attack in the district gets your name on the list."
+        },
+        "progression": {
+          "Dormant": "Senses only; adaptation not online. Instinct is a pull, not a push.",
+          "Awakened": "Permanent +1 online; Let It Out available.",
+          "Integrated": "Let It Out is cheaper or longer (pending playtest); Instinct intrudes more under Stress; Bane exposure also costs 1 Stress.",
+          "Manifest": "Full shift becomes possible (scope TBD); deep Stress can force a Breakdown-like complication; a Bane hit adds two Wound steps.",
+          "Ascendant": "Capstone shift abilities; under high Stress the GM may direct one action per scene; even brief Bane contact moves the Wound Track."
+        },
+        "openQuestions": [
+          "Is Beastkin the same thing the rulebook calls Lycan, or a wider family that Lycan sits inside (a Hunter Aspect at Manifest)?",
+          "Silver, a pest-deterrent frequency, both, or something else for the Bane?",
+          "Is the Visceral lineage a possible source, or should Beastkin stay strictly something that happened to a mortal?"
+        ]
+      }
+    }
   }
 }

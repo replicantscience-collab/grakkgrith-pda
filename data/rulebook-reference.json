@@ -2,48 +2,332 @@
   "_about": "Checkable facts copied from the GRAKKGRITH First Edition rulebook. tools/check-rules.mjs compares data/rules.json against this. When the rulebook changes, update this file first; the check will then show exactly what rules.json still needs.",
   "rulebook": "First Edition v1.47",
   "races": {
-    "Goblin":          { "mods": { "muscle": -2, "reflex": 2, "root": 1 },              "resistance": ["Chemical"],          "vulnerability": [] },
-    "Kobold":          { "mods": { "reflex": 1, "wit": 1, "muscle": -1 },               "resistance": ["Chemical"],          "vulnerability": ["Cryo"] },
-    "Slimefolk":       { "mods": { "spark": 2, "reflex": -1 },                          "resistance": ["Chemical"],          "vulnerability": ["Electrical"] },
-    "Orc":             { "mods": { "muscle": 2, "reflex": -1 },                         "resistance": ["Bludgeoning"],       "vulnerability": [] },
-    "Human":           { "mods": {}, "choice": true,                                    "resistance": [],                    "vulnerability": [] },
-    "Fairy":           { "mods": { "savvy": 1, "spark": 1, "muscle": -1 },              "resistance": ["Psychic"],           "vulnerability": [] },
-    "Elf":             { "mods": { "spark": 1, "root": 1, "muscle": -1 },               "resistance": ["Magical"],           "vulnerability": [] },
-    "Dwarf":           { "mods": { "muscle": 2, "wit": 1, "reflex": -1, "root": -1 },   "resistance": ["Fire"],              "vulnerability": [] },
-    "Halfling (Fenn)": { "mods": { "muscle": -1, "reflex": 1, "root": 1 },              "resistance": [],                    "vulnerability": [] },
-    "Cinderfolk":      { "mods": { "spark": 1, "savvy": 1, "muscle": -1 },              "resistance": ["Fire", "Necrotic"],  "vulnerability": ["Cryo"] },
-    "Troll":           { "mods": { "muscle": 1, "spark": 1, "reflex": -1 },             "resistance": ["Bludgeoning"],       "vulnerability": ["Fire"] }
+    "Goblin": {
+      "mods": {
+        "muscle": -2,
+        "reflex": 2,
+        "root": 1
+      },
+      "resistance": [
+        "Chemical"
+      ],
+      "vulnerability": []
+    },
+    "Kobold": {
+      "mods": {
+        "reflex": 1,
+        "wit": 1,
+        "muscle": -1
+      },
+      "resistance": [
+        "Chemical"
+      ],
+      "vulnerability": [
+        "Cryo"
+      ]
+    },
+    "Slimefolk": {
+      "mods": {
+        "spark": 2,
+        "reflex": -1
+      },
+      "resistance": [
+        "Chemical"
+      ],
+      "vulnerability": [
+        "Electrical"
+      ]
+    },
+    "Orc": {
+      "mods": {
+        "muscle": 2,
+        "reflex": -1
+      },
+      "resistance": [
+        "Bludgeoning"
+      ],
+      "vulnerability": []
+    },
+    "Human": {
+      "mods": {},
+      "choice": true,
+      "resistance": [],
+      "vulnerability": []
+    },
+    "Fairy": {
+      "mods": {
+        "savvy": 1,
+        "spark": 1,
+        "muscle": -1
+      },
+      "resistance": [
+        "Psychic"
+      ],
+      "vulnerability": []
+    },
+    "Elf": {
+      "mods": {
+        "spark": 1,
+        "root": 1,
+        "muscle": -1
+      },
+      "resistance": [
+        "Magical"
+      ],
+      "vulnerability": []
+    },
+    "Dwarf": {
+      "mods": {
+        "muscle": 2,
+        "wit": 1,
+        "reflex": -1,
+        "root": -1
+      },
+      "resistance": [
+        "Fire"
+      ],
+      "vulnerability": []
+    },
+    "Halfling (Fenn)": {
+      "mods": {
+        "muscle": -1,
+        "reflex": 1,
+        "root": 1
+      },
+      "resistance": [],
+      "vulnerability": []
+    },
+    "Cinderfolk": {
+      "mods": {
+        "spark": 1,
+        "savvy": 1,
+        "muscle": -1
+      },
+      "resistance": [
+        "Fire",
+        "Necrotic"
+      ],
+      "vulnerability": [
+        "Cryo"
+      ]
+    },
+    "Troll": {
+      "mods": {
+        "muscle": 1,
+        "spark": 1,
+        "reflex": -1
+      },
+      "resistance": [
+        "Bludgeoning"
+      ],
+      "vulnerability": [
+        "Fire"
+      ]
+    }
   },
   "classes": {
-    "Wrench":  { "subclasses": { "Medic": null, "Rigger": null, "Stronghold Rigger": "Dwarf" } },
-    "Striker": { "subclasses": { "Enforcer": null, "Guerrilla": null, "Iron Code": "Orc" } },
-    "Ghost":   { "subclasses": { "Extract": null, "Spy": null, "Wallflower": "Halfling (Fenn)" } },
-    "Signal":  { "subclasses": { "Performer": null, "Hacker": null, "Fluid Transmission": "Slimefolk" } },
-    "Shade":   { "subclasses": { "Death Worker": null, "Ward Keeper": null, "Gutter Practitioner": "Goblin", "Living Memory": "Elf", "Ancestor Work": "Troll" } },
-    "Broker":  { "subclasses": { "Fixer": null, "Syndicate": null, "Ember Court Factor": "Cinderfolk" } },
-    "Warden":  { "subclasses": { "Investigator": null, "Advocate": null, "City Architect": "Human" } },
-    "Runner":  { "subclasses": { "LHL Courier": null, "Rooftop": null, "Threnn Guide": "Goblin" } }
+    "Wrench": {
+      "subclasses": {
+        "Medic": null,
+        "Rigger": null,
+        "Stronghold Rigger": "Dwarf"
+      }
+    },
+    "Striker": {
+      "subclasses": {
+        "Enforcer": null,
+        "Guerrilla": null,
+        "Iron Code": "Orc"
+      }
+    },
+    "Ghost": {
+      "subclasses": {
+        "Extract": null,
+        "Spy": null,
+        "Wallflower": "Halfling (Fenn)"
+      }
+    },
+    "Signal": {
+      "subclasses": {
+        "Performer": null,
+        "Hacker": null,
+        "Fluid Transmission": "Slimefolk"
+      }
+    },
+    "Shade": {
+      "subclasses": {
+        "Death Worker": null,
+        "Ward Keeper": null,
+        "Gutter Practitioner": "Goblin",
+        "Living Memory": "Elf",
+        "Ancestor Work": "Troll"
+      }
+    },
+    "Broker": {
+      "subclasses": {
+        "Fixer": null,
+        "Syndicate": null,
+        "Ember Court Factor": "Cinderfolk"
+      }
+    },
+    "Warden": {
+      "subclasses": {
+        "Investigator": null,
+        "Advocate": null,
+        "City Architect": "Human"
+      }
+    },
+    "Runner": {
+      "subclasses": {
+        "LHL Courier": null,
+        "Rooftop": null,
+        "Threnn Guide": "Goblin"
+      }
+    }
   },
   "origins": {
-    "Tangle-Born": "Goblin", "Ashborn": "Goblin", "Tidecrew": "Goblin", "Patchkin": "Goblin", "Dustwalker": "Goblin",
-    "Forge-Clan Dwarf": "Dwarf", "Martial Orc": "Orc", "Ember Court Cinderfolk": "Cinderfolk", "Old-Blood Elf": "Elf",
-    "Spirit-Kept Troll": "Troll", "Tidewater Slimefolk": "Slimefolk", "City-Born Human": "Human",
-    "Service-Level Kobold": "Kobold", "Fenn-Born Halfling": "Halfling (Fenn)",
-    "Ember Court Raised": null, "Sewers Community": null, "Civic Brat": null, "Noble Heights Fallen": null
+    "Tangle-Born": "Goblin",
+    "Ashborn": "Goblin",
+    "Tidecrew": "Goblin",
+    "Patchkin": "Goblin",
+    "Dustwalker": "Goblin",
+    "Forge-Clan Dwarf": "Dwarf",
+    "Martial Orc": "Orc",
+    "Ember Court Cinderfolk": "Cinderfolk",
+    "Old-Blood Elf": "Elf",
+    "Spirit-Kept Troll": "Troll",
+    "Tidewater Slimefolk": "Slimefolk",
+    "City-Born Human": "Human",
+    "Service-Level Kobold": "Kobold",
+    "Fenn-Born Halfling": "Halfling (Fenn)",
+    "Ember Court Raised": null,
+    "Sewers Community": null,
+    "Civic Brat": null,
+    "Noble Heights Fallen": null
   },
   "lives": [
-    "Low Halo Regular", "Corporate Castoff", "On the Books", "Contractor", "Scrapfields Picker", "Edge Dweller",
-    "Gang Member", "Freelance Thief", "Mercenary", "Underground Enforcer", "Contract Killer", "Corporate Agent"
+    "Low Halo Regular",
+    "Corporate Castoff",
+    "On the Books",
+    "Contractor",
+    "Scrapfields Picker",
+    "Edge Dweller",
+    "Gang Member",
+    "Freelance Thief",
+    "Mercenary",
+    "Underground Enforcer",
+    "Contract Killer",
+    "Corporate Agent"
   ],
-  "streetTags": ["Oath-Touched", "Tunnel-Sighted", "Threshold-Schooled", "Ward-Literate", "Illusion-Touched", "Resonant"],
-  "damageTypes": ["Bludgeoning", "Piercing", "Slashing", "Fire", "Electrical", "Chemical", "Cryo", "Necrotic", "Magical", "Psychic"],
-  "attributes": ["muscle", "reflex", "wit", "savvy", "spark", "root"],
+  "streetTags": [
+    "Oath-Touched",
+    "Tunnel-Sighted",
+    "Threshold-Schooled",
+    "Ward-Literate",
+    "Illusion-Touched",
+    "Resonant"
+  ],
+  "damageTypes": [
+    "Bludgeoning",
+    "Piercing",
+    "Slashing",
+    "Fire",
+    "Electrical",
+    "Chemical",
+    "Cryo",
+    "Necrotic",
+    "Magical",
+    "Psychic"
+  ],
+  "attributes": [
+    "muscle",
+    "reflex",
+    "wit",
+    "savvy",
+    "spark",
+    "root"
+  ],
   "skills": {
-    "Force": ["Brawl", "Melee", "Intimidate", "Endure", "Breach", "Haul"],
-    "Motion": ["Dash", "Climb", "Dodge", "Pickpocket", "Drive", "Ranged"],
-    "Craft": ["Repair", "Salvage", "Medic", "Forge", "Hack"],
-    "Social": ["Persuade", "Deceive", "Negotiate", "Perform", "Streetwise"],
-    "Arcane": ["Attune", "Cast", "Ward", "Sense", "Disrupt"],
-    "Territory": ["Navigate", "Network", "Hideout", "Intel", "Lay Low"]
+    "Force": [
+      "Brawl",
+      "Melee",
+      "Intimidate",
+      "Endure",
+      "Breach",
+      "Haul"
+    ],
+    "Motion": [
+      "Dash",
+      "Climb",
+      "Dodge",
+      "Pickpocket",
+      "Drive",
+      "Ranged"
+    ],
+    "Craft": [
+      "Repair",
+      "Salvage",
+      "Medic",
+      "Forge",
+      "Hack"
+    ],
+    "Social": [
+      "Persuade",
+      "Deceive",
+      "Negotiate",
+      "Perform",
+      "Streetwise"
+    ],
+    "Arcane": [
+      "Attune",
+      "Cast",
+      "Ward",
+      "Sense",
+      "Disrupt"
+    ],
+    "Territory": [
+      "Navigate",
+      "Network",
+      "Hideout",
+      "Intel",
+      "Lay Low"
+    ]
+  },
+  "mixedHeritage": {
+    "mortal": [
+      "Goblin",
+      "Orc",
+      "Human",
+      "Elf",
+      "Dwarf",
+      "Halfling (Fenn)",
+      "Troll"
+    ],
+    "markLists": [
+      "Goblin",
+      "Orc",
+      "Human",
+      "Elf",
+      "Dwarf",
+      "Halfling (Fenn)",
+      "Fairy",
+      "Cinderfolk",
+      "Troll"
+    ],
+    "marksEach": 5,
+    "complications": 15,
+    "registrations": 8
+  },
+  "afflictions": {
+    "stages": [
+      "Dormant",
+      "Awakened",
+      "Integrated",
+      "Manifest",
+      "Ascendant"
+    ],
+    "rulebook": [
+      "Vampire"
+    ]
   }
 }

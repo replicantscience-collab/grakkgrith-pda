@@ -135,6 +135,39 @@ try {
     });
     await step('the sheet shows the new character', async () => { await page.evaluate(() => document.getElementById('sheetBtn').click()); await page.waitForTimeout(1600); return frame(page).evaluate(() => document.body.innerText.includes('Smoke Runner') && document.getElementById('raceSelect').value === 'Goblin'); });
     await step('Explore can send them somewhere', async () => { await page.evaluate(() => document.getElementById('exploreBtn').click()); await page.waitForTimeout(1500); return frame(page).evaluate(() => { const X = window.GRAKK_EXPLORE, t = { district: 'low-halo', place: 'low-halo--rust-market' }; X.startTrip(t, X.planTrip(t)[0]); return !!JSON.parse(localStorage.getItem('grakkgrith_character_tool_v8_state')).world.presence.transit; }); });
+    // Mixed Heritage (Ch. 15) and Afflictions (Ch. 20) in Character Setup and on the sheet.
+    await step('Mixed Heritage and Affliction rules hold in Character Setup', async () => {
+      await page.evaluate(() => document.getElementById('creatorBtn').click()); await page.waitForTimeout(1200); f = frame(page);
+      return f.evaluate(() => {
+        const fail = [];
+        c = Object.assign(blank(), { name: 'T', race: 'Fairy' }); c.heritage.on = true;
+        if (heritageSecondaries().length || !validate(1).length) fail.push('Fairy should not take a mortal Secondary Heritage');
+        c = Object.assign(blank(), { name: 'T', race: 'Elf', class: 'Runner' });
+        Object.assign(c.heritage, { on: true, secondary: 'Goblin', mark: 'Route Instinct', complication: 'Split Claim', registration: 'Missing Record', publicRead: 'As both', subclassFrom: 'secondary' });
+        if (!subclasses().some(s => s.name === 'Threnn Guide')) fail.push('Goblin-heritage swap should unlock Threnn Guide');
+        Object.assign(c.affliction, { id: 'Vampire', stage: 'Awakened' });
+        if (!validate(1).some(e => /adaptation/.test(e))) fail.push('Awakened Vampire must choose an adaptation');
+        c.affliction.adaptation = 'savvy';
+        if (validate(1).length) fail.push('complete build still has errors: ' + validate(1)[0]);
+        if (finals().savvy !== 2) fail.push(`Elf Vampire savvy should be 2, got ${finals().savvy}`);
+        c.affliction.stage = 'Dormant';
+        if (finals().savvy !== 1) fail.push('Dormant should not give the +1');
+        Object.assign(c.affliction, { id: 'Beastkin', stage: 'Awakened', aspect: 'Hunter', adaptation: '', bane: 'Silver' });
+        if (finals().muscle !== 2) fail.push(`Elf Beastkin Hunter muscle should be 2 (floor then +1), got ${finals().muscle}`);
+        return fail.length ? fail.join('; ') : true;
+      });
+    });
+    await step('the sheet keeps the heritage subclass and the Affliction +1', async () => {
+      await page.evaluate(() => { const s = JSON.parse(localStorage.getItem('grakkgrith_character_tool_v8_state'));
+        Object.assign(s.character, { race: 'Elf', class: 'Runner', subclass: 'Threnn Guide', heritage: { on: true, secondary: 'Goblin', mark: 'Route Instinct', complication: 'Split Claim', registration: 'Missing Record', publicRead: 'As both', subclassFrom: 'secondary' }, affliction: { id: 'Beastkin', stage: 'Awakened', aspect: 'Hunter', adaptation: 'muscle', bane: 'Silver' } });
+        s.builder = Object.assign(s.builder || {}, { base: { muscle: '1', reflex: '4', wit: '3', savvy: '2', spark: '2', root: '2' } });
+        localStorage.setItem('grakkgrith_character_tool_v8_state', JSON.stringify(s)); });
+      await page.evaluate(() => document.getElementById('sheetBtn').click()); await page.waitForTimeout(1800); f = frame(page);
+      const sub = await f.evaluate(() => document.getElementById('subclassSelect').value);
+      const muscle = (await page.evaluate(() => JSON.parse(localStorage.getItem('grakkgrith_character_tool_v8_state')).stats.muscle));
+      const panel = await f.evaluate(() => document.getElementById('heritagePanel').innerText);
+      return (sub === 'Threnn Guide' && muscle === '2' && /Beastkin/.test(panel) && /Route Instinct/.test(panel)) || `subclass ${sub}, muscle ${muscle}, panel ${panel.slice(0, 40)}`;
+    });
     check(`${label}: no script errors or missing files`, errors.length === 0, [...new Set(errors)].slice(0, 5).join(' | '));
     await ctx.close();
   }
