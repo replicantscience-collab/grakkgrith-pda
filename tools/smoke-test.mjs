@@ -143,6 +143,27 @@ try {
     });
     await step('the sheet shows the new character', async () => { await page.evaluate(() => document.getElementById('sheetBtn').click()); await page.waitForTimeout(1600); return frame(page).evaluate(() => document.body.innerText.includes('Smoke Runner') && document.getElementById('raceSelect').value === 'Goblin'); });
     await step('Explore can send them somewhere', async () => { await page.evaluate(() => document.getElementById('exploreBtn').click()); await page.waitForTimeout(1500); return frame(page).evaluate(() => { const X = window.GRAKK_EXPLORE, t = { district: 'low-halo', place: 'low-halo--rust-market' }; X.startTrip(t, X.planTrip(t)[0]); return !!JSON.parse(localStorage.getItem('grakkgrith_character_tool_v8_state')).world.presence.transit; }); });
+    // The Week: rent on the Adyta clock and Heat mail, from a fresh character.
+    const ST = () => page.evaluate(() => JSON.parse(localStorage.getItem('grakkgrith_character_tool_v8_state')));
+    await step('Mail shows the first week of rent and a badge', async () => {
+      await page.evaluate(() => document.getElementById('mailBtn').click()); await page.waitForTimeout(1500); f = frame(page);
+      const bill = await f.evaluate(() => !!document.querySelector('.letter.bill button[data-pay]'));
+      const badge = await page.evaluate(() => document.getElementById('mailBadge').textContent);
+      const w = await f.evaluate(() => document.documentElement.scrollWidth - innerWidth);
+      return (bill && badge === '1' && w <= 1) || `bill ${bill}, badge "${badge}", ${w}px too wide`;
+    });
+    await step('paying rent takes credits and clears the badge', async () => {
+      const before = Number((await ST()).coins.credits || 0); await f.click('.letter.bill button[data-pay]'); await page.waitForTimeout(400);
+      const after = Number((await ST()).coins.credits || 0), badge = await page.evaluate(() => document.getElementById('mailBadge').textContent);
+      return (before - after === 70 && badge === '') || `credits ${before} -> ${after}, badge "${badge}"`;
+    });
+    await step('Heat 2 sends a notice; the sheet does not wipe the mail', async () => {
+      await page.evaluate(() => { const s = JSON.parse(localStorage.getItem('grakkgrith_character_tool_v8_state')); s.stats.heat = '2'; localStorage.setItem('grakkgrith_character_tool_v8_state', JSON.stringify(s)); });
+      await page.evaluate(() => document.getElementById('sheetBtn').click()); await page.waitForTimeout(1600);
+      await page.evaluate(() => document.getElementById('mailBtn').click()); await page.waitForTimeout(1500); f = frame(page);
+      const s = await ST(), notices = s.week.mail.filter(m => m.kind === 'notice').length, paid = s.week.mail.some(m => m.kind === 'bill' && m.status === 'paid');
+      return (notices === 1 && paid && await f.evaluate(() => !!document.querySelector('.letter.notice'))) || `notices ${notices}, bill paid ${paid}, heat ${s.stats.heat}`;
+    });
     // Mixed Heritage (Ch. 15) and Afflictions (Ch. 20) in Character Setup and on the sheet.
     await step('Mixed Heritage and Affliction rules hold in Character Setup', async () => {
       await page.evaluate(() => document.getElementById('creatorBtn').click()); await page.waitForTimeout(1200); f = frame(page);

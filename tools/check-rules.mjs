@@ -142,10 +142,24 @@ for (const p of W.places) if (p.brand && !(W.brands || {})[p.brand]) bad(`places
 if (!placeIds.has(W.start.place) || !W.districts[W.start.district]) bad('places.start', 'start place or district not found');
 if (Number.isNaN(Date.parse(W.clock.anchorReal)) || Number.isNaN(Date.parse(W.clock.anchorAdyta + 'Z'))) bad('places.clock', 'anchors must be dates');
 
+// --- The Week (data/week.json): bill amounts and the Heat ladder follow the rulebook ---------
+const WEEK = load('data/week.json'), col = ref.costOfLiving;
+for (const [id, cr] of Object.entries(col.housing)) { const h = WEEK.week.housing.find(x => x.id === id); if (!h) bad('week.housing', `missing ${id}`); else if (h.credits !== cr) bad(`week.housing.${id}`, `is ${h.credits}, rulebook says ${cr}`); }
+for (const h of WEEK.week.housing) if (!(h.id in col.housing) && h.status !== 'draft') bad(`week.housing.${h.id}`, 'not in the rulebook; mark it draft');
+if (WEEK.week.food.credits !== col.food) bad('week.food', `is ${WEEK.week.food.credits}, rulebook says ${col.food}`);
+for (const [k, [lo, hi]] of [['gear', col.gear], ['chrome', col.chrome]]) for (const x of WEEK.week[k]) if (x.credits && (x.credits < lo || x.credits > hi)) bad(`week.${k}.${x.id}`, `${x.credits} is outside the rulebook's ${lo}-${hi}`);
+if (JSON.stringify(WEEK.heatBands.map(b => ({ min: b.min, max: b.max }))) !== JSON.stringify(ref.heatLadder)) bad('week.heatBands', 'do not match the rulebook Heat ladder');
+for (const b of WEEK.heatBands.slice(1)) if (!(WEEK.notices[b.id] || []).length) bad(`week.notices.${b.id}`, 'no notices for this Heat band');
+for (const [bandId, list] of Object.entries(WEEK.notices)) if (Array.isArray(list)) for (const n of list) {
+  if (n.check && (!ref.attributes.includes(n.check.attribute) || !Object.values(rules.skillKeys).includes(n.check.skill))) bad(`week.notices.${n.id}.check`, 'unknown attribute or skill');
+  if (bandId !== 'crisis' && !n.days) bad(`week.notices.${n.id}`, 'needs a deadline in days');
+}
+
 // --- Report -------------------------------------------------------------------
 if (problems.length) {
   console.error(`rules.json vs ${ref.rulebook}: ${problems.length} problem(s)\n` + problems.map(p => '  - ' + p).join('\n'));
   process.exit(1);
 }
 console.log(`rules.json matches ${ref.rulebook}: ${races.length} races, ${Object.keys(rules.classes).length} classes, ${Object.keys(rules.origins).length} origins, ${Object.keys(rules.lives).length} lives.`);
+console.log(`week.json matches the rulebook's Cost of Living and Heat ladder: ${WEEK.week.housing.length} housing tiers, ${Object.values(WEEK.notices).filter(Array.isArray).flat().length} notices.`);
 console.log(`places.json is consistent: ${Object.keys(W.maps).length} maps, ${Object.keys(W.districts).length} districts, ${W.places.length} places, ${W.routes.length} routes.`);

@@ -60,3 +60,7 @@ body.pda-art::before{display:none}
 @media (hover:none){
   .pda-art .navGroup:hover:not(:focus-within) .navMenu{display:none}
 }
+
+/* Mail count on the nav tab */
+.pda-art .navPill .mailBadge{display:inline-grid;place-items:center;min-width:20px;height:20px;margin-left:6px;padding:0 5px;border-radius:999px;background:var(--art-magenta);color:#fff;font:700 12px/1 var(--art-ui);vertical-align:middle}
+.pda-art .navPill .mailBadge[hidden]{display:none}

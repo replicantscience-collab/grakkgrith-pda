@@ -329,5 +329,39 @@
     "rulebook": [
       "Vampire"
     ]
-  }
+  },
+  "costOfLiving": {
+    "housing": {
+      "commons": 40,
+      "mixed": 80,
+      "corporate": 150
+    },
+    "food": 20,
+    "gear": [
+      10,
+      30
+    ],
+    "chrome": [
+      20,
+      50
+    ]
+  },
+  "heatLadder": [
+    {
+      "min": 0,
+      "max": 1
+    },
+    {
+      "min": 2,
+      "max": 3
+    },
+    {
+      "min": 4,
+      "max": 5
+    },
+    {
+      "min": 6,
+      "max": 8
+    }
+  ]
 }
