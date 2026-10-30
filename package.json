@@ -1,0 +1,14 @@
+{
+  "name": "grakkgrith-pda",
+  "private": true,
+  "type": "module",
+  "description": "GRAKKGRITH PDA companion app. No build step: the site is the files in this folder.",
+  "scripts": {
+    "check": "node tools/check-rules.mjs",
+    "smoke": "node tools/smoke-test.mjs",
+    "test": "node tools/check-rules.mjs && node tools/smoke-test.mjs"
+  },
+  "devDependencies": {
+    "playwright": "1.63.0"
+  }
+}

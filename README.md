@@ -17,7 +17,9 @@ The companion web app for GRAKKGRITH, the Adyta tabletop RPG: character setup, c
 | `art/sideways-shops/` | Guide art. Race cards are cut from the Sideways Shops poster; replace a card's image to re-render it. |
 | `fonts/` | Fonts bundled for offline use, with their licenses |
 | `data/rulebook-reference.json` | Facts copied from the rulebook that `rules.json` is checked against |
-| `tools/check-rules.mjs` | The rules check (see below) |
+| `tools/check-rules.mjs` | The rules and map data check (see below) |
+| `tools/smoke-test.mjs` | Clicks through every screen in a real browser (see below) |
+| `package.json` | Only for the tests; the site itself has no build step |
 | `maps/official/` | Official maps used by Explore: the city, Low Halo, Ember Court, Market Ring, Dockside |
 | `maps/` | Older street-layer maps used by the City page (Low Halo, Ember Court, Sewers) |
 | `icons/`, `manifest.json` | PWA install icons and metadata |
@@ -46,6 +48,18 @@ node tools/check-rules.mjs
 ```
 
 It compares `rules.json` with the rulebook facts in `data/rulebook-reference.json` (race modifiers, resistances, vulnerabilities, classes, subclasses and their race locks, origins, lives, skills, street magic tags) and catches broken references, like a Life granting a skill that doesn't exist. GitHub runs it on every push and pull request, so a mistake shows up as a red ✗ on the commit.
+
+## Testing every screen
+
+`tools/smoke-test.mjs` opens the PDA in a real browser at desktop and phone size and clicks through every screen: each tab has content, Explore's map loads and can plan a trip, Guides shows all 11 races, the City tab has its 28 pins and dossiers, Character Setup has every race, and the sheet loads a character. It fails on any script error or missing file. GitHub runs it on every push too.
+
+To run it yourself (needs Node):
+
+```
+npm install
+npx playwright install chromium
+npm run smoke
+```
 
 **When the rulebook changes:** update `rulebook-reference.json` first. The check then lists exactly what `rules.json` still needs.
 

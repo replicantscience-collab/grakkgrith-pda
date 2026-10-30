@@ -1,0 +1,29 @@
+name: Check the PDA
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  rules:
+    name: Rules and map data
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - run: node tools/check-rules.mjs
+
+  smoke:
+    name: Every screen opens
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - run: npx playwright install --with-deps chromium
+      - run: node tools/smoke-test.mjs
