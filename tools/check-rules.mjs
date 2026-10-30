@@ -192,6 +192,16 @@ if (GIGS.sideways) {
   for (const g of GIGS.sideways.gigs) { if (!Object.values(rules.skillKeys).includes(g.skill)) bad(`gigs.sideways.${g.id}`, `unknown skill ${g.skill}`); if (!['place', 'remote', 'sideways'].includes(g.where)) bad(`gigs.sideways.${g.id}`, 'where must be place, remote or sideways'); }
 }
 
+// --- Radio Sewers (data/radio.json) -----------------------------------------------------------
+const RADIO = load('data/radio.json'), hoursCovered = new Set();
+for (const sl of RADIO.slots) { for (let h = sl.from; h !== sl.to; h = (h + 1) % 24) { if (hoursCovered.has(h)) bad(`radio.slots.${sl.id}`, `hour ${h} is double-booked`); hoursCovered.add(h); } if (!RADIO.lines[sl.id] || !RADIO.lines[sl.id].length) bad(`radio.lines.${sl.id}`, 'no lines for this DJ'); }
+if (hoursCovered.size !== 24) bad('radio.slots', `cover ${hoursCovered.size} of 24 hours`);
+if (!rules.territories.some(t => t.id === RADIO.standingTerritory)) bad('radio.standingTerritory', `${RADIO.standingTerritory} is not a territory`);
+for (const d of RADIO.support.districts) if (!PLACES_.districts[d]) bad('radio.support.districts', `${d} is not a district`);
+if (!PLACES_.places.some(p => RADIO.support.districts.includes(p.district))) bad('radio.support.districts', 'no places in these districts to send anyone');
+for (const j of RADIO.support.jobs) if (!Object.values(rules.skillKeys).includes(j.skill)) bad(`radio.support.${j.id}`, `unknown skill ${j.skill}`);
+if (RADIO.support.pay[0] < 100 || RADIO.support.pay[1] > 300) bad('radio.support.pay', "outside the rulebook's 100-300");
+
 // --- Report -------------------------------------------------------------------
 if (problems.length) {
   console.error(`rules.json vs ${ref.rulebook}: ${problems.length} problem(s)\n` + problems.map(p => '  - ' + p).join('\n'));
@@ -201,4 +211,5 @@ console.log(`rules.json matches ${ref.rulebook}: ${races.length} races, ${Object
 console.log(`week.json matches the rulebook's Cost of Living and Heat ladder: ${WEEK.week.housing.length} housing tiers, ${Object.values(WEEK.notices).filter(Array.isArray).flat().length} notices.`);
 console.log(`make.json is consistent: ${MAKE.recipes.length} things to make across ${new Set(MAKE.recipes.map(r => r.class)).size} classes.`);
 console.log(`gigs.json is consistent: ${GIGS.gigs.length} gigs on ${GIGS.app.name}.`);
+console.log(`radio.json is consistent: ${RADIO.slots.length} DJs cover the day; ${RADIO.support.jobs.length} station jobs.`);
 console.log(`places.json is consistent: ${Object.keys(W.maps).length} maps, ${Object.keys(W.districts).length} districts, ${W.places.length} places, ${W.routes.length} routes.`);

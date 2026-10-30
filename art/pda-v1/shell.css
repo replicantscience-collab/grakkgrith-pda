@@ -64,3 +64,14 @@ body.pda-art::before{display:none}
 /* Mail count on the nav tab */
 .pda-art .navPill .mailBadge{display:inline-grid;place-items:center;min-width:20px;height:20px;margin-left:6px;padding:0 5px;border-radius:999px;background:var(--art-magenta);color:#fff;font:700 12px/1 var(--art-ui);vertical-align:middle}
 .pda-art .navPill .mailBadge[hidden]{display:none}
+
+/* Wide screens: fifteen tabs share one row (tighter tabs, no fixed minimum width). */
+@media (min-width:901px){
+  .pda-art .mainNav{flex-wrap:nowrap;gap:5px}
+  .pda-art .navPill{min-width:0;padding:8px 10px;font-size:14px;letter-spacing:.04em}
+}
+@media (min-width:901px) and (max-width:1280px){
+  .pda-art .brand small{display:none}
+  .pda-art .brand{font-size:21px}
+  .pda-art .navPill{padding:8px 7px;font-size:13px}
+}

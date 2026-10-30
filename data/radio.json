@@ -1,0 +1,146 @@
+{
+  "_about": "Radio Sewers in the PDA. Who runs it, the DJs and their slots are from the group's Discord. The rules hooks are from the First Edition rulebook: Radio Sewers Support jobs (Jobs chapter), the Sewers Community perk 'Radio Sewers broadcasts on your behalf once per session', the Resonant tag, and Velvet Signal vs. Radio Sewers as opposing factions. Segment lines are drafts for the players to rewrite in the DJs' real voices. The music is player-made and lives on the GoblinNib radio.",
+  "status": "draft",
+  "station": {
+    "name": "Radio Sewers",
+    "tagline": "The voice of the Commons, bounced off whatever's still standing.",
+    "runBy": "Smokier (goblin) and Mercury (troll), with friends who bounce the signal for them.",
+    "listenUrl": "https://goblinnib.com",
+    "listenLabel": "Listen live on GoblinNib",
+    "listenNote": "All music on Radio Sewers is made by the players."
+  },
+  "standingTerritory": "sewers",
+  "standingNote": "Sewers Community Standing is tracked here as your Standing in The Sewers.",
+  "slots": [
+    {
+      "id": "smokier",
+      "from": 6,
+      "to": 12,
+      "dj": "Smokier",
+      "show": "Morning Tunes & News",
+      "who": "Goblin. Co-runs the station. Currently missing.",
+      "mia": true,
+      "archive": "Smokier is MIA. The morning slot runs from the archives."
+    },
+    {
+      "id": "sludge",
+      "from": 12,
+      "to": 18,
+      "dj": "DJ Sludge",
+      "show": "Afternoon Tunes & Fun",
+      "who": "Everyone's coolest uncle and latest guide to the best sewer songs."
+    },
+    {
+      "id": "stormbird",
+      "from": 18,
+      "to": 6,
+      "dj": "DJ Stormbird",
+      "show": "Nights",
+      "who": "Silky smoothness to get you through the hardest nights. Satisfaction guaranteed."
+    }
+  ],
+  "lines": {
+    "smokier": [
+      "[From the archives] Morning, Commons. Here's what the city did while you slept.",
+      "[From the archives] Tunes first, news second, Crownline never.",
+      "[From the archives] If you're hearing this, the relay held. Thank whoever's on the roof."
+    ],
+    "sludge": [
+      "Alright alright, your uncle's back on the dial. This next one's a sewer classic.",
+      "Afternoon, kiddos. Drink some water, avoid the drains on the east side, and turn this up.",
+      "Requests are open. Bad requests are also open. I'll play 'em anyway."
+    ],
+    "stormbird": [
+      "It's late, love. Let me keep you company.",
+      "Whoever's walking home right now: stay in the light, and keep this on.",
+      "Long night? I've got all of it. You just listen."
+    ]
+  },
+  "rumors": [
+    "Word from {district}: somebody's buying up old keys. Nobody knows which doors.",
+    "{district} folks say the power's flickering in a pattern. Could be nothing. Could be a message.",
+    "Heard a Bastion van's been parked in {district} two days with nobody in it.",
+    "Free soup in {district} tonight if you bring a bowl and don't ask whose soup it is.",
+    "Somebody in {district} left chalk marks on every third door. Shades, call in if you know what that means.",
+    "Pocket Change is paying weird in {district} this week. Read the fine print, then read it again."
+  ],
+  "headsUp": {
+    "minStanding": 3,
+    "rule": "At Sewers Community Standing 3+, Radio Sewers warns you before trouble lands: a compliance sweep that will find something you put up, or a crisis already on its way. Hearing it in time is the point.",
+    "sweep": "Heads up, {district}: Crownline compliance is doing a walk-through come Monday. If you put something up you shouldn't have, take it down.",
+    "crisis": "Heads up for anyone running warm: {from} is moving. {title}. You didn't hear it from us. Yes you did.",
+    "sealed": "Spot checks on the {district} crossings today. Whatever's in your bag, make it boring."
+  },
+  "support": {
+    "status": "draft",
+    "_about": "The rulebook's Radio Sewers Support job: transmitter parts, relay maintenance, new broadcast spots, moving gear ahead of a Velvet trace sweep. Pays 100-300 credits, more often in Standing and information. A Side Job (1 downtime action).",
+    "perDay": 2,
+    "pay": [
+      100,
+      150
+    ],
+    "standingGain": 1,
+    "standingCap": 5,
+    "traceHeat": 1,
+    "trace": "Velvet's trace sweep caught the relay with you next to it. Heat +1.",
+    "districts": [
+      "low-halo",
+      "three-wires",
+      "the-sewers",
+      "the-tangle"
+    ],
+    "jobs": [
+      {
+        "id": "relay",
+        "title": "Fix a relay box before tonight's show",
+        "skill": "repair",
+        "difficulty": 2,
+        "blurb": "It's on a roof. It's always on a roof."
+      },
+      {
+        "id": "spot",
+        "title": "Scout a new broadcast spot",
+        "skill": "navigate",
+        "difficulty": 1,
+        "blurb": "Somewhere high, somewhere quiet, somewhere Velvet hasn't mapped."
+      },
+      {
+        "id": "haul",
+        "title": "Move the gear ahead of a trace sweep",
+        "skill": "haul",
+        "difficulty": 1,
+        "blurb": "Velvet's sweeping this block in an hour. The transmitter weighs what it weighs."
+      },
+      {
+        "id": "part",
+        "title": "Source a transmitter part",
+        "skill": "salvage",
+        "difficulty": 2,
+        "blurb": "Corporate part. Buying one leaves a record. Finding one doesn't."
+      },
+      {
+        "id": "bounce",
+        "title": "Bounce the signal for a night",
+        "skill": "hack",
+        "difficulty": 2,
+        "blurb": "Sit with a handset on a rooftop and keep the chain alive till dawn."
+      }
+    ]
+  },
+  "broadcast": {
+    "minStanding": 4,
+    "rule": "Sewers Community perk (rulebook): Radio Sewers broadcasts on your behalf once per session.",
+    "kinds": [
+      {
+        "id": "message",
+        "name": "Get a message out",
+        "text": "Your words go out on the next segment, for the whole Commons to hear."
+      },
+      {
+        "id": "pressure",
+        "name": "Put pressure on a notice",
+        "text": "The Commons hears what the city is doing to you. Your next APA appeal against that notice rolls +2 dice."
+      }
+    ]
+  }
+}

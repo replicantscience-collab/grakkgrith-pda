@@ -89,7 +89,8 @@
   }
 
   /* ---------- the clock: expiry and discovery (weekly, Adyta time) ---------- */
-  function settle(s, M, W, aMs, rng = Math.random) {
+  /* Discovery is seeded per artifact and week (unless a test passes its own dice), so Radio Sewers can know a sweep is coming. */
+  function settle(s, M, W, aMs, rng = null) {
     const m = ensure(s), out = [], wk = WK(), week = wk ? wk.weekIndex(aMs) : Math.floor(aMs / (7 * DAY));
     for (const a of m.artifacts) {
       if (a.status !== 'active') continue;
@@ -100,7 +101,8 @@
         if (a.lastCheckedWeek == null) { a.lastCheckedWeek = week; continue; }       // the first week is free
         while (a.lastCheckedWeek < week && a.status === 'active') {
           a.lastCheckedWeek++;
-          if (rng() < discoveryChance(M, a.visibility, a.location && a.location.district)) {
+          const roll = rng ? rng() : seeded(hash(`${a.id}|${a.lastCheckedWeek}`))();
+          if (roll < discoveryChance(M, a.visibility, a.location && a.location.district)) {
             const who = watcher(M, a.location && a.location.district); a.status = 'removed'; addHeat(s, 1);
             a.events.unshift({ at: aMs, text: `Found and removed by ${who}. Heat +1.` }); out.push(a);
             if (wk) wk.inform(s, aMs, who, 'Unauthorized Installation Removed', `Your ${a.name}${a.location && a.location.label ? ` in ${a.location.label}` : ''} was found on property you don't control and removed. Your description is attached to the report. Heat +1.`);
@@ -232,6 +234,13 @@
     }
   }
 
-  const api = { ensure, board, take, here, recipe, recipesFor, downtimeLeft, preview, make, settle, use, maintain, salePrice, sell, complete, retire, rule, apaFiling, spendApaFiling, watcher, discoveryChance };
+  /* Will this unauthorized placement be found at its next weekly check? (Radio Sewers' heads-up.) */
+  function willBeFound(s, M, a, aMs) {
+    if (!a || a.status !== 'active' || a.kind !== 'placed' || a.permission !== 'none') return false;
+    const wk = WK(), cur = wk ? wk.weekIndex(aMs) : 0, next = (a.lastCheckedWeek == null ? cur : Math.max(a.lastCheckedWeek, cur)) + 1;
+    if (a.expires != null && wk && a.expires <= wk.weekStart(next)) return false;
+    return seeded(hash(`${a.id}|${next}`))() < discoveryChance(M, a.visibility, a.location && a.location.district);
+  }
+  const api = { ensure, board, take, here, willBeFound, recipe, recipesFor, downtimeLeft, preview, make, settle, use, maintain, salePrice, sell, complete, retire, rule, apaFiling, spendApaFiling, watcher, discoveryChance };
   root.GRAKK_MAKE = api;
 })(typeof window !== 'undefined' ? window : globalThis);

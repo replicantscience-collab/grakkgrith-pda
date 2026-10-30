@@ -62,7 +62,7 @@ function letterHtml(m, open) {
     else {
       if (m.fine) buttons += `<button class="primary" data-pay="${m.id}">Pay ${m.fine} cr</button>`;
       if (m.check) buttons += `<button data-answer="${m.id}">${esc(m.check.label)}</button>`;
-      if (m.appeal && !m.appealed) buttons += `<button class="ghost" data-appeal="${m.id}">File with the APA${HAS_FILING ? ' (+2, your filing)' : ''}</button>`;
+      if (m.appeal && !m.appealed) buttons += `<button class="ghost" data-appeal="${m.id}">File with the APA${[HAS_FILING && '+2 filing', m.pressure && '+2 Radio Sewers'].filter(Boolean).length ? ' (' + [HAS_FILING && '+2 filing', m.pressure && '+2 Radio Sewers'].filter(Boolean).join(', ') + ')' : ''}</button>`;
     }
     if (m.kind === 'notice') buttons += `<span class="note" style="color:#5b4630;align-self:center">Ignore it and it comes back worse.</span>`;
   }
@@ -103,7 +103,7 @@ document.addEventListener('click', e => {
   const t = now();
   if (b.dataset.dismiss) { act(s => WK.dismiss(s, b.dataset.dismiss, t)); }
   else if (b.dataset.pay) { const r = act(s => WK.pay(s, b.dataset.pay, t)); r && toast(r.msg); }
-  else if (b.dataset.appeal) { const r = act(s => { const n = s.week.mail.find(x => x.id === b.dataset.appeal); const bonus = n && n.status === 'open' && !n.appealed ? MK.spendApaFiling(s, t, n.title) : 0; return WK.appeal(s, W, b.dataset.appeal, t, Math.random, bonus); }); r && toast(r.msg, r.dice); }
+  else if (b.dataset.appeal) { const r = act(s => { const n = s.week.mail.find(x => x.id === b.dataset.appeal); const bonus = n && n.status === 'open' && !n.appealed ? MK.spendApaFiling(s, t, n.title) + (n.pressure || 0) : 0; return WK.appeal(s, W, b.dataset.appeal, t, Math.random, bonus); }); r && toast(r.msg, r.dice); }
   else if (b.dataset.answer) { const r = act(s => WK.answer(s, b.dataset.answer, t)); r && toast(r.msg, r.dice); }
   else if (b.dataset.flag) { act(s => WK.acknowledgeCrisis(s, b.dataset.flag, t)); toast('Flagged. Whoever runs the next session will see it.'); }
   else if (b.dataset.debt) { const r = act(s => WK.payDebt(s, b.dataset.debt, t)); r && toast(r.msg); }

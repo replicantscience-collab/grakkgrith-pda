@@ -188,6 +188,12 @@ try {
       const n = await f.$$eval('.gig [data-take]', b => b.length), w = await f.evaluate(() => document.documentElement.scrollWidth - innerWidth);
       return (n >= 1 && w <= 1) || `${n} gigs to take; ${w}px too wide`;
     });
+    await step('Radio Sewers is on air with the right DJ and a live link', async () => {
+      await page.evaluate(() => document.getElementById('radioBtn').click()); await page.waitForTimeout(1500); f = frame(page);
+      const dj = await f.evaluate(() => document.querySelector('.onair h2').textContent), link = await f.evaluate(() => document.querySelector('a.listen').href);
+      const segs = await f.$$eval('.seg', x => x.length), w = await f.evaluate(() => document.documentElement.scrollWidth - innerWidth);
+      return (['Smokier', 'DJ Sludge', 'DJ Stormbird'].includes(dj) && /goblinnib/.test(link) && segs >= 10 && w <= 1) || `${dj}, ${link}, ${segs} segments, ${w}px too wide`;
+    });
     // Mixed Heritage (Ch. 15) and Afflictions (Ch. 20) in Character Setup and on the sheet.
     await step('Mixed Heritage and Affliction rules hold in Character Setup', async () => {
       await page.evaluate(() => document.getElementById('creatorBtn').click()); await page.waitForTimeout(1200); f = frame(page);
