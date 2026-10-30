@@ -1,8 +1,8 @@
-// GRAKKGRITH Service Worker v47
+// GRAKKGRITH Service Worker v48
 // Caches the app for offline use. Cache busts on version bump.
 // Maps are not downloaded up front: each one is saved the first time you open it (see fetch below).
 
-const CACHE_NAME = 'grakkgrith-v47';
+const CACHE_NAME = 'grakkgrith-v48';
 const ASSETS = [
   './',
   './index.html',
@@ -13,7 +13,8 @@ const ASSETS = [
   './apps/guide.html',
   './art/pda-v1/tokens.css',
   './art/pda-v1/shell.css',
-  './art/pda-v1/start.css',
+  './art/pda-v1/world.css',
+  './art/pda-v1/city.css',
   './art/pda-v1/assets/sideways-sigil.svg',
   './art/pda-v1/assets/nav-tab-idle.svg',
   './art/pda-v1/assets/nav-tab-active.svg',

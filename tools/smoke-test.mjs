@@ -74,7 +74,8 @@ try {
     // Sideways art pass: Start wears the kit; Sideways' commentary and the rulebook stay separate in the guide.
     f = await open('worldBtn', 1200);
     await step('Start uses the Sideways skin', () => f.evaluate(() => document.body.classList.contains('pda-art') && getComputedStyle(document.querySelector('.title')).fontFamily.includes('Permanent Marker')));
-    await step('City keeps its own look (skin is Start-only)', async () => { await f.evaluate(() => showPanel('city')); return !(await f.evaluate(() => document.body.classList.contains('pda-art'))); });
+    await step('City uses the Sideways skin', async () => { await f.evaluate(() => showPanel('city')); return f.evaluate(() => document.body.classList.contains('pda-art')); });
+    await step('Missions keeps its own look until its pass', async () => { await f.evaluate(() => showPanel('missions')); return !(await f.evaluate(() => document.body.classList.contains('pda-art'))); });
 
     // Guides: all 11 races, and a card opens its entry.
     f = await open('guidesBtn', 1200);
@@ -85,6 +86,8 @@ try {
     // City: 28 atlas pins, and a pin opens its dossier.
     f = await open('cityBtn', 1500);
     await step('City shows 28 atlas pins', async () => { const n = await f.evaluate(() => document.querySelectorAll('.cityPin').length); return n === 28 || `found ${n}`; });
+    await step('City fits the screen (no sideways scroll)', async () => { const w = await f.evaluate(() => document.documentElement.scrollWidth - innerWidth); return w <= 1 || `${w}px too wide`; });
+    await step('City opens at the top', async () => { const y = await f.evaluate(() => scrollY); return y === 0 || `opened scrolled down ${y}px`; });
     await step('City pin opens a dossier', async () => { await f.evaluate(() => [...document.querySelectorAll('.cityPin')].find(p => p.dataset.cityPin === 'THE TANGLE').click()); return /The Tangle/.test(await f.evaluate(() => document.getElementById('cityMapReadout').innerText)); });
 
     // Character Setup has the rulebook's races; the sheet loads the saved character.

@@ -101,11 +101,13 @@ function withExampleInventoryItem(s){if(!s||typeof s!=='object')return s;const f
 function getState(){try{const raw=localStorage.getItem(TOOL_KEY);if(raw){const parsed=withExampleInventoryItem(JSON.parse(raw));localStorage.setItem(TOOL_KEY,JSON.stringify(parsed));return parsed}for(const oldKey of OLD_TOOL_KEYS){const old=localStorage.getItem(oldKey);if(old){const parsed=withExampleInventoryItem(JSON.parse(old));localStorage.setItem(TOOL_KEY,JSON.stringify(parsed));return parsed}}for(const k of ['adyta_offline_inventory_v44_shared','adyta_offline_inventory_v43_shared','adyta_offline_inventory_v42_shared']){const x=localStorage.getItem(k);if(x){const parsed=withExampleInventoryItem(JSON.parse(x));localStorage.setItem(TOOL_KEY,JSON.stringify(parsed));return parsed}}const fresh=withExampleInventoryItem(exampleStarterState());localStorage.setItem(TOOL_KEY,JSON.stringify(fresh));return fresh}catch(e){}return null}
 function setState(s){s=withExampleInventoryItem(s);pendingState=s;try{localStorage.setItem(TOOL_KEY,JSON.stringify(s));}catch(e){}statusEl.textContent='';updateCharacterBadge()}
 /* City tab atlas: pins and dossiers come from data/places.json (districts[].atlas and districts[].dossier). */
-/* Sideways PDA art pass: load the kit into the World page. The skin applies only while Start is showing
+/* Sideways PDA art pass: load the kit into the World page. The skin applies only on panels in PDA_ART_PAGES
    (showPanel already sets body[data-page]); other panels keep their look until their own pass. */
+/* World panels that have had their Sideways art pass. Add a page here once its pass is done. */
+const PDA_ART_PAGES=['start','city'];
 function withPdaArt(html){const u=f=>new URL(f,location.href).href;
-const links=`<link rel="stylesheet" href="${u('./art/pda-v1/tokens.css')}"><link rel="stylesheet" href="${u('./art/pda-v1/start.css')}">`;
-const sync=`<script>(function(){var b=document.body;function s(){b.classList.toggle('pda-art',b.dataset.page==='start')}s();new MutationObserver(s).observe(b,{attributes:true,attributeFilter:['data-page']})})()<\/script>`;
+const links=`<link rel="stylesheet" href="${u('./art/pda-v1/tokens.css')}"><link rel="stylesheet" href="${u('./art/pda-v1/world.css')}"><link rel="stylesheet" href="${u('./art/pda-v1/city.css')}">`;
+const sync=`<script>(function(){var b=document.body,P=${JSON.stringify(PDA_ART_PAGES)};function s(){b.classList.toggle('pda-art',P.indexOf(b.dataset.page)>=0)}s();new MutationObserver(s).observe(b,{attributes:true,attributeFilter:['data-page']})})()<\/script>`;
 const h=html.indexOf('</head>'),e=html.lastIndexOf('</body>');if(h<0||e<0)return html;
 return html.slice(0,h)+links+html.slice(h,e)+sync+html.slice(e)}
 function atlasEntries(){return PLACES?Object.entries(PLACES.districts).filter(([,d])=>d.atlas):[]}
@@ -157,10 +159,10 @@ function enhanceCityAtlas(){
   const after=doc.querySelector('.cityMapStage')||doc.querySelector('#routeMapMount')||doc.querySelector('#panel');after.insertAdjacentElement('afterend',mount);
   const nav=mount.querySelector('#districtMapChoices');nav.innerHTML=Object.keys(districtMaps).map(id=>'<button type="button" class="districtChoice" data-district-choice="'+id+'">'+h(districtMaps[id].title)+'</button>').join('');
   const img=mount.querySelector('#districtMapImg'),readout=mount.querySelector('#districtMapReadout');
-  function renderDistrictMap(id){const m=districtMaps[id]||districtMaps['low-halo'];win.__selectedDistrictMap=id;nav.querySelectorAll('[data-district-choice]').forEach(b=>b.classList.toggle('active',b.dataset.districtChoice===id));img.src=m.src;img.alt=m.title+' expanded map page';readout.innerHTML='<b>'+h(m.title)+'</b><br><span class="tag">'+h(m.tag)+'</span><p>'+h(m.read)+'</p><ul>'+m.wisdom.map(w=>'<li>'+h(w)+'</li>').join('')+'</ul>';mount.scrollIntoView({block:'nearest',behavior:'smooth'});return id}
+  function renderDistrictMap(id,quiet){const m=districtMaps[id]||districtMaps['low-halo'];win.__selectedDistrictMap=id;nav.querySelectorAll('[data-district-choice]').forEach(b=>b.classList.toggle('active',b.dataset.districtChoice===id));img.src=m.src;img.alt=m.title+' expanded map page';readout.innerHTML='<b>'+h(m.title)+'</b><br><span class="tag">'+h(m.tag)+'</span><p>'+h(m.read)+'</p><ul>'+m.wisdom.map(w=>'<li>'+h(w)+'</li>').join('')+'</ul>';if(!quiet)mount.scrollIntoView({block:'nearest',behavior:'smooth'});return id}
   win.showDistrictMap=renderDistrictMap;nav.querySelectorAll('[data-district-choice]').forEach(b=>b.addEventListener('click',()=>renderDistrictMap(b.dataset.districtChoice)));
   doc.querySelectorAll('[data-city-pin]').forEach(pin=>{const k=(pin.dataset.cityPin||'').toUpperCase();const target=k.includes('LOW HALO')?'low-halo':k.includes('EMBER COURT')?'ember-court':k.includes('SEWER')?'sewers-town':'';if(target){pin.dataset.districtMap=target;pin.addEventListener('click',()=>renderDistrictMap(target))}});
-  renderDistrictMap('low-halo');
+  renderDistrictMap('low-halo',true);   // set up quietly: opening City shouldn't jump down the page
  }
  if(!doc.getElementById('cityZoomControls')&&!toolbar.querySelector('.cityZoomControls')){
   let zoom=1;const controls=doc.createElement('div');controls.id='cityZoomControls';controls.className='cityZoomControls';controls.innerHTML='<button type="button" onclick="window.__cityAtlasZoom(\'out\')">ZOOM -</button><button type="button" onclick="window.__cityAtlasZoom(\'in\')">ZOOM +</button><button type="button" onclick="window.__cityAtlasZoom(\'reset\')">RESET</button><span class="cityZoomReadout">100%</span>';toolbar.appendChild(controls);

@@ -27,9 +27,16 @@ See `CLAUDE_HANDOFF.md`.
 ## Integrated so far (slice 1)
 
 - **Shell** (`index.html` + `shell.css`): brand, nav tabs, Tools menu. On phones the nav is one swipeable row and Tools opens as a sheet from the bottom.
-- **Start** (`start.css`): applies only while the Start panel is showing (the World page sets `body[data-page]`); City, Missions, Factions, Lore and Logs keep their old look until their own pass.
+- **World page** (`world.css`): the hero, section chips, panel, buttons and cards shared by World panels, plus Start's own pieces. It applies only to panels listed in `PDA_ART_PAGES` in `index.html` (the World page sets `body[data-page]`); Missions, Factions, Lore and Logs keep their old look until their own pass. To give a panel its pass: add page-specific CSS (like `city.css`), then add the page to `PDA_ART_PAGES`.
 - **Race guide** (`apps/guide.html`): Sideways' take on stamped paper, the rulebook in a framed panel labelled "From the rulebook". All values still come from `data/guides/races.json` and `data/rules.json`.
 - Offline: the CSS and the SVGs these screens use are pre-cached (about 30 KB).
+
+## Integrated so far (slice 2: City)
+
+- **City** (`city.css`): atlas frame, layer toggles (on = cyan, off = struck through), pin labels (appearance only; positions untouched), the district dossier as a paper field file, district map pages, route board.
+- Fixed two old City bugs: the page was 1188px wide on a 390px phone (a grid track couldn't shrink around the 1120px atlas), and opening City jumped down to District Map Pages.
+- Phones get a compact City hero; the character buttons live on Start and in Tools.
+- Known limit: the 28 atlas pins are about 24px tall. Bigger hit areas would overlap neighbours on this dense map; Explore is the touch-friendly map.
 - Before/after screenshots: `screenshots/` (`compare-*.jpg` are side by side).
 
 Still pending Nib's review: the Sideways sigil as the PDA's brand mark, and the hero copy ("A livin' city in your pocket / Welcome to Adyta"), taken from the kit preview.

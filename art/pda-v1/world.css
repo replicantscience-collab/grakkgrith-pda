@@ -1,6 +1,8 @@
-/* Start screen (the World page's "start" panel). Applies only while Start is showing:
-   the shell adds class pda-art to the World page's body when body[data-page="start"].
-   City, Missions, Factions, Lore, and Logs keep their current look until they get their own pass.
+/* World page skin: the hero, section chips, panel, buttons and cards shared by every World panel that has
+   had its art pass, plus Start's own pieces. The shell adds class pda-art to the World page's body only for
+   panels listed in PDA_ART_PAGES (index.html); page-specific styles live in their own file (city.css).
+   Missions, Factions, Lore, and Logs keep their old look until their pass.
+   Note: Low Halo's own map page also reports data-page="city", so it gets the City treatment.
    The older "occult caseboard" skin uses !important, so these rules do too, with higher specificity. */
 
 body.pda-art{background:var(--art-ink) url("assets/ink-tile.svg") repeat!important;color:var(--art-cream);font-family:var(--art-body)}
@@ -42,6 +44,7 @@ body.pda-art .ops p:nth-of-type(1){font-weight:700;font-size:18px}
 
 /* Section switcher: the old rail becomes one row of chips */
 body.pda-art .dashboard{display:block!important;margin-top:18px}
+body.pda-art .panel{min-width:0}
 body.pda-art .rail{position:static!important;display:flex!important;flex-wrap:wrap;gap:8px;padding:0!important;margin:0 0 14px;
   border:0!important;background:none!important;box-shadow:none!important}
 body.pda-art .module{width:auto!important;margin:0!important;min-height:44px;padding:8px 14px!important;border:1px solid rgba(118,80,45,.8)!important;
