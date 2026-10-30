@@ -2,7 +2,7 @@
 // Caches the app for offline use. Cache busts on version bump.
 // Maps are not downloaded up front: each one is saved the first time you open it (see fetch below).
 
-const CACHE_NAME = 'grakkgrith-v50';
+const CACHE_NAME = 'grakkgrith-v51';
 const ASSETS = [
   './',
   './index.html',
@@ -16,6 +16,7 @@ const ASSETS = [
   './art/pda-v1/world.css',
   './art/pda-v1/city.css',
   './art/pda-v1/board.css',
+  './art/pda-v1/apps.css',
   './art/pda-v1/assets/sideways-sigil.svg',
   './art/pda-v1/assets/nav-tab-idle.svg',
   './art/pda-v1/assets/nav-tab-active.svg',

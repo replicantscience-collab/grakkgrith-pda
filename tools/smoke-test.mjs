@@ -95,8 +95,16 @@ try {
     // Character Setup has the rulebook's races; the sheet loads the saved character.
     f = await open('creatorBtn', 1200);
     await step('Character Setup has all 11 races', async () => { const n = await f.evaluate(() => Object.keys(DATA.races).filter(r => r !== 'Custom / Homebrew').length); return n === 11 || `found ${n}`; });
+    // Character screens wear the Sideways kit (not the old caseboard skin) and fit a phone.
+    const kitted = () => f.evaluate(() => document.body.classList.contains('pda-art') && !document.getElementById('occultCaseboardSkin'));
+    const fits = async () => { const w = await f.evaluate(() => document.documentElement.scrollWidth - innerWidth); return w <= 1 || `${w}px too wide`; };
+    await step('Character Setup uses the Sideways skin and fits', async () => (await kitted()) ? fits() : 'unskinned');
+    await step('Character Setup is labelled for rules v1.47', async () => /v1\.47/.test(await f.evaluate(() => document.querySelector('.head').textContent)));
+    f = await open('charHubBtn', 1200);
+    await step('Character Hub uses the Sideways skin and fits', async () => (await kitted()) ? fits() : 'unskinned');
     f = await open('sheetBtn', 1800);
     await step('Character Sheet loads the character', async () => { const v = await f.evaluate(() => document.getElementById('raceSelect')?.value); return v === 'Goblin' || `race shows "${v}"`; });
+    await step('Character Sheet uses the Sideways skin and fits', async () => (await kitted()) ? fits() : 'unskinned');
 
     check(`${label}: no script errors or missing files`, errors.length === 0, [...new Set(errors)].slice(0, 5).join(' | '));
     await ctx.close();
