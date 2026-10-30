@@ -1,7 +1,7 @@
 {
   "schema": "grakkgrith-places",
   "schemaVersion": 1,
-  "_about": "Districts, places, and routes for the Explore map. Pins are fractions of the map image (0-1). Edit with Explore > Edit pins, then download places.json and replace this file. routes: walk/tram are minutes; estimate means the time is not printed on a map. Optional per route: walkRange/tramRange [min,max], goblin (minutes by goblin rooftop and tunnel routes, for the Runner view), source.",
+  "_about": "Districts, places, and routes for the Explore map. Pins are fractions of the map image (0-1). Edit with Explore > Edit pins, then download places.json and replace this file. routes: walk/tram are minutes; estimate means the time is not printed on a map. Optional per route: walkRange/tramRange [min,max], goblin (minutes by goblin rooftop and tunnel routes, for the Runner view), source. districts[].atlas: pin on the City tab's PDA atlas art (x/y in percent), its label and note. districts[].dossier: the City tab's district dossier.",
   "clock": {
     "anchorReal": "2026-10-29T20:13:00Z",
     "anchorAdyta": "2026-10-29T22:38:00",
@@ -84,6 +84,13 @@
         "x": 0.098,
         "y": 0.104,
         "approx": true
+      },
+      "atlas": {
+        "x": 15.0,
+        "y": 14.0,
+        "label": "Noble Heights",
+        "note": "Old money and older bones. Access, memory, resentment, and institutions that do not forget.",
+        "kind": null
       }
     },
     "grand-academy": {
@@ -93,6 +100,13 @@
       "cityPin": {
         "x": 0.2138,
         "y": 0.048
+      },
+      "atlas": {
+        "x": 21.0,
+        "y": 11.0,
+        "label": "Grand Academy",
+        "note": "Knowledge and older arrogance. Institutional memory with locked doors.",
+        "kind": "area"
       }
     },
     "new-halo": {
@@ -102,6 +116,13 @@
       "cityPin": {
         "x": 0.4489,
         "y": 0.0791
+      },
+      "atlas": {
+        "x": 50.0,
+        "y": 8.0,
+        "label": "New Halo",
+        "note": "The Shining Spire, aspirational skyline, prestige pressure, and the polished version of Adyta sold upward.",
+        "kind": "area"
       }
     },
     "governance-district": {
@@ -111,6 +132,13 @@
       "cityPin": {
         "x": 0.6206,
         "y": 0.0653
+      },
+      "atlas": {
+        "x": 68.0,
+        "y": 14.0,
+        "label": "Governance",
+        "note": "Paper, power, lies, civic channels, public authority, and procedures that decide who gets heard.",
+        "kind": "area"
       }
     },
     "crownline-industrials": {
@@ -120,6 +148,22 @@
       "cityPin": {
         "x": 0.7785,
         "y": 0.1209
+      },
+      "atlas": {
+        "x": 81.0,
+        "y": 18.0,
+        "label": "Crownline",
+        "note": "Profit, smoke, infrastructure leverage, and the corporate version of stability.",
+        "kind": null
+      },
+      "dossier": {
+        "mood": "Service is strength, and strength sends invoices.",
+        "control": "Crownline, contractors, security, infrastructure leverage.",
+        "heat": "Corporate Heat. Evidence becomes liability before it becomes truth.",
+        "hazards": "Watch teams, access logs, clean uniforms, dirty files, managed witnesses.",
+        "factions": "Crownline Infrastructure; Bastion Dynamics; civic compromise chain.",
+        "missions": "Burn-Wire Block Check; seized power dispute; corridor shutdowns.",
+        "wisdom": "They protect you. You pay. Everybody wins, allegedly."
       }
     },
     "three-spires-monastery": {
@@ -129,6 +173,13 @@
       "cityPin": {
         "x": 0.2074,
         "y": 0.1554
+      },
+      "atlas": {
+        "x": 31.0,
+        "y": 26.0,
+        "label": "Three Spires",
+        "note": "Old gods, older secrets, and spiritual leverage that does not fit corporate reporting.",
+        "kind": "area"
       }
     },
     "elven-enclave": {
@@ -138,6 +189,13 @@
       "cityPin": {
         "x": 0.0492,
         "y": 0.2041
+      },
+      "atlas": {
+        "x": 16.0,
+        "y": 28.0,
+        "label": "Elven Enclave",
+        "note": "Established, elegant, elven. An enclave of older status and polished exclusions.",
+        "kind": "area"
       }
     },
     "central-core": {
@@ -147,6 +205,13 @@
       "cityPin": {
         "x": 0.4348,
         "y": 0.2181
+      },
+      "atlas": {
+        "x": 49.0,
+        "y": 32.0,
+        "label": "Central Core",
+        "note": "Commerce, politics, control, transit for all. The official city explains itself from here.",
+        "kind": null
       }
     },
     "the-ashrun": {
@@ -156,6 +221,13 @@
       "cityPin": {
         "x": 0.7053,
         "y": 0.2092
+      },
+      "atlas": {
+        "x": 67.0,
+        "y": 31.0,
+        "label": "The Ashrun",
+        "note": "Trade flows, waste flows, stories drown. Water routes carry more than freight.",
+        "kind": "area"
       }
     },
     "far-shipyards": {
@@ -165,6 +237,13 @@
       "cityPin": {
         "x": 0.8998,
         "y": 0.2183
+      },
+      "atlas": {
+        "x": 92.0,
+        "y": 31.0,
+        "label": "Far Shipyards",
+        "note": "Build it, break it, sell it twice. Heavy industry at the edge of the harbor map.",
+        "kind": "area"
       }
     },
     "the-tangle": {
@@ -174,6 +253,22 @@
       "cityPin": {
         "x": 0.1351,
         "y": 0.2813
+      },
+      "atlas": {
+        "x": 18.0,
+        "y": 39.0,
+        "label": "The Tangle",
+        "note": "Goblin heartland, jury-rigged passages, clan memory, and routes official maps cannot admit.",
+        "kind": "area"
+      },
+      "dossier": {
+        "mood": "Goblin heartland where routes are argued into existence.",
+        "control": "Clans, rooftops, jury-rig crews, and people who know which bridges still hold.",
+        "heat": "Heat spreads socially before it becomes official.",
+        "hazards": "Bad stairs, false shortcuts, insulted locals, patched power, hidden tolls.",
+        "factions": "Commons survival mesh; Patchkin; Gremlin Works; local crews.",
+        "missions": "Route favors; reclaimed gear disputes; hidden crossing work.",
+        "wisdom": "Rooftops are faster. Being rude is slower."
       }
     },
     "low-halo": {
@@ -184,7 +279,24 @@
         "x": 0.258,
         "y": 0.2917
       },
-      "map": "low-halo"
+      "map": "low-halo",
+      "atlas": {
+        "x": 36.0,
+        "y": 40.0,
+        "label": "Low Halo",
+        "note": "Arts, music, resistance, chaos curated. This is the first-play focus: lived pressure, public memory, and routes below the official story.",
+        "kind": "mission",
+        "districtMap": "low-halo"
+      },
+      "dossier": {
+        "mood": "Loud music, ignored rent, lights that never stay fixed.",
+        "control": "Residents, venues, local fixers, Crownline pressure at the borders.",
+        "heat": "High public sensitivity. Quiet help earns trust; official spectacle gets remembered.",
+        "hazards": "Bad wiring, eviction pressure, watch patrols, rumor cascades, haunted infrastructure.",
+        "factions": "Low Halo residents; Crownline Infrastructure; Velvet Signal; local fixer network.",
+        "missions": "Burn-Wire Block Check; Pipe 37 approach; venue-block fallout.",
+        "wisdom": "Maps are lies. Make your own anyway."
+      }
     },
     "ember-court": {
       "name": "Ember Court",
@@ -194,7 +306,23 @@
         "x": 0.4569,
         "y": 0.3368
       },
-      "map": "ember-court"
+      "map": "ember-court",
+      "atlas": {
+        "x": 50.0,
+        "y": 42.0,
+        "label": "Ember Court",
+        "note": "Occult trade, legal-up-front, illegal behind curtains. Contracts have teeth here.",
+        "kind": "area"
+      },
+      "dossier": {
+        "mood": "Occult trade with legal curtains and teeth behind the receipt.",
+        "control": "Licensed mystics, contract lawyers, old families, polite predators.",
+        "heat": "Low until a contract breaks; then it gets ceremonial.",
+        "hazards": "Binding clauses, cursed collateral, social traps, witnesses that are not human.",
+        "factions": "Occult brokers; Velvet Signal; old-city stakeholders.",
+        "missions": "Below-Site Incident Review; artifact verification; curse containment.",
+        "wisdom": "If the ink warms, stop signing."
+      }
     },
     "market-ring": {
       "name": "Market Ring",
@@ -204,7 +332,14 @@
         "x": 0.6091,
         "y": 0.3304
       },
-      "map": "market-ring"
+      "map": "market-ring",
+      "atlas": {
+        "x": 62.0,
+        "y": 43.0,
+        "label": "Market Ring",
+        "note": "Everything legal, everything negotiable, everything has a price. Good for contacts, gear, and favors with strings.",
+        "kind": null
+      }
     },
     "dockside": {
       "name": "Dockside Warehouses",
@@ -214,7 +349,15 @@
         "x": 0.7974,
         "y": 0.2907
       },
-      "map": "dockside"
+      "map": "dockside",
+      "atlas": {
+        "x": 82.0,
+        "y": 40.0,
+        "label": "Dockside",
+        "note": "Freight, smuggling, opportunity, tidecrew goblins, and records that may or may not exist.",
+        "kind": "area",
+        "key": "DOCKSIDE WAREHOUSES"
+      }
     },
     "three-wires": {
       "name": "Three Wires",
@@ -223,6 +366,22 @@
       "cityPin": {
         "x": 0.0502,
         "y": 0.4047
+      },
+      "atlas": {
+        "x": 15.0,
+        "y": 52.0,
+        "label": "Three Wires",
+        "note": "Contact zone, hire here, regret later. A switchboard of favors, debts, and fast introductions.",
+        "kind": "area"
+      },
+      "dossier": {
+        "mood": "Contact zone, favors, debts, and fast introductions.",
+        "control": "Brokers, runners, small crews, payphones that still somehow work.",
+        "heat": "Medium. Trouble here becomes a name someone can sell.",
+        "hazards": "Bad introductions, fake jobs, debt hooks, social crossfire.",
+        "factions": "Fixer network; civic intermediaries; Commons contacts.",
+        "missions": "Find a crew; source a route; meet the person who knows a person.",
+        "wisdom": "Never accept the first price or the second apology."
       }
     },
     "greasewick-row": {
@@ -232,6 +391,13 @@
       "cityPin": {
         "x": 0.1956,
         "y": 0.4029
+      },
+      "atlas": {
+        "x": 30.0,
+        "y": 51.0,
+        "label": "Greasewick",
+        "note": "Machines, oil, fixers, goblin tech, and repair work that smells like debt and hot metal.",
+        "kind": "area"
       }
     },
     "old-city": {
@@ -241,6 +407,22 @@
       "cityPin": {
         "x": 0.3789,
         "y": 0.4212
+      },
+      "atlas": {
+        "x": 45.0,
+        "y": 56.0,
+        "label": "Old City",
+        "note": "Built on ruins, built over lies, still standing. Every wall remembers earlier arrangements.",
+        "kind": "area"
+      },
+      "dossier": {
+        "mood": "Built over ruins, lies, and rooms that still disagree with time.",
+        "control": "Developers, old families, municipal files, things under the floor.",
+        "heat": "Clean on paper, explosive if the buried version surfaces.",
+        "hazards": "Unstable chambers, false histories, occult resonance, missing workers.",
+        "factions": "ABI; Velvet Signal; developers; old-city stakeholders.",
+        "missions": "Below-Site Incident Review.",
+        "wisdom": "Every wall remembers earlier arrangements."
       }
     },
     "southport-slums": {
@@ -250,6 +432,13 @@
       "cityPin": {
         "x": 0.5992,
         "y": 0.4378
+      },
+      "atlas": {
+        "x": 65.0,
+        "y": 56.0,
+        "label": "Southport",
+        "note": "Forgotten, abandoned, still surviving. The city forgets people here until it needs them moved.",
+        "kind": "area"
       }
     },
     "scrapfields": {
@@ -259,6 +448,22 @@
       "cityPin": {
         "x": 0.7725,
         "y": 0.4204
+      },
+      "atlas": {
+        "x": 80.0,
+        "y": 55.0,
+        "label": "Scrapfields",
+        "note": "Pickers, scavengers, patchkin goblins, and useful things that refused to stay dead.",
+        "kind": "mission area"
+      },
+      "dossier": {
+        "mood": "Useful things that refused to stay dead.",
+        "control": "Pickers, Patchkin, Gremlin Works, scavengers, contested tags.",
+        "heat": "Street-level until corporations remember ownership.",
+        "hazards": "Toxic salvage, armed escorts, misfiled property, unstable assemblies.",
+        "factions": "Patchkin; Gremlin Works; Bastion Dynamics; Crownline.",
+        "missions": "Hold the Line on Reclaimed Power.",
+        "wisdom": "Abandoned means nobody rich needed it yesterday."
       }
     },
     "outer-farms": {
@@ -268,6 +473,13 @@
       "cityPin": {
         "x": 0.102,
         "y": 0.4962
+      },
+      "atlas": {
+        "x": 17.0,
+        "y": 64.0,
+        "label": "Outer Farms",
+        "note": "Scrap gangs, hunters, dustwalker goblins, and the edge where city logic starts to fail.",
+        "kind": "area"
       }
     },
     "borderlands": {
@@ -277,6 +489,13 @@
       "cityPin": {
         "x": 0.2509,
         "y": 0.4964
+      },
+      "atlas": {
+        "x": 30.0,
+        "y": 65.0,
+        "label": "Borderlands",
+        "note": "Law fades, survival sharpens, no promises. Good for crossings and deals nobody records.",
+        "kind": "area"
       }
     },
     "southern-industrial-belt": {
@@ -286,6 +505,14 @@
       "cityPin": {
         "x": 0.4546,
         "y": 0.4997
+      },
+      "atlas": {
+        "x": 51.0,
+        "y": 64.0,
+        "label": "S-Industrial",
+        "note": "Smoke, steel, sweat, Ashborn goblins, dwarf strongholds, and work that changes bodies.",
+        "kind": "area",
+        "key": "S-INDUSTRIAL BELT"
       }
     },
     "crownless-row": {
@@ -306,6 +533,13 @@
         "x": 0.787,
         "y": 0.526,
         "approx": true
+      },
+      "atlas": {
+        "x": 83.0,
+        "y": 64.0,
+        "label": "Ash Wastes",
+        "note": "Dead wind, dead things, stay out. Escalation space for fallout and dangerous edges of the map.",
+        "kind": null
       }
     },
     "the-sewers": {
@@ -315,6 +549,22 @@
       "cityPin": {
         "x": 0.4756,
         "y": 0.682
+      },
+      "atlas": {
+        "x": 49.0,
+        "y": 86.0,
+        "label": "Sewers",
+        "note": "Underground community, hidden movement, warnings, labor, and shelter. Route truth lives here before it becomes a file.",
+        "kind": "mission"
+      },
+      "dossier": {
+        "mood": "Lived underground space: route truth before file truth.",
+        "control": "Sewers Community, Radio Sewers, Antitoxin, people who listen.",
+        "heat": "Usually hidden. Official closure makes it political.",
+        "hazards": "Contamination, bad air, wrong echoes, route collapses, surface arrogance.",
+        "factions": "Sewers Community; Antitoxin; Radio Sewers; Emergency Management.",
+        "missions": "Route Check: Murr Corridor; Pipe 37 Marked Access.",
+        "wisdom": "The tunnels listen. Your secrets do not."
       }
     },
     "deep-tunnels": {
@@ -324,6 +574,22 @@
       "cityPin": {
         "x": 0.3043,
         "y": 0.7919
+      },
+      "atlas": {
+        "x": 43.0,
+        "y": 95.0,
+        "label": "Deep Tunnels",
+        "note": "Forgotten infrastructure, still somewhere, below the readable city and above worse places.",
+        "kind": "area"
+      },
+      "dossier": {
+        "mood": "Wrong infrastructure below the readable city.",
+        "control": "No one honest claims control. Some things still maintain themselves.",
+        "heat": "Staff-controlled danger zone. Use after visible choices have consequences.",
+        "hazards": "Lost time, contamination, pressure doors, sealed records, things that learned the pipes.",
+        "factions": "Antitoxin; ABI; old infrastructure ghosts.",
+        "missions": "Pipe 37 Breach; post-incident restriction overlay.",
+        "wisdom": "If the map agrees too easily, it is bait."
       }
     },
     "forgotten-depths": {
@@ -333,6 +599,34 @@
       "cityPin": {
         "x": 0.5801,
         "y": 0.7952
+      },
+      "atlas": {
+        "x": 64.0,
+        "y": 95.0,
+        "label": "Forgotten Depths",
+        "note": "Where maps stop and worse goes down. Use for deep fallout, lost systems, and hard choices.",
+        "kind": "area"
+      }
+    },
+    "main-roads": {
+      "name": "Main Roads",
+      "tagline": "Official movement: freight, patrols, transit, paperwork, blame.",
+      "layer": "network",
+      "atlas": {
+        "x": 44.0,
+        "y": 51.0,
+        "label": "Main Roads",
+        "note": "Primary surface roads, trade spines, civic transit lanes, and visible routes that official traffic, patrols, freight, and job fallout move through first.",
+        "kind": "roadPin"
+      },
+      "dossier": {
+        "mood": "Official movement: freight, patrols, transit, paperwork, blame.",
+        "control": "Civic systems, Crownline maintenance, traffic enforcement.",
+        "heat": "Visible. If it happens here, someone records it.",
+        "hazards": "Cameras, patrol timing, chokepoints, blocked transit, crowd panic.",
+        "factions": "Wardens; Crownline; Civil Registry; Emergency Management.",
+        "missions": "Any public-facing operation or getaway complication.",
+        "wisdom": "The legal road is not always the safe road."
       }
     }
   },

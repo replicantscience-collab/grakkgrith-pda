@@ -12,7 +12,7 @@ The companion web app for GRAKKGRITH, the Adyta tabletop RPG: character setup, c
 | `apps/guide.html` | Guides: Sideways Shops' guide to the races (card wall, tap a card for the full entry) |
 | `apps/player.html` | Character Sheet: wounds, stress, inventory, rolls, downtime, grith, Heat |
 | `data/rules.json` | **The rules.** Races, classes, subclasses, origins, lives, skills, street magic tags, territories, starting loadouts, Shade workings, downtime actions. Both the creator and the sheet read this one file. |
-| `data/places.json` | **The map.** Districts, places, pins, routes and travel times, tram hours, and the Adyta clock |
+| `data/places.json` | **The map.** Districts, places, pins, routes and travel times, tram hours, and the Adyta clock. Also feeds the City tab: each district's `atlas` (pin and note) and `dossier`. Edit a district here and both Explore and the City tab change. |
 | `data/guides/races.json` | What Sideways Shops says about each race: blurbs, traits, lifespans, card art, tips. Game numbers come from `rules.json`. |
 | `art/sideways-shops/` | Guide art. Race cards are cut from the Sideways Shops poster; replace a card's image to re-render it. |
 | `fonts/` | Fonts bundled for offline use, with their licenses |
