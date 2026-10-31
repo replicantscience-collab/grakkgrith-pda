@@ -69,6 +69,7 @@ try {
     let f = await open('exploreBtn', 1500);
     await step('Explore map image loads', () => f.evaluate(() => { const i = document.getElementById('mapImg'); return i.complete && i.naturalWidth > 0; }));
     await step('Explore shows the Adyta clock', async () => /\d:\d\d [AP]M/.test(await f.evaluate(() => document.getElementById('clock').textContent)));
+    await step('Explore has every district map, Three Wires & Tangle and Noble Heights included', async () => { const tabs = await f.$$eval('#mapTabs button', b => b.map(x => x.textContent)); return (tabs.length === 7 && tabs.some(t => /Three Wires/.test(t)) && tabs.some(t => /Noble/.test(t))) || tabs.join('|'); });
     await step('Explore can plan a trip', async () => (await f.evaluate(() => window.GRAKK_EXPLORE.planTrip({ district: 'ember-court', place: 'ember-court--the-ninth-circle-ph' }).length)) > 0);
 
     // Sideways art pass: Start wears the kit; Sideways' commentary and the rulebook stay separate in the guide.
