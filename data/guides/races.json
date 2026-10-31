@@ -45,7 +45,7 @@
       ]
     },
     "Orc": {
-      "card": "art/sideways-shops/races/orc.jpg",
+      "card": "art/pda-v1/imports/races/orc-lifespan-corrected.webp",
       "lifespan": "70–90 years",
       "lifespanSource": "wiki",
       "blurb": "Strong, resilient, and deeply communal. Orcs value honor, protection, and the bonds of family.",
@@ -54,8 +54,7 @@
         "Steadfast",
         "Protective",
         "Loyal"
-      ],
-      "artNote": "Card art shows \"?\" for lifespan; the Adyta wiki says 70–90 years."
+      ]
     },
     "Human": {
       "card": "art/sideways-shops/races/human.jpg",
@@ -70,7 +69,7 @@
       ]
     },
     "Dwarf": {
-      "card": "art/sideways-shops/races/dwarf.jpg",
+      "card": "art/pda-v1/imports/races/dwarf-lifespan-corrected.webp",
       "lifespan": "150–200 years",
       "lifespanSource": "both",
       "blurb": "Steady, skilled, and fiercely loyal. Dwarves build, craft, and keep things running.",
@@ -79,8 +78,7 @@
         "Reliable",
         "Stubborn",
         "Proud"
-      ],
-      "artNote": "Card art shows \"?\" for lifespan; the rulebook and wiki say 150–200 years."
+      ]
     },
     "Elf": {
       "card": "art/sideways-shops/races/elf.jpg",
@@ -95,7 +93,7 @@
       ]
     },
     "Fairy": {
-      "card": null,
+      "card": "art/pda-v1/imports/races/fairy.webp",
       "lifespan": "Ageless",
       "lifespanSource": "rulebook",
       "blurb": "Charming, sharp, and never quite what you expected. Fairies read a room before you've finished walking into it, and they always know when a promise breaks.",
@@ -104,7 +102,8 @@
         "Charming",
         "Fae",
         "Promise-bound"
-      ]
+      ],
+      "artNote": "Card art is a visual draft (art sprint 01), pending Nib's review."
     },
     "Halfling (Fenn)": {
       "card": "art/sideways-shops/races/halfling.jpg",

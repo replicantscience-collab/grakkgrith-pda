@@ -1,0 +1,128 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Radio Sewers</title>
+<link rel="stylesheet" href="../fonts/fonts.css">
+<link rel="stylesheet" href="../art/pda-v1/tokens.css">
+<link rel="stylesheet" href="./screen.css">
+<style>
+.onair{display:grid;grid-template-columns:auto minmax(0,1fr);gap:18px;align-items:center;margin-top:16px;padding:18px 20px;border:2px solid var(--art-brass);border-radius:var(--art-radius);background:radial-gradient(circle at 12% 30%,rgba(154,242,105,.14),transparent 45%),linear-gradient(130deg,#132019,#0b0c16);box-shadow:inset 0 0 0 1px rgba(220,180,117,.2),0 8px 22px rgba(0,0,0,.45)}
+.dial{position:relative;display:grid;place-items:center;width:104px;height:104px;border-radius:50%;border:3px solid var(--art-brass);background:repeating-conic-gradient(from 0deg,#1a2a20 0 6deg,#0d1510 6deg 12deg);box-shadow:inset 0 0 18px rgba(0,0,0,.8),0 0 18px rgba(154,242,105,.25)}
+.dial b{display:grid;place-items:center;width:62px;height:62px;border-radius:50%;background:#0b0c16;border:2px solid var(--art-lime);color:var(--art-lime);font:700 13px/1.1 var(--art-ui);letter-spacing:.08em;text-align:center}
+.live{display:inline-flex;align-items:center;gap:6px;color:#ff9aa1;font:700 12px var(--art-ui);letter-spacing:.14em;text-transform:uppercase}
+.live::before{content:"";width:10px;height:10px;border-radius:50%;background:#fc6c74;box-shadow:0 0 10px #fc6c74;animation:pulse 1.6s infinite}
+@keyframes pulse{50%{opacity:.35}}
+@media (prefers-reduced-motion:reduce){.live::before{animation:none}}
+.onair h2{margin:4px 0 2px;color:#ffc55f;font:400 clamp(28px,4vw,40px)/1.05 var(--art-title);text-shadow:3px 3px 0 #1d3a25}
+.onair .show{color:var(--art-lime);font:700 15px var(--art-ui);letter-spacing:.08em;text-transform:uppercase}
+.onair p{margin:6px 0 0}
+a.listen{display:inline-flex;align-items:center;min-height:44px;margin-top:10px;padding:9px 16px;border:1px solid var(--art-lime);border-radius:6px;background:#132019;color:var(--art-lime);font:700 15px var(--art-ui);letter-spacing:.06em;text-transform:uppercase;text-decoration:none}
+a.listen:hover{background:#1c3324}
+.djpic{width:132px;height:132px;border-radius:50%;object-fit:cover;border:3px solid var(--art-lime);box-shadow:0 0 18px rgba(154,242,105,.3)}
+.archive{filter:sepia(.3) contrast(.95)}
+.crew{display:flex;flex-wrap:wrap;gap:14px;align-items:center;margin-top:10px}
+.crewm{display:flex;align-items:center;gap:10px;margin:0}
+.crewm img{width:56px;height:56px;border-radius:50%;object-fit:cover;border:2px solid var(--art-brass)}
+.crewm figcaption{font-size:13px;color:var(--art-muted);max-width:180px}
+.crewm figcaption b{display:block;color:#ffe2a8;font:700 15px var(--art-ui)}
+.crewnote{flex-basis:100%;margin:0}
+.sched img{float:left;width:40px;height:40px;margin-right:10px;border-radius:50%;object-fit:cover}
+.sched{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;margin-top:12px}
+.sched div{padding:10px 12px;border:1px solid rgba(118,80,45,.85);border-radius:8px;background:rgba(10,11,22,.8)}
+.sched div.now{border-color:var(--art-lime);box-shadow:0 0 12px rgba(154,242,105,.25)}
+.sched b{display:block;color:#ffe2a8;font:700 16px var(--art-ui)}
+.sched span{color:var(--art-muted);font-size:13px}
+.seg{display:grid;grid-template-columns:76px minmax(0,1fr);gap:10px;padding:10px 0;border-bottom:1px solid rgba(118,80,45,.35)}
+.seg time{color:var(--art-cyan);font:700 12px/1.4 var(--art-ui);letter-spacing:.06em}
+.seg .k{display:inline-block;margin-right:6px;padding:0 8px;border-radius:999px;background:rgba(215,172,97,.15);color:var(--art-brass);font:700 11px/1.7 var(--art-ui);letter-spacing:.1em;text-transform:uppercase}
+.seg .who{color:var(--art-muted);font-size:13px}
+.seg.headsUp{margin:6px -10px;padding:12px 10px;border:1px solid var(--art-alert);border-radius:8px;background:rgba(252,108,116,.08)}
+.seg.headsUp .k{background:rgba(252,108,116,.2);color:#ffb3b8}
+.seg.yours .k{background:rgba(154,242,105,.15);color:var(--art-lime)}
+.seg.song .k{background:rgba(34,218,228,.12);color:var(--art-cyan)}
+.lock{padding:12px 14px;border:1px dashed rgba(215,172,97,.5);border-radius:8px;color:var(--art-muted)}
+textarea{width:100%;min-height:88px;padding:10px;border:1px solid rgba(118,80,45,.9);border-radius:6px;background:#0b0c16;color:var(--art-cream);font:16px/1.4 var(--art-body)}
+.stand b{color:#ffc55f;font:400 30px var(--art-title)}
+@media (max-width:860px){.onair{grid-template-columns:1fr;justify-items:start}.sched{grid-template-columns:1fr}}
+</style>
+</head>
+<body class="pda-art">
+<div class="wrap">
+  <div class="kicker">ADYTA PDA / RADIO</div>
+  <h1 id="title">Radio Sewers</h1>
+  <p class="muted" id="tag"></p>
+  <div class="crew" id="crew"></div>
+  <div id="onair"></div>
+  <div class="cols">
+    <section class="frame" aria-labelledby="feedH"><h2 id="feedH">On the air</h2><div id="feed"></div></section>
+    <aside>
+      <section class="frame" aria-labelledby="standH"><h2 id="standH">You and the Sewers</h2><div id="stand"></div></section>
+      <section class="frame" aria-labelledby="needH"><h2 id="needH">The station needs</h2><div id="needs"></div></section>
+      <section class="frame" aria-labelledby="bcH"><h2 id="bcH">Your broadcast</h2><div id="bc"></div></section>
+    </aside>
+  </div>
+</div>
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+<script src="./week.js"></script>
+<script src="./make.js"></script>
+<script src="./gigs.js"></script>
+<script src="./radio.js"></script>
+<script>
+'use strict';
+const KEY = 'grakkgrith_character_tool_v8_state';
+const WK = window.GRAKK_WEEK, MK = window.GRAKK_MAKE, RA = window.GRAKK_RADIO, $ = id => document.getElementById(id);
+const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+let RD = null, R = null, PL = null, W = null, M = null, CLOCK = null;
+const load = () => { try { return JSON.parse(localStorage.getItem(KEY)); } catch (e) { return null; } };
+const save = s => { try { localStorage.setItem(KEY, JSON.stringify(s)); } catch (e) {} try { parent.postMessage({ type: 'grakkgrith-week-changed' }, '*'); } catch (e) {} };
+const now = () => WK.adytaNow(CLOCK, Date.now());
+const hasChar = s => !!(s && s.character && String(s.character.name || '').trim());
+const diceHtml = d => d.map(x => `<span class="die ${x >= 5 ? 'hit' : ''}">${x}</span>`).join('');
+const hhmm = ms => WK.fmt(ms).split(' ').slice(2).join(' ');
+const hr = h => `${h % 12 || 12}${h < 12 ? 'am' : 'pm'}`;
+function toast(msg, dice) { const t = $('toast'); t.innerHTML = esc(msg) + (dice ? `<div style="margin-top:6px">${diceHtml(dice)}</div>` : ''); t.classList.add('on'); clearTimeout(toast.t); toast.t = setTimeout(() => t.classList.remove('on'), 4600); }
+function act(fn) { const s = load(); if (!hasChar(s)) return; WK.settle(s, W, CLOCK, Date.now()); MK.settle(s, M, W, now()); const r = fn(s); save(s); render(); return r; }
+const KIND = { song: 'Song', talk: 'On air', rumor: 'Rumor', headsUp: 'Heads up', yours: 'Your broadcast' };
+
+function render() {
+  const t = now(), slot = RA.slotAt(RD, t), s = load(), st = RD.station;
+  $('tag').innerHTML = `${esc(st.tagline)}`;
+  $('crew').innerHTML = (st.crew || []).map(c => `<figure class="crewm"><img src="../${esc(c.portrait)}" alt="${esc(c.name)}" loading="lazy" width="800" height="800" class="${c.archive ? 'archive' : ''}"><figcaption><b>${esc(c.name)}</b>${esc(c.who)}</figcaption></figure>`).join('') + `<p class="note crewnote">Run by ${esc(st.runBy)} ${esc(st.portraitNote || '')}</p>`;
+  $('onair').innerHTML = `<div class="onair">${slot.portrait ? `<img class="djpic${slot.mia ? ' archive' : ''}" src="../${esc(slot.portrait)}" alt="${esc(slot.dj)}${slot.mia ? ', archive photo' : ''}" width="800" height="800">` : '<div class="dial" aria-hidden="true"><b>RADIO<br>SEWERS</b></div>'}<div>
+    <span class="live">On air · ${esc(hhmm(t))} Adyta</span><h2>${esc(slot.dj)}</h2><div class="show">${esc(slot.show)}</div>
+    <p>${esc(slot.who)}</p>${slot.mia ? `<p class="note">${esc(slot.archive)}</p>` : ''}
+    <a class="listen" href="${esc(st.listenUrl)}" target="_blank" rel="noopener">${esc(st.listenLabel)}</a><p class="note">${esc(st.listenNote)}</p></div></div>
+    <div class="sched">${RD.slots.map(x => `<div class="${x.id === slot.id ? 'now' : ''}">${x.portrait ? `<img src="../${esc(x.portrait)}" alt="" loading="lazy" width="800" height="800">` : ''}<b>${esc(x.dj)}</b><span>${hr(x.from)}–${hr(x.to)} · ${esc(x.show)}${x.mia ? ' · archives' : ''}</span></div>`).join('')}</div>`;
+  if (!hasChar(s)) { $('feed').innerHTML = RA.feed({}, RD, M, PL, t).filter(x => x.kind !== 'headsUp').map(segHtml).join(''); ['stand', 'needs', 'bc'].forEach(id => $(id).innerHTML = '<p class="muted">Make a character to get on the station\'s good side.</p>'); return; }
+  const sv = RA.standing(s, RD);
+  $('feed').innerHTML = RA.feed(s, RD, M, PL, t).map(segHtml).join('');
+  $('stand').innerHTML = `<p class="stand"><b>${sv}</b> / 5 Sewers Standing</p><p class="note">${esc(RD.standingNote)}</p>
+    <p>${sv >= RD.headsUp.minStanding ? '✓' : '·'} <b>${RD.headsUp.minStanding}+</b> They warn you before trouble lands.</p><p>${sv >= RD.broadcast.minStanding ? '✓' : '·'} <b>${RD.broadcast.minStanding}+</b> They put something on air for you, once a session.</p>`;
+  const jobs = RA.board(s, RD, R, PL, t), mine = RA.ensure(s).jobs.filter(j => j.status === 'active'), left = MK.downtimeLeft(s);
+  $('needs').innerHTML = `<p class="note">${esc(RD.support._about)}</p>` + mine.map(j => { const here = (MK.here(s, t) || {}).place === j.place.place; return `<article class="letter notice"><div class="from">For the station · ${esc(j.place.name)}, ${esc(j.place.districtName)}</div><h3>${esc(j.title)}</h3><p>${esc(j.blurb)}</p><p class="meta"><span>${esc(j.attr.replace(/^\w/, c => c.toUpperCase()))} + ${esc(j.skillName)} · need ${j.difficulty}</span><span><b>${j.pay} cr</b> + Standing</span></p><div class="actions"><button class="primary" data-work="${j.id}" ${here ? '' : 'disabled'}>${here ? 'Do it' : 'Get there first'}</button><button class="ghost" data-go="${j.place.place}">Go there</button></div></article>`; }).join('')
+    + jobs.filter(j => !j.taken).map(j => `<article class="letter bill"><div class="from">${esc(j.place.name)}, ${esc(j.place.districtName)}</div><h3>${esc(j.title)}</h3><p>${esc(j.blurb)}</p><p class="meta"><span>${esc(j.attr.replace(/^\w/, c => c.toUpperCase()))} + ${esc(j.skillName)} · need ${j.difficulty}</span><span><b>${j.pay} cr</b> + Sewers Standing</span><span>Risk: a Velvet trace sweep</span></p><div class="actions"><button class="primary" data-take="${j.id}" ${left ? '' : 'disabled'}>Help out</button><button class="ghost" data-go="${j.place.place}">Map</button></div></article>`).join('') || '<p class="muted">Nothing today. Check back tomorrow, Adyta time.</p>';
+  if (sv < RD.broadcast.minStanding) $('bc').innerHTML = `<div class="lock">${esc(RD.broadcast.rule)} You need Sewers Standing ${RD.broadcast.minStanding}. Helping the station is how you get there.</div>`;
+  else if (!RA.canBroadcast(s, RD)) $('bc').innerHTML = `<div class="lock">Used this session. Press "Session starting" in Mail when the next one begins.</div>`;
+  else { const notices = ((s.week && s.week.mail) || []).filter(m => m.status === 'open' && m.appeal && !m.appealed);
+    $('bc').innerHTML = `<p class="note">${esc(RD.broadcast.rule)}</p><label for="bcMsg">Get a message out</label><textarea id="bcMsg" maxlength="200" placeholder="Keep it short. The station reads it on air."></textarea><div class="actions"><button class="primary" data-bc="message">Send it to the station</button></div>
+    ${notices.length ? `<label for="bcNotice">Or put pressure on a notice</label><select id="bcNotice">${notices.map(m => `<option value="${m.id}">${esc(m.from)}: ${esc(m.title)}</option>`).join('')}</select><div class="actions"><button data-bc="pressure">Put it on air (+2 on the appeal)</button></div>` : ''}`; }
+}
+function segHtml(x) { return `<div class="seg ${esc(x.kind)}"><time>${esc(hhmm(x.at))}</time><div><span class="k">${esc(KIND[x.kind] || x.kind)}</span><span class="who">${esc(x.dj)}</span><div>${esc(x.text)}</div></div></div>`; }
+
+document.addEventListener('click', e => {
+  const b = e.target.closest('button'); if (!b) return; const t = now();
+  if (b.dataset.take) { const r = act(s => RA.take(s, RD, R, PL, b.dataset.take, t)); r && toast(r.msg); }
+  else if (b.dataset.work) { const r = act(s => RA.work(s, RD, b.dataset.work, t)); r && toast(r.msg, r.dice); }
+  else if (b.dataset.go) parent.postMessage({ type: 'grakkgrith-open-explore', place: b.dataset.go }, '*');
+  else if (b.dataset.bc) { const payload = b.dataset.bc === 'message' ? $('bcMsg').value : $('bcNotice').value; const r = act(s => RA.broadcast(s, RD, b.dataset.bc, payload, t)); r && toast(r.msg); }
+});
+Promise.all(['radio', 'rules', 'places', 'week', 'make'].map(n => fetch(`../data/${n}.json`).then(r => r.json()))).then(([rd, r, p, w, m]) => {
+  RD = rd; R = r; PL = p; W = w; M = m; CLOCK = p.clock;
+  render(); window.GRAKK_RADIO_READY = true;
+  setInterval(() => { if (!document.activeElement || document.activeElement.tagName !== 'TEXTAREA') render(); }, 60000);
+});
+</script>
+</body>
+</html>

@@ -1,0 +1,70 @@
+{
+  "_about": "The Week: bills on the live Adyta clock and Heat mail. Costs, Debt and the Heat ladder are from the First Edition rulebook (Cost of Living, Chapter Nine; Heat, Chapter Seven). Notice wording, fines and appeal numbers are drafts built on the World Anvil (Civic Institutions, Corporations) and marked status: draft.",
+  "rulebook": "First Edition v1.47",
+  "week": {
+    "startsOn": "Monday 00:00 Adyta",
+    "billDueDays": 2,
+    "maxCatchUpWeeks": 4,
+    "food": { "name": "Basic food and supplies", "credits": 20 },
+    "housing": [
+      { "id": "commons", "name": "Basic housing, Commons district", "credits": 40, "creditor": "Commons landlord" },
+      { "id": "mixed", "name": "Decent housing, mixed district", "credits": 80, "creditor": "Mixed-district landlord" },
+      { "id": "corporate", "name": "Corporate-adjacent housing", "credits": 150, "creditor": "Crownline-certified property management" },
+      { "id": "none", "name": "No fixed address (GM approval)", "credits": 0, "creditor": "", "status": "draft", "note": "Edge Dwellers and the like: off-registry, no rent, and anything needing a formal address is Hard." }
+    ],
+    "gear": [
+      { "id": "light", "name": "Light loadout upkeep", "credits": 10 },
+      { "id": "standard", "name": "Standard loadout upkeep", "credits": 20 },
+      { "id": "heavy", "name": "Heavy loadout upkeep", "credits": 30 }
+    ],
+    "chrome": [
+      { "id": "none", "name": "No chrome", "credits": 0 },
+      { "id": "light", "name": "Light chrome upkeep", "credits": 20 },
+      { "id": "moderate", "name": "Moderate chrome upkeep", "credits": 35 },
+      { "id": "heavy", "name": "Heavy chrome upkeep", "credits": 50 }
+    ],
+    "debt": "A character who doesn't cover weekly costs accumulates Debt: 1 Stress per session until cleared, and -1 Standing with anyone they owe."
+  },
+  "heatBands": [
+    { "id": "clean", "min": 0, "max": 1, "name": "Clean", "rule": "Nothing. You're clean." },
+    { "id": "scrutiny", "min": 2, "max": 3, "name": "Scrutiny", "rule": "The system can see you. Bureaucratic, not dramatic. +1 difficulty on Lay Low." },
+    { "id": "attention", "min": 4, "max": 5, "name": "Active attention", "rule": "Someone is asking around. A named investigator, contractor, warden, or fixer starts digging." },
+    { "id": "crisis", "min": 6, "max": 8, "name": "Crisis", "rule": "Somebody has committed. It arrives before the next session ends unless actively disrupted. At 7 it is named and ongoing; at 8 it is citywide." }
+  ],
+  "appeal": {
+    "status": "draft",
+    "name": "File with the APA",
+    "rule": "Adyta Public Advocacy handles wrongful fines, evictions, utility disputes and compliance actions. Roll Savvy + Persuade; Wardens add +1 die because they know the paperwork. Challenging (2 successes) voids the notice. Otherwise it stands and you can still pay. One appeal per notice.",
+    "difficulty": 2,
+    "wardenBonus": 1
+  },
+  "notices": {
+    "scrutiny": [
+      { "id": "crownline-address", "from": "Crownline Infrastructure", "title": "Compliance Flag: Address Review", "body": "Your registered address has been flagged for review following an irregularity in service records. A compliance fee resolves the flag. Crownline thanks you for helping keep Adyta safe, legal and connected.", "fine": 60, "days": 3, "appeal": true },
+      { "id": "acw-contact", "from": "Adyta Civic Wardens", "title": "Contact Card: Voluntary Interview", "body": "A warden left a card. They'd like a word about an incident in your district. Voluntary, for now.", "check": { "label": "Show up and talk", "attribute": "savvy", "skill": "deceive", "difficulty": 1, "success": "They have nothing that sticks. The card goes in a drawer.", "failHeat": 1, "fail": "You said one thing too many. Your description is now in a report." }, "days": 3 },
+      { "id": "acr-discrepancy", "from": "Adyta Civil Registry", "title": "Record Discrepancy", "body": "Your civil record doesn't match a recent access log. Correcting it costs a filing fee. Uncorrected records get noticed.", "fine": 25, "days": 4, "appeal": true },
+      { "id": "crownline-utility", "from": "Crownline Infrastructure", "title": "Temporary Utility Limitation", "body": "Service to your address is under temporary limitation pending a safety review. Reconnection is available for a standard fee. This is not a shutoff. Crownline does not use that word.", "fine": 40, "days": 3, "appeal": true }
+    ],
+    "attention": [
+      { "id": "abi-inquiry", "from": "Adyta Bureau of Investigation", "title": "Request for Information", "body": "Investigator {investigator} requests a conversation regarding an open matter. You are not under arrest. You are also not not under arrest.", "check": { "label": "Answer carefully", "attribute": "savvy", "skill": "deceive", "difficulty": 2, "success": "{investigator} leaves with less than they came for.", "failHeat": 1, "fail": "{investigator} leaves with a name, a face and a timeline." }, "appeal": true, "days": 3 },
+      { "id": "bastion-courtesy", "from": "Bastion Dynamics", "title": "Courtesy Visit Scheduled", "body": "A Bastion contractor will conduct a courtesy visit to discuss recent activity near a client property. A service fee waives the visit.", "fine": 150, "days": 2 },
+      { "id": "lease-review", "from": "{creditor}", "title": "Lease Review", "body": "Following reports about activity at your address, your lease is under review. Continued tenancy requires a one-time risk surcharge.", "fine": 80, "days": 3, "appeal": true },
+      { "id": "helix-data", "from": "Helix Systems", "title": "Data Request", "body": "Helix Systems has identified you as a person of research interest. A small privacy fee will remove your file from the active queue. Helix values your privacy.", "fine": 100, "days": 3 }
+    ],
+    "crisis": [
+      { "id": "acw-warrant", "from": "Adyta Civic Wardens", "title": "Warrant Issued", "body": "An ACW warrant names you for questioning with temporary custody authorized. Wardens will look for you before the next session ends." },
+      { "id": "bastion-sweep", "from": "Bastion Dynamics", "title": "District Sweep", "body": "Bastion has a paid contract to sweep your district. They have a description. They have your route." },
+      { "id": "crownline-eviction", "from": "Crownline Infrastructure", "title": "Notice of Responsible Transition", "body": "Your address is scheduled for responsible transition: an eviction with paperwork. Crews arrive before the next session ends." },
+      { "id": "abi-raid", "from": "Adyta Bureau of Investigation", "title": "Search Authorized", "body": "{investigator} has a search authorization for places you sleep, store things, or are known to visit." },
+      { "id": "underground-contract", "from": "The Underground", "title": "Contract on Your Name", "body": "Someone put money on you. Not much. Enough." }
+    ],
+    "escalation": {
+      "status": "draft",
+      "rule": "An ignored notice comes back at its deadline: Heat +1 and the fine x1.5 as a Second Notice. Ignore that and the Final Notice adds Heat +1 again and the fine becomes Debt.",
+      "heat": 1,
+      "fineMult": 1.5,
+      "steps": ["Second Notice", "Final Notice"]
+    }
+  },
+  "investigators": ["Inspector Dahl Morrow", "Investigator Pell Quist", "Detective Sora Vance", "Investigator Brann Okafor", "Detective Mireille Tash"]
+}

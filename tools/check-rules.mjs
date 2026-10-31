@@ -142,10 +142,87 @@ for (const p of W.places) if (p.brand && !(W.brands || {})[p.brand]) bad(`places
 if (!placeIds.has(W.start.place) || !W.districts[W.start.district]) bad('places.start', 'start place or district not found');
 if (Number.isNaN(Date.parse(W.clock.anchorReal)) || Number.isNaN(Date.parse(W.clock.anchorAdyta + 'Z'))) bad('places.clock', 'anchors must be dates');
 
+// --- The Week (data/week.json): bill amounts and the Heat ladder follow the rulebook ---------
+const WEEK = load('data/week.json'), col = ref.costOfLiving;
+for (const [id, cr] of Object.entries(col.housing)) { const h = WEEK.week.housing.find(x => x.id === id); if (!h) bad('week.housing', `missing ${id}`); else if (h.credits !== cr) bad(`week.housing.${id}`, `is ${h.credits}, rulebook says ${cr}`); }
+for (const h of WEEK.week.housing) if (!(h.id in col.housing) && h.status !== 'draft') bad(`week.housing.${h.id}`, 'not in the rulebook; mark it draft');
+if (WEEK.week.food.credits !== col.food) bad('week.food', `is ${WEEK.week.food.credits}, rulebook says ${col.food}`);
+for (const [k, [lo, hi]] of [['gear', col.gear], ['chrome', col.chrome]]) for (const x of WEEK.week[k]) if (x.credits && (x.credits < lo || x.credits > hi)) bad(`week.${k}.${x.id}`, `${x.credits} is outside the rulebook's ${lo}-${hi}`);
+if (JSON.stringify(WEEK.heatBands.map(b => ({ min: b.min, max: b.max }))) !== JSON.stringify(ref.heatLadder)) bad('week.heatBands', 'do not match the rulebook Heat ladder');
+for (const b of WEEK.heatBands.slice(1)) if (!(WEEK.notices[b.id] || []).length) bad(`week.notices.${b.id}`, 'no notices for this Heat band');
+for (const [bandId, list] of Object.entries(WEEK.notices)) if (Array.isArray(list)) for (const n of list) {
+  if (n.check && (!ref.attributes.includes(n.check.attribute) || !Object.values(rules.skillKeys).includes(n.check.skill))) bad(`week.notices.${n.id}.check`, 'unknown attribute or skill');
+  if (bandId !== 'crisis' && !n.days) bad(`week.notices.${n.id}`, 'needs a deadline in days');
+}
+
+// --- The Make system (data/make.json) -------------------------------------------------------
+const MAKE = load('data/make.json'), PLACES_ = load('data/places.json');
+for (const cls of Object.keys(rules.classes)) if (!MAKE.recipes.some(r => r.class === cls)) bad('make.recipes', `${cls} has nothing to make`);
+const seenMake = new Set();
+for (const r of MAKE.recipes) {
+  const w = `make.${r.id}`;
+  if (seenMake.has(r.id)) bad(w, 'duplicate id'); seenMake.add(r.id);
+  if (!rules.classes[r.class]) bad(w, `unknown class ${r.class}`);
+  if (!MAKE.kinds[r.kind]) bad(w, `unknown kind ${r.kind}`);
+  if (!['auto', 'ruling'].includes(r.adjudication)) bad(w, 'adjudication must be auto or ruling');
+  if (r.adjudication === 'auto' && !r.roll && !['contract', 'job'].includes(r.kind)) bad(w, 'auto work needs a roll (only contracts and jobs skip it)');
+if (MAKE.recipes.some(r => r.board) && !MAKE.deliveries) bad('make.deliveries', 'the delivery board needs its settings');
+  if (r.adjudication === 'ruling' && !r.rulingNote) bad(w, 'a ruling needs a note saying who decides');
+  if (r.roll && (!ref.attributes.includes(r.roll.attribute) || !Object.values(rules.skillKeys).includes(r.roll.skill))) bad(w, 'unknown attribute or skill');
+  if (r.working && !rules.shadeWorkings.some(x => x.id === r.working)) bad(w, `unknown Shade working ${r.working}`);
+  if (r.working) { const x = rules.shadeWorkings.find(x => x.id === r.working); if (x && (x.stress !== (r.costs.stress || 0) || x.difficulty !== r.roll.difficulty)) bad(w, `costs should follow the ${x.name} working (Stress ${x.stress}, difficulty ${x.difficulty})`); }
+  if (!['lawful', 'restricted'].includes(r.legality)) bad(w, 'legality must be lawful or restricted');
+  if (r.pay && !(r.pay[0] <= r.pay[1])) bad(w, 'pay range is backwards');
+}
+for (const d of Object.keys(MAKE.watchers)) if (!['_default', 'watchedBonus', 'watchedBonusChance'].includes(d) && !PLACES_.districts[d]) bad(`make.watchers.${d}`, 'not a district');
+for (const d of MAKE.watchers.watchedBonus) if (!PLACES_.districts[d]) bad('make.watchers.watchedBonus', `${d} is not a district`);
+
+// --- Pocket Change gigs (data/gigs.json) ---------------------------------------------------
+const GIGS = load('data/gigs.json'), gigIds = new Set();
+for (const g of GIGS.gigs) {
+  if (gigIds.has(g.id)) bad(`gigs.${g.id}`, 'duplicate id'); gigIds.add(g.id);
+  if (!Object.values(rules.skillKeys).includes(g.skill)) bad(`gigs.${g.id}`, `unknown skill ${g.skill}`);
+  if (!['place', 'remote'].includes(g.where)) bad(`gigs.${g.id}`, 'where must be place or remote');
+  if (!(g.pay[0] <= g.pay[1])) bad(`gigs.${g.id}`, 'pay range is backwards');
+  if (g.pay[1] * GIGS.rating.premiumPay > 500) bad(`gigs.${g.id}`, 'tops the book\'s Minor job band (200-500); that is a job, not a gig');
+}
+if (!(GIGS.app.cut > 0 && GIGS.app.cut < 0.5)) bad('gigs.app.cut', 'should be a fraction');
+if (GIGS.sideways) {
+  for (const id of GIGS.sideways.places) if (!PLACES_.places.some(p => p.id === id)) bad('gigs.sideways.places', `${id} is not a place`);
+  for (const g of GIGS.sideways.gigs) { if (!Object.values(rules.skillKeys).includes(g.skill)) bad(`gigs.sideways.${g.id}`, `unknown skill ${g.skill}`); if (!['place', 'remote', 'sideways'].includes(g.where)) bad(`gigs.sideways.${g.id}`, 'where must be place, remote or sideways'); }
+}
+
+// --- Radio Sewers (data/radio.json) -----------------------------------------------------------
+const RADIO = load('data/radio.json'), hoursCovered = new Set();
+for (const sl of RADIO.slots) { for (let h = sl.from; h !== sl.to; h = (h + 1) % 24) { if (hoursCovered.has(h)) bad(`radio.slots.${sl.id}`, `hour ${h} is double-booked`); hoursCovered.add(h); } if (!RADIO.lines[sl.id] || !RADIO.lines[sl.id].length) bad(`radio.lines.${sl.id}`, 'no lines for this DJ'); }
+if (hoursCovered.size !== 24) bad('radio.slots', `cover ${hoursCovered.size} of 24 hours`);
+if (!rules.territories.some(t => t.id === RADIO.standingTerritory)) bad('radio.standingTerritory', `${RADIO.standingTerritory} is not a territory`);
+for (const d of RADIO.support.districts) if (!PLACES_.districts[d]) bad('radio.support.districts', `${d} is not a district`);
+if (!PLACES_.places.some(p => RADIO.support.districts.includes(p.district))) bad('radio.support.districts', 'no places in these districts to send anyone');
+for (const j of RADIO.support.jobs) if (!Object.values(rules.skillKeys).includes(j.skill)) bad(`radio.support.${j.id}`, `unknown skill ${j.skill}`);
+if (RADIO.support.pay[0] < 100 || RADIO.support.pay[1] > 300) bad('radio.support.pay', "outside the rulebook's 100-300");
+
+// --- Pulse's art pack (art/pda-v1/imports) and the corporations it illustrates ---------------
+const RADIO_ = load('data/radio.json'), ART = load('art/pda-v1/imports/manifest.json'), CORPS = load('data/corporations.json');
+for (const it of ART.items) for (const k of ['poster', 'card', 'sheet']) if (it[k] && !existsSync(new URL('../art/pda-v1/imports/' + it[k], import.meta.url))) bad(`art.${it.slug}.${k}`, `${it[k]} is missing`);
+const artSlugs = new Set(ART.items.map(i => i.slug));
+const SPRINT = load('art/pda-v1/imports/manifest-sprint-01.json');
+for (const it of SPRINT.assets) if (!existsSync(new URL('../art/pda-v1/imports/' + it.file, import.meta.url))) bad(`art.sprint01.${it.id}`, `${it.file} is missing`);
+const GUIDE = load('data/guides/races.json');
+for (const [name, g] of Object.entries(GUIDE.races)) if (!g.card) bad(`guides.races.${name}`, 'no card art'); else if (!existsSync(new URL('../' + g.card, import.meta.url))) bad(`guides.races.${name}`, `${g.card} is missing`);
+for (const sl of RADIO_.slots || []) if (sl.portrait && !existsSync(new URL('../' + sl.portrait, import.meta.url))) bad(`radio.slots.${sl.id}`, `${sl.portrait} is missing`);
+for (const c of CORPS.corporations) { if (c.art && !artSlugs.has(c.art)) bad(`corporations.${c.id}`, `no art called ${c.art}`); for (const k of c.campaigns || []) if (k.art && !artSlugs.has(k.art)) bad(`corporations.${c.id}.campaigns`, `no art called ${k.art}`); }
+if (CORPS.corporations.length !== 5) bad('corporations', 'the World Anvil names five corporations');
+
 // --- Report -------------------------------------------------------------------
 if (problems.length) {
   console.error(`rules.json vs ${ref.rulebook}: ${problems.length} problem(s)\n` + problems.map(p => '  - ' + p).join('\n'));
   process.exit(1);
 }
 console.log(`rules.json matches ${ref.rulebook}: ${races.length} races, ${Object.keys(rules.classes).length} classes, ${Object.keys(rules.origins).length} origins, ${Object.keys(rules.lives).length} lives.`);
+console.log(`week.json matches the rulebook's Cost of Living and Heat ladder: ${WEEK.week.housing.length} housing tiers, ${Object.values(WEEK.notices).filter(Array.isArray).flat().length} notices.`);
+console.log(`make.json is consistent: ${MAKE.recipes.length} things to make across ${new Set(MAKE.recipes.map(r => r.class)).size} classes.`);
+console.log(`gigs.json is consistent: ${GIGS.gigs.length} gigs on ${GIGS.app.name}.`);
+console.log(`radio.json is consistent: ${RADIO.slots.length} DJs cover the day; ${RADIO.support.jobs.length} station jobs.`);
+console.log(`Art pack: ${ART.items.length} pieces, all files present; ${CORPS.corporations.length} corporations.`);
 console.log(`places.json is consistent: ${Object.keys(W.maps).length} maps, ${Object.keys(W.districts).length} districts, ${W.places.length} places, ${W.routes.length} routes.`);

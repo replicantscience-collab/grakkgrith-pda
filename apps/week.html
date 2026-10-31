@@ -1,0 +1,128 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Mail and Bills</title>
+<link rel="stylesheet" href="../fonts/fonts.css">
+<link rel="stylesheet" href="../art/pda-v1/tokens.css">
+<link rel="stylesheet" href="./screen.css">
+</head>
+<body class="pda-art">
+<div class="wrap">
+  <div class="kicker">ADYTA PDA / INBOX</div>
+  <h1>Mail &amp; Bills</h1>
+  <p class="muted" id="who">The city sends its paperwork on Adyta time.</p>
+  <div class="strip" id="strip"></div>
+  <div class="cols">
+    <section class="frame" aria-labelledby="mailH"><h2 id="mailH">Mail</h2><div id="mail"></div></section>
+    <aside>
+      <section class="frame" aria-labelledby="debtH"><h2 id="debtH">Debt</h2><div id="debts"></div></section>
+      <section class="frame" aria-labelledby="costH"><h2 id="costH">Weekly costs</h2><div id="costs"></div></section>
+      <section class="frame" aria-labelledby="logH"><h2 id="logH">Ledger</h2><ul class="ledger" id="log"></ul></section>
+    </aside>
+  </div>
+</div>
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+<script src="./week.js"></script>
+<script src="./make.js"></script>
+<script>
+'use strict';
+const KEY = 'grakkgrith_character_tool_v8_state';
+const WK = window.GRAKK_WEEK, $ = id => document.getElementById(id);
+const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+let W = null, CLOCK = null, M = null;
+const MK = window.GRAKK_MAKE;
+/* Run both clocks: bills/mail and the Workshop's expiry and discovery. */
+function settleAll(s) { const a = WK.settle(s, W, CLOCK, Date.now()); const b = M ? MK.settle(s, M, W, now()) : []; return a.length + b.length; }
+const load = () => { try { return JSON.parse(localStorage.getItem(KEY)); } catch (e) { return null; } };
+const save = s => { try { localStorage.setItem(KEY, JSON.stringify(s)); } catch (e) {} try { parent.postMessage({ type: 'grakkgrith-week-changed' }, '*'); } catch (e) {} };
+const now = () => WK.adytaNow(CLOCK, Date.now());
+const hasChar = s => !!(s && s.character && String(s.character.name || '').trim());
+function toast(msg, dice) { const t = $('toast'); t.innerHTML = esc(msg) + (dice ? `<div style="margin-top:6px">${diceHtml(dice)}</div>` : ''); t.classList.add('on'); clearTimeout(toast.t); toast.t = setTimeout(() => t.classList.remove('on'), 4200); }
+const diceHtml = d => d.map(x => `<span class="die ${x >= 5 ? 'hit' : ''}">${x}</span>`).join('');
+
+/* Read fresh, change, save: the sheet or Explore may have saved since this screen last looked. */
+function act(fn) { const s = load(); if (!hasChar(s)) return; settleAll(s); const r = fn(s); save(s); render(); return r; }
+
+function letterHtml(m, open) {
+  const t = now(), late = m.due != null && m.due <= t;
+  const dueTag = m.due != null && open ? `<span class="due ${late ? 'late' : ''}">${esc(WK.untilText(m.due - t))}</span>` : '';
+  const stamp = !open ? `<span class="stamp ${esc(m.status)}">${esc(m.status)}</span>` : '';
+  let body = '';
+  if (m.kind === 'bill') body = `<table class="lines">${m.lines.map(l => `<tr><td>${esc(l.name)}</td><td>${l.credits}</td></tr>`).join('')}<tr class="total"><td>Total</td><td>${m.total} cr</td></tr></table><p class="meta"><span>Due <b>${esc(WK.fmt(m.due))}</b></span><span>Unpaid becomes Debt with <b>${esc(m.creditor)}</b></span></p>`;
+  else if (m.kind === 'info') body = `<p>${esc(m.body)}</p>`;
+  else body = `<p>${esc(m.body)}</p><div class="meta">${m.fine ? `<span>Fee <b>${m.fine} cr</b></span>` : ''}${m.due ? `<span>Respond by <b>${esc(WK.fmt(m.due))}</b></span>` : '<span><b>Lands before the next session ends</b> unless disrupted</span>'}${m.why ? `<span>${esc(m.why)}</span>` : ''}</div>`;
+  const rolls = [m.appealRoll && `APA appeal: ${diceHtml(m.appealRoll.dice)} ${m.appealRoll.hits}/${m.appealRoll.need}`, m.checkRoll && `${esc(m.check.label)}: ${diceHtml(m.checkRoll.dice)} ${m.checkRoll.hits}/${m.checkRoll.need}`].filter(Boolean).map(x => `<div class="roll">${x}</div>`).join('');
+  let buttons = '';
+  if (open) {
+    if (m.kind === 'bill') buttons = `<button class="primary" data-pay="${m.id}">Pay ${m.total} cr</button>`;
+    else if (m.kind === 'info') buttons = `<button class="ghost" data-dismiss="${m.id}">Got it</button>`;
+    else if (m.kind === 'crisis') buttons = `<button class="primary" data-flag="${m.id}">Flag it for the session</button>`;
+    else {
+      if (m.fine) buttons += `<button class="primary" data-pay="${m.id}">Pay ${m.fine} cr</button>`;
+      if (m.check) buttons += `<button data-answer="${m.id}">${esc(m.check.label)}</button>`;
+      if (m.appeal && !m.appealed) buttons += `<button class="ghost" data-appeal="${m.id}">File with the APA${[HAS_FILING && '+2 filing', m.pressure && '+2 Radio Sewers'].filter(Boolean).length ? ' (' + [HAS_FILING && '+2 filing', m.pressure && '+2 Radio Sewers'].filter(Boolean).join(', ') + ')' : ''}</button>`;
+    }
+    if (m.kind === 'notice') buttons += `<span class="note" style="color:#5b4630;align-self:center">Ignore it and it comes back worse.</span>`;
+  }
+  return `<article class="letter ${esc(m.kind)}" aria-label="${esc(m.title)}">${stamp}<div class="from">${esc(m.from)}</div><h3>${esc(m.title)}</h3>${dueTag}${body}${rolls}${buttons ? `<div class="actions">${buttons}</div>` : ''}</article>`;
+}
+
+let HAS_FILING = false;
+function render() {
+  const s = load();
+  HAS_FILING = !!(s && MK && MK.apaFiling(s));
+  if (!hasChar(s)) { $('who').textContent = 'No character yet. Make one in Character Setup and the city will find your address.'; ['strip', 'mail', 'debts', 'costs', 'log'].forEach(id => $(id).innerHTML = ''); return; }
+  const w = WK.ensure(s), t = now(), heat = Number(s.stats?.heat || 0), band = W.heatBands.find(b => b.id === WK.band(W, heat));
+  $('who').textContent = `${s.character.name}'s inbox. Rent runs on Adyta time, weekly from Monday.`;
+  const owed = WK.owed(s);
+  $('strip').innerHTML = `<div class="stat"><b>Adyta</b><span id="clockNow">${esc(WK.fmt(t))}</span><small>Week rolls Monday 00:00</small></div>
+    <div class="stat"><b>Credits</b><span>${esc(s.coins?.credits || 0)}</span><small>${WK.weeklyTotal(W, w)} cr a week</small></div>
+    <div class="stat ${heat >= 4 ? 'warn' : ''}"><b>Heat ${heat}</b><span>${esc(band.name)}</span><small>${esc(band.rule.split('.')[0])}.</small></div>
+    <div class="stat ${owed ? 'warn' : ''}"><b>Debt</b><span>${owed} cr</span><small>${owed ? '1 Stress each session' : 'Clear'}</small></div>
+    <button class="ghost" id="sessionBtn" title="Applies the rulebook's start-of-session effects">Session starting</button>`;
+  const open = w.mail.filter(m => m.status === 'open'), closed = w.mail.filter(m => m.status !== 'open').slice(0, 20);
+  open.sort((a, b) => (a.kind === 'crisis' ? -1 : 0) - (b.kind === 'crisis' ? -1 : 0) || (a.due ?? Infinity) - (b.due ?? Infinity));
+  $('mail').innerHTML = (open.length ? open.map(m => letterHtml(m, true)).join('') : `<div class="empty">Nothing waiting. ${heat >= 2 ? 'Give it time.' : 'Keep your Heat low and it stays that way.'}</div>`)
+    + (closed.length ? `<details class="filed"><summary>Filed (${closed.length})</summary>${closed.map(m => letterHtml(m, false)).join('')}</details>` : '');
+  $('debts').innerHTML = w.debts.length ? w.debts.map(d => `<div class="debt"><b>${d.amount} cr</b> to ${esc(d.creditor)}<div class="note">${esc(d.why || '')}${d.standingHit ? ` · Standing -1 in ${esc(d.standingHit)}` : ''}</div><div class="actions"><button class="primary" data-debt="${d.id}">Pay it off</button>${d.amount > 50 ? `<button class="ghost" data-debt50="${d.id}">Pay 50</button>` : ''}</div></div>`).join('')
+    + `<p class="note">${esc(W.week.debt)}</p>` : `<p class="muted">You don't owe anyone. Yet.</p>`;
+  const opt = (list, cur) => list.map(x => `<option value="${esc(x.id)}" ${x.id === cur ? 'selected' : ''}>${esc(x.name)} · ${x.credits} cr</option>`).join('');
+  $('costs').innerHTML = `<label for="cHousing">Housing</label><select id="cHousing">${opt(W.week.housing, w.housing)}</select>
+    <label for="cGear">Equipment maintenance</label><select id="cGear">${opt(W.week.gear, w.gear)}</select>
+    <label for="cChrome">Cybernetic upkeep</label><select id="cChrome">${opt(W.week.chrome, w.chrome)}</select>
+    <div class="total"><b>Food and supplies</b><span>${W.week.food.credits} cr</span></div>
+    <div class="total"><b>Each week</b><span>${WK.weeklyTotal(W, w)} cr</span></div>
+    <p class="note">From the rulebook's Cost of Living table. Changes apply from next week's bill.</p>`;
+  $('log').innerHTML = w.log.slice(0, 30).map(l => `<li><time>${esc(WK.fmt(l.at))}</time>${esc(l.text)}</li>`).join('') || '<li class="muted">Nothing yet.</li>';
+}
+
+document.addEventListener('click', e => {
+  const b = e.target.closest('button'); if (!b) return;
+  const t = now();
+  if (b.dataset.dismiss) { act(s => WK.dismiss(s, b.dataset.dismiss, t)); }
+  else if (b.dataset.pay) { const r = act(s => WK.pay(s, b.dataset.pay, t)); r && toast(r.msg); }
+  else if (b.dataset.appeal) { const r = act(s => { const n = s.week.mail.find(x => x.id === b.dataset.appeal); const bonus = n && n.status === 'open' && !n.appealed ? MK.spendApaFiling(s, t, n.title) + (n.pressure || 0) : 0; return WK.appeal(s, W, b.dataset.appeal, t, Math.random, bonus); }); r && toast(r.msg, r.dice); }
+  else if (b.dataset.answer) { const r = act(s => WK.answer(s, b.dataset.answer, t)); r && toast(r.msg, r.dice); }
+  else if (b.dataset.flag) { act(s => WK.acknowledgeCrisis(s, b.dataset.flag, t)); toast('Flagged. Whoever runs the next session will see it.'); }
+  else if (b.dataset.debt) { const r = act(s => WK.payDebt(s, b.dataset.debt, t)); r && toast(r.msg); }
+  else if (b.dataset.debt50) { const r = act(s => WK.payDebt(s, b.dataset.debt50, t, 50)); r && toast(r.msg); }
+  else if (b.id === 'sessionBtn') { const r = act(s => WK.sessionStart(s, t)); r && toast(r.stress ? 'Debt pressure: Stress +1.' : 'Session started. No debt pressure.'); }
+});
+document.addEventListener('change', e => {
+  const map = { cHousing: 'housing', cGear: 'gear', cChrome: 'chrome' }, k = map[e.target.id]; if (!k) return;
+  act(s => WK.setCosts(s, { [k]: e.target.value })); toast('Updated. It shows on next week\'s bill.');
+});
+
+Promise.all([fetch('../data/week.json').then(r => r.json()), fetch('../data/places.json').then(r => r.json()), fetch('../data/make.json').then(r => r.json())]).then(([w, p, mk]) => {
+  W = w; CLOCK = p.clock; M = mk;
+  const s = load(); if (hasChar(s)) { settleAll(s); save(s); }
+  render();
+  window.GRAKK_WEEK_READY = true;
+  setInterval(() => { const c = $('clockNow'); if (c) c.textContent = WK.fmt(now()); }, 15000);
+  setInterval(() => { const s = load(); if (hasChar(s) && settleAll(s)) { save(s); render(); } }, 60000);
+});
+</script>
+</body>
+</html>

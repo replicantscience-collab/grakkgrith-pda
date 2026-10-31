@@ -14,6 +14,10 @@ jobs:
         with:
           node-version: 22
       - run: node tools/check-rules.mjs
+      - run: node tools/week-test.mjs
+      - run: node tools/make-test.mjs
+      - run: node tools/gigs-test.mjs
+      - run: node tools/radio-test.mjs
 
   smoke:
     name: Every screen opens

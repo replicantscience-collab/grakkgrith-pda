@@ -50,9 +50,10 @@
       "kind": "district",
       "district": "ember-court",
       "status": "official",
-      "image": "maps/official/ember-court.jpg",
+      "image": "maps/official/ember-court-painted.jpg",
       "width": 1369,
-      "height": 1149
+      "height": 1149,
+      "previous": "maps/candidates/ember-court-diagram.jpg"
     },
     "market-ring": {
       "title": "Market Ring District Map",
@@ -73,6 +74,30 @@
       "image": "maps/official/dockside.jpg",
       "width": 1536,
       "height": 1024
+    },
+    "three-wires-tangle": {
+      "title": "Three Wires & the Tangle District Map",
+      "short": "Three Wires & Tangle",
+      "kind": "district",
+      "district": "three-wires",
+      "districts": [
+        "three-wires",
+        "the-tangle"
+      ],
+      "status": "canon candidate",
+      "image": "maps/official/three-wires-tangle.jpg",
+      "width": 1536,
+      "height": 1024
+    },
+    "noble-heights": {
+      "title": "Noble Heights District Map",
+      "short": "Noble Heights",
+      "kind": "district",
+      "district": "noble-heights",
+      "status": "canon candidate",
+      "image": "maps/official/noble-heights.jpg",
+      "width": 1536,
+      "height": 1024
     }
   },
   "districts": {
@@ -90,8 +115,10 @@
         "y": 14.0,
         "label": "Noble Heights",
         "note": "Old money and older bones. Access, memory, resentment, and institutions that do not forget.",
-        "kind": null
-      }
+        "kind": null,
+        "districtMap": "noble-heights"
+      },
+      "map": "noble-heights"
     },
     "grand-academy": {
       "name": "Grand Academy",
@@ -259,7 +286,8 @@
         "y": 39.0,
         "label": "The Tangle",
         "note": "Goblin heartland, jury-rigged passages, clan memory, and routes official maps cannot admit.",
-        "kind": "area"
+        "kind": "area",
+        "districtMap": "three-wires-tangle"
       },
       "dossier": {
         "mood": "Goblin heartland where routes are argued into existence.",
@@ -269,7 +297,8 @@
         "factions": "Commons survival mesh; Patchkin; Gremlin Works; local crews.",
         "missions": "Route favors; reclaimed gear disputes; hidden crossing work.",
         "wisdom": "Rooftops are faster. Being rude is slower."
-      }
+      },
+      "map": "three-wires-tangle"
     },
     "low-halo": {
       "name": "Low Halo",
@@ -338,7 +367,8 @@
         "y": 43.0,
         "label": "Market Ring",
         "note": "Everything legal, everything negotiable, everything has a price. Good for contacts, gear, and favors with strings.",
-        "kind": null
+        "kind": null,
+        "districtMap": "market-ring"
       }
     },
     "dockside": {
@@ -356,7 +386,8 @@
         "label": "Dockside",
         "note": "Freight, smuggling, opportunity, tidecrew goblins, and records that may or may not exist.",
         "kind": "area",
-        "key": "DOCKSIDE WAREHOUSES"
+        "key": "DOCKSIDE WAREHOUSES",
+        "districtMap": "dockside"
       }
     },
     "three-wires": {
@@ -372,7 +403,8 @@
         "y": 52.0,
         "label": "Three Wires",
         "note": "Contact zone, hire here, regret later. A switchboard of favors, debts, and fast introductions.",
-        "kind": "area"
+        "kind": "area",
+        "districtMap": "three-wires-tangle"
       },
       "dossier": {
         "mood": "Contact zone, favors, debts, and fast introductions.",
@@ -382,7 +414,8 @@
         "factions": "Fixer network; civic intermediaries; Commons contacts.",
         "missions": "Find a crew; source a route; meet the person who knows a person.",
         "wisdom": "Never accept the first price or the second apology."
-      }
+      },
+      "map": "three-wires-tangle"
     },
     "greasewick-row": {
       "name": "Greasewick Row",
@@ -911,8 +944,8 @@
       "blurb": "Souvenirs. Sanitized culture. Overpriced tea.",
       "pin": {
         "map": "ember-court",
-        "x": 0.2899,
-        "y": 0.0538
+        "x": 0.3141,
+        "y": 0.1114
       }
     },
     {
@@ -923,22 +956,22 @@
       "blurb": "Clean shops. Expensive charms. For tourists and people who want danger with receipts.",
       "pin": {
         "map": "ember-court",
-        "x": 0.4436,
-        "y": 0.0959
+        "x": 0.4543,
+        "y": 0.1305
       }
     },
     {
       "id": "ember-court--static-square",
       "district": "ember-court",
-      "name": "Static Square",
+      "name": "Ember Square",
       "type": "landmark",
       "blurb": "Public space and ward grounding point.",
       "pin": {
         "map": "ember-court",
-        "x": 0.392,
-        "y": 0.183,
-        "approx": true
-      }
+        "x": 0.385,
+        "y": 0.2245
+      },
+      "formerly": "Static Square"
     },
     {
       "id": "ember-court--ember-court-tram-stop",
@@ -948,8 +981,8 @@
       "blurb": "Cinderwick Station. One stop from Mercy Street.",
       "pin": {
         "map": "ember-court",
-        "x": 0.6301,
-        "y": 0.0573
+        "x": 0.6034,
+        "y": 0.148
       },
       "tram": true
     },
@@ -961,9 +994,8 @@
       "blurb": "Maps. Brochures. Disappointments.",
       "pin": {
         "map": "ember-court",
-        "x": 0.538,
-        "y": 0.187,
-        "approx": true
+        "x": 0.6866,
+        "y": 0.1976
       }
     },
     {
@@ -974,9 +1006,8 @@
       "blurb": "Contracts. Law. Disputes. Where promises get heavy.",
       "pin": {
         "map": "ember-court",
-        "x": 0.721,
-        "y": 0.202,
-        "approx": true
+        "x": 0.8459,
+        "y": 0.1854
       }
     },
     {
@@ -987,9 +1018,8 @@
       "blurb": "Barristers. Bindings. Infernal disputes.",
       "pin": {
         "map": "ember-court",
-        "x": 0.757,
-        "y": 0.285,
-        "approx": true
+        "x": 0.7874,
+        "y": 0.3203
       }
     },
     {
@@ -1000,8 +1030,8 @@
       "blurb": "Records. Debts. Sealed agreements. It remembers.",
       "pin": {
         "map": "ember-court",
-        "x": 0.7506,
-        "y": 0.38
+        "x": 0.7706,
+        "y": 0.4021
       }
     },
     {
@@ -1012,8 +1042,8 @@
       "blurb": "Signatures. Seals. Oaths. We witness everything.",
       "pin": {
         "map": "ember-court",
-        "x": 0.727,
-        "y": 0.4613
+        "x": 0.7743,
+        "y": 0.4769
       }
     },
     {
@@ -1024,9 +1054,8 @@
       "blurb": "Tourist shops, charm vendors, readings, and curiosities.",
       "pin": {
         "map": "ember-court",
-        "x": 0.735,
-        "y": 0.557,
-        "approx": true
+        "x": 0.7305,
+        "y": 0.5962
       }
     },
     {
@@ -1037,9 +1066,8 @@
       "blurb": "Behind the shops. Behind the doors. You didn't see this.",
       "pin": {
         "map": "ember-court",
-        "x": 0.747,
-        "y": 0.707,
-        "approx": true
+        "x": 0.7414,
+        "y": 0.7241
       }
     },
     {
@@ -1050,8 +1078,8 @@
       "blurb": "Cheaper charms. Quick curses. Locals first. Questions later.",
       "pin": {
         "map": "ember-court",
-        "x": 0.2836,
-        "y": 0.3226
+        "x": 0.2557,
+        "y": 0.3438
       }
     },
     {
@@ -1062,8 +1090,8 @@
       "blurb": "Connection to Low Halo.",
       "pin": {
         "map": "ember-court",
-        "x": 0.1601,
-        "y": 0.3531
+        "x": 0.0928,
+        "y": 0.2637
       }
     },
     {
@@ -1074,8 +1102,8 @@
       "blurb": "Remedies priced upfront. Problems assessed individually.",
       "pin": {
         "map": "ember-court",
-        "x": 0.2505,
-        "y": 0.4244
+        "x": 0.2067,
+        "y": 0.4204
       }
     },
     {
@@ -1086,9 +1114,8 @@
       "blurb": "Death work, undertakers, spirit mediation, and funerary services.",
       "pin": {
         "map": "ember-court",
-        "x": 0.476,
-        "y": 0.398,
-        "approx": true
+        "x": 0.4733,
+        "y": 0.4238
       }
     },
     {
@@ -1099,8 +1126,8 @@
       "blurb": "Family houses. Private courtyards. Mind your step.",
       "pin": {
         "map": "ember-court",
-        "x": 0.4825,
-        "y": 0.5041
+        "x": 0.4361,
+        "y": 0.5091
       }
     },
     {
@@ -1111,8 +1138,8 @@
       "blurb": "Noodles so good, your soul stays.",
       "pin": {
         "map": "ember-court",
-        "x": 0.2035,
-        "y": 0.556
+        "x": 0.1863,
+        "y": 0.5466
       }
     },
     {
@@ -1123,8 +1150,8 @@
       "blurb": "Pawn-magic. Cheap deals. Buyer beware.",
       "pin": {
         "map": "ember-court",
-        "x": 0.2446,
-        "y": 0.6323
+        "x": 0.2082,
+        "y": 0.6031
       }
     },
     {
@@ -1135,8 +1162,8 @@
       "blurb": "Candles. Matches. Charms. And back doors.",
       "pin": {
         "map": "ember-court",
-        "x": 0.2653,
-        "y": 0.709
+        "x": 0.2411,
+        "y": 0.6658
       }
     },
     {
@@ -1147,8 +1174,8 @@
       "blurb": "The flame has never burned out.",
       "pin": {
         "map": "ember-court",
-        "x": 0.4767,
-        "y": 0.6848
+        "x": 0.4967,
+        "y": 0.6197
       }
     },
     {
@@ -1159,8 +1186,8 @@
       "blurb": "Soup. Scalding. Survival.",
       "pin": {
         "map": "ember-court",
-        "x": 0.4387,
-        "y": 0.7478
+        "x": 0.4397,
+        "y": 0.7293
       }
     },
     {
@@ -1171,8 +1198,8 @@
       "blurb": "Whispers. Endings. Apologies. Maybe forgiven, maybe not.",
       "pin": {
         "map": "ember-court",
-        "x": 0.4579,
-        "y": 0.8072
+        "x": 0.4397,
+        "y": 0.7789
       }
     },
     {
@@ -1183,22 +1210,22 @@
       "blurb": "Up or down. People leave candles for what went wrong.",
       "pin": {
         "map": "ember-court",
-        "x": 0.2495,
-        "y": 0.7795
+        "x": 0.2126,
+        "y": 0.7502
       }
     },
     {
       "id": "ember-court--widows-bridge",
       "district": "ember-court",
-      "name": "Widow's Bridge",
+      "name": "Cinderwick Bridge",
       "type": "landmark",
       "blurb": "Main south crossing.",
       "pin": {
         "map": "ember-court",
-        "x": 0.412,
-        "y": 0.877,
-        "approx": true
-      }
+        "x": 0.5004,
+        "y": 0.8921
+      },
+      "formerly": "Widow's Bridge"
     },
     {
       "id": "ember-court--cinderwick-lane",
@@ -1208,8 +1235,8 @@
       "blurb": "Main spine of Ember Court. Everything has a price.",
       "pin": {
         "map": "ember-court",
-        "x": 0.4216,
-        "y": 0.3198
+        "x": 0.504,
+        "y": 0.322
       }
     },
     {
@@ -1491,9 +1518,9 @@
       "blurb": "A narrow little shop that looks suspiciously like it used to be a maintenance tunnel. Easy to miss, even with official maps. Inside it's warmer than it has any right to be: a muttering kettle, low glitchy music, a workbench of half-fixed devices, a chalkboard of route notes, and a curtain in the back that probably doesn't lead where the building permit says it should.",
       "brand": "sideways-shops",
       "pin": {
-        "map": "adyta-city",
-        "x": 0.0926,
-        "y": 0.343,
+        "map": "three-wires-tangle",
+        "x": 0.8138,
+        "y": 0.4199,
         "approx": true
       },
       "sign": [
@@ -1543,7 +1570,8 @@
         }
       ],
       "note": "Not a syndicate. Not a faction office. Not a legal transport service. It is a shop. If you need a way out, ask quietly.",
-      "entrance": "The depot: repurposed service depot between Three Wires and the Tangle"
+      "entrance": "The depot: repurposed service depot between Three Wires and the Tangle",
+      "pinNote": "Somewhere between Three Wires and the Tangle. The map doesn't say where. Neither will we."
     },
     {
       "id": "low-halo--sideways-shops-sewer-door",
@@ -1564,6 +1592,381 @@
         "Repairs • Routes • Relays • Odd Jobs • No Refunds On Curses You Brought In Yourself"
       ],
       "note": "Not a syndicate. Not a faction office. Not a legal transport service. It is a shop. If you need a way out, ask quietly."
+    },
+    {
+      "id": "the-tangle--the-tangle",
+      "district": "the-tangle",
+      "name": "The Tangle",
+      "type": "housing",
+      "blurb": "Homes, workshops, shared roofs.",
+      "pin": {
+        "map": "three-wires-tangle",
+        "x": 0.4232,
+        "y": 0.1514
+      }
+    },
+    {
+      "id": "the-tangle--old-relay-nest",
+      "district": "the-tangle",
+      "name": "Old Relay Nest",
+      "type": "landmark",
+      "blurb": "Lookout. Signal. Rooftop watch.",
+      "pin": {
+        "map": "three-wires-tangle",
+        "x": 0.5436,
+        "y": 0.1152
+      }
+    },
+    {
+      "id": "the-tangle--lantern-steps",
+      "district": "the-tangle",
+      "name": "Lantern Steps",
+      "type": "street",
+      "blurb": "Up is faster. Mind the landings.",
+      "pin": {
+        "map": "three-wires-tangle",
+        "x": 0.7422,
+        "y": 0.166
+      }
+    },
+    {
+      "id": "the-tangle--watchback-edge",
+      "district": "the-tangle",
+      "name": "Watchback Edge",
+      "type": "landmark",
+      "blurb": "Eyes on the service corridor.",
+      "pin": {
+        "map": "three-wires-tangle",
+        "x": 0.8724,
+        "y": 0.2393
+      }
+    },
+    {
+      "id": "the-tangle--patchline-terrace",
+      "district": "the-tangle",
+      "name": "Patchline Terrace",
+      "type": "industrial",
+      "blurb": "Workshops. Relays. Fabrication.",
+      "pin": {
+        "map": "three-wires-tangle",
+        "x": 0.6999,
+        "y": 0.3125
+      }
+    },
+    {
+      "id": "the-tangle--warm-pipe-cut",
+      "district": "the-tangle",
+      "name": "Warm Pipe Cut",
+      "type": "street",
+      "blurb": "Heat in winter. Crowded, always.",
+      "pin": {
+        "map": "three-wires-tangle",
+        "x": 0.7552,
+        "y": 0.5615
+      }
+    },
+    {
+      "id": "three-wires--tin-market",
+      "district": "three-wires",
+      "name": "Tin Market",
+      "type": "market",
+      "blurb": "Salvage. Parts. Odd finds.",
+      "pin": {
+        "map": "three-wires-tangle",
+        "x": 0.1758,
+        "y": 0.293
+      }
+    },
+    {
+      "id": "three-wires--three-wires-trade-front",
+      "district": "three-wires",
+      "name": "Three Wires Trade Front",
+      "type": "market",
+      "blurb": "Repairs. Parts. Discreet services.",
+      "pin": {
+        "map": "three-wires-tangle",
+        "x": 0.2441,
+        "y": 0.4297
+      }
+    },
+    {
+      "id": "three-wires--babas-crumbs",
+      "district": "three-wires",
+      "name": "Baba's Crumbs",
+      "type": "food",
+      "blurb": "Bread, pastries, hand pies. Don't lie to Baba.",
+      "pin": {
+        "map": "three-wires-tangle",
+        "x": 0.4264,
+        "y": 0.4688
+      }
+    },
+    {
+      "id": "three-wires--three-wires-walk",
+      "district": "three-wires",
+      "name": "Three Wires Walk",
+      "type": "street",
+      "blurb": "Trade spine. Customers, carts, couriers.",
+      "pin": {
+        "map": "three-wires-tangle",
+        "x": 0.306,
+        "y": 0.5469
+      }
+    },
+    {
+      "id": "three-wires--grease-alley",
+      "district": "three-wires",
+      "name": "Grease Alley",
+      "type": "industrial",
+      "blurb": "Mechanics, fixers, welders.",
+      "pin": {
+        "map": "three-wires-tangle",
+        "x": 0.127,
+        "y": 0.5645
+      }
+    },
+    {
+      "id": "three-wires--soup-junction",
+      "district": "three-wires",
+      "name": "Soup Junction",
+      "type": "food",
+      "blurb": "Food first. Pay if you can.",
+      "pin": {
+        "map": "three-wires-tangle",
+        "x": 0.3971,
+        "y": 0.6836
+      }
+    },
+    {
+      "id": "three-wires--needle-bridge",
+      "district": "three-wires",
+      "name": "Needle Bridge",
+      "type": "street",
+      "blurb": "One at a time. Keep moving.",
+      "pin": {
+        "map": "three-wires-tangle",
+        "x": 0.5697,
+        "y": 0.6348
+      }
+    },
+    {
+      "id": "three-wires--scrap-prayer-yard",
+      "district": "three-wires",
+      "name": "Scrap Prayer Yard",
+      "type": "sacred",
+      "blurb": "Parts go in. Machines come out.",
+      "pin": {
+        "map": "three-wires-tangle",
+        "x": 0.2669,
+        "y": 0.7178
+      }
+    },
+    {
+      "id": "three-wires--the-quiet-shack",
+      "district": "three-wires",
+      "name": "The Quiet Shack",
+      "type": "civic",
+      "blurb": "Medic. Rest. Knock twice.",
+      "pin": {
+        "map": "three-wires-tangle",
+        "x": 0.5566,
+        "y": 0.7812
+      }
+    },
+    {
+      "id": "three-wires--the-sink",
+      "district": "three-wires",
+      "name": "The Sink",
+      "type": "street",
+      "blurb": "Wet shortcut. Unsafe in heavy rain.",
+      "pin": {
+        "map": "three-wires-tangle",
+        "x": 0.7064,
+        "y": 0.8398
+      }
+    },
+    {
+      "id": "three-wires--the-bent-ladder",
+      "district": "three-wires",
+      "name": "The Bent Ladder",
+      "type": "street",
+      "blurb": "Still holds. Usually. Ask first.",
+      "pin": {
+        "map": "three-wires-tangle",
+        "x": 0.4948,
+        "y": 0.9082
+      }
+    },
+    {
+      "id": "three-wires--tram-drop",
+      "district": "three-wires",
+      "name": "Tram Drop",
+      "type": "transit",
+      "blurb": "Public arrival point. Tram service unconfirmed.",
+      "pin": {
+        "map": "three-wires-tangle",
+        "x": 0.651,
+        "y": 0.8838
+      }
+    },
+    {
+      "id": "three-wires--cinder-drain",
+      "district": "three-wires",
+      "name": "Cinder Drain",
+      "type": "street",
+      "blurb": "Old tunnel access. Don't go proud.",
+      "pin": {
+        "map": "three-wires-tangle",
+        "x": 0.9147,
+        "y": 0.6836
+      }
+    },
+    {
+      "id": "noble-heights--northridge-estates",
+      "district": "noble-heights",
+      "name": "Northridge Estates",
+      "type": "housing",
+      "blurb": "Historic families. Private compounds.",
+      "pin": {
+        "map": "noble-heights",
+        "x": 0.4297,
+        "y": 0.1318
+      }
+    },
+    {
+      "id": "noble-heights--silverhallow-estate",
+      "district": "noble-heights",
+      "name": "Silverhallow Estate",
+      "type": "housing",
+      "blurb": "Ancient lineage. Elven family. Terraced gardens.",
+      "pin": {
+        "map": "noble-heights",
+        "x": 0.2441,
+        "y": 0.2637
+      }
+    },
+    {
+      "id": "noble-heights--vexley-manor",
+      "district": "noble-heights",
+      "name": "Vexley Manor",
+      "type": "landmark",
+      "blurb": "The Vexley family estate. Wealthy merchant family. Private grounds.",
+      "pin": {
+        "map": "noble-heights",
+        "x": 0.5729,
+        "y": 0.293
+      }
+    },
+    {
+      "id": "noble-heights--moonspire-house",
+      "district": "noble-heights",
+      "name": "Moonspire House",
+      "type": "housing",
+      "blurb": "Fae family. Diplomacy. Court functions.",
+      "pin": {
+        "map": "noble-heights",
+        "x": 0.8398,
+        "y": 0.2734
+      }
+    },
+    {
+      "id": "noble-heights--arlencourt-manor",
+      "district": "noble-heights",
+      "name": "Arlencourt Manor",
+      "type": "housing",
+      "blurb": "Fae household. Historic nobility.",
+      "pin": {
+        "map": "noble-heights",
+        "x": 0.8496,
+        "y": 0.3662
+      }
+    },
+    {
+      "id": "noble-heights--noble-heights-collegiate",
+      "district": "noble-heights",
+      "name": "Noble Heights Collegiate",
+      "type": "civic",
+      "blurb": "Elite education. Multi-species.",
+      "pin": {
+        "map": "noble-heights",
+        "x": 0.4199,
+        "y": 0.4492
+      }
+    },
+    {
+      "id": "noble-heights--the-conservatory",
+      "district": "noble-heights",
+      "name": "The Conservatory",
+      "type": "landmark",
+      "blurb": "Rare flora. Private collections. Research. Garden events.",
+      "pin": {
+        "map": "noble-heights",
+        "x": 0.8464,
+        "y": 0.5664
+      }
+    },
+    {
+      "id": "noble-heights--the-gilded-crescent",
+      "district": "noble-heights",
+      "name": "The Gilded Crescent",
+      "type": "shop",
+      "blurb": "Fine boutiques. Jewellers. Art dealers. Couture. Cafés. Salons.",
+      "pin": {
+        "map": "noble-heights",
+        "x": 0.2572,
+        "y": 0.5811
+      }
+    },
+    {
+      "id": "noble-heights--founders-square",
+      "district": "noble-heights",
+      "name": "Founder's Square",
+      "type": "civic",
+      "blurb": "Legacy. Power. Prosperity. Monuments. Ceremonies.",
+      "pin": {
+        "map": "noble-heights",
+        "x": 0.4492,
+        "y": 0.6494
+      }
+    },
+    {
+      "id": "noble-heights--old-families-row",
+      "district": "noble-heights",
+      "name": "Old Families' Row",
+      "type": "housing",
+      "blurb": "Established houses. Generational wealth. Quiet prestige.",
+      "pin": {
+        "map": "noble-heights",
+        "x": 0.651,
+        "y": 0.6396
+      }
+    },
+    {
+      "id": "noble-heights--the-silver-arcade",
+      "district": "noble-heights",
+      "name": "The Silver Arcade",
+      "type": "food",
+      "blurb": "Tea salons. Fine dining. Private clubs. Society events.",
+      "pin": {
+        "map": "noble-heights",
+        "x": 0.5078,
+        "y": 0.7764
+      }
+    },
+    {
+      "id": "low-halo--sideways-tourist-booth",
+      "district": "low-halo",
+      "name": "Sideways Tourist Booth",
+      "type": "shop",
+      "brand": "sideways-shops",
+      "blurb": "A booth on the main strip, somewhere between the Second Cup and the Last Byte. Maps, race guides, traveler tips, and questionable advice for the extra-dimensional traveler.",
+      "pin": {
+        "map": "low-halo",
+        "x": 0.29,
+        "y": 0.53,
+        "approx": true
+      },
+      "note": "The booth is easy to find. The shop is not. That's on purpose."
     }
   ],
   "routes": [
@@ -1626,7 +2029,7 @@
       "b": "old-city",
       "walk": 20,
       "tram": null,
-      "via": "downhill past Widow's Bridge",
+      "via": "downhill over Cinderwick Bridge",
       "estimate": true
     },
     {
@@ -1905,6 +2308,20 @@
       "tram": 22,
       "goblin": 15,
       "via": "industrial corridors toward the Tangle edge",
+      "estimate": true
+    },
+    {
+      "a": "noble-heights",
+      "b": "the-tangle",
+      "walk": 25,
+      "via": "Down the terrace stairs (Noble Heights map: 'To The Tangle')",
+      "estimate": true
+    },
+    {
+      "a": "noble-heights",
+      "b": "grand-academy",
+      "walk": 20,
+      "via": "Uphill (Noble Heights map: 'To The Grand Academy')",
       "estimate": true
     }
   ],

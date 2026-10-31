@@ -1,0 +1,142 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Adyta PDA</title>
+<link rel="stylesheet" href="../fonts/fonts.css">
+<link rel="stylesheet" href="../art/pda-v1/tokens.css">
+<link rel="stylesheet" href="./screen.css">
+<style>
+/* Start: the dashboard from art/pda-v1/mockups/start-vision.png. Every card opens a section of the PDA. */
+.wrap{max-width:1180px}
+.hero{position:relative;display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,1fr);gap:20px;min-height:330px;padding:clamp(22px,4vw,42px);border:3px solid var(--art-brass-shadow);border-radius:16px;overflow:hidden;
+  background:linear-gradient(90deg,rgba(10,11,22,.96) 0%,rgba(10,11,22,.82) 42%,rgba(10,11,22,.15) 100%),url("../art/pda-v1/imports/start/city-hero-DRAFT-trimmed.webp") center 40%/cover,url("../maps/adyta-city-map.jpg") center/cover;box-shadow:inset 0 0 0 1px rgba(220,180,117,.25),0 12px 30px rgba(0,0,0,.55)}
+.hero::after{content:"";position:absolute;inset:8px;border:1px solid rgba(215,172,97,.35);border-radius:10px;pointer-events:none}
+.hero .kick{color:var(--art-cyan);font:700 14px var(--art-ui);letter-spacing:.14em;text-transform:uppercase}
+.hero h1{margin:6px 0 10px;font-size:clamp(46px,7vw,84px);line-height:.92;transform:rotate(-2deg);transform-origin:left}
+.hero h1 small{display:block;font-size:.45em;color:#ffe2a8}
+.hero p.lede{max-width:34ch;margin:0;color:var(--art-cream);font:400 clamp(17px,2vw,21px)/1.4 var(--art-title);letter-spacing:.01em}
+.hero .ctas{display:flex;flex-wrap:wrap;gap:10px;margin-top:18px}
+.note-card{align-self:start;justify-self:end;max-width:300px;padding:14px 16px;border:1px solid #a97f45;border-left:5px solid var(--art-magenta);border-radius:7px;background:var(--art-parchment) url("../art/pda-v1/assets/parchment-tile.svg");color:#2c1c18;transform:rotate(3deg);box-shadow:0 10px 24px rgba(0,0,0,.5)}
+.note-card h2{margin:0 0 4px;color:#5b254e;font-size:24px;text-shadow:none}
+.note-card .row{display:flex;justify-content:space-between;gap:10px;padding:3px 0;border-bottom:1px dashed rgba(107,75,51,.35);font-size:15px}
+.note-card .row b{color:#3a1730}
+.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px;margin-top:18px}
+.card{position:relative;display:flex;flex-direction:column;min-height:230px;padding:18px 20px;border:2px solid var(--c,var(--art-brass));border-radius:14px;overflow:hidden;
+  background:linear-gradient(110deg,rgba(13,10,24,.97) 0%,rgba(13,10,24,.9) 52%,rgba(13,10,24,.25) 100%),var(--img,none) right center/cover no-repeat,#120e1f;
+  box-shadow:0 0 0 1px rgba(0,0,0,.6),0 0 22px color-mix(in srgb,var(--c,#d7ac61) 30%,transparent),0 10px 24px rgba(0,0,0,.5)}
+.card h2{display:flex;align-items:center;gap:10px;margin:0 0 8px;color:#fff;font-size:30px;text-shadow:2px 2px 0 rgba(0,0,0,.6)}
+.card h2 svg{width:34px;height:34px;flex:none;color:var(--c)}
+.card p{max-width:30ch;margin:0;color:var(--art-cream)}
+.card .go{display:inline-flex;align-items:center;gap:10px;align-self:flex-start;min-height:44px;margin-top:auto;padding:8px 16px;border:1px solid var(--c);border-radius:999px;background:rgba(10,11,22,.85);color:#fff;font:700 15px var(--art-ui);letter-spacing:.08em;text-transform:uppercase;box-shadow:none}
+.card .go b{color:var(--c);font-size:18px}
+.card.paper{--c:#a97f45;background:var(--art-parchment) url("../art/pda-v1/assets/parchment-tile.svg");color:#2c1c18}
+.card.paper h2{color:#2c1c18;text-shadow:none}.card.paper h2 svg{color:#5b254e}
+.card.paper p{color:#3d2b1f}
+.card.paper .go{background:transparent;color:#3a1730;border-color:#8a6a48}
+.list{margin:10px 0 12px;padding:0;list-style:none}
+.list li{display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid rgba(107,75,51,.35)}
+.list li .dot{width:12px;height:12px;flex:none;transform:rotate(45deg);background:var(--dc,#ef46ba);border:1px solid rgba(0,0,0,.4)}
+.list li span.t{flex:1;min-width:0}
+.list li small{color:#7a2f6a;font:700 12px var(--art-ui);letter-spacing:.06em;text-transform:uppercase;white-space:nowrap}
+.list li.heads{color:#9c1f2c;font-weight:700}
+.banners{display:flex;gap:10px;margin-top:12px}
+.banners i{display:block;width:36px;height:70px;clip-path:polygon(0 0,100% 0,100% 82%,50% 100%,0 82%)}
+.shops{display:grid;grid-template-columns:auto minmax(0,1fr) auto;gap:18px;align-items:center;margin-top:18px;padding:16px 20px;border:2px solid var(--art-magenta);border-radius:14px;
+  background:linear-gradient(90deg,rgba(13,10,24,.95),rgba(42,18,48,.9)),url("../art/sideways-shops/races-header.jpg") center/cover;box-shadow:0 0 24px rgba(239,70,186,.3)}
+.shops img{width:72px;height:72px}
+.shops h2{margin:0;color:#ff7ad1;font-size:clamp(28px,4vw,42px);text-shadow:3px 3px 0 #2a1230}
+.shops p{margin:2px 0 0;color:var(--art-cream)}
+.shops ul{margin:0;padding:10px 14px;list-style:none;border:1px solid #a97f45;border-radius:6px;background:var(--art-parchment) url("../art/pda-v1/assets/parchment-tile.svg");color:#2c1c18;transform:rotate(-2deg)}
+.shops li{padding:2px 0;font-weight:700}
+.shops li::before{content:"✦ ";color:#7a2f6a}
+.shops .actions button{white-space:nowrap}
+.tiny{color:var(--art-muted);font-size:13px}
+@media (max-width:860px){.hero{grid-template-columns:1fr}.note-card{justify-self:start;transform:rotate(1.5deg)}.grid{grid-template-columns:1fr}.shops{grid-template-columns:1fr}.shops img{display:none}.card{min-height:200px}}
+@media (prefers-reduced-motion:reduce){.hero h1,.note-card,.shops ul{transform:none}}
+</style>
+</head>
+<body class="pda-art">
+<div class="wrap" id="app"></div>
+<script src="./week.js"></script>
+<script src="./make.js"></script>
+<script src="./gigs.js"></script>
+<script src="./radio.js"></script>
+<script>
+'use strict';
+const KEY = 'grakkgrith_character_tool_v8_state';
+const WK = window.GRAKK_WEEK, MK = window.GRAKK_MAKE, GG = window.GRAKK_GIGS, RA = window.GRAKK_RADIO, $ = id => document.getElementById(id);
+const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+const load = () => { try { return JSON.parse(localStorage.getItem(KEY)); } catch (e) { return null; } };
+const save = s => { try { localStorage.setItem(KEY, JSON.stringify(s)); } catch (e) {} try { parent.postMessage({ type: 'grakkgrith-week-changed' }, '*'); } catch (e) {} };
+const hasChar = s => !!(s && s.character && String(s.character.name || '').trim());
+const nav = to => parent.postMessage({ type: 'grakkgrith-nav', to }, '*');
+const ago = ms => { const m = Math.max(0, Math.round(ms / 60000)); return m < 60 ? `${m}m ago` : `${Math.round(m / 60)}h ago`; };
+const ICON = {
+  guides: '<path d="M3 5c3-1 6-1 9 1 3-2 6-2 9-1v14c-3-1-6-1-9 1-3-2-6-2-9-1z"/><path d="M12 6v14"/>',
+  city: '<circle cx="12" cy="12" r="9"/><path d="M12 3v18M3 12h18M12 3l3 9-3 9-3-9z"/>',
+  missions: '<path d="M7 3h10l3 3v15H7z"/><path d="M10 9h7M10 13h7M10 17h4"/>',
+  rumors: '<path d="M4 5h16v10H9l-5 4z"/><circle cx="9" cy="10" r=".6"/><circle cx="12" cy="10" r=".6"/><circle cx="15" cy="10" r=".6"/>',
+  factions: '<path d="M6 3v18M18 3v18"/><path d="M12 4l3 5-3 2-3-2z"/><path d="M12 11v10"/>',
+  artifacts: '<path d="M12 2l6 7-6 13L6 9z"/><path d="M6 9h12M12 2v20"/>'
+};
+const icon = k => `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${ICON[k]}</svg>`;
+let D = {};
+
+function render() {
+  const s = load(), named = hasChar(s), now = WK.adytaNow(D.places.clock, Date.now());
+  if (named) { WK.settle(s, D.week, D.places.clock, Date.now()); MK.settle(s, D.make, D.week, now); GG.settle(s, D.gigs, now); save(s); }
+  const races = Object.keys(D.rules.races).filter(r => !/Custom/.test(r)).length;
+  const atlas = Object.values(D.places.districts).filter(d => d.atlas).length;
+  // Hero + your day
+  let note;
+  if (named) {
+    const heat = Number(s.stats?.heat || 0), band = D.week.heatBands.find(b => b.id === WK.band(D.week, heat));
+    note = `<aside class="note-card" aria-label="Your day"><h2>${esc(s.character.name)}</h2>
+      <div class="row"><span>Adyta</span><b>${esc(WK.fmt(now))}</b></div>
+      <div class="row"><span>Credits</span><b>${esc(s.coins?.credits || 0)}</b></div>
+      <div class="row"><span>Heat</span><b>${heat} · ${esc(band.name)}</b></div>
+      <div class="row"><span>Mail</span><b>${WK.pending(s)} waiting</b></div>
+      <div class="row"><span>Downtime</span><b>${MK.downtimeLeft(s)} / 2 left</b></div></aside>`;
+  } else note = `<aside class="note-card"><h2>Same city.</h2><p style="margin:0">Different stories every day. Make a character and the city starts noticing you.</p></aside>`;
+  let h = `<section class="hero"><div><div class="kick">A livin' city in your pocket</div><h1><small>Welcome to</small>Adyta</h1>
+    <p class="lede">The city is alive. People are working, deals are being made, rivalries are brewing, whether you're here or not.</p>
+    <div class="ctas">${named ? `<button class="primary" data-nav="sheetBtn">Character sheet</button><button data-nav="mailBtn">Mail${WK.pending(s) ? ` (${WK.pending(s)})` : ''}</button>` : `<button class="primary" data-nav="creatorBtn" data-action="creator">Create your character</button><button data-nav="guidesBtn">Read the guides</button>`}</div></div>${note}</section><div class="grid">`;
+  // Species guides
+  h += `<article class="card" style="--c:#b06cf0;--img:url('../art/sideways-shops/races/goblin.jpg')"><h2>${icon('guides')}Species Guides</h2><p>Races, lifespans, traits, cultures, and more. With Sideways commentary.</p><button class="go" data-nav="guidesBtn">${races} races <b>›</b></button></article>`;
+  // City
+  h += `<article class="card" style="--c:#22dae4;--img:url('../maps/low-halo-district-map.jpg')"><h2>${icon('city')}City Districts</h2><p>Explore neighborhoods, services, shops, and who runs them.</p><button class="go" data-nav="cityBtn">${atlas} districts <b>›</b></button></article>`;
+  // Missions: what you're on, else what's open
+  let items = [];
+  if (named) {
+    for (const a of ((s.make && s.make.artifacts) || [])) if (a.status === 'active' && a.delivery) items.push({ t: `Delivery: ${a.delivery.cargo.name} to ${a.delivery.to.name}`, tag: WK.untilText(a.delivery.due - now), c: '#22dae4' });
+    for (const j of ((s.gigs && s.gigs.jobs) || [])) if (j.status === 'active') items.push({ t: j.title, tag: j.remote ? 'Remote' : j.place.districtName, c: j.sideways ? '#ef46ba' : '#b06cf0' });
+    for (const j of ((s.radio && s.radio.jobs) || [])) if (j.status === 'active') items.push({ t: `Radio Sewers: ${j.title}`, tag: j.place.districtName, c: '#9af269' });
+    if (!items.length) for (const j of GG.board(s, D.gigs, D.rules, D.places, now).gigs.filter(x => !x.taken).slice(0, 3)) items.push({ t: j.title, tag: `${j.net} cr`, c: j.sideways ? '#ef46ba' : '#d7ac61' });
+  } else items = [{ t: 'Gigs, deliveries and contracts', tag: 'Citywide', c: '#d7ac61' }, { t: 'Make a character to take one', tag: 'Start here', c: '#ef46ba' }];
+  h += `<article class="card paper"><h2>${icon('missions')}Active Missions</h2><p>Jobs, favors, open contracts, and opportunities.</p><ul class="list">${items.slice(0, 3).map(i => `<li style="--dc:${i.c}"><span class="dot"></span><span class="t">${esc(i.t)}</span><small>${esc(i.tag)}</small></li>`).join('')}</ul><button class="go" data-nav="missionsBtn">View all missions <b>›</b></button></article>`;
+  // Rumors: Radio Sewers
+  const feed = RA.feed(named ? s : {}, D.radio, D.make, D.places, now, 12).filter(x => x.kind === 'rumor' || x.kind === 'headsUp' || x.kind === 'yours').slice(0, 3);
+  h += `<article class="card paper"><h2>${icon('rumors')}Recent Rumors</h2><p>What people are saying across Adyta, by way of Radio Sewers.</p><ul class="list">${feed.map(x => `<li class="${x.kind === 'headsUp' ? 'heads' : ''}" style="--dc:${x.kind === 'headsUp' ? '#fc6c74' : '#9af269'}"><span class="dot"></span><span class="t">${esc(x.text)}</span><small>${esc(ago(now - x.at))}</small></li>`).join('') || '<li>Static. Tune in later.</li>'}</ul><button class="go" data-nav="radioBtn">View more rumors <b>›</b></button></article>`;
+  // Factions
+  // Pulse's corporate card art: a different corporation's ad each Adyta hour (no animation)
+  const ads = (D.art.items || []).filter(i => i.kind === 'faction-poster'), ad = ads.length ? ads[Math.floor(now / 3600000) % ads.length] : null;
+  h += `<article class="card" style="--c:#fc6c74${ad ? `;--img:url('../art/pda-v1/imports/${ad.card}')` : ''}"><h2>${icon('factions')}Factions</h2><p>Five corporations, the City Authority, and the Commons. Their goals, and how they see you.</p>${ad ? `<p class="tiny" style="margin-top:8px">On the billboards right now: ${esc(ad.title)}.</p>` : ''}<div class="actions" style="margin-top:auto;padding-top:12px"><button class="go" data-nav="factionsBtn" style="margin:0">The three powers <b>›</b></button><button class="go" data-nav="corpsBtn" style="margin:0">Corporations <b>›</b></button></div></article>`;
+  // Artifacts: your work, else your class's makes
+  let art = [];
+  if (named) { art = ((s.make && s.make.artifacts) || []).filter(a => a.status === 'active' && !a.delivery).slice(0, 2).map(a => a.name); if (!art.length) art = MK.recipesFor(D.make, s.character.class).slice(0, 3).map(r => r.name); }
+  h += `<article class="card" style="--c:#22dae4;--img:url('../art/pda-v1/imports/start/featured-artifacts-1600x900.webp')"><h2>${icon('artifacts')}Featured Artifacts</h2><p>${named && art.length ? `${esc(art.join(' · '))}.` : 'Notable items, tech, and other curiosities.'} Strange things change hands in Adyta.</p><button class="go" data-nav="makeBtn">Your workshop <b>›</b></button></article></div>`;
+  // Sideways Shops
+  h += `<section class="shops"><img src="../art/pda-v1/assets/sideways-sigil.svg" alt=""><div><h2>Sideways Shops</h2><p>Guides, maps, and questionable advice for the extra-dimensional traveler.</p><div class="actions"><button class="primary" data-go="three-wires--sideways-shops">Find the shop</button><button data-nav="guidesBtn">Race guides</button></div></div>
+    <ul aria-label="Sideways carries"><li>Race Guides</li><li>District Maps</li><li>Traveler Tips</li><li>Unofficial Lore</li></ul></section>
+    <p class="tiny">Not official. Just useful.</p>`;
+  $('app').innerHTML = h;
+}
+document.addEventListener('click', e => { const b = e.target.closest('button'); if (!b) return; if (b.dataset.nav) nav(b.dataset.nav); else if (b.dataset.go) parent.postMessage({ type: 'grakkgrith-open-explore', place: b.dataset.go }, '*'); });
+Promise.all([...['rules', 'places', 'week', 'make', 'gigs', 'radio'].map(n => fetch(`../data/${n}.json`).then(r => r.json())), fetch('../art/pda-v1/imports/manifest.json').then(r => r.json()).catch(() => ({ items: [] }))]).then(([rules, places, week, make, gigs, radio, art]) => {
+  D = { rules, places, week, make, gigs, radio, art }; render(); window.GRAKK_START_READY = true; setInterval(render, 60000);
+});
+</script>
+</body>
+</html>

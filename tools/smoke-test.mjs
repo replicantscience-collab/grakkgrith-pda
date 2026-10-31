@@ -69,11 +69,20 @@ try {
     let f = await open('exploreBtn', 1500);
     await step('Explore map image loads', () => f.evaluate(() => { const i = document.getElementById('mapImg'); return i.complete && i.naturalWidth > 0; }));
     await step('Explore shows the Adyta clock', async () => /\d:\d\d [AP]M/.test(await f.evaluate(() => document.getElementById('clock').textContent)));
+    await step('Explore has every district map, Three Wires & Tangle and Noble Heights included', async () => { const tabs = await f.$$eval('#mapTabs button', b => b.map(x => x.textContent)); return (tabs.length === 7 && tabs.some(t => /Three Wires/.test(t)) && tabs.some(t => /Noble/.test(t))) || tabs.join('|'); });
     await step('Explore can plan a trip', async () => (await f.evaluate(() => window.GRAKK_EXPLORE.planTrip({ district: 'ember-court', place: 'ember-court--the-ninth-circle-ph' }).length)) > 0);
 
     // Sideways art pass: Start wears the kit; Sideways' commentary and the rulebook stay separate in the guide.
     f = await open('worldBtn', 1200);
-    await step('Start uses the Sideways skin', () => f.evaluate(() => document.body.classList.contains('pda-art') && getComputedStyle(document.querySelector('.title')).fontFamily.includes('Permanent Marker')));
+    await step('Start is the dashboard: Sideways skin, eight cards and the shop banner', () => f.evaluate(() => document.body.classList.contains('pda-art') && getComputedStyle(document.querySelector('.hero h1')).fontFamily.includes('Permanent Marker') && document.querySelectorAll('.grid .card').length === 6 && !!document.querySelector('.shops')));
+    await step('the top bar has eight section tabs, not a wall of them', () => page.evaluate(() => document.querySelectorAll('.sectionNav .secTab').length === 8 && [...document.querySelectorAll('.topbar button')].filter(b => b.offsetParent).length <= 12));
+    await step('a Start card opens its section', async () => { await f.click('.card [data-nav="cityBtn"]'); await page.waitForTimeout(1500); return page.evaluate(() => document.querySelector('.secTab.active').dataset.sec === 'city'); });
+    await step('section tabs show their pages as sub-tabs', async () => { await page.evaluate(() => document.getElementById('sec-missions').click()); await page.waitForTimeout(1200);
+      const subs = await page.$$eval('#subNav .subTab', b => b.map(x => x.textContent)); return (subs.join('|') === 'Contracts|Pocket Change|Radio Sewers') || subs.join('|'); });
+    await step('Corporations shows five, with Pulse\'s posters and New Halo under Crownline', async () => { await page.evaluate(() => document.getElementById('corpsBtn').click()); await page.waitForTimeout(1500); const g = frame(page); await g.waitForFunction(() => window.GRAKK_CORPS_READY);
+      const n = await g.$$eval('.corp', x => x.length), imgs = await g.$$eval('.corp img', x => x.length), nh = await g.evaluate(() => !!document.querySelector('#crownline .campaign')), sub = await page.evaluate(() => document.querySelector('.secTab.active').dataset.sec);
+      return (n === 5 && imgs === 4 && nh && sub === 'factions') || `${n} corps, ${imgs} posters, New Halo under Crownline ${nh}, tab ${sub}`; });
+    f = await open('cityBtn', 1500);
     await step('City uses the Sideways skin', async () => { await f.evaluate(() => showPanel('city')); return f.evaluate(() => document.body.classList.contains('pda-art')); });
     await step('Missions and Factions use the Sideways skin', async () => { for (const id of ['missions', 'factions']) { await f.evaluate(id => showPanel(id), id); if (!(await f.evaluate(() => document.body.classList.contains('pda-art')))) return `${id} is unskinned`; } return true; });
     await step('Lore and Logs use the Sideways skin', async () => { for (const id of ['lore', 'downtime']) { await f.evaluate(id => showPanel(id), id); if (!(await f.evaluate(() => document.body.classList.contains('pda-art')))) return `${id} is unskinned`; } return true; });
@@ -83,6 +92,7 @@ try {
     f = await open('guidesBtn', 1200);
     await step('Guides shows 11 races', async () => { const n = await f.evaluate(() => document.querySelectorAll('.card').length); return n === 11 || `found ${n}`; });
     await step('Guide keeps Sideways commentary and rules apart', async () => { await f.evaluate(() => document.querySelector('[data-race="Goblin"]').click()); return f.evaluate(() => !!document.querySelector('#detail .sideways') && /From the rulebook/i.test(document.querySelector('#detail .rules').innerText) && !document.querySelector('#detail .sideways').innerText.includes('Reflex')); });
+    await step('every race has card art, Fairy included', async () => { const n = await f.$$eval('.card img', x => x.filter(i => i.complete && i.naturalWidth > 0).length); return n === 11 || `${n} of 11 cards loaded`; });
     await step('Guides opens a race entry', async () => { await f.evaluate(() => document.querySelector('[data-race="Fairy"]').click()); return /Fae Reading/.test(await f.evaluate(() => document.getElementById('detail').innerText)); });
 
     // City: 28 atlas pins, and a pin opens its dossier.
@@ -120,7 +130,8 @@ try {
     await page.goto(BASE + '/');
     await page.waitForTimeout(1200);
     let f = frame(page);
-    await step('Start offers "Create your character"', async () => /Create your character/.test(await f.evaluate(() => document.querySelector('.hero button.primary').textContent)) && !(await f.evaluate(() => document.querySelector('.ops').innerText)).includes('file found'));
+    await f.waitForFunction(() => window.GRAKK_START_READY);
+    await step('Start offers "Create your character"', async () => /Create your character/.test(await f.evaluate(() => document.querySelector('.hero button.primary').textContent)) && !(await f.evaluate(() => document.querySelector('.note-card').innerText)).includes('Credits'));
     await step('builds a character through every Character Setup step', async () => {
       await f.click('.hero button[data-action="creator"]'); await page.waitForTimeout(1200); f = frame(page);
       for (let guard = 0; guard < 20; guard++) {
@@ -143,6 +154,58 @@ try {
     });
     await step('the sheet shows the new character', async () => { await page.evaluate(() => document.getElementById('sheetBtn').click()); await page.waitForTimeout(1600); return frame(page).evaluate(() => document.body.innerText.includes('Smoke Runner') && document.getElementById('raceSelect').value === 'Goblin'); });
     await step('Explore can send them somewhere', async () => { await page.evaluate(() => document.getElementById('exploreBtn').click()); await page.waitForTimeout(1500); return frame(page).evaluate(() => { const X = window.GRAKK_EXPLORE, t = { district: 'low-halo', place: 'low-halo--rust-market' }; X.startTrip(t, X.planTrip(t)[0]); return !!JSON.parse(localStorage.getItem('grakkgrith_character_tool_v8_state')).world.presence.transit; }); });
+    // The Week: rent on the Adyta clock and Heat mail, from a fresh character.
+    const ST = () => page.evaluate(() => JSON.parse(localStorage.getItem('grakkgrith_character_tool_v8_state')));
+    await step('Mail shows the first week of rent and a badge', async () => {
+      await page.evaluate(() => document.getElementById('mailBtn').click()); await page.waitForTimeout(1500); f = frame(page);
+      const bill = await f.evaluate(() => !!document.querySelector('.letter.bill button[data-pay]'));
+      const badge = await page.evaluate(() => document.getElementById('mailBadge').textContent);
+      const w = await f.evaluate(() => document.documentElement.scrollWidth - innerWidth);
+      return (bill && badge === '1' && w <= 1) || `bill ${bill}, badge "${badge}", ${w}px too wide`;
+    });
+    await step('paying rent takes credits and clears the badge', async () => {
+      const before = Number((await ST()).coins.credits || 0); await f.click('.letter.bill button[data-pay]'); await page.waitForTimeout(400);
+      const after = Number((await ST()).coins.credits || 0), badge = await page.evaluate(() => document.getElementById('mailBadge').textContent);
+      return (before - after === 70 && badge === '') || `credits ${before} -> ${after}, badge "${badge}"`;
+    });
+    await step('Heat 2 sends a notice; the sheet does not wipe the mail', async () => {
+      await page.evaluate(() => { const s = JSON.parse(localStorage.getItem('grakkgrith_character_tool_v8_state')); s.stats.heat = '2'; localStorage.setItem('grakkgrith_character_tool_v8_state', JSON.stringify(s)); });
+      await page.evaluate(() => document.getElementById('sheetBtn').click()); await page.waitForTimeout(1600);
+      await page.evaluate(() => document.getElementById('mailBtn').click()); await page.waitForTimeout(1500); f = frame(page);
+      const s = await ST(), notices = s.week.mail.filter(m => m.kind === 'notice').length, paid = s.week.mail.some(m => m.kind === 'bill' && m.status === 'paid');
+      return (notices === 1 && paid && await f.evaluate(() => !!document.querySelector('.letter.notice'))) || `notices ${notices}, bill paid ${paid}, heat ${s.stats.heat}`;
+    });
+    // The Workshop: a Runner makes a Route Sheet through the UI and gets a full record.
+    await step('Workshop shows the Runner list and fits the screen', async () => {
+      await page.evaluate(() => document.getElementById('makeBtn').click()); await page.waitForTimeout(1500); f = frame(page);
+      const names = await f.$$eval('.recipe b', bs => bs.map(b => b.textContent)); const w = await f.evaluate(() => document.documentElement.scrollWidth - innerWidth);
+      return (names.includes('Route Sheet') && names.includes('Delivery Slot') && w <= 1) || `${names.join(', ')}; ${w}px too wide`;
+    });
+    await step('making a Route Sheet spends a downtime action and records it', async () => {
+      await f.click('.recipe[data-recipe="route-sheet"]'); await f.selectOption('#fDistrict', 'low-halo'); await f.click('#doMake'); await page.waitForTimeout(400);
+      const s = await ST(), a = (s.make && s.make.artifacts || [])[0];
+      return (a && a.recipe === 'route-sheet' && a.creator.name === 'Smoke Runner' && a.location.district === 'low-halo' && s.downtime.actionsRemaining === 1 && await f.evaluate(() => document.querySelectorAll('.work .letter').length) === 1) || JSON.stringify(a).slice(0, 120);
+    });
+    await step('a Runner takes a delivery and Explore shows the pickup', async () => {
+      await f.click('.recipe[data-recipe="delivery-run"]'); const n = await f.$$eval('[data-take]', b => b.length);
+      await f.click('[data-take] >> nth=0'); await page.waitForTimeout(400);
+      const a = (await ST()).make.artifacts.find(x => x.delivery); if (!a) return `board had ${n} jobs; none taken`;
+      await f.click('.work [data-go] >> nth=0'); await page.waitForTimeout(1800); const ex = frame(page);
+      const url = await ex.evaluate(() => location.search), note = await ex.evaluate(() => (document.querySelector('#sheetBody .job') || {}).textContent || '');
+      return (n === 3 && url.includes(encodeURIComponent(a.delivery.from.place)) && /Pick up here/.test(note)) || `jobs ${n}, url ${url}, note "${note}"`;
+    });
+    await step('Pocket Change shows gigs and fits the screen', async () => {
+      await page.evaluate(() => document.getElementById('gigsBtn').click()); await page.waitForTimeout(1500); f = frame(page);
+      const n = await f.$$eval('.gig [data-take]', b => b.length), w = await f.evaluate(() => document.documentElement.scrollWidth - innerWidth);
+      return (n >= 1 && w <= 1) || `${n} gigs to take; ${w}px too wide`;
+    });
+    await step('Radio Sewers is on air with the right DJ and a live link', async () => {
+      await page.evaluate(() => document.getElementById('radioBtn').click()); await page.waitForTimeout(1500); f = frame(page);
+      const dj = await f.evaluate(() => document.querySelector('.onair h2').textContent), link = await f.evaluate(() => document.querySelector('a.listen').href);
+      const segs = await f.$$eval('.seg', x => x.length), w = await f.evaluate(() => document.documentElement.scrollWidth - innerWidth);
+      const pic = await f.evaluate(() => { const i = document.querySelector('.djpic'); return !!i && i.complete && i.naturalWidth > 0; });
+      return (pic && ['Smokier', 'DJ Sludge', 'DJ Stormbird'].includes(dj) && /goblinnib/.test(link) && segs >= 10 && w <= 1) || `${dj}, ${link}, ${segs} segments, ${w}px too wide`;
+    });
     // Mixed Heritage (Ch. 15) and Afflictions (Ch. 20) in Character Setup and on the sheet.
     await step('Mixed Heritage and Affliction rules hold in Character Setup', async () => {
       await page.evaluate(() => document.getElementById('creatorBtn').click()); await page.waitForTimeout(1200); f = frame(page);

@@ -1,0 +1,24 @@
+{
+  "_about": "The five corporations, from the World Anvil's Corporations article (roles paraphrased; the article is the authority). Posters are Pulse's concept art (art/pda-v1/imports, manifest 2026-10-30-a): in-world advertising, so their slogans are what the corporation claims, not canon fact. Art use, logos and slogans are pending Nib's review.",
+  "source": "https://www.worldanvil.com/w/adyta-jeeperssheefers/a/corporations-article",
+  "artBase": "art/pda-v1/imports/",
+  "artStatus": "Concept art, pending Nib's review",
+  "corporations": [
+    { "id": "crownline", "name": "Crownline Infrastructure", "role": "Utilities, permits, compliance, urban systems, and access to stability.",
+      "about": "Runs the power, water, transit-grid support, smart meters, elevators and building certifications. Decides what counts as safe, legal, connected and worth maintaining. Its language avoids describing harm: shutoffs become temporary utility limitations.",
+      "art": "crownline", "claim": "Stability through access control.",
+      "campaigns": [ { "art": "new-halo", "name": "New Halo", "note": "A Crownline initiative: the residential development campaign for New Halo.", "claim": "Welcome to New Halo." } ] },
+    { "id": "bastion", "name": "Bastion Dynamics", "role": "Private security, corporate enforcement, and controlled force.",
+      "about": "Adyta's largest security contractor. It doesn't set policy; it's hired to enforce decisions made elsewhere. Crownline writes the notice; Bastion makes it physical. Not the ACW, legally, even when both arrive with shields.",
+      "art": "bastion-dynamics", "claim": "We secure Adyta." },
+    { "id": "helix", "name": "Helix Systems", "role": "Cybernetics, biotechnology, experimental medicine, and personal data.",
+      "about": "Implants, prosthetics, neural interfaces and treatment you can't get anywhere else, with maintenance, monitoring and licensing attached. Its interest in you doesn't end when your treatment does.",
+      "art": null },
+    { "id": "meridian", "name": "Meridian Logistics", "role": "Shipping, freight, transport infrastructure, and supply movement.",
+      "about": "Profits from movement, whatever the cargo: relief supplies, eviction equipment, stolen machinery. Often partners with Crownline, but answers to its own contracts.",
+      "art": null },
+    { "id": "velvet", "name": "Velvet Signal", "role": "Media, advertising, platform control, reputation management, and narrative suppression.",
+      "about": "Sanitizes what the other corporations do. Owns the platforms most of the city reads, watches and works through, Pocket Change included.",
+      "art": "velvet-signal", "claim": "Trust the story that protects you." }
+  ]
+}
