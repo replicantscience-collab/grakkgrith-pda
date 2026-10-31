@@ -50,9 +50,10 @@
       "kind": "district",
       "district": "ember-court",
       "status": "official",
-      "image": "maps/official/ember-court.jpg",
+      "image": "maps/official/ember-court-painted.jpg",
       "width": 1369,
-      "height": 1149
+      "height": 1149,
+      "previous": "maps/candidates/ember-court-diagram.jpg"
     },
     "market-ring": {
       "title": "Market Ring District Map",
@@ -943,8 +944,8 @@
       "blurb": "Souvenirs. Sanitized culture. Overpriced tea.",
       "pin": {
         "map": "ember-court",
-        "x": 0.2899,
-        "y": 0.0538
+        "x": 0.3141,
+        "y": 0.1114
       }
     },
     {
@@ -955,22 +956,22 @@
       "blurb": "Clean shops. Expensive charms. For tourists and people who want danger with receipts.",
       "pin": {
         "map": "ember-court",
-        "x": 0.4436,
-        "y": 0.0959
+        "x": 0.4543,
+        "y": 0.1305
       }
     },
     {
       "id": "ember-court--static-square",
       "district": "ember-court",
-      "name": "Static Square",
+      "name": "Ember Square",
       "type": "landmark",
       "blurb": "Public space and ward grounding point.",
       "pin": {
         "map": "ember-court",
-        "x": 0.392,
-        "y": 0.183,
-        "approx": true
-      }
+        "x": 0.385,
+        "y": 0.2245
+      },
+      "formerly": "Static Square"
     },
     {
       "id": "ember-court--ember-court-tram-stop",
@@ -980,8 +981,8 @@
       "blurb": "Cinderwick Station. One stop from Mercy Street.",
       "pin": {
         "map": "ember-court",
-        "x": 0.6301,
-        "y": 0.0573
+        "x": 0.6034,
+        "y": 0.148
       },
       "tram": true
     },
@@ -993,9 +994,8 @@
       "blurb": "Maps. Brochures. Disappointments.",
       "pin": {
         "map": "ember-court",
-        "x": 0.538,
-        "y": 0.187,
-        "approx": true
+        "x": 0.6866,
+        "y": 0.1976
       }
     },
     {
@@ -1006,9 +1006,8 @@
       "blurb": "Contracts. Law. Disputes. Where promises get heavy.",
       "pin": {
         "map": "ember-court",
-        "x": 0.721,
-        "y": 0.202,
-        "approx": true
+        "x": 0.8459,
+        "y": 0.1854
       }
     },
     {
@@ -1019,9 +1018,8 @@
       "blurb": "Barristers. Bindings. Infernal disputes.",
       "pin": {
         "map": "ember-court",
-        "x": 0.757,
-        "y": 0.285,
-        "approx": true
+        "x": 0.7874,
+        "y": 0.3203
       }
     },
     {
@@ -1032,8 +1030,8 @@
       "blurb": "Records. Debts. Sealed agreements. It remembers.",
       "pin": {
         "map": "ember-court",
-        "x": 0.7506,
-        "y": 0.38
+        "x": 0.7706,
+        "y": 0.4021
       }
     },
     {
@@ -1044,8 +1042,8 @@
       "blurb": "Signatures. Seals. Oaths. We witness everything.",
       "pin": {
         "map": "ember-court",
-        "x": 0.727,
-        "y": 0.4613
+        "x": 0.7743,
+        "y": 0.4769
       }
     },
     {
@@ -1056,9 +1054,8 @@
       "blurb": "Tourist shops, charm vendors, readings, and curiosities.",
       "pin": {
         "map": "ember-court",
-        "x": 0.735,
-        "y": 0.557,
-        "approx": true
+        "x": 0.7305,
+        "y": 0.5962
       }
     },
     {
@@ -1069,9 +1066,8 @@
       "blurb": "Behind the shops. Behind the doors. You didn't see this.",
       "pin": {
         "map": "ember-court",
-        "x": 0.747,
-        "y": 0.707,
-        "approx": true
+        "x": 0.7414,
+        "y": 0.7241
       }
     },
     {
@@ -1082,8 +1078,8 @@
       "blurb": "Cheaper charms. Quick curses. Locals first. Questions later.",
       "pin": {
         "map": "ember-court",
-        "x": 0.2836,
-        "y": 0.3226
+        "x": 0.2557,
+        "y": 0.3438
       }
     },
     {
@@ -1094,8 +1090,8 @@
       "blurb": "Connection to Low Halo.",
       "pin": {
         "map": "ember-court",
-        "x": 0.1601,
-        "y": 0.3531
+        "x": 0.0928,
+        "y": 0.2637
       }
     },
     {
@@ -1106,8 +1102,8 @@
       "blurb": "Remedies priced upfront. Problems assessed individually.",
       "pin": {
         "map": "ember-court",
-        "x": 0.2505,
-        "y": 0.4244
+        "x": 0.2067,
+        "y": 0.4204
       }
     },
     {
@@ -1118,9 +1114,8 @@
       "blurb": "Death work, undertakers, spirit mediation, and funerary services.",
       "pin": {
         "map": "ember-court",
-        "x": 0.476,
-        "y": 0.398,
-        "approx": true
+        "x": 0.4733,
+        "y": 0.4238
       }
     },
     {
@@ -1131,8 +1126,8 @@
       "blurb": "Family houses. Private courtyards. Mind your step.",
       "pin": {
         "map": "ember-court",
-        "x": 0.4825,
-        "y": 0.5041
+        "x": 0.4361,
+        "y": 0.5091
       }
     },
     {
@@ -1143,8 +1138,8 @@
       "blurb": "Noodles so good, your soul stays.",
       "pin": {
         "map": "ember-court",
-        "x": 0.2035,
-        "y": 0.556
+        "x": 0.1863,
+        "y": 0.5466
       }
     },
     {
@@ -1155,8 +1150,8 @@
       "blurb": "Pawn-magic. Cheap deals. Buyer beware.",
       "pin": {
         "map": "ember-court",
-        "x": 0.2446,
-        "y": 0.6323
+        "x": 0.2082,
+        "y": 0.6031
       }
     },
     {
@@ -1167,8 +1162,8 @@
       "blurb": "Candles. Matches. Charms. And back doors.",
       "pin": {
         "map": "ember-court",
-        "x": 0.2653,
-        "y": 0.709
+        "x": 0.2411,
+        "y": 0.6658
       }
     },
     {
@@ -1179,8 +1174,8 @@
       "blurb": "The flame has never burned out.",
       "pin": {
         "map": "ember-court",
-        "x": 0.4767,
-        "y": 0.6848
+        "x": 0.4967,
+        "y": 0.6197
       }
     },
     {
@@ -1191,8 +1186,8 @@
       "blurb": "Soup. Scalding. Survival.",
       "pin": {
         "map": "ember-court",
-        "x": 0.4387,
-        "y": 0.7478
+        "x": 0.4397,
+        "y": 0.7293
       }
     },
     {
@@ -1203,8 +1198,8 @@
       "blurb": "Whispers. Endings. Apologies. Maybe forgiven, maybe not.",
       "pin": {
         "map": "ember-court",
-        "x": 0.4579,
-        "y": 0.8072
+        "x": 0.4397,
+        "y": 0.7789
       }
     },
     {
@@ -1215,22 +1210,22 @@
       "blurb": "Up or down. People leave candles for what went wrong.",
       "pin": {
         "map": "ember-court",
-        "x": 0.2495,
-        "y": 0.7795
+        "x": 0.2126,
+        "y": 0.7502
       }
     },
     {
       "id": "ember-court--widows-bridge",
       "district": "ember-court",
-      "name": "Widow's Bridge",
+      "name": "Cinderwick Bridge",
       "type": "landmark",
       "blurb": "Main south crossing.",
       "pin": {
         "map": "ember-court",
-        "x": 0.412,
-        "y": 0.877,
-        "approx": true
-      }
+        "x": 0.5004,
+        "y": 0.8921
+      },
+      "formerly": "Widow's Bridge"
     },
     {
       "id": "ember-court--cinderwick-lane",
@@ -1240,8 +1235,8 @@
       "blurb": "Main spine of Ember Court. Everything has a price.",
       "pin": {
         "map": "ember-court",
-        "x": 0.4216,
-        "y": 0.3198
+        "x": 0.504,
+        "y": 0.322
       }
     },
     {
@@ -1576,7 +1571,7 @@
       ],
       "note": "Not a syndicate. Not a faction office. Not a legal transport service. It is a shop. If you need a way out, ask quietly.",
       "entrance": "The depot: repurposed service depot between Three Wires and the Tangle",
-      "pinNote": "The depot between Three Wires and the Tangle. Pin is approximate until Eko marks the door."
+      "pinNote": "Somewhere between Three Wires and the Tangle. The map doesn't say where. Neither will we."
     },
     {
       "id": "low-halo--sideways-shops-sewer-door",
@@ -1957,6 +1952,21 @@
         "x": 0.5078,
         "y": 0.7764
       }
+    },
+    {
+      "id": "low-halo--sideways-tourist-booth",
+      "district": "low-halo",
+      "name": "Sideways Tourist Booth",
+      "type": "shop",
+      "brand": "sideways-shops",
+      "blurb": "A booth on the main strip, somewhere between the Second Cup and the Last Byte. Maps, race guides, traveler tips, and questionable advice for the extra-dimensional traveler.",
+      "pin": {
+        "map": "low-halo",
+        "x": 0.29,
+        "y": 0.53,
+        "approx": true
+      },
+      "note": "The booth is easy to find. The shop is not. That's on purpose."
     }
   ],
   "routes": [
@@ -2019,7 +2029,7 @@
       "b": "old-city",
       "walk": 20,
       "tram": null,
-      "via": "downhill past Widow's Bridge",
+      "via": "downhill over Cinderwick Bridge",
       "estimate": true
     },
     {
