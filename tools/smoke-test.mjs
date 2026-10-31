@@ -91,6 +91,7 @@ try {
     f = await open('guidesBtn', 1200);
     await step('Guides shows 11 races', async () => { const n = await f.evaluate(() => document.querySelectorAll('.card').length); return n === 11 || `found ${n}`; });
     await step('Guide keeps Sideways commentary and rules apart', async () => { await f.evaluate(() => document.querySelector('[data-race="Goblin"]').click()); return f.evaluate(() => !!document.querySelector('#detail .sideways') && /From the rulebook/i.test(document.querySelector('#detail .rules').innerText) && !document.querySelector('#detail .sideways').innerText.includes('Reflex')); });
+    await step('every race has card art, Fairy included', async () => { const n = await f.$$eval('.card img', x => x.filter(i => i.complete && i.naturalWidth > 0).length); return n === 11 || `${n} of 11 cards loaded`; });
     await step('Guides opens a race entry', async () => { await f.evaluate(() => document.querySelector('[data-race="Fairy"]').click()); return /Fae Reading/.test(await f.evaluate(() => document.getElementById('detail').innerText)); });
 
     // City: 28 atlas pins, and a pin opens its dossier.
@@ -201,7 +202,8 @@ try {
       await page.evaluate(() => document.getElementById('radioBtn').click()); await page.waitForTimeout(1500); f = frame(page);
       const dj = await f.evaluate(() => document.querySelector('.onair h2').textContent), link = await f.evaluate(() => document.querySelector('a.listen').href);
       const segs = await f.$$eval('.seg', x => x.length), w = await f.evaluate(() => document.documentElement.scrollWidth - innerWidth);
-      return (['Smokier', 'DJ Sludge', 'DJ Stormbird'].includes(dj) && /goblinnib/.test(link) && segs >= 10 && w <= 1) || `${dj}, ${link}, ${segs} segments, ${w}px too wide`;
+      const pic = await f.evaluate(() => { const i = document.querySelector('.djpic'); return !!i && i.complete && i.naturalWidth > 0; });
+      return (pic && ['Smokier', 'DJ Sludge', 'DJ Stormbird'].includes(dj) && /goblinnib/.test(link) && segs >= 10 && w <= 1) || `${dj}, ${link}, ${segs} segments, ${w}px too wide`;
     });
     // Mixed Heritage (Ch. 15) and Afflictions (Ch. 20) in Character Setup and on the sheet.
     await step('Mixed Heritage and Affliction rules hold in Character Setup', async () => {

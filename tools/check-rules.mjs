@@ -203,9 +203,14 @@ for (const j of RADIO.support.jobs) if (!Object.values(rules.skillKeys).includes
 if (RADIO.support.pay[0] < 100 || RADIO.support.pay[1] > 300) bad('radio.support.pay', "outside the rulebook's 100-300");
 
 // --- Pulse's art pack (art/pda-v1/imports) and the corporations it illustrates ---------------
-const ART = load('art/pda-v1/imports/manifest.json'), CORPS = load('data/corporations.json');
+const RADIO_ = load('data/radio.json'), ART = load('art/pda-v1/imports/manifest.json'), CORPS = load('data/corporations.json');
 for (const it of ART.items) for (const k of ['poster', 'card', 'sheet']) if (it[k] && !existsSync(new URL('../art/pda-v1/imports/' + it[k], import.meta.url))) bad(`art.${it.slug}.${k}`, `${it[k]} is missing`);
 const artSlugs = new Set(ART.items.map(i => i.slug));
+const SPRINT = load('art/pda-v1/imports/manifest-sprint-01.json');
+for (const it of SPRINT.assets) if (!existsSync(new URL('../art/pda-v1/imports/' + it.file, import.meta.url))) bad(`art.sprint01.${it.id}`, `${it.file} is missing`);
+const GUIDE = load('data/guides/races.json');
+for (const [name, g] of Object.entries(GUIDE.races)) if (!g.card) bad(`guides.races.${name}`, 'no card art'); else if (!existsSync(new URL('../' + g.card, import.meta.url))) bad(`guides.races.${name}`, `${g.card} is missing`);
+for (const sl of RADIO_.slots || []) if (sl.portrait && !existsSync(new URL('../' + sl.portrait, import.meta.url))) bad(`radio.slots.${sl.id}`, `${sl.portrait} is missing`);
 for (const c of CORPS.corporations) { if (c.art && !artSlugs.has(c.art)) bad(`corporations.${c.id}`, `no art called ${c.art}`); for (const k of c.campaigns || []) if (k.art && !artSlugs.has(k.art)) bad(`corporations.${c.id}.campaigns`, `no art called ${k.art}`); }
 if (CORPS.corporations.length !== 5) bad('corporations', 'the World Anvil names five corporations');
 

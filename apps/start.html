@@ -11,7 +11,7 @@
 /* Start: the dashboard from art/pda-v1/mockups/start-vision.png. Every card opens a section of the PDA. */
 .wrap{max-width:1180px}
 .hero{position:relative;display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,1fr);gap:20px;min-height:330px;padding:clamp(22px,4vw,42px);border:3px solid var(--art-brass-shadow);border-radius:16px;overflow:hidden;
-  background:linear-gradient(90deg,rgba(10,11,22,.96) 0%,rgba(10,11,22,.82) 42%,rgba(10,11,22,.15) 100%),url("../maps/adyta-city-map.jpg") center/cover;box-shadow:inset 0 0 0 1px rgba(220,180,117,.25),0 12px 30px rgba(0,0,0,.55)}
+  background:linear-gradient(90deg,rgba(10,11,22,.96) 0%,rgba(10,11,22,.82) 42%,rgba(10,11,22,.15) 100%),url("../art/pda-v1/imports/start/city-hero-DRAFT-trimmed.webp") center 40%/cover,url("../maps/adyta-city-map.jpg") center/cover;box-shadow:inset 0 0 0 1px rgba(220,180,117,.25),0 12px 30px rgba(0,0,0,.55)}
 .hero::after{content:"";position:absolute;inset:8px;border:1px solid rgba(215,172,97,.35);border-radius:10px;pointer-events:none}
 .hero .kick{color:var(--art-cyan);font:700 14px var(--art-ui);letter-spacing:.14em;text-transform:uppercase}
 .hero h1{margin:6px 0 10px;font-size:clamp(46px,7vw,84px);line-height:.92;transform:rotate(-2deg);transform-origin:left}
@@ -126,7 +126,7 @@ function render() {
   // Artifacts: your work, else your class's makes
   let art = [];
   if (named) { art = ((s.make && s.make.artifacts) || []).filter(a => a.status === 'active' && !a.delivery).slice(0, 2).map(a => a.name); if (!art.length) art = MK.recipesFor(D.make, s.character.class).slice(0, 3).map(r => r.name); }
-  h += `<article class="card" style="--c:#22dae4"><h2>${icon('artifacts')}Featured Artifacts</h2><p>${named && art.length ? `${esc(art.join(' · '))}.` : 'Notable items, tech, and other curiosities.'} Strange things change hands in Adyta.</p><button class="go" data-nav="makeBtn">Your workshop <b>›</b></button></article></div>`;
+  h += `<article class="card" style="--c:#22dae4;--img:url('../art/pda-v1/imports/start/featured-artifacts-1600x900.webp')"><h2>${icon('artifacts')}Featured Artifacts</h2><p>${named && art.length ? `${esc(art.join(' · '))}.` : 'Notable items, tech, and other curiosities.'} Strange things change hands in Adyta.</p><button class="go" data-nav="makeBtn">Your workshop <b>›</b></button></article></div>`;
   // Sideways Shops
   h += `<section class="shops"><img src="../art/pda-v1/assets/sideways-sigil.svg" alt=""><div><h2>Sideways Shops</h2><p>Guides, maps, and questionable advice for the extra-dimensional traveler.</p><div class="actions"><button class="primary" data-go="three-wires--sideways-shops">Find the shop</button><button data-nav="guidesBtn">Race guides</button></div></div>
     <ul aria-label="Sideways carries"><li>Race Guides</li><li>District Maps</li><li>Traveler Tips</li><li>Unofficial Lore</li></ul></section>

@@ -7,7 +7,21 @@
     "runBy": "Smokier (goblin) and Mercury (troll), with friends who bounce the signal for them.",
     "listenUrl": "https://goblinnib.com",
     "listenLabel": "Listen live on GoblinNib",
-    "listenNote": "All music on Radio Sewers is made by the players."
+    "listenNote": "All music on Radio Sewers is made by the players.",
+    "crew": [
+      {
+        "name": "Smokier",
+        "who": "Goblin. Co-runs the station. Missing.",
+        "portrait": "art/pda-v1/imports/radio-sewers/smokier-concept.webp",
+        "archive": true
+      },
+      {
+        "name": "Mercury",
+        "who": "Troll. Co-runs the station.",
+        "portrait": "art/pda-v1/imports/radio-sewers/mercury-concept.webp"
+      }
+    ],
+    "portraitNote": "DJ portraits are concept art (art sprint 01), pending review."
   },
   "standingTerritory": "sewers",
   "standingNote": "Sewers Community Standing is tracked here as your Standing in The Sewers.",
@@ -20,7 +34,8 @@
       "show": "Morning Tunes & News",
       "who": "Goblin. Co-runs the station. Currently missing.",
       "mia": true,
-      "archive": "Smokier is MIA. The morning slot runs from the archives."
+      "archive": "Smokier is MIA. The morning slot runs from the archives.",
+      "portrait": "art/pda-v1/imports/radio-sewers/smokier-concept.webp"
     },
     {
       "id": "sludge",
@@ -28,7 +43,8 @@
       "to": 18,
       "dj": "DJ Sludge",
       "show": "Afternoon Tunes & Fun",
-      "who": "Everyone's coolest uncle and latest guide to the best sewer songs."
+      "who": "Everyone's coolest uncle and latest guide to the best sewer songs.",
+      "portrait": "art/pda-v1/imports/radio-sewers/dj-sludge-concept.webp"
     },
     {
       "id": "stormbird",
@@ -36,7 +52,8 @@
       "to": 6,
       "dj": "DJ Stormbird",
       "show": "Nights",
-      "who": "Silky smoothness to get you through the hardest nights. Satisfaction guaranteed."
+      "who": "Silky smoothness to get you through the hardest nights. Satisfaction guaranteed.",
+      "portrait": "art/pda-v1/imports/radio-sewers/dj-stormbird-concept.webp"
     }
   ],
   "lines": {
