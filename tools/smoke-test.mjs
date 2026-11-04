@@ -109,7 +109,7 @@ try {
     const kitted = () => f.evaluate(() => document.body.classList.contains('pda-art') && !document.getElementById('occultCaseboardSkin'));
     const fits = async () => { const w = await f.evaluate(() => document.documentElement.scrollWidth - innerWidth); return w <= 1 || `${w}px too wide`; };
     await step('Character Setup uses the Sideways skin and fits', async () => (await kitted()) ? fits() : 'unskinned');
-    await step('Character Setup is labelled for rules v1.47', async () => /v1\.47/.test(await f.evaluate(() => document.querySelector('.head').textContent)));
+    await step('Character Setup is labelled for rules v1.52', async () => /v1\.52/.test(await f.evaluate(() => document.querySelector('.head').textContent)));
     f = await open('charHubBtn', 1200);
     await step('Character Hub uses the Sideways skin and fits', async () => (await kitted()) ? fits() : 'unskinned');
     f = await open('sheetBtn', 1800);

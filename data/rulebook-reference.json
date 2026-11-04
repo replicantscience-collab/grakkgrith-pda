@@ -1,6 +1,6 @@
 {
   "_about": "Checkable facts copied from the GRAKKGRITH First Edition rulebook. tools/check-rules.mjs compares data/rules.json against this. When the rulebook changes, update this file first; the check will then show exactly what rules.json still needs.",
-  "rulebook": "First Edition v1.47",
+  "rulebook": "First Edition v1.52",
   "races": {
     "Goblin": {
       "mods": {
@@ -9,7 +9,8 @@
         "root": 1
       },
       "resistance": [
-        "Chemical"
+        "Chemical",
+        "Disease"
       ],
       "vulnerability": []
     },
@@ -363,5 +364,15 @@
       "min": 6,
       "max": 8
     }
+  ],
+  "nonDamageResistances": [
+    "Disease"
+  ],
+  "reacts": [
+    "Dodge",
+    "Block",
+    "Return Fire",
+    "Riposte",
+    "Interrupt"
   ]
 }

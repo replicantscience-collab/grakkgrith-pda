@@ -4,21 +4,71 @@
   "artBase": "art/pda-v1/imports/",
   "artStatus": "Concept art, pending Nib's review",
   "corporations": [
-    { "id": "crownline", "name": "Crownline Infrastructure", "role": "Utilities, permits, compliance, urban systems, and access to stability.",
+    {
+      "id": "crownline",
+      "name": "Crownline Infrastructure",
+      "role": "Utilities, permits, compliance, urban systems, and access to stability.",
       "about": "Runs the power, water, transit-grid support, smart meters, elevators and building certifications. Decides what counts as safe, legal, connected and worth maintaining. Its language avoids describing harm: shutoffs become temporary utility limitations.",
-      "art": "crownline", "claim": "Stability through access control.",
-      "campaigns": [ { "art": "new-halo", "name": "New Halo", "note": "A Crownline initiative: the residential development campaign for New Halo.", "claim": "Welcome to New Halo." } ] },
-    { "id": "bastion", "name": "Bastion Dynamics", "role": "Private security, corporate enforcement, and controlled force.",
+      "art": "crownline",
+      "claim": "Stability through access control.",
+      "campaigns": [
+        {
+          "art": "new-halo",
+          "name": "New Halo",
+          "note": "A Crownline initiative: the residential development campaign for New Halo.",
+          "claim": "Welcome to New Halo."
+        }
+      ],
+      "leader": {
+        "name": "Martin E. Caldwell",
+        "what": "Human CEO, 61. Rose through compliance and regulatory planning, not engineering. Approved the standards that let the Winter Grid Cut happen without any executive appearing to decide it.",
+        "doctrine": null,
+        "inPlay": "Annual reports, hearings, ribbon-cuttings, policy approvals. He can truthfully say he never ordered the harm in question."
+      }
+    },
+    {
+      "id": "bastion",
+      "name": "Bastion Dynamics",
+      "role": "Private security, corporate enforcement, and controlled force.",
       "about": "Adyta's largest security contractor. It doesn't set policy; it's hired to enforce decisions made elsewhere. Crownline writes the notice; Bastion makes it physical. Not the ACW, legally, even when both arrive with shields.",
-      "art": "bastion-dynamics", "claim": "We secure Adyta." },
-    { "id": "helix", "name": "Helix Systems", "role": "Cybernetics, biotechnology, experimental medicine, and personal data.",
+      "art": "bastion-dynamics",
+      "claim": "We secure Adyta.",
+      "leader": {
+        "name": "Seren Vale",
+        "what": "Elven CEO, 278, CEO since 1986. Turned Bastion into Adyta's most respectable enforcement institution: training standards, force thresholds, evidence retention.",
+        "doctrine": null,
+        "inPlay": "Contract language, deployment approvals, internal reviews. She expects to outlast the room."
+      }
+    },
+    {
+      "id": "helix",
+      "name": "Helix Systems",
+      "role": "Cybernetics, biotechnology, experimental medicine, and personal data.",
       "about": "Implants, prosthetics, neural interfaces and treatment you can't get anywhere else, with maintenance, monitoring and licensing attached. Its interest in you doesn't end when your treatment does.",
-      "art": null },
-    { "id": "meridian", "name": "Meridian Logistics", "role": "Shipping, freight, transport infrastructure, and supply movement.",
+      "art": null
+    },
+    {
+      "id": "meridian",
+      "name": "Meridian Logistics",
+      "role": "Shipping, freight, transport infrastructure, and supply movement.",
       "about": "Profits from movement, whatever the cargo: relief supplies, eviction equipment, stolen machinery. Often partners with Crownline, but answers to its own contracts.",
-      "art": null },
-    { "id": "velvet", "name": "Velvet Signal", "role": "Media, advertising, platform control, reputation management, and narrative suppression.",
+      "art": null
+    },
+    {
+      "id": "velvet",
+      "name": "Velvet Signal",
+      "role": "Media, advertising, platform control, reputation management, and narrative suppression.",
       "about": "Sanitizes what the other corporations do. Owns the platforms most of the city reads, watches and works through, Pocket Change included.",
-      "art": "velvet-signal", "claim": "Trust the story that protects you." }
-  ]
+      "art": "velvet-signal",
+      "claim": "Trust the story that protects you.",
+      "leader": {
+        "name": "Celeste Vey",
+        "what": "Human CEO, about 44. Advertising creative, media and platform strategy. Absorbs threats instead of erasing them: verification, resources, reach, and the compromise that comes with it.",
+        "doctrine": "Attention is the first form of power.",
+        "inPlay": "Creator contracts, media panels, platform-policy decisions, and offers too good to turn down. With Nib, her strongest move is a genuinely excellent contract."
+      }
+    }
+  ],
+  "leadersSource": "First Edition v1.52, Chapter One (corporate leadership). Full canon lives in each character's Reference.",
+  "leadersLine": "Caldwell makes harm procedural. Vale makes harm professional. Vey makes the preferred version of harm easier to want and easier to remember."
 }

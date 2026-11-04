@@ -1,7 +1,7 @@
 {
   "schema": "grakkgrith-rules",
   "schemaVersion": 1,
-  "rulebook": "First Edition v1.47",
+  "rulebook": "First Edition v1.52",
   "attributes": [
     {
       "id": "muscle",
@@ -259,8 +259,9 @@
       "passive": "In any district you have spent a week or more in, you instinctively know unofficial routes, which buildings have unlocked service doors, and where enforcement crews patrol.",
       "active": "Goblin Routes: Once per scene, move through unofficial paths, bypassing a single obstacle entirely. The GM cannot declare ‘there’s nothing useful here’ while this is active. Additionally, you can move through spaces too small for medium creatures and enemies take -1 die to hit you in close quarters.",
       "standing": "Low by default. Profiled by ACW. Turned away from corporate spaces. Treated as criminal until proven otherwise. High standing in Commons spaces.",
-      "resistance": "Chemical",
-      "vulnerability": "None"
+      "resistance": "Chemical, Disease",
+      "vulnerability": "None",
+      "resistanceNote": "Disease resistance is biological, not mechanical immunity. Its scale is set in a later pass. Resistance is not immunity."
     },
     "Kobold": {
       "summary": "Smaller even than goblins — two to three feet, wiry and lithe — and built for the spaces between things. Cold-blooded, communal, and quiet, kobolds are Adyta’s subterranean labor caste: the crews that crawl the ducts, work the service levels, and keep the working guts of the city running for people who never see them do it. A single kobold is unremarkable and slow. A kobold crew is a swarm of competence that can strip and rebuild a system before anyone upstairs notices it stopped. The corps tolerate them in places they would turn a goblin away from, because kobolds read as labor, not threat. That tolerance is the trap — they are paid least, worked hardest, and seen by no one. They are the most at home of anyone below the surface, and even they do not go past the Deep Tunnels.",
@@ -1899,7 +1900,7 @@
     }
   },
   "mixedHeritage": {
-    "_source": "First Edition v1.47, Chapter Fifteen",
+    "_source": "First Edition v1.52, Chapter Fifteen",
     "summary": "Optional, with GM approval. One body, one primary rules package, one inherited echo, and twice as many ways for the city to misread you. The Primary Species gives the full package; the Secondary Heritage gives one Heritage Mark and a required Social Complication, and no stats, abilities, resistances, or vulnerabilities.",
     "mortal": [
       "Goblin",
@@ -2244,7 +2245,7 @@
     "subclassRule": "Primary Species unlocks racial subclasses. With GM approval, and an Origin and Life that back it, you may take your Secondary Heritage's racial subclass eligibility instead. Never both."
   },
   "afflictions": {
-    "_source": "First Edition v1.47, Chapter Twenty (framework pitched by Ekois). Beastkin is a draft, not yet in the rulebook.",
+    "_source": "First Edition v1.52, Chapter Twenty (framework pitched by Ekois). Beastkin is a draft, not yet in the rulebook.",
     "summary": "Class answers \"what do you do?\" An Affliction answers \"what has the Hidden Layer done to you?\" It is not a species and not a profession: something that happened to an already-mortal person. Every Affliction has a Passive, an Active, a Compulsion, a Weakness, and an Evolution. Stage advancement is a GM-adjudicated story event, never a Mark spend.",
     "stages": [
       "Dormant",
@@ -2465,5 +2466,35 @@
         ]
       }
     }
+  },
+  "reacts": {
+    "_source": "First Edition v1.52, Chapter Five: Reacts in Combat",
+    "rule": "Your React is your once-per-round answer to something happening to you.",
+    "list": [
+      {
+        "name": "Dodge",
+        "text": "Declare before the attack roll: +1 Defense against that one incoming attack."
+      },
+      {
+        "name": "Block",
+        "text": "Declare after a Hit, holding a suitable item or shield: reduce final wound steps by 1."
+      },
+      {
+        "name": "Return Fire",
+        "text": "After an enemy ranged attack against you resolves, make an immediate Light or Standard ranged attack against them."
+      },
+      {
+        "name": "Riposte",
+        "text": "After an enemy melee attack against you resolves, make an immediate Light or Standard melee attack against them."
+      },
+      {
+        "name": "Interrupt",
+        "text": "Contest an enemy action with a relevant opposed pool; on success, their action is delayed or disrupted."
+      }
+    ],
+    "notes": [
+      "Return Fire and Riposte exclude Heavy weapons, and cost your React like anything else.",
+      "Heavy armor (-2 dice Motion penalty) prevents the Dodge React entirely."
+    ]
   }
 }

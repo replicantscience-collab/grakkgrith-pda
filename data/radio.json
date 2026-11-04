@@ -79,7 +79,10 @@
     "Heard a Bastion van's been parked in {district} two days with nobody in it.",
     "Free soup in {district} tonight if you bring a bowl and don't ask whose soup it is.",
     "Somebody in {district} left chalk marks on every third door. Shades, call in if you know what that means.",
-    "Pocket Change is paying weird in {district} this week. Read the fine print, then read it again."
+    "Pocket Change is paying weird in {district} this week. Read the fine print, then read it again.",
+    "Somebody's building in {district} started smelling like candy. If you smell it too, don't go looking. Call someone who burns things.",
+    "Sugar-picker crews are hiring spotters again. Watch your picker. Pull the second they stop moving.",
+    "Pink cough going around {district}. Clinics want Helix forms. The soup kitchens don't."
   ],
   "headsUp": {
     "minStanding": 3,

@@ -34,8 +34,11 @@ for (const [name, want] of Object.entries(ref.races)) {
 }
 for (const [name, det] of Object.entries(rules.raceDetails)) {
   for (const t of [...typeList(det.resistance), ...typeList(det.vulnerability)])
-    if (!ref.damageTypes.includes(t)) bad(`raceDetails.${name}`, `"${t}" is not a damage type`);
+    if (!ref.damageTypes.includes(t) && !(ref.nonDamageResistances || []).includes(t)) bad(`raceDetails.${name}`, `"${t}" is not a damage type`);
 }
+
+// --- Reacts (Chapter Five) ----------------------------------------------------
+if (JSON.stringify((rules.reacts?.list || []).map(x => x.name)) !== JSON.stringify(ref.reacts)) bad('reacts', `are [${(rules.reacts?.list || []).map(x => x.name)}], rulebook says [${ref.reacts}]`);
 
 // --- Classes and subclasses --------------------------------------------------
 for (const [cls, want] of Object.entries(ref.classes)) {
