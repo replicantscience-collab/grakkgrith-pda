@@ -446,7 +446,7 @@ if($('removeShopIconBtn')) $('removeShopIconBtn').addEventListener('click',()=>{
 $('clearSlotBtn').addEventListener('click',()=>{ if(!confirm('Throw/delete selected slot? This does not export it first.')) return; state.inventory[selected]=EMPTY_ITEM(); if(state.equipment.active===selected) state.equipment.active=null; if(state.equipment.secondary===selected) state.equipment.secondary=null; if(state.equipment.ammoSource===selected) state.equipment.ammoSource=null; if(state.equipment.armor===selected) state.equipment.armor=null; if(state.equipment.back===selected) state.equipment.back=null; loadEditor(); renderGrid(); scheduleSave(); });
 /* v37 removed obsolete duplicate: toggleEquip */
 $('setActiveBtn').addEventListener('click',()=>toggleEquip('active',selected)); $('setSecondaryBtn').addEventListener('click',()=>toggleEquip('secondary',selected)); $('setAmmoSourceBtn').addEventListener('click',()=>{ const item=getCurrentItem(); if(!isAmmoClass(item)&&!confirm('Selected item is not class AMMO. Set as Ammo Source anyway?')) return; toggleEquip('ammoSource',selected); }); if($('setArmorBtn')) $('setArmorBtn').addEventListener('click',()=>{ const item=getCurrentItem(); if(!isArmorClass(item)&&!confirm('Selected item is not class ARMOR. Set as Armor anyway?')) return; toggleEquip('armor',selected); }); if($('setBackBtn')) $('setBackBtn').addEventListener('click',()=>{ const item=getCurrentItem(); if(!isBackClass(item)&&!confirm('Selected item is not class BACK/BAG/POUCH. Set as Back anyway?')) return; toggleEquip('back',selected); }); $('clearEquipBtn').addEventListener('click',()=>{ state.equipment={active:null,secondary:null,ammoSource:null,armor:null,back:null}; renderGrid(); renderEquipment(); updateComputed(); scheduleSave(); });
-$('fireBtn').addEventListener('click',()=>consumeWeaponAmmo(1,'Spend Ammo')); $('burstBtn').addEventListener('click',()=>finishAction('Jam cleared. This still costs the Action required by the fiction.')); $('autoBtn').addEventListener('click',()=>{}); $('reloadBtn').addEventListener('click',()=>reloadWeapon()); $('useBtn').addEventListener('click',()=>useConsumable());
+$('fireBtn').addEventListener('click',()=>playApply('SPEND AMMO','',()=>{const item=getCurrentItem(),c=counts(item);if(!isWeaponClass(item)||!itemAllows(item,'fire')||c.cur<1||c.max<=0)return false;setCur(item,c.cur-1);return (item.name||'Weapon')+' ammo '+c.cur+' → '+(c.cur-1)+'.';})); $('burstBtn').addEventListener('click',()=>finishAction('Jam cleared. This still costs the Action required by the fiction.')); $('autoBtn').addEventListener('click',()=>{}); $('reloadBtn').addEventListener('click',()=>playApply('RELOAD','Reloaded selected weapon.',()=>{ const item=getCurrentItem(); const source=state.inventory[normalizeEquipIndex(state.equipment.ammoSource)]; if(!isWeaponClass(item)||!itemAllows(item,'reload')||!source||!isAmmoClass(source)||!sameAmmoType(item,source)||counts(item).max<=counts(item).cur||counts(source).cur<1)return false; reloadWeapon(); return 'Reloaded '+item.name+'.'; })); $('useBtn').addEventListener('click',()=>useConsumable());
 document.querySelectorAll('[data-card-action]').forEach(ch=>ch.addEventListener('change',()=>{ if(!IS_SHOPS){ ch.checked=itemAllows(getCurrentItem(),ch.dataset.cardAction); return; } setItemAction(getCurrentItem(),ch.dataset.cardAction,ch.checked); updateActionPanel(); renderCard(false); scheduleSave(); }));
 document.querySelectorAll('[data-card-flag="noRefill"]').forEach(ch=>ch.addEventListener('change',()=>{ if(!IS_SHOPS){ ch.checked=itemNoRefill(getCurrentItem()); return; } getCurrentItem().noRefill=!!ch.checked; syncActionEditor(); updateActionPanel(); renderCard(false); scheduleSave(); }));
 function itemType(item){ return String(item&&item.class||'').trim().toUpperCase(); } function isWeaponClass(item){ return /WEAPON|GUN|FIREARM|BOW|CROSSBOW/.test(itemType(item)); } function isAmmoClass(item){ return /AMMO|AMMOBAG|AMMO PACK|AMMUNITION/.test(itemType(item)); } function isConsumableClass(item){ return /ITEM|CONSUMABLE|FOOD|DRINK|MED|MEDKIT|POTION|STIM|USABLE/.test(itemType(item)); }
@@ -718,17 +718,26 @@ function ensurePlayAutomationState(){ if(!state.playAutomation||typeof state.pla
 function playSnapshot(){ return {stats:deepCopy(state.stats),equipment:deepCopy(state.equipment),inventory:deepCopy(state.inventory),combatFlags:deepCopy(state.combatFlags||{})}; }
 function restorePlaySnapshot(snap){ if(!snap)return; state.stats=deepCopy(snap.stats||state.stats); state.equipment=deepCopy(snap.equipment||state.equipment); state.inventory=deepCopy(snap.inventory||state.inventory); state.combatFlags=deepCopy(snap.combatFlags||state.combatFlags||{}); selected=clampInt(state.selected,0,SLOT_COUNT-1); }
 function playTimeStamp(){ const d=new Date(); return d.toLocaleTimeString([], {hour:'2-digit', minute:'2-digit'}); }
-function recordPlayAutomation(label,detail,before){ ensurePlayAutomationState(); state.playAutomation.log.unshift({label,detail,time:playTimeStamp(),wound:state.stats.woundState,stress:state.stats.stress,heat:state.stats.heat}); state.playAutomation.log=state.playAutomation.log.slice(0,30); state.playAutomation.undo.unshift({label,before}); state.playAutomation.undo=state.playAutomation.undo.slice(0,8); renderPlayAutomation(); }
+function recordPlayAutomation(label,detail,before){ ensurePlayAutomationState(); state.playAutomation.log.unshift({label,detail,time:playTimeStamp(),wound:state.stats.woundState,stress:state.stats.stress,heat:state.stats.heat}); state.playAutomation.log=state.playAutomation.log.slice(0,30); const changes=actionChanges(before,playSnapshot()); const slots=[...new Set(changes.filter(c=>c.path[0]==='inventory').map(c=>c.path[1]))]; state.playAutomation.undo.unshift({label,changes,items:slots.map(slot=>({slot,after:deepCopy(state.inventory[slot])}))}); state.playAutomation.undo=state.playAutomation.undo.slice(0,8); renderPlayAutomation(); }
 function playRefreshAfterAction(){ updateMeters(); refreshBoundInputs(); renderGrid(); loadEditor(); updateComputed(); renderPlayAutomation(); if(window.__compactReady)compactUpdateSummaries(); scheduleSave(); }
-function playApply(label,detail,mutator){ ensurePlayAutomationState(); const before=playSnapshot(); const result=mutator(); if(result===false)return; recordPlayAutomation(label,result||detail,before); playRefreshAfterAction(); }
-function undoPlayAutomation(){ ensurePlayAutomationState(); const last=state.playAutomation.undo.shift(); if(!last){ alert('No automated action to undo.'); return; } restorePlaySnapshot(last.before); state.playAutomation.log.unshift({label:'UNDO',detail:'Reverted '+last.label+'.',time:playTimeStamp(),wound:state.stats.woundState,stress:state.stats.stress,heat:state.stats.heat}); state.playAutomation.log=state.playAutomation.log.slice(0,30); playRefreshAfterAction(); }
+function playApply(label,detail,mutator){ ensurePlayAutomationState(); const before=playSnapshot(); const result=mutator(); if(result===false)return; recordPlayAutomation(label,result||detail,before); playRefreshAfterAction(); saveNow(); actionReceipt(result||detail); }
+function undoPlayAutomation(){
+  ensurePlayAutomationState(); const last=state.playAutomation.undo[0];
+  if(!last){actionReceipt('No action to undo.');return;}
+  if(!last.changes){actionReceipt('This older action uses a full snapshot. Undo is unavailable to protect later edits.');return;}
+  if((last.items||[]).some(item=>JSON.stringify(state.inventory[item.slot])!==JSON.stringify(item.after))||last.changes.some(c=>JSON.stringify(actionValue(c.path))!==JSON.stringify(c.hadAfter?c.after:undefined))){actionReceipt('Cannot undo: an affected value changed later. Your edits have been kept.');return;}
+  for(const c of last.changes){const parent=c.path.slice(0,-1).reduce((v,k)=>v[k],state);const key=c.path.at(-1);if(c.hadBefore)parent[key]=deepCopy(c.before);else delete parent[key];}
+  state.playAutomation.undo.shift();setPendingPush(null);
+  state.playAutomation.log.unshift({label:'UNDO',detail:'Reverted '+last.label+'. Rolls remain in history.',time:playTimeStamp(),wound:state.stats.woundState,stress:state.stats.stress,heat:state.stats.heat});
+  state.playAutomation.log=state.playAutomation.log.slice(0,30);playRefreshAfterAction();saveNow();actionReceipt('Undid '+last.label+'. Rolls remain in history.');
+}
 function buildPlayAlerts(){ const level=toNum(state.character.level,1),wound=toNum(state.stats.woundState,0),stress=toNum(state.stats.stress,0),heat=toNum(state.stats.heat,0),sc=stressCap(level),hc=heatCap(level),alerts=[]; if(wound>=3)alerts.push({sev:'critical',text:'Critical: one Action per turn; medical attention is needed this scene or death clock starts.'}); else if(wound>=2)alerts.push({sev:'critical',text:'Wounded: -2 dice on all checks and must be treated before rest.'}); else if(wound>=1)alerts.push({sev:'attention',text:'Hurt: -1 die on physical checks.'}); if(stress>=6)alerts.push({sev:'critical',text:'Breakdown active: act on both Conditions; GM gains a scene complication.'}); else if(stress>=3)alerts.push({sev:'attention',text:'Condition threshold reached: pick or enforce a Condition.'}); if(stress>=sc)alerts.push({sev:'critical',text:'Stress is capped at '+sc+'. Further pressure should become consequences.'}); if(heat>=hc)alerts.push({sev:'critical',text:'Heat cap reached: institutional consequences are imminent.'}); else if(heat>=Math.max(4,hc-2))alerts.push({sev:'attention',text:'Heat is loud. Expect patrols, files, or faction attention.'}); const active=equippedItem('active'); if(active&&isWeaponClass(active)&&counts(active).max>0&&counts(active).cur===0)alerts.push({sev:'attention',text:'Active weapon is empty; reload or swap before firing.'}); const armor=equippedItem('armor'); if(armor){ const p=normalizeArmorProfile(armor); if(['ballistic','blade','impact','energy'].some(k=>toNum(p.current[k],0)<toNum(p.base[k],0)))alerts.push({sev:'attention',text:'Armor has degraded soak; repair during downtime or with fiction.'}); } if(!alerts.length)alerts.push({sev:'ok',text:'No immediate automation warnings.'}); return alerts; }
 function renderPlayAutomation(){ ensurePlayAutomationState(); const alerts=$('playAlertStrip'); if(alerts)alerts.innerHTML=buildPlayAlerts().map(a=>'<div class="playAlert '+(a.sev==='critical'?'critical':a.sev==='ok'?'ok':'')+'">'+escapeHtml(a.text)+'</div>').join(''); const log=$('playSessionLog'); if(log){ const entries=state.playAutomation.log||[]; log.innerHTML=entries.length?entries.map(e=>'<div class="playLogEntry"><strong>'+escapeHtml(e.label||'AUTO')+'</strong>: '+escapeHtml(e.detail||'')+'<small>'+escapeHtml(e.time||'')+' · '+woundName()+' · Stress '+escapeHtml(e.stress??state.stats.stress)+' · Heat '+escapeHtml(e.heat??state.stats.heat)+'</small></div>').join(''):'No automated actions yet.'; } const undo=$('undoPlayActionBtn'); if(undo)undo.disabled=!(state.playAutomation.undo&&state.playAutomation.undo.length); }
-function fireEquippedAutomation(which){ const idx=normalizeEquipIndex(state.equipment[which]); if(idx===null){ alert('No '+which+' weapon equipped.'); return false; } const old=selected; selected=idx; const item=getCurrentItem(); if(!isWeaponClass(item)){ selected=old; alert('Equipped '+which+' item is not a weapon.'); return false; } const c=counts(item); if(c.max<=0||c.cur<1){ selected=old; alert((item.name||'Weapon')+' has no loaded ammo.'); return false; } setCur(item,c.cur-1); selected=old; return (item.name||'Weapon')+' fired: loaded ammo '+c.cur+' → '+(c.cur-1)+'.'; }
+function fireEquippedAutomation(which){ const idx=normalizeEquipIndex(state.equipment[which]); if(idx===null){ alert('No '+which+' weapon equipped.'); return false; } const old=selected; selected=idx; const item=getCurrentItem(); if(!isWeaponClass(item)){ selected=old; alert('Equipped '+which+' item is not a weapon.'); return false; } const c=counts(item); if(!itemAllows(item,'fire')||c.max<=0||c.cur<1){ selected=old; alert((item.name||'Weapon')+' has no loaded ammo.'); return false; } setCur(item,c.cur-1); selected=old; return (item.name||'Weapon')+' fired: loaded ammo '+c.cur+' → '+(c.cur-1)+'.'; }
 function reloadEquippedAutomation(which){ const idx=normalizeEquipIndex(state.equipment[which]); if(idx===null){ alert('No '+which+' weapon equipped.'); return false; } const old=selected; selected=idx; const weapon=getCurrentItem(), ai=normalizeEquipIndex(state.equipment.ammoSource); if(!isWeaponClass(weapon)){ selected=old; alert('Equipped '+which+' item is not a weapon.'); return false; } if(ai===null){ selected=old; alert('No ammo source selected.'); return false; } const ammo=state.inventory[ai], wc=counts(weapon), ac=counts(ammo); if(!isAmmoClass(ammo)||!sameAmmoType(weapon,ammo)||wc.max<=0||wc.cur>=wc.max||ac.cur<=0){ selected=old; alert('Reload blocked: check ammo source, matching type, weapon capacity, and available ammo.'); return false; } const moved=Math.min(wc.max-wc.cur,ac.cur); setCur(weapon,wc.cur+moved); setCur(ammo,ac.cur-moved); const removed=removeIfNoRefillZero(ai); selected=old; return 'Reloaded '+(weapon.name||'weapon')+' with '+moved+' from '+(ammo.name||'ammo')+'.'+(removed?' Removed empty NO REFILL '+removed+'.':''); }
 function useSelectedAutomation(){ const item=getCurrentItem(), c=counts(item); if(isWeaponClass(item)||isAmmoClass(item)||!itemAllows(item,'use')||c.cur<1){ alert('Selected card cannot be used right now.'); return false; } const a=item.adds||[],recovery=Math.max(0,Math.floor(toNum(a[4],0))),relief=Math.max(0,Math.floor(toNum(a[5],0))),oldW=toNum(state.stats.woundState,0),oldS=toNum(state.stats.stress,0); state.stats.woundState=String(clampInt(oldW-recovery,0,3)); state.stats.stress=String(clampInt(oldS-relief,0,stressCap(state.character.level))); setCur(item,c.cur-1); const removed=removeIfNoRefillZero(selected); return 'Used '+(item.name||'selected item')+': -1 use, wound '+oldW+' → '+state.stats.woundState+', stress '+oldS+' → '+state.stats.stress+'.'+(removed?' Removed empty NO REFILL '+removed+'.':''); }
 function bindPlayAutomation(){ ensurePlayAutomationState(); const bind=(id,label,detail,fn)=>{const el=$(id); if(el)el.onclick=()=>playApply(label,detail,fn);}; bind('autoDamageBtn','TAKE HIT','Wound worsened by 1.',()=>{const before=toNum(state.stats.woundState,0); state.stats.woundState=String(clampInt(before+1,0,3)); return 'Wound '+before+' → '+state.stats.woundState+'.';}); bind('autoPatchBtn','PATCH WOUND','Wound improved by 1.',()=>{const before=toNum(state.stats.woundState,0); state.stats.woundState=String(clampInt(before-1,0,3)); return 'Wound '+before+' → '+state.stats.woundState+'.';}); bind('autoStressBtn','GAIN STRESS','Stress increased by 1.',()=>{const before=toNum(state.stats.stress,0); state.stats.stress=String(clampInt(before+1,0,stressCap(state.character.level))); return 'Stress '+before+' → '+state.stats.stress+'.';}); bind('autoCoolBtn','CLEAR STRESS','Stress reduced by 1.',()=>{const before=toNum(state.stats.stress,0); state.stats.stress=String(clampInt(before-1,0,stressCap(state.character.level))); return 'Stress '+before+' → '+state.stats.stress+'.';}); bind('autoHeatBtn','HEAT +1','Heat increased by 1.',()=>{const before=toNum(state.stats.heat,0); state.stats.heat=String(clampInt(before+1,0,heatCap(state.character.level))); return 'Heat '+before+' → '+state.stats.heat+'.';}); bind('autoFireActiveBtn','FIRE ACTIVE','Spent one active weapon ammo.',()=>fireEquippedAutomation('active')); bind('autoReloadActiveBtn','RELOAD ACTIVE','Reloaded active weapon from ammo source.',()=>reloadEquippedAutomation('active')); bind('autoUseItemBtn','USE ITEM','Used selected item.',useSelectedAutomation); bind('autoArmorBlockBtn','ARMOR BLOCK','Armor absorbed a full block.',()=>{const armor=equippedItem('armor'); if(!armor){alert('Equip armor first.');return false;} const family=$('armorBlockFamily')?.value||'ballistic', amount=Math.max(1,Math.floor(toNum($('armorBlockedAmount')?.value,1))), p=normalizeArmorProfile(armor), before=toNum(p.current[family],0), blocked=Math.min(before,amount); if(blocked<=0){alert('That armor family is already at 0.');return false;} p.current[family]=String(Math.max(0,before-blocked)); state.stats.stress=String(Math.min(stressCap(state.character.level),toNum(state.stats.stress,0)+1)); state.combatFlags=state.combatFlags||{}; state.combatFlags.grazeActive=true; return (armor.name||'Armor')+' blocked '+blocked+' '+family+'; soak '+before+' → '+p.current[family]+', +1 Stress, graze flag set.';}); bind('autoLogSceneBtn','SCENE BEAT','Marked a scene beat.',()=> 'Scene beat marked: '+woundName()+', Stress '+state.stats.stress+', Heat '+state.stats.heat+'.'); const undo=$('undoPlayActionBtn'); if(undo)undo.onclick=undoPlayAutomation; renderPlayAutomation(); }
-function useConsumable(){ const item=getCurrentItem(); if(isWeaponClass(item)||isAmmoClass(item)){alert('Use is for ITEM / CONSUMABLE only.');return;} if(!itemAllows(item,'use')){alert('This card does not allow USE. Set it on SHOPS page.');return;} const c=counts(item); if(c.cur<1){alert('No uses left.');return;} const a=item.adds||[], recovery=Math.max(0,Math.floor(toNum(a[4],0))), relief=Math.max(0,Math.floor(toNum(a[5],0))); state.stats.woundState=String(clampInt(toNum(state.stats.woundState,0)-recovery,0,3)); state.stats.stress=String(clampInt(toNum(state.stats.stress,0)-relief,0,stressCap(state.character.level))); setCur(item,c.cur-1); const removed=removeIfNoRefillZero(selected); finishAction('Used: -1. Wound recovery '+recovery+' step; Stress -'+relief+'.'+(removed?'\nNO REFILL: '+removed+' reached 0 and was removed.':'')); }
+function useConsumable(){ previewUse(); }
 function defenseFromReflex(reflex){ return 1+Math.floor(Math.max(1,toNum(reflex,1))/2); }
 function blankArmorProfile(){ return {base:{ballistic:'0',blade:'0',impact:'0',energy:'0'},current:{ballistic:'0',blade:'0',impact:'0',energy:'0'}}; }
 function armorNumber(v){ return String(Math.max(0,Math.floor(toNum(v,0)))); }
@@ -825,7 +834,7 @@ function conditionRollEffects(attr,context){
 }
 let pendingPush=null;
 function setPendingPush(handler){ pendingPush=typeof handler==='function'?handler:null; if(rollPushLastBtn) rollPushLastBtn.disabled=!pendingPush; }
-function consumePush(){ if(!pendingPush) return; const handler=pendingPush; setPendingPush(null); state.stats.stress=String(clampInt(toNum(state.stats.stress,0)+1,0,stressCap(state.character.level))); updateMeters(); updateComputed(); scheduleSave(); handler(rollDicePool(2)); }
+function consumePush(){ if(!pendingPush)return; if(toNum(state.stats.stress,0)>=stressCap(state.character.level)){actionReceipt('Stress is full. Resolve further pressure with the GM before pushing.');return;} const handler=pendingPush; playApply('PUSH','Added 2 dice and 1 Stress.',()=>{setPendingPush(null);state.stats.stress=String(toNum(state.stats.stress,0)+1);handler(rollDicePool(2));}); }
 function rollDicePool(n){ const out=[]; for(let i=0;i<n;i++) out.push(1+Math.floor(Math.random()*6)); return out; }
 function countSuccesses(dice){ return dice.reduce((sum,d)=>sum+(d>=5?1:0),0); }
 function titleCaseKey(k){ const map={muscle:'Muscle',reflex:'Reflex',wit:'Wit',savvy:'Savvy',spark:'Spark',root:'Root',brawl:'Brawl',melee:'Melee',ranged:'Ranged',dodge:'Dodge',dash:'Dash',cast:'Cast'}; return map[k]||SKILL_LABELS[k]||String(k||''); }
@@ -1407,8 +1416,109 @@ window.addEventListener('message',e=>{
  }
 });
 
+/* PLAYER ACTIONS: see docs/PLAYER_ACTIONS_HANDOFF.md before coordinating edits. */
+function actionChanges(before, after, path=[]) {
+  if (JSON.stringify(before)===JSON.stringify(after)) return [];
+  if (before && after && typeof before==='object' && typeof after==='object' && Array.isArray(before)===Array.isArray(after)) {
+    return [...new Set([...Object.keys(before),...Object.keys(after)])].flatMap(key=>actionChanges(before[key],after[key],[...path,key]));
+  }
+  return [{path,before:before===undefined?null:deepCopy(before),after:after===undefined?null:deepCopy(after),hadBefore:before!==undefined,hadAfter:after!==undefined}];
+}
+function actionValue(path) { return path.reduce((value,key)=>value?.[key],state); }
+function actionReceipt(message) { const el=$('playerActionReceipt'); if(el)el.textContent=message; }
+function actionPoolText(pool,attr,skill) {
+  return pool.total+' dice = '+titleCaseKey(attr)+' '+pool.attrVal+' + '+skill+' '+pool.skillValue+' + situation '+pool.situational+' + gear '+pool.extra+' + wounds '+pool.wound.mod+' + conditions '+pool.cond.mod+(pool.totalRaw!==pool.total?' (limited to 0–10)':'');
+}
+function actionPreview(title, describe, apply, allowModifier=false) {
+  const dialog=$('playerActionDialog');
+  $('playerActionTitle').textContent=title;
+  $('playerActionModifierField').hidden=!allowModifier;
+  $('playerActionModifier').value=rollModifier.value||'0';
+  const update=()=>{const preview=describe(toNum($('playerActionModifier').value,0)); $('playerActionDetails').textContent=preview.text; $('playerActionConfirm').disabled=!!preview.blocked;};
+  $('playerActionModifier').oninput=update;
+  $('playerActionConfirm').onclick=()=>{
+    const mod=toNum($('playerActionModifier').value,0),preview=describe(mod);
+    if(preview.blocked){update();return;}
+    dialog.close(); if(allowModifier)rollModifier.value=String(mod); apply(); renderPlayerNow();
+  };
+  update();dialog.showModal();$('playerActionCancel').focus();
+}
+function previewCheck() {
+  actionPreview(rollLabel.value||rollSkillName.value||'Skill check',mod=>{
+    const pool=buildPool(rollAttr.value,Math.min(3,Math.max(0,toNum(rollSkillValue.value,0))),rollContext.value,mod,0,rollSkillName.value);
+    return {text:actionPoolText(pool,rollAttr.value,rollSkillName.value)+'\nDifficulty '+rollDifficulty.value+'\n'+[...pool.wound.notes,...pool.cond.notes].join('\n')+'\nPush is optional after rolling: +2 dice, +1 Stress.'};
+  },()=>{performQuickRoll();compactOpenAndScroll('roll');actionReceipt('Rolled '+(rollSkillName.value||'check')+'. Result saved in roll history.');},true);
+}
+function prepareSkillAction(key) {
+  const entry=Object.values(window.GRAKK_RULES.skills).find(v=>v[1].some(name=>window.GRAKK_RULES.skillKeys[name]===key));
+  rollSkill.value=key;syncRollSkillSelection(true);
+  if(entry)rollAttr.value=String(entry[0]).toLowerCase();
+  rollContext.value=['muscle','reflex'].includes(rollAttr.value)?'physical':rollAttr.value==='savvy'?'social':'general';
+  rollLabel.value='';rollModifier.value='0';previewCheck();
+}
+function previewAttack(which) {
+  actionPreview('Attack · '+(equippedItem(which)?.name||'No weapon'),mod=>{
+    const item=equippedItem(which);if(!item||!isWeaponClass(item))return {text:'Equip a weapon first.',blocked:true};
+    const p=classifyAttackProfile(item),d=deriveCombat(),c=counts(item),spends=c.max>0;
+    const pool=buildPool(p.attr,toNum(d.skills[p.skill],0),p.attr==='savvy'?'social':'physical',mod,toNum(d.mods.atk,0),item.name);
+    const blocked=spends&&(!itemAllows(item,'fire')||c.cur<1);
+    return {blocked,text:actionPoolText(pool,p.attr,titleCaseKey(p.skill))+'\nTarget Defense '+rollTargetDefense.value+' · Soak '+rollTargetSoak.value+' · '+rollTargetTrait.value+'\n'+(spends?'Ammo: '+c.cur+' → '+Math.max(0,c.cur-1)+' (one round)':'No tracked ammo cost.')+'\n'+(blocked?'Cannot fire: empty or this card disallows firing. Reload or change equipment.':'Target settings can be edited in Dice Clatter before attacking.')+'\n'+[...pool.wound.notes,...pool.cond.notes].join('\n')};
+  },()=>{
+    playApply('ATTACK','',()=>{const item=equippedItem(which),c=counts(item);performAttackRoll(which);if(c.max>0)setCur(item,c.cur-1);return (item.name||'Weapon')+' attack rolled.'+(c.max>0?' Ammo '+c.cur+' → '+(c.cur-1)+'.':'');});
+    compactOpenAndScroll('roll');
+  },true);
+}
+function previewUse() {
+  const idx=selected;
+  actionPreview('Use · '+(getCurrentItem()?.name||'Selected item'),()=>{
+    const item=state.inventory[idx],c=counts(item),a=item.adds||[],w=toNum(state.stats.woundState,0),s=toNum(state.stats.stress,0);
+    return {blocked:selected!==idx||isWeaponClass(item)||isAmmoClass(item)||!itemAllows(item,'use')||c.cur<1,text:(item.name||'Item')+' · Uses '+c.cur+' → '+Math.max(0,c.cur-1)+'\nWounds '+w+' → '+Math.max(0,w-Math.max(0,Math.floor(toNum(a[4],0))))+'\nStress '+s+' → '+Math.max(0,s-Math.max(0,Math.floor(toNum(a[5],0))))+(itemNoRefill(item)&&c.cur===1?'\nThe empty card will be removed. Undo can restore it.':'')+(c.cur<1?'\nNo uses remain.':'')};
+  },()=>playApply('USE ITEM','',useSelectedAutomation));
+}
+function reloadAction(which) {
+  const item=equippedItem(which);
+  if(!item||!itemAllows(item,'reload')){actionReceipt('Equip a weapon with Reload enabled.');return;}
+  playApply('RELOAD','',()=>reloadEquippedAutomation(which));
+}
+function renderPlayerNow() {
+  const box=$('playerNowStatus');if(!box)return;
+  const weapon=equippedItem('active'),c=weapon?counts(weapon):null;
+  box.textContent=woundName()+' · Stress '+state.stats.stress+'/'+stressCap(state.character.level)+' · '+(weapon?weapon.name+(c.max>0?' · Ammo '+c.cur+'/'+c.max:''):'No active weapon');
+  $('playerNowAttack').disabled=!weapon||!isWeaponClass(weapon);
+  $('playerNowReload').disabled=!weapon||!itemAllows(weapon,'reload')||!c.max||c.cur>=c.max;
+  const item=getCurrentItem();$('playerNowUse').textContent='Use '+(item.name||'selected item');
+  $('playerNowUse').disabled=isWeaponClass(item)||isAmmoClass(item)||!itemAllows(item,'use')||counts(item).cur<1;
+  $('playerNowUndo').disabled=!state.playAutomation?.undo?.length;
+}
+function initPlayerActions() {
+  const style=document.createElement('style');style.textContent=`
+    .playerNow{border:1px solid #d7ac61;background:#0a0b16;padding:14px;margin:12px 0;color:#f7e8c9;border-radius:10px;min-width:0}
+    .playerNow h2{margin:0 0 8px;color:#d7ac61;font-size:20px}.playerNow p{line-height:1.5;overflow-wrap:anywhere}
+    .playerNowActions{display:flex;flex-wrap:wrap;gap:8px;margin:12px 0}
+    .playerNow button,.playerActionDialog button,.playerSkillRoll{min-height:44px;white-space:normal;overflow-wrap:anywhere}
+    .playerNowActions button{flex:1 1 135px;min-width:0}.playerNow button:focus-visible,.playerActionDialog :focus-visible,.playerSkillRoll:focus-visible{outline:3px solid #22dae4;outline-offset:3px}
+    .playerActionDialog{background:#0a0b16;color:#f7e8c9;border:2px solid #d7ac61;border-radius:12px;padding:20px;width:min(520px,calc(100vw - 32px));max-height:85vh;overflow:auto;box-sizing:border-box}
+    .playerActionDialog::backdrop{background:rgba(0,0,0,.75)}.playerActionDialog p{white-space:pre-line;line-height:1.6;overflow-wrap:anywhere}.playerActionDialog input{min-height:44px;width:100%;box-sizing:border-box}
+    .playerActionDialog [hidden]{display:none}.playerActionDialog h2{color:#d7ac61}.playerSkillRoll{margin-top:6px}
+  `;document.head.appendChild(style);
+  const box=document.createElement('section');box.className='playerNow';box.setAttribute('aria-label','Now');
+  box.innerHTML='<h2>Now</h2><p id="playerNowStatus"></p><div class="playerNowActions"><button id="playerNowRoll">Roll a skill</button><button id="playerNowAttack">Attack</button><button id="playerNowReload">Reload</button><button id="playerNowUse">Use selected item</button><button id="playerNowGear">Choose gear</button><button id="playerNowUndo">Undo last action</button></div><p id="playerActionReceipt" role="status" aria-live="polite">Pick an action. Check the details before you roll or use gear.</p>';
+  document.querySelector('.compactQuickBar').before(box);
+  const dialog=document.createElement('dialog');dialog.id='playerActionDialog';dialog.className='playerActionDialog';dialog.setAttribute('aria-labelledby','playerActionTitle');
+  dialog.innerHTML='<h2 id="playerActionTitle"></h2><label id="playerActionModifierField">Situational dice <input id="playerActionModifier" type="number" step="1"></label><p id="playerActionDetails"></p><div class="playerNowActions"><button id="playerActionCancel">Cancel</button><button id="playerActionConfirm">Confirm action</button></div>';
+  document.body.appendChild(dialog);$('playerActionCancel').onclick=()=>dialog.close();
+  $('playerNowRoll').onclick=()=>compactOpenAndScroll('skills');$('playerNowGear').onclick=()=>compactOpenAndScroll('inventory');
+  $('playerNowAttack').onclick=()=>previewAttack('active');$('playerNowReload').onclick=()=>reloadAction('active');$('playerNowUse').onclick=previewUse;$('playerNowUndo').onclick=undoPlayAutomation;
+  $('rollCheckBtn').onclick=previewCheck;$('rollActiveBtn').onclick=()=>previewAttack('active');$('rollSecondaryBtn').onclick=()=>previewAttack('secondary');
+  $('autoUseItemBtn').onclick=previewUse;$('autoReloadActiveBtn').onclick=()=>reloadAction('active');
+  $('autoFireActiveBtn').textContent='Spend ammo only';document.querySelectorAll('[data-compact-click="autoFireActiveBtn"]').forEach(b=>b.textContent='Spend ammo only');
+  document.querySelectorAll('[data-skill-rank]').forEach(input=>{const button=document.createElement('button');button.type='button';button.className='playerSkillRoll';button.textContent='Roll '+SKILL_LABELS[input.dataset.skillRank];button.onclick=()=>prepareSkillAction(input.dataset.skillRank);input.parentElement.appendChild(button);});
+  document.addEventListener('click',()=>queueMicrotask(renderPlayerNow));document.addEventListener('input',()=>queueMicrotask(renderPlayerNow));window.addEventListener('message',e=>{if(e.data?.type==='grakkgrith-load-state'){dialog.close();setPendingPush(null);}queueMicrotask(renderPlayerNow);});renderPlayerNow();
+}
+/* END PLAYER ACTIONS */
 function init(){ initMusicPlayer(); normalizeCoreRules(); ensurePlayAutomationState(); ensureMagicState(); ensureFoundationState(); bindInputs(); populateBuilderControls(); bindBuilderEvents(); populateFoundationControls(); bindFoundationEvents(); renderCityRelations(); if($('woundDownBtn')) $('woundDownBtn').onclick=()=>moveWound(1); if($('woundUpBtn')) $('woundUpBtn').onclick=()=>moveWound(-1); if($('stressDownBtn')) $('stressDownBtn').onclick=()=>moveStress(-1); if($('stressUpBtn')) $('stressUpBtn').onclick=()=>moveStress(1); createGrid(); loadEditor(); applyPageMode(); updateMeters(); updateComputed(); initRollConsole(); initMagicSystem(); renderRollHistory(); renderAttributeBuilder(); renderClassAbilityPanel(); initDowntime(); bindPlayAutomation(); compactBuildChrome(); saveNow(); }
 init();
+initPlayerActions();
 setTimeout(()=>{try{parent.postMessage({type:'grakkgrith-player-ready'},'*');}catch(_e){}},0);
 })();
 </script>
