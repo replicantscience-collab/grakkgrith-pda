@@ -217,6 +217,12 @@ for (const sl of RADIO_.slots || []) if (sl.portrait && !existsSync(new URL('../
 for (const c of CORPS.corporations) { if (c.art && !artSlugs.has(c.art)) bad(`corporations.${c.id}`, `no art called ${c.art}`); for (const k of c.campaigns || []) if (k.art && !artSlugs.has(k.art)) bad(`corporations.${c.id}.campaigns`, `no art called ${k.art}`); }
 if (CORPS.corporations.length !== 5) bad('corporations', 'the World Anvil names five corporations');
 
+// --- Job Board (data/jobs.json): the rulebook's Chapter Eighteen jobs, Chapter Nine tables ---
+const JOBS = load('data/jobs.json');
+if (JSON.stringify(JOBS.jobs.map(j => j.title)) !== JSON.stringify(ref.jobs)) bad('jobs', `job list doesn't match the rulebook's Chapter Eighteen`);
+for (const [tier, die] of [['known', 6], ['emerging', 8], ['twist', 6]]) if (JOBS.complications[tier].list.length !== die) bad(`jobs.complications.${tier}`, `needs ${die} entries for a d${die}`);
+for (const j of JOBS.jobs) { if (![1, 2, 3].includes(j.baseHeat)) bad(`jobs.${j.id}`, 'base Heat must be 1-3 (rulebook guidance)'); if (j.payKind === 'credits' && !(j.pay && j.pay[0] <= j.pay[1])) bad(`jobs.${j.id}`, 'pay range'); if (!j.clients || !j.clients.length) bad(`jobs.${j.id}`, 'no client'); }
+
 // --- Report -------------------------------------------------------------------
 if (problems.length) {
   console.error(`rules.json vs ${ref.rulebook}: ${problems.length} problem(s)\n` + problems.map(p => '  - ' + p).join('\n'));
@@ -228,4 +234,5 @@ console.log(`make.json is consistent: ${MAKE.recipes.length} things to make acro
 console.log(`gigs.json is consistent: ${GIGS.gigs.length} gigs on ${GIGS.app.name}.`);
 console.log(`radio.json is consistent: ${RADIO.slots.length} DJs cover the day; ${RADIO.support.jobs.length} station jobs.`);
 console.log(`Art pack: ${ART.items.length} pieces, all files present; ${CORPS.corporations.length} corporations.`);
+console.log(`jobs.json matches the rulebook: ${JOBS.jobs.length} jobs, complication tables d6/d8/d6.`);
 console.log(`places.json is consistent: ${Object.keys(W.maps).length} maps, ${Object.keys(W.districts).length} districts, ${W.places.length} places, ${W.routes.length} routes.`);

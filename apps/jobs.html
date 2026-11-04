@@ -1,0 +1,121 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Job Board</title>
+<link rel="stylesheet" href="../fonts/fonts.css">
+<link rel="stylesheet" href="../art/pda-v1/tokens.css">
+<link rel="stylesheet" href="./screen.css">
+<style>
+.board{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px;margin-top:14px}
+.contract .cat{display:inline-block;margin-bottom:4px;padding:1px 9px;border:1px solid #8a6a48;border-radius:999px;color:#5b4630;font:700 11px/1.6 var(--art-ui);letter-spacing:.08em;text-transform:uppercase}
+.contract dl{display:grid;grid-template-columns:auto 1fr;gap:4px 12px;margin:8px 0}
+.contract dt{color:#7a2f6a;font:700 12px/1.6 var(--art-ui);letter-spacing:.1em;text-transform:uppercase}
+.contract dd{margin:0}
+.cx{margin:8px 0;padding:8px 10px;border-left:4px solid #7a2f6a;background:rgba(122,47,106,.08)}
+.cx b{color:#3a1730}
+.cx.emerging{border-left-color:#b8732e;background:rgba(184,115,46,.1)}
+.cx.twist{border-left-color:#b8222e;background:rgba(184,34,46,.08)}
+.cx.hidden{border-left-style:dashed;color:#7a6a58}
+.heat{display:inline-block;padding:1px 9px;border-radius:999px;background:#3a1730;color:#fff;font:700 12px/1.6 var(--art-ui);letter-spacing:.06em}
+.book summary{min-height:36px;color:#7a2f6a;font:700 13px var(--art-ui);letter-spacing:.06em;text-transform:uppercase;cursor:pointer}
+.book li{margin:3px 0}
+.closeout{margin-top:10px;padding:10px 12px;border:1px solid #8a6a48;border-radius:8px;background:rgba(255,248,230,.5)}
+.closeout label{display:flex;align-items:flex-start;gap:8px;margin:6px 0;color:#2c1c18;font:400 15px/1.35 var(--art-body);letter-spacing:0;text-transform:none}
+.closeout label b{color:#3a1730}
+.closeout input[type=radio],.closeout input[type=checkbox]{width:20px;height:20px;flex:none;margin-top:1px;accent-color:#7a2f6a}
+.closeout input[type=number],.closeout textarea{width:100%;min-height:44px;padding:8px;border:1px solid #8a6a48;border-radius:6px;background:#fffaf0;color:#2c1c18;font:16px var(--art-body)}
+.closeout h4{margin:8px 0 2px;color:#7a2f6a;font:700 12px var(--art-ui);letter-spacing:.1em;text-transform:uppercase}
+.rules{font-size:14px}
+.rules p{margin:6px 0}
+@media (max-width:860px){.board{grid-template-columns:1fr}}
+</style>
+</head>
+<body class="pda-art">
+<div class="wrap">
+  <div class="kicker">ADYTA PDA / MISSIONS</div>
+  <h1>Job Board</h1>
+  <p class="muted" id="who">Small, specific, usually connected to the gap between what the city provides and what people need.</p>
+  <div class="cols">
+    <section class="frame" aria-labelledby="boardH"><h2 id="boardH">Posted today</h2><p class="note" id="boardNote"></p><div class="board" id="board"></div></section>
+    <aside>
+      <section class="frame" aria-labelledby="mineH"><h2 id="mineH">Your jobs</h2><div id="mine"></div></section>
+      <section class="frame rules" aria-labelledby="rulesH"><h2 id="rulesH">How jobs work</h2><div id="rules"></div></section>
+    </aside>
+  </div>
+</div>
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+<script src="./week.js"></script>
+<script src="./jobs.js"></script>
+<script>
+'use strict';
+const KEY = 'grakkgrith_character_tool_v8_state';
+const WK = window.GRAKK_WEEK, JB = window.GRAKK_JOBS, $ = id => document.getElementById(id);
+const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+let J = null, PL = null, CLOCK = null;
+const load = () => { try { return JSON.parse(localStorage.getItem(KEY)); } catch (e) { return null; } };
+const save = s => { try { localStorage.setItem(KEY, JSON.stringify(s)); } catch (e) {} try { parent.postMessage({ type: 'grakkgrith-week-changed' }, '*'); } catch (e) {} };
+const now = () => WK.adytaNow(CLOCK, Date.now());
+const hasChar = s => !!(s && s.character && String(s.character.name || '').trim());
+function toast(msg) { const t = $('toast'); t.textContent = msg; t.classList.add('on'); clearTimeout(toast.t); toast.t = setTimeout(() => t.classList.remove('on'), 5200); }
+function act(fn) { const s = load(); if (!hasChar(s)) { toast('Make a character first.'); return; } const r = fn(s); save(s); render(); return r; }
+const payText = j => j.pay != null ? `<b>${j.pay} cr</b>${j.pendingPay ? ' <i>(proposed, pending ruling)</i>' : ''}` : j.percent ? `<b>${j.percent[0]}–${j.percent[1]}%</b> of the item's value, plus expenses` : '<b>Varies.</b> Sometimes nothing.';
+const cx = (c, cls) => `<div class="cx ${cls}"><b>${esc(c.label)}: ${esc(c.name)}</b> <span class="note" style="color:#5b4630">(d${c.die}: ${c.roll})</span><br>${esc(c.text)}</div>`;
+const bookBits = j => `<details class="book"><summary>From the rulebook</summary><p>${esc(j.text)}</p><p><b>What tends to go wrong:</b></p><ul>${j.bookComplications.map(c => `<li>${esc(c)}</li>`).join('')}</ul><p><b>What it pays:</b> ${esc(j.pays)}</p></details>`;
+
+function postedCard(j, s) {
+  return `<article class="letter contract notice"><span class="cat">${esc(j.category)}</span><div class="from">${esc(j.client)}</div><h3>${esc(j.title)}</h3>
+    <dl><dt>Where</dt><dd>${esc(j.place.name)}, ${esc(j.place.districtName)}</dd><dt>Pays</dt><dd>${payText(j)}</dd><dt>Heat</dt><dd><span class="heat">Base ${j.baseHeat}</span> ${esc(J.heat.base[String(j.baseHeat)] || '')}</dd></dl>
+    ${cx(j.known, 'known')}<div class="cx hidden">Something else will surface during the job. And maybe something late.</div>${bookBits(j)}
+    <div class="actions">${j.taken ? '<span class="stamp read" style="position:static;transform:none">taken</span>' : `<button class="primary" data-take="${j.id}">Take the job</button>`}<button class="ghost" data-go="${j.place.place}">Map</button></div></article>`;
+}
+function mineCard(j) {
+  const open = ['taken', 'on'].includes(j.status);
+  let h = `<article class="letter contract ${open ? 'notice' : 'bill'}">${open ? '' : `<span class="stamp ${j.status === 'done' ? 'paid' : 'unpaid'}">${esc(j.status === 'done' ? (j.outcome === 'partial' ? 'partly done' : 'done') : j.status)}</span>`}
+    <span class="cat">${esc(j.category)}</span><div class="from">${esc(j.client)} · taken by ${esc(j.by)}</div><h3>${esc(j.title)}</h3>
+    <dl><dt>Where</dt><dd>${esc(j.place.name)}, ${esc(j.place.districtName)}</dd><dt>Pays</dt><dd>${payText(j)}</dd><dt>Heat</dt><dd><span class="heat">Base ${j.baseHeat}</span></dd></dl>
+    ${cx(j.known, 'known')}${j.emerging ? cx(j.emerging, 'emerging') : open ? '<div class="cx hidden">Something will surface once you\'re on the job.</div>' : ''}${j.twist ? cx(j.twist, 'twist') : ''}`;
+  if (open) {
+    h += `<div class="actions">${j.status === 'taken' ? `<button class="primary" data-start="${j.id}">We're on the job</button>` : ''}${j.status === 'on' && !j.twist ? `<button data-twist="${j.id}">Something's off (the twist)</button>` : ''}<button class="ghost" data-go="${j.place.place}">Map</button><button class="ghost" data-drop="${j.id}">Walk away</button></div>`;
+    if (j.status === 'on') h += `<form class="closeout" data-close="${j.id}"><h4>Close it out</h4>
+      <label><input type="radio" name="o" value="success" checked> <span><b>Done.</b> ${j.pay != null ? `${j.pay} cr.` : ''} +1 Mark.</span></label>
+      <label><input type="radio" name="o" value="partial"> <span><b>Partly done.</b> ${j.pay != null ? `${Math.round(j.pay * J.outcome.partialPay)} cr (draft: half).` : ''} +1 Mark.</span></label>
+      <label><input type="radio" name="o" value="failed"> <span><b>Failed.</b> No pay, no Mark. Heat still comes.</span></label>
+      ${j.pay == null ? `<label style="display:block"><b>What it actually paid</b><input type="number" name="paid" min="0" value="0" aria-label="What it actually paid"></label>` : ''}
+      <h4>What happened (execution Heat)</h4>${J.heat.execution.map(e => `<label><input type="checkbox" name="x" value="${e.heat}"> <span><b>+${e.heat}</b> ${esc(e.text)}</span></label>`).join('')}
+      <label style="display:block"><b>Note for the log</b><textarea name="note" maxlength="300" rows="2"></textarea></label>
+      <p class="note" style="color:#5b4630">${esc(J.heat.rule)} Base Heat ${j.baseHeat} always applies: every job generates Heat.</p>
+      <div class="actions"><button class="primary" type="submit">Close the job</button></div></form>`;
+  }
+  h += `<details class="book"><summary>Record (${j.events.length})</summary><ul>${j.events.map(e => `<li><b>${esc(WK.fmt(e.at))}</b> ${esc(e.text)}</li>`).join('')}</ul></details></article>`;
+  return h;
+}
+function render() {
+  const s = load(), t = now(), named = hasChar(s);
+  const posts = JB.board(J, PL, t, named ? s : null);
+  $('boardNote').textContent = `${J.board.perDay} jobs posted for ${WK.fmt(t).split(' ').slice(0, 2).join(' ')}, Adyta time. The whole crew sees the same board. New postings tomorrow.`;
+  $('board').innerHTML = posts.map(j => postedCard(j, s)).join('');
+  const list = named ? JB.ensure(s).list : [];
+  $('mine').innerHTML = list.length ? list.map(mineCard).join('') : `<p class="muted">${named ? 'Nothing taken. Pick something off the board.' : 'Make a character to take jobs.'}</p>`;
+  $('rules').innerHTML = `<p>${esc(J.structure)}</p><p><b>Complications</b> come in three tiers: one you know before (d6), one that surfaces during (d8), and sometimes a twist late that changes what success means (d6).</p>
+    <p><b>Heat:</b> base ${Object.entries(J.heat.base).map(([k, v]) => `${k} for ${v.toLowerCase()}`).join('; ')}. Execution Heat stacks on top.</p>
+    <p><b>Pay scale:</b> ${J.paymentScale.map(p => `${p.scale} ${p.pay[0]}${p.pay[1] ? '–' + p.pay[1] : '+'}`).join(' · ')}.</p><p class="note">${esc(J.outcome.marksNote)} ${esc(J.outcome.partialNote)} Job types and wording: rulebook ${esc(J.rulebook)}, Chapter Eighteen.</p>`;
+}
+document.addEventListener('click', e => {
+  const b = e.target.closest('button'); if (!b || (b.type === 'submit' && b.closest('form'))) return; const t = now();
+  if (b.dataset.take) { const r = act(s => JB.take(s, J, PL, b.dataset.take, t)); r && toast(r.msg); }
+  else if (b.dataset.start) { const r = act(s => JB.start(s, J, b.dataset.start, t)); r && r.ok && toast(r.msg); }
+  else if (b.dataset.twist) { const r = act(s => JB.twist(s, J, b.dataset.twist, t)); r && r.ok && toast(r.msg); }
+  else if (b.dataset.drop) { const r = act(s => JB.drop(s, b.dataset.drop, t)); r && r.ok && toast(r.msg); }
+  else if (b.dataset.go) parent.postMessage({ type: 'grakkgrith-open-explore', place: b.dataset.go }, '*');
+});
+document.addEventListener('submit', e => {
+  const f = e.target.closest('form[data-close]'); if (!f) return; e.preventDefault();
+  const fd = new FormData(f), o = { outcome: fd.get('o'), execution: fd.getAll('x'), paid: fd.get('paid'), note: fd.get('note') };
+  const r = act(s => JB.close(s, J, f.dataset.close, o, now())); r && toast(r.msg);
+});
+Promise.all(['jobs', 'places'].map(n => fetch(`../data/${n}.json`).then(r => r.json()))).then(([j, p]) => { J = j; PL = p; CLOCK = p.clock; render(); window.GRAKK_JOBS_READY = true; });
+</script>
+</body>
+</html>

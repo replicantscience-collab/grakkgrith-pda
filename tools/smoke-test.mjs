@@ -78,7 +78,7 @@ try {
     await step('the top bar has eight section tabs, not a wall of them', () => page.evaluate(() => document.querySelectorAll('.sectionNav .secTab').length === 8 && [...document.querySelectorAll('.topbar button')].filter(b => b.offsetParent).length <= 12));
     await step('a Start card opens its section', async () => { await f.click('.card [data-nav="cityBtn"]'); await page.waitForTimeout(1500); return page.evaluate(() => document.querySelector('.secTab.active').dataset.sec === 'city'); });
     await step('section tabs show their pages as sub-tabs', async () => { await page.evaluate(() => document.getElementById('sec-missions').click()); await page.waitForTimeout(1200);
-      const subs = await page.$$eval('#subNav .subTab', b => b.map(x => x.textContent)); return (subs.join('|') === 'Contracts|Pocket Change|Radio Sewers') || subs.join('|'); });
+      const subs = await page.$$eval('#subNav .subTab', b => b.map(x => x.textContent)); return (subs.join('|') === 'Contracts|Job Board|Pocket Change|Radio Sewers') || subs.join('|'); });
     await step('Corporations shows five, with Pulse\'s posters and New Halo under Crownline', async () => { await page.evaluate(() => document.getElementById('corpsBtn').click()); await page.waitForTimeout(1500); const g = frame(page); await g.waitForFunction(() => window.GRAKK_CORPS_READY);
       const n = await g.$$eval('.corp', x => x.length), imgs = await g.$$eval('.corp img', x => x.length), nh = await g.evaluate(() => !!document.querySelector('#crownline .campaign')), sub = await page.evaluate(() => document.querySelector('.secTab.active').dataset.sec);
       return (n === 5 && imgs === 4 && nh && sub === 'factions') || `${n} corps, ${imgs} posters, New Halo under Crownline ${nh}, tab ${sub}`; });
@@ -205,6 +205,13 @@ try {
       const segs = await f.$$eval('.seg', x => x.length), w = await f.evaluate(() => document.documentElement.scrollWidth - innerWidth);
       const pic = await f.evaluate(() => { const i = document.querySelector('.djpic'); return !!i && i.complete && i.naturalWidth > 0; });
       return (pic && ['Smokier', 'DJ Sludge', 'DJ Stormbird'].includes(dj) && /goblinnib/.test(link) && segs >= 10 && w <= 1) || `${dj}, ${link}, ${segs} segments, ${w}px too wide`;
+    });
+    await step('Job Board: take a rulebook job, go on it, close it out', async () => {
+      await page.evaluate(() => document.getElementById('jobsBtn').click()); await page.waitForTimeout(1500); f = frame(page); await f.waitForFunction(() => window.GRAKK_JOBS_READY);
+      const posted = await f.$$eval('#board .contract', x => x.length); const before = Number((await ST()).stats.heat || 0);
+      for (const sel of ['#board [data-take]', '#mine [data-start]', '#mine form[data-close] button[type=submit]']) { const okc = await f.evaluate(sel => { const b = document.querySelector(sel); if (b) b.click(); return !!b; }, sel); if (!okc) return `no ${sel}`; await page.waitForTimeout(400); }
+      const s = await ST(), j = s.jobs.list[0];
+      return (posted === 4 && j.status === 'done' && j.emerging && Number(s.stats.heat) >= Math.min(6, before + j.baseHeat) && s.downtime.marks >= 1) || `${posted} posted, ${j && j.status}, heat ${before}->${s.stats.heat}`;
     });
     // Mixed Heritage (Ch. 15) and Afflictions (Ch. 20) in Character Setup and on the sheet.
     await step('Mixed Heritage and Affliction rules hold in Character Setup', async () => {

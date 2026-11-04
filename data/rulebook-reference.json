@@ -374,5 +374,29 @@
     "Return Fire",
     "Riposte",
     "Interrupt"
+  ],
+  "jobs": [
+    "Power Tap Installation",
+    "Generator Repair",
+    "Patch Grid Maintenance",
+    "Courier Work",
+    "Extract",
+    "Transit Fraud",
+    "Data Theft",
+    "Surveillance",
+    "Missing Person Retrieval",
+    "Eviction Interference",
+    "Protection Work",
+    "Illegal Rooftop Market Security",
+    "Medicine Smuggling",
+    "Off-Book Medical Care",
+    "Spotter Work",
+    "Bloom Clearance",
+    "Radio Sewers Support",
+    "Document Forgery",
+    "Compliance Obstruction",
+    "Black Market Acquisition",
+    "Faction Mediation",
+    "Sample Run"
   ]
 }

@@ -18,6 +18,7 @@ jobs:
       - run: node tools/make-test.mjs
       - run: node tools/gigs-test.mjs
       - run: node tools/radio-test.mjs
+      - run: node tools/jobs-test.mjs
 
   smoke:
     name: Every screen opens

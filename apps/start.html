@@ -63,6 +63,7 @@
 <script src="./make.js"></script>
 <script src="./gigs.js"></script>
 <script src="./radio.js"></script>
+<script src="./jobs.js"></script>
 <script>
 'use strict';
 const KEY = 'grakkgrith_character_tool_v8_state';
@@ -110,12 +111,14 @@ function render() {
   // Missions: what you're on, else what's open
   let items = [];
   if (named) {
+    for (const j of window.GRAKK_JOBS.active(s)) items.push({ t: `Job: ${j.title}`, tag: j.status === 'on' ? 'On the job' : j.place.districtName, c: '#fc6c74' });
     for (const a of ((s.make && s.make.artifacts) || [])) if (a.status === 'active' && a.delivery) items.push({ t: `Delivery: ${a.delivery.cargo.name} to ${a.delivery.to.name}`, tag: WK.untilText(a.delivery.due - now), c: '#22dae4' });
     for (const j of ((s.gigs && s.gigs.jobs) || [])) if (j.status === 'active') items.push({ t: j.title, tag: j.remote ? 'Remote' : j.place.districtName, c: j.sideways ? '#ef46ba' : '#b06cf0' });
     for (const j of ((s.radio && s.radio.jobs) || [])) if (j.status === 'active') items.push({ t: `Radio Sewers: ${j.title}`, tag: j.place.districtName, c: '#9af269' });
-    if (!items.length) for (const j of GG.board(s, D.gigs, D.rules, D.places, now).gigs.filter(x => !x.taken).slice(0, 3)) items.push({ t: j.title, tag: `${j.net} cr`, c: j.sideways ? '#ef46ba' : '#d7ac61' });
+    if (!items.length && D.jobs) for (const j of window.GRAKK_JOBS.board(D.jobs, D.places, now, s).filter(x => !x.taken).slice(0, 2)) items.push({ t: j.title, tag: j.pay != null ? `${j.pay} cr` : j.place.districtName, c: '#fc6c74' });
+    if (items.length < 3) for (const j of GG.board(s, D.gigs, D.rules, D.places, now).gigs.filter(x => !x.taken).slice(0, 3 - items.length)) items.push({ t: j.title, tag: `${j.net} cr`, c: j.sideways ? '#ef46ba' : '#d7ac61' });
   } else items = [{ t: 'Gigs, deliveries and contracts', tag: 'Citywide', c: '#d7ac61' }, { t: 'Make a character to take one', tag: 'Start here', c: '#ef46ba' }];
-  h += `<article class="card paper"><h2>${icon('missions')}Active Missions</h2><p>Jobs, favors, open contracts, and opportunities.</p><ul class="list">${items.slice(0, 3).map(i => `<li style="--dc:${i.c}"><span class="dot"></span><span class="t">${esc(i.t)}</span><small>${esc(i.tag)}</small></li>`).join('')}</ul><button class="go" data-nav="missionsBtn">View all missions <b>›</b></button></article>`;
+  h += `<article class="card paper"><h2>${icon('missions')}Active Missions</h2><p>Jobs, favors, open contracts, and opportunities.</p><ul class="list">${items.slice(0, 3).map(i => `<li style="--dc:${i.c}"><span class="dot"></span><span class="t">${esc(i.t)}</span><small>${esc(i.tag)}</small></li>`).join('')}</ul><button class="go" data-nav="jobsBtn">View all missions <b>›</b></button></article>`;
   // Rumors: Radio Sewers
   const feed = RA.feed(named ? s : {}, D.radio, D.make, D.places, now, 12).filter(x => x.kind === 'rumor' || x.kind === 'headsUp' || x.kind === 'yours').slice(0, 3);
   h += `<article class="card paper"><h2>${icon('rumors')}Recent Rumors</h2><p>What people are saying across Adyta, by way of Radio Sewers.</p><ul class="list">${feed.map(x => `<li class="${x.kind === 'headsUp' ? 'heads' : ''}" style="--dc:${x.kind === 'headsUp' ? '#fc6c74' : '#9af269'}"><span class="dot"></span><span class="t">${esc(x.text)}</span><small>${esc(ago(now - x.at))}</small></li>`).join('') || '<li>Static. Tune in later.</li>'}</ul><button class="go" data-nav="radioBtn">View more rumors <b>›</b></button></article>`;
@@ -134,8 +137,8 @@ function render() {
   $('app').innerHTML = h;
 }
 document.addEventListener('click', e => { const b = e.target.closest('button'); if (!b) return; if (b.dataset.nav) nav(b.dataset.nav); else if (b.dataset.go) parent.postMessage({ type: 'grakkgrith-open-explore', place: b.dataset.go }, '*'); });
-Promise.all([...['rules', 'places', 'week', 'make', 'gigs', 'radio'].map(n => fetch(`../data/${n}.json`).then(r => r.json())), fetch('../art/pda-v1/imports/manifest.json').then(r => r.json()).catch(() => ({ items: [] }))]).then(([rules, places, week, make, gigs, radio, art]) => {
-  D = { rules, places, week, make, gigs, radio, art }; render(); window.GRAKK_START_READY = true; setInterval(render, 60000);
+Promise.all([...['rules', 'places', 'week', 'make', 'gigs', 'radio', 'jobs'].map(n => fetch(`../data/${n}.json`).then(r => r.json())), fetch('../art/pda-v1/imports/manifest.json').then(r => r.json()).catch(() => ({ items: [] }))]).then(([rules, places, week, make, gigs, radio, jobs, art]) => {
+  D = { rules, places, week, make, gigs, radio, jobs, art }; render(); window.GRAKK_START_READY = true; setInterval(render, 60000);
 });
 </script>
 </body>
