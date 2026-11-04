@@ -52,11 +52,18 @@ Rules and map checks pass. The desktop/phone suite passed 107 checks on
 2026-11-04, including cancellation, attack ammo, Push, reload transfer, no-refill
 item deletion/restoration, manual edit protection, replacement-gear protection,
 reopening persistence, skill previews, melee attacks, and 44px Now controls.
-Additional installed-service-worker checks are being finalized.
+Five additional installed-service-worker checks pass: cached Now panel, 360px
+preview bounds, initial Cancel focus, Escape dismissal, and an offline saved
+skill roll. The offline harness was corrected to open Tools before selecting the
+hidden sheet menu item; the targeted offline run then passed all five checks.
 
 Screenshots are generated under `output/playwright/player-{now,attack}-{desktop,phone}.png`.
 The phone attack preview and Now panel were visually inspected. Save fixtures use
 disposable browser contexts, not a real player's localStorage.
+
+`git merge-tree --write-tree HEAD origin/feat/the-week` reports only a `sw.js`
+content conflict; player.html and smoke-test.mjs merge automatically. This was a
+merge preview, not a modification or merge of either branch.
 
 Merge integration with PRs #6/#7 has not been runtime-tested. Keep the PR draft
 until the combined branch passes its complete smoke tests. No merge or deployment

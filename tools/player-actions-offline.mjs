@@ -4,11 +4,12 @@ export async function checkPlayerOffline(browser, base, check) {
   const page=await ctx.newPage();
   try {
     await page.goto(base+'/');
-    await page.evaluate(async()=>{await navigator.serviceWorker.ready;});
+    await page.evaluate(async()=>{await Promise.race([navigator.serviceWorker.ready,new Promise((_,reject)=>setTimeout(()=>reject(new Error('Service worker did not activate')),15000))]);});
     await page.reload();
     await page.waitForFunction(()=>!!navigator.serviceWorker.controller);
     await ctx.setOffline(true);
     await page.reload();
+    await page.locator('#toolsBtn').click();
     await page.locator('#sheetBtn').click();
     const f=page.frameLocator('#frame');
     await f.locator('#playerNowRoll').waitFor();
