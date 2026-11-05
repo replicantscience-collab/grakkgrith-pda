@@ -131,6 +131,13 @@ body.pda-art{margin:0;font-size:16px;background:var(--art-ink) url("../art/pda-v
 'use strict';
 const $ = id => document.getElementById(id);
 const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+// Secret Sideways ancestry: not an official race or a rulebook stat block.
+const GREMLIN_ARCHIVE = {
+  title: 'GREMLIN // UNRECOGNIZED',
+  description: 'According to the city, we do not exist. According to the city, we are also wanted. Funny how that works.',
+  lore: 'Goblin and fae blood meet in unpredictable ways. Gremlins are not recognized by corporate registries, and many pass as Goblins to avoid being hunted. They share an affinity for liminal spaces, but their abilities differ. Most have an entangled fae counterpart; that connection may manifest as cohabitation, an external form, or something stranger. The third eye is one expression of that bond, not a mandatory identical anatomy. A Blink briefly inhabits the Between; knowing how to navigate between universes is another discipline entirely.',
+  warning: 'SIDEWAYS NOTE: This is an unofficial cultural record, not a new rulebook race. Use Goblin rules until the table agrees otherwise. Do not expose another person’s Gremlin identity.'
+};
 const ORDER = ['Goblin', 'Orc', 'Human', 'Dwarf', 'Elf', 'Halfling (Fenn)', 'Troll', 'Kobold', 'Cinderfolk', 'Slimefolk', 'Fairy'];
 let R, G, open = null;
 
@@ -196,6 +203,31 @@ function showRace(race, scroll) {
       <button class="go" type="button" id="buildBtn">Make a character</button>
     </div>
   </article>`;
+  if (race === 'Goblin') {
+    const detail = $('detail').querySelector('.entry > div:last-child');
+    const seal = document.createElement('button');
+    seal.type = 'button'; seal.id = 'classificationSeal';
+    seal.setAttribute('aria-label', 'Inspect Goblin classification seal');
+    seal.setAttribute('title', 'Classification seal G-07');
+    seal.style.cssText = 'display:inline-block;margin:10px 0;padding:8px 12px;border:1px dashed var(--art-brass);border-radius:6px;color:var(--art-brass);font:700 13px var(--art-ui);letter-spacing:.1em;min-height:44px';
+    seal.textContent = 'G-07 ◈';
+    detail.appendChild(seal);
+    let touches = 0;
+    seal.onclick = () => {
+      if (++touches < 3) { seal.textContent = touches === 1 ? 'G-07 ◈ / checksum?' : 'G-07 ◈ / classification error'; return; }
+      seal.remove();
+      const archive = document.createElement('section');
+      archive.id = 'gremlinArchive'; archive.className = 'sideways';
+      archive.setAttribute('aria-label', 'Unofficial Gremlin archive');
+      archive.innerHTML = '<span class="badge">SIDEWAYS // UNREGISTERED</span>'
+        + '<h3>' + esc(GREMLIN_ARCHIVE.title) + '</h3>'
+        + '<p>' + esc(GREMLIN_ARCHIVE.description) + '</p>'
+        + '<p>' + esc(GREMLIN_ARCHIVE.lore) + '</p>'
+        + '<p><strong>' + esc(GREMLIN_ARCHIVE.warning) + '</strong></p>'
+        + '<p class="sign">Oh. There you are. — Gremlin Works</p>';
+      detail.appendChild(archive);
+    };
+  }
   $('detail').classList.add('open');
   $('closeDetail').onclick = () => { $('detail').classList.remove('open'); open = null; document.querySelectorAll('.card').forEach(c => c.setAttribute('aria-pressed', 'false')); };
   $('buildBtn').onclick = () => { if (parent !== window) parent.postMessage({ type: 'grakkgrith-open-creator' }, '*'); };
