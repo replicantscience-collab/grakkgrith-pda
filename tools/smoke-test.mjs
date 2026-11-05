@@ -112,6 +112,10 @@ try {
     f = await open('charHubBtn', 1200);
     await step('Character Hub uses the Sideways skin and fits', async () => (await kitted()) ? fits() : 'unskinned');
     f = await open('sheetBtn', 1800);
+    await step('Sheet opens the one-page sheet: identity, six attributes, 32 skills, tracks', async () => { await f.waitForFunction(() => window.GRAKK_SHEET_READY); const r = await f.evaluate(() => ({ attrs: document.querySelectorAll('.attrs tr').length - 1, skills: document.querySelectorAll('.sg tr').length - 6, wound: document.querySelectorAll('[data-wound]').length, name: document.querySelector('.ident b')?.textContent })); return (r.attrs === 6 && r.skills === 32 && r.wound === 4 && r.name === 'Smoke Test') || JSON.stringify(r); });
+    await step('one-page sheet: tapping a Stress pip saves it', async () => { await f.evaluate(() => document.querySelector('[data-track="stress"] [data-pip="2"]').click()); return (await page.evaluate(() => JSON.parse(localStorage.getItem('grakkgrith_character_tool_v8_state')).stats.stress)) === '2'; });
+    await step('one-page sheet fits the screen', async () => { const w = await f.evaluate(() => document.documentElement.scrollWidth - innerWidth); return w <= 1 || `${w}px too wide`; });
+    f = await open('fullSheetBtn', 1800);
     await step('Character Sheet loads the character', async () => { const v = await f.evaluate(() => document.getElementById('raceSelect')?.value); return v === 'Goblin' || `race shows "${v}"`; });
     await step('Character Sheet uses the Sideways skin and fits', async () => (await kitted()) ? fits() : 'unskinned');
     await step('Shiny Bit Details is off the sheet', () => f.evaluate(() => getComputedStyle(document.querySelector('.accordionSection[data-section-id="item"]')).display === 'none'));
@@ -154,7 +158,7 @@ try {
       const c = await page.evaluate(() => JSON.parse(localStorage.getItem('grakkgrith_character_tool_v8_state')).character);
       return (c.name === 'Smoke Runner' && c.class === 'Runner' && !!c.subclass) || `saved ${JSON.stringify(c).slice(0, 80)}`;
     });
-    await step('the sheet shows the new character', async () => { await page.evaluate(() => document.getElementById('sheetBtn').click()); await page.waitForTimeout(1600); return frame(page).evaluate(() => document.body.innerText.includes('Smoke Runner') && document.getElementById('raceSelect').value === 'Goblin'); });
+    await step('the sheet shows the new character', async () => { await page.evaluate(() => document.getElementById('fullSheetBtn').click()); await page.waitForTimeout(1600); return frame(page).evaluate(() => document.body.innerText.includes('Smoke Runner') && document.getElementById('raceSelect').value === 'Goblin'); });
     await step('Explore can send them somewhere', async () => { await page.evaluate(() => document.getElementById('exploreBtn').click()); await page.waitForTimeout(1500); return frame(page).evaluate(() => { const X = window.GRAKK_EXPLORE, t = { district: 'low-halo', place: 'low-halo--rust-market' }; X.startTrip(t, X.planTrip(t)[0]); return !!JSON.parse(localStorage.getItem('grakkgrith_character_tool_v8_state')).world.presence.transit; }); });
     // The Week: rent on the Adyta clock and Heat mail, from a fresh character.
     const ST = () => page.evaluate(() => JSON.parse(localStorage.getItem('grakkgrith_character_tool_v8_state')));
@@ -172,7 +176,7 @@ try {
     });
     await step('Heat 2 sends a notice; the sheet does not wipe the mail', async () => {
       await page.evaluate(() => { const s = JSON.parse(localStorage.getItem('grakkgrith_character_tool_v8_state')); s.stats.heat = '2'; localStorage.setItem('grakkgrith_character_tool_v8_state', JSON.stringify(s)); });
-      await page.evaluate(() => document.getElementById('sheetBtn').click()); await page.waitForTimeout(1600);
+      await page.evaluate(() => document.getElementById('fullSheetBtn').click()); await page.waitForTimeout(1600);
       await page.evaluate(() => document.getElementById('mailBtn').click()); await page.waitForTimeout(1500); f = frame(page);
       const s = await ST(), notices = s.week.mail.filter(m => m.kind === 'notice').length, paid = s.week.mail.some(m => m.kind === 'bill' && m.status === 'paid');
       return (notices === 1 && paid && await f.evaluate(() => !!document.querySelector('.letter.notice'))) || `notices ${notices}, bill paid ${paid}, heat ${s.stats.heat}`;
@@ -249,7 +253,7 @@ try {
         Object.assign(s.character, { race: 'Elf', class: 'Runner', subclass: 'Threnn Guide', heritage: { on: true, secondary: 'Goblin', mark: 'Route Instinct', complication: 'Split Claim', registration: 'Missing Record', publicRead: 'As both', subclassFrom: 'secondary' }, affliction: { id: 'Beastkin', stage: 'Awakened', aspect: 'Hunter', adaptation: 'muscle', line: 'Lycan', bane: 'Silver' } });
         s.builder = Object.assign(s.builder || {}, { base: { muscle: '1', reflex: '4', wit: '3', savvy: '2', spark: '2', root: '2' } });
         localStorage.setItem('grakkgrith_character_tool_v8_state', JSON.stringify(s)); });
-      await page.evaluate(() => document.getElementById('sheetBtn').click()); await page.waitForTimeout(1800); f = frame(page);
+      await page.evaluate(() => document.getElementById('fullSheetBtn').click()); await page.waitForTimeout(1800); f = frame(page);
       const sub = await f.evaluate(() => document.getElementById('subclassSelect').value);
       const muscle = (await page.evaluate(() => JSON.parse(localStorage.getItem('grakkgrith_character_tool_v8_state')).stats.muscle));
       const panel = await f.evaluate(() => document.getElementById('heritagePanel').innerText);

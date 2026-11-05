@@ -64,7 +64,7 @@ button.primary,.navPill.active{border-color:rgba(184,50,50,.75);background:linea
  </div>
  <nav class="subNav" id="subNav" aria-label="Section pages" hidden></nav>
  <!-- Every screen still has its own button (and id) here; the section tabs and sub-tabs press them. -->
- <div id="legacyNav" hidden><button id="itemsBtn">Item cards</button><button id="sheetBtn" data-help="">Character Sheet</button>
+ <div id="legacyNav" hidden><button id="fullSheetBtn">Edit sheet</button><button id="itemsBtn">Item cards</button><button id="sheetBtn" data-help="">Character Sheet</button>
   <button id="worldBtn">Start</button><button id="exploreBtn">Explore</button><button id="mailBtn">Mail</button><button id="makeBtn">Workshop</button>
   <button id="gigsBtn">Pocket Change</button><button id="radioBtn">Radio Sewers</button><button id="guidesBtn">Guides</button><button id="cityBtn">City</button>
   <button id="missionsBtn">Missions</button><button id="factionsBtn">Factions</button><button id="loreBtn">Lore</button><button id="logsBtn">Logs</button><button id="stateBtn">State</button>
@@ -129,7 +129,7 @@ const SECTIONS=[
  {id:'inventory',pages:[['player','Sheet','sheetBtn'],['make','Workshop','makeBtn'],['mail','Mail & bills','mailBtn'],['downtime','Logs','logsBtn']]}];
 /* Pages reached from the character menu, not a sub-tab: they light up Inventory with no sub-tab picked. */
 const MENU_PAGES={character:'inventory',creator:'inventory'};
-const MODE_ALIAS={items:'make',world:'start',logs:'downtime',state:'downtime',city:'explore',missions:'jobs',fullrules:'rules',build:'quickstart'},LAST_PAGE={};
+const MODE_ALIAS={fullsheet:'player',items:'make',world:'start',logs:'downtime',state:'downtime',city:'explore',missions:'jobs',fullrules:'rules',build:'quickstart'},LAST_PAGE={};
 function sectionFor(mode){mode=MODE_ALIAS[mode]||mode;for(const sec of SECTIONS){const pg=sec.pages.find(p=>p[0]===mode);if(pg)return{sec,pg}}if(MENU_PAGES[mode])return{sec:SECTIONS.find(x=>x.id===MENU_PAGES[mode]),pg:null};return{sec:SECTIONS[0],pg:SECTIONS[0].pages[0]}}
 function setActiveShell(nextMode){const{sec,pg}=sectionFor(nextMode);if(pg)LAST_PAGE[sec.id]=pg[2];
  document.querySelectorAll('.secTab').forEach(b=>{const on=b.dataset.sec===sec.id;b.classList.toggle('active',on);if(on)b.setAttribute('aria-current','page');else b.removeAttribute('aria-current')});
@@ -148,7 +148,7 @@ function injectOccultTheme(){
 function setDoc(html,nextMode){if(currentUrl)URL.revokeObjectURL(currentUrl);currentUrl=URL.createObjectURL(new Blob([html],{type:'text/html'}));mode=nextMode;playerReady=false;acceptPlayerState=false;frame.addEventListener('load',injectOccultTheme,{once:true});frame.src=currentUrl;statusEl.textContent='';setActiveShell(nextMode)}
 async function showWorld(panel){await appsReady;setDoc(withPdaArt(worldHtml(getState(),panel)),'world');setWorldShell(panel);frame.addEventListener('load',()=>{injectOccultTheme();if(panel==='city')enhanceCityAtlas()},{once:true})}
 async function showCreator(reset=false){await appsReady;if(reset)frame.addEventListener('load',()=>frame.contentWindow.postMessage({type:'grakkgrith-reset-creator'},'*'),{once:true});setDoc(withPdaArt(CREATOR_HTML,'creator'),'creator')}
-async function showPlayer(state){await appsReady;if(state)setState(state);setDoc(withPdaArt(PLAYER_HTML,'sheet'),'player')}
+async function showPlayer(state){await appsReady;if(state)setState(state);setDoc(withPdaArt(PLAYER_HTML,'sheet'),'fullsheet')}
 /* Workshop > Item cards: the sheet's item editor in its authoring (Shops) mode, showing only the Stuff Sack and the card editor. */
 async function showItems(){await appsReady;const s=getState();if(!s||!s.character||!String(s.character.name||'').trim()){toast('Create a character first.');showCreator(false);return}const bar='<nav class="wsSwitch" aria-label="Workshop"><button type="button" onclick="parent.postMessage({type:\'grakkgrith-nav\',to:\'makeBtn\'},\'*\')">Make</button><button type="button" aria-current="page">Item cards</button></nav><p class="wsLead">Make and edit item cards: name, picture, class, what it does. These are the items you carry and, later, trade.</p>';setDoc(withPdaArt(PLAYER_HTML.replace('<body data-page-mode="player">','<body data-page-mode="shops" data-view="items"><style>.wsSwitch{display:flex;gap:6px;margin:4px 0 12px}.wsSwitch button{min-height:40px;padding:6px 16px;border:1px solid rgba(118,80,45,.9);border-radius:999px;background:rgba(10,11,22,.75);color:var(--art-cream,#f4e6c8);font:700 13px/1 var(--art-ui,sans-serif);letter-spacing:.06em;text-transform:uppercase;cursor:pointer}.wsSwitch button[aria-current]{border-color:var(--art-magenta,#ef46ba);background:#2a1230;color:#fff}.wsLead{margin:0 0 10px;color:var(--art-muted,#b9a98c)}</style>'+bar),'sheet'),'items')}
 function streamlinedCharacterHubHtml(state){
@@ -205,7 +205,7 @@ window.addEventListener('message',e=>{const m=e.data||{};if(m.type==='grakkgrith
  else if(m.type==='grakkgrith-player-ready'){playerReady=true;const s=getState()||pendingState;/* saved copy first: Explore may have changed it since pendingState was set */if(s)frame.contentWindow.postMessage({type:'grakkgrith-load-state',state:s},'*');acceptPlayerState=true;statusEl.textContent='';updateCharacterBadge()}
  else if(m.type==='grakkgrith-player-state'){if(playerReady&&acceptPlayerState)setState(m.state)}
  else if(m.type==='grakkgrith-reset-all'){clearAllData();showCharacterHub();toast('Character and local data deleted. Character Hub is clean.')}
- else if(m.type==='grakkgrith-open-sheet'){const s=getState();if(s)showPlayer(s);else{toast('Create a character first.');showCreator(false)}}
+ else if(m.type==='grakkgrith-open-sheet'){const s=getState();if(s)showSheet();else{toast('Create a character first.');showCreator(false)}}
  else if(m.type==='grakkgrith-open-creator'){showCreator(false)}
  else if(m.type==='grakkgrith-open-city'){showExplore()}
  else if(m.type==='grakkgrith-save-campaign'){setCampaignState(m.state);showCampaignState();toast('Campaign state saved.')}
@@ -237,7 +237,7 @@ const weekReady=Promise.all([fetch('./data/week.json').then(r=>r.json()),fetch('
 async function tickWeek(){await appsReady;await weekReady;const WK=window.GRAKK_WEEK,badge=document.getElementById('mailBadge');if(!WK||!WEEK_DATA||!PLACES)return;
  let s=null;try{s=JSON.parse(localStorage.getItem(TOOL_KEY))}catch(e){}
  const named=s&&s.character&&String(s.character.name||'').trim();
- if(named&&!['player','creator','mail','make','gigs','radio','start'].includes(mode)){const MK=window.GRAKK_MAKE,GG=window.GRAKK_GIGS,t=WK.adytaNow(PLACES.clock,Date.now()),a=WK.settle(s,WEEK_DATA,PLACES.clock,Date.now()).length,b=MK&&MAKE_DATA?MK.settle(s,MAKE_DATA,WEEK_DATA,t).length:0,c=GG&&GIGS_DATA?GG.settle(s,GIGS_DATA,t).length:0;if(a||b||c||!s.week)localStorage.setItem(TOOL_KEY,JSON.stringify(s))}
+ if(named&&!['player','fullsheet','items','creator','mail','make','gigs','radio','start'].includes(mode)){const MK=window.GRAKK_MAKE,GG=window.GRAKK_GIGS,t=WK.adytaNow(PLACES.clock,Date.now()),a=WK.settle(s,WEEK_DATA,PLACES.clock,Date.now()).length,b=MK&&MAKE_DATA?MK.settle(s,MAKE_DATA,WEEK_DATA,t).length:0,c=GG&&GIGS_DATA?GG.settle(s,GIGS_DATA,t).length:0;if(a||b||c||!s.week)localStorage.setItem(TOOL_KEY,JSON.stringify(s))}
  const n=named?WK.pending(s):0;badge.hidden=!n;badge.textContent=n?String(n):'';document.querySelectorAll('[data-mailcount]').forEach(x=>x.textContent=n?String(n):'')}
 tickWeek();setInterval(tickWeek,60000);
 function showGuides(){if(currentUrl){URL.revokeObjectURL(currentUrl);currentUrl=''}mode='guides';frame.src='./apps/guide.html';setActiveShell('guides');statusEl.textContent=''}
@@ -250,7 +250,10 @@ document.getElementById('logsBtn').onclick=()=>showWorld('downtime');
 document.getElementById('stateBtn').onclick=()=>showWorld('downtime');
 document.getElementById('toolsBtn').onclick=e=>e.currentTarget.focus();
 document.getElementById('charHubBtn').onclick=()=>showCharacterHub();
-document.getElementById('sheetBtn').onclick=()=>{const s=getState();if(s)showPlayer(s);else{toast('Create a character first.');showCreator(false)}};
+/* Sheet = the one-page sheet (apps/sheet.html); Edit sheet = the full editable sheet. */
+function showSheet(){if(currentUrl){URL.revokeObjectURL(currentUrl);currentUrl=''}mode='player';frame.src='./apps/sheet.html';setActiveShell('player');statusEl.textContent=''}
+document.getElementById('sheetBtn').onclick=()=>showSheet();
+document.getElementById('fullSheetBtn').onclick=()=>{const s=getState();if(s)showPlayer(s);else{toast('Create a character first.');showCreator(false)}};
 document.getElementById('creatorBtn').onclick=()=>showCreator(false);
 document.getElementById('quickstartBtn').onclick=()=>showWorld('quickstart');
 document.getElementById('rulesBtn').onclick=()=>showWorld('rules');
