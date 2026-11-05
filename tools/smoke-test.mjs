@@ -146,6 +146,22 @@ try {
     await ctx.close();
   }
 
+  // Reduced motion: no autoplay, no flashing beats, a still instead of the clip, and Next / Continue to move on.
+  {
+    const ctx = await browser.newContext({ viewport: { width: 390, height: 844 }, reducedMotion: 'reduce', serviceWorkers: 'block' });
+    const page = await ctx.newPage(), errors = []; page.on('pageerror', e => errors.push(e.message));
+    await page.goto(BASE + '/apps/cityid.html?issued'); await page.waitForSelector('.gIntro', { timeout: 6000 });
+    const beats = await page.$$eval('.gIntro .dots i', x => x.length);
+    await page.waitForTimeout(2500); const still = await page.evaluate(() => document.querySelector('.gIntro img.on').src.includes('registry/00'));
+    let presses = 0; while (presses < 15 && await page.$('.gIntro')) { await page.click('.gIntro .next'); presses++; }
+    check('reduced motion: registry drops the flashing beats and waits for Next', beats === 10 && still && presses === 10, JSON.stringify({ beats, still, presses }));
+    await page.goto(BASE + '/apps/radio.html'); await page.waitForSelector('.gIntro', { timeout: 6000 });
+    const src = await page.evaluate(() => document.querySelector('.gIntro img.on').src); await page.click('.gIntro .next');
+    check('reduced motion: Radio shows a still and a Continue button', /radio-hide-it-still\.webp$/.test(src) && !(await page.$('.gIntro')), src);
+    check('reduced motion: no script errors', errors.length === 0, errors.slice(0, 3).join(' | '));
+    await ctx.close();
+  }
+
   // The alpha's core loop, as a brand-new player on a phone: nothing saved -> build a character by clicking
   // through every Character Setup step -> sheet -> walk somewhere in Explore.
   {
@@ -179,6 +195,12 @@ try {
       return (c.name === 'Smoke Runner' && c.class === 'Runner' && !!c.subclass) || `saved ${JSON.stringify(c).slice(0, 80)}`;
     });
     await step('finishing Setup issues the City ID', async () => { await page.waitForTimeout(800); const g = frame(page); await g.waitForFunction(() => window.GRAKK_CITYID_READY, null, { timeout: 5000 }); const r = await g.evaluate(() => ({ name: document.querySelector('.cell div')?.parentElement && [...document.querySelectorAll('.cell')].find(x => /Full name/.test(x.textContent))?.querySelector('div').textContent, reg: JSON.parse(localStorage.getItem('grakkgrith_character_tool_v8_state')).cityId?.registry, issued: !!document.querySelector('.issued'), wide: document.documentElement.scrollWidth - innerWidth })); return (r.name === 'Smoke Runner' && /^ACR-7X-SMO-\d{4}$/.test(r.reg) && r.issued && r.wide <= 1) || JSON.stringify(r); });
+    await step('finishing Setup plays the Civic Registry intro; Skip ends it and it stays seen', async () => {
+      const g = frame(page); await g.waitForSelector('.gIntro', { timeout: 6000 });
+      const r = await g.evaluate(() => ({ beats: document.querySelectorAll('.gIntro .dots i').length, first: /registry\/\d\d\.webp$/.test(document.querySelector('.gIntro img.on')?.src || ''), focus: document.activeElement?.classList.contains('skip'), label: document.querySelector('.gIntro').getAttribute('aria-label') }));
+      await g.click('.gIntro .skip'); const gone = await g.evaluate(() => !document.querySelector('.gIntro') && !!JSON.parse(localStorage.getItem('grakkgrith-intros-seen'))['civic-registry']);
+      return (r.beats === 12 && r.first && r.focus && /Civic Registry/.test(r.label) && gone) || JSON.stringify({ ...r, gone });
+    });
     await step('the sheet shows the new character', async () => { await page.evaluate(() => document.getElementById('fullSheetBtn').click()); await page.waitForTimeout(1600); return frame(page).evaluate(() => document.body.innerText.includes('Smoke Runner') && document.getElementById('raceSelect').value === 'Goblin'); });
     await step('Explore can send them somewhere', async () => { await page.evaluate(() => document.getElementById('exploreBtn').click()); await page.waitForTimeout(1500); return frame(page).evaluate(() => { const X = window.GRAKK_EXPLORE, t = { district: 'low-halo', place: 'low-halo--rust-market' }; X.startTrip(t, X.planTrip(t)[0]); return !!JSON.parse(localStorage.getItem('grakkgrith_character_tool_v8_state')).world.presence.transit; }); });
     // The Week: rent on the Adyta clock and Heat mail, from a fresh character.
@@ -233,6 +255,13 @@ try {
       const pic = await f.evaluate(() => { const i = document.querySelector('.djpic'); return !!i && i.complete && i.naturalWidth > 0; });
       return (pic && ['Smokier', 'DJ Sludge', 'DJ Stormbird'].includes(dj) && /goblinnib/.test(link) && segs >= 10 && w <= 1) || `${dj}, ${link}, ${segs} segments, ${w}px too wide`;
     });
+    await step('first visit to Radio Sewers plays the Hide it clip; Escape skips; it does not come back', async () => {
+      await f.waitForSelector('.gIntro .wide', { timeout: 6000 }); const clip = await f.evaluate(() => document.querySelector('.gIntro img.on').src);
+      await f.evaluate(() => document.body.focus()); await f.press('body', 'Escape'); const gone = await f.evaluate(() => !document.querySelector('.gIntro'));
+      await page.evaluate(() => document.getElementById('radioBtn').click()); await page.waitForTimeout(1500); f = frame(page); const again = await f.evaluate(() => !!document.querySelector('.gIntro'));
+      return (/radio-hide-it\.webp$/.test(clip) && gone && !again) || `clip ${clip}, closed ${gone}, came back ${again}`;
+    });
+    await step('Hide it flips the PDA to the City ID', async () => { await page.click('#hideItBtn'); await page.waitForTimeout(1200); const g = frame(page); return /cityid\.html/.test(g.url()) && await g.evaluate(() => !document.querySelector('.gIntro')) || g.url(); });
     await step('Job Board: take a rulebook job, go on it, close it out', async () => {
       await page.evaluate(() => document.getElementById('jobsBtn').click()); await page.waitForTimeout(1500); f = frame(page); await f.waitForFunction(() => window.GRAKK_JOBS_READY);
       const posted = await f.$$eval('#board .contract', x => x.length); const before = Number((await ST()).stats.heat || 0);

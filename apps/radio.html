@@ -69,6 +69,7 @@ textarea{width:100%;min-height:88px;padding:10px;border:1px solid rgba(118,80,45
 <script src="./make.js"></script>
 <script src="./gigs.js"></script>
 <script src="./radio.js"></script>
+<script src="./intro.js"></script>
 <script>
 'use strict';
 const KEY = 'grakkgrith_character_tool_v8_state';
@@ -121,6 +122,8 @@ document.addEventListener('click', e => {
 Promise.all(['radio', 'rules', 'places', 'week', 'make'].map(n => fetch(`../data/${n}.json`).then(r => r.json()))).then(([rd, r, p, w, m]) => {
   RD = rd; R = r; PL = p; W = w; M = m; CLOCK = p.clock;
   render(); window.GRAKK_RADIO_READY = true;
+  /* Onboarding: first time tuning in, the station shows how to hide it. */
+  fetch('../data/onboarding.json').then(r => r.json()).then(O => { const r = O.radio, base = '../' + O.artBase; return window.GRAKK_INTRO.once({ ...r, clip: { ...r.clip, src: base + r.clip.src, still: base + r.clip.still } }); }).catch(() => {});
   setInterval(() => { if (!document.activeElement || document.activeElement.tagName !== 'TEXTAREA') render(); }, 60000);
 });
 </script>
