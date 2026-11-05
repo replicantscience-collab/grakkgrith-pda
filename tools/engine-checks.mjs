@@ -46,6 +46,9 @@ s.inventory[0].adds[6] = '4';
 u = E.undoLast();
 check('Undo refuses when the weapon was changed by hand afterwards', !u.ok && /changed later/.test(u.message) && s.inventory[0].adds[6] === '4', u.message);
 
+check('Undo ignores card bookkeeping fields and key order', E.sameValue({ name: 'Kit', adds: ['1'] }, { schema: 'GRAKKGRITH_ITEM_CARD', schemaVersion: 44, legacyUpgraded: true, tier: '', adds: ['1'], name: 'Kit' }));
+check('Undo still sees a real change to a card', !E.sameValue({ name: 'Kit', adds: ['1'] }, { name: 'Kit', adds: ['2'] }) && !E.sameValue({ name: 'Kit' }, { name: 'Kat' }));
+check('a raw save with no equipment block does not crash', create(() => ({ stats: {}, inventory: [] })).equippedItem('armor') === null);
 s = fresh(); s.stats.stress = '6';
 check('Push is refused at full Stress', !E.canPush() && !E.payPush().ok && s.stats.stress === '6');
 s.stats.stress = '2'; const p = E.payPush();

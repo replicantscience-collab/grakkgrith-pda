@@ -4,6 +4,7 @@
 //   npm install        (once)
 //   npm run smoke      (or: node tools/smoke-test.mjs)
 import { checkPlayerActions } from './player-actions-checks.mjs';
+import { checkSheetNow } from './sheet-now-checks.mjs';
 import { checkPlayerOffline } from './player-actions-offline.mjs';
 import { createServer } from 'node:http';
 import { readFile, stat } from 'node:fs/promises';
@@ -146,6 +147,7 @@ try {
 
     f = await open('fullSheetBtn', 2000);
     await checkPlayerActions(page, f, step, label);
+    await checkSheetNow(page, open, step);
     check(`${label}: no script errors or missing files`, errors.length === 0, [...new Set(errors)].slice(0, 5).join(' | '));
     await ctx.close();
   }

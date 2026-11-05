@@ -96,7 +96,7 @@ function create(getState, opts) {
     return Math.max(0,Math.min(SLOT_COUNT-BASE_UNLOCKED_SLOTS,Math.floor(n||0)));
   }
   function normalizeEquipIndex(v){ if(v===null||v===undefined||v==='') return null; const n=Number(v); return Number.isInteger(n)&&n>=0&&n<SLOT_COUNT?n:null; }
-  function equippedItem(which){ const idx=normalizeEquipIndex(S().equipment[which]); return idx===null?null:S().inventory[idx]; }
+  function equippedItem(which){ const idx=normalizeEquipIndex((S().equipment||{})[which]); return idx===null?null:((S().inventory||[])[idx]||null); } /* guarded: the one-page Sheet reads raw saves */
   function unlockedSlotCount(){ if(IS_SHOPS || S().inventoryRules?.slotLimitsEnabled===false) return SLOT_COUNT; const back=equippedItem('back'); return Math.max(BASE_UNLOCKED_SLOTS,Math.min(SLOT_COUNT,BASE_UNLOCKED_SLOTS+backSlotBonus(back))); }
   function attrNames(){ return ['muscle','reflex','wit','savvy','spark','root']; }
   function skillRankRaw(key){ return Math.max(0,Math.min(4,Math.floor(toNum(S().skills?.[key],0)))); }
@@ -209,6 +209,13 @@ function create(getState, opts) {
 
   function pushRoll(entry){ const s=S(); if(!Array.isArray(s.rollHistory)) s.rollHistory=[]; s.rollHistory.unshift(entry); s.rollHistory=s.rollHistory.slice(0,20); }
 
+  /* Undo's "was this changed later?" test compares what a value is, not how it is stored: Edit sheet adds
+     bookkeeping fields to item cards when it opens a save, and key order can differ between screens.
+     Bookkeeping fields are ignored, keys are sorted, and a missing field equals an empty one. */
+  const BOOKKEEPING = new Set(['schema','schemaVersion','migratedFromVersion','legacyUpgraded']);
+  function canon(v){ if(Array.isArray(v)) return v.map(canon); if(v&&typeof v==='object'){ const o={}; Object.keys(v).sort().forEach(k=>{ if(BOOKKEEPING.has(k)) return; const c=canon(v[k]); if(c===''||c===undefined||c===null) return; o[k]=c; }); return o; } return v===undefined||v===null?'':v; }
+  function sameValue(a,b){ return JSON.stringify(canon(a))===JSON.stringify(canon(b)); }
+
   /* Action history with guarded Undo (PR #8). before = playSnapshot() taken before the change. */
   function recordAction(label,detail,before){ ensurePlayAutomationState(); const s=S(); s.playAutomation.log.unshift({label,detail,time:playTimeStamp(),wound:s.stats.woundState,stress:s.stats.stress,heat:s.stats.heat}); s.playAutomation.log=s.playAutomation.log.slice(0,30); const changes=actionChanges(before,playSnapshot()); const slots=[...new Set(changes.filter(c=>c.path[0]==='inventory').map(c=>c.path[1]))]; s.playAutomation.undo.unshift({label,changes,items:slots.map(slot=>({slot,after:deepCopy(s.inventory[slot])}))}); s.playAutomation.undo=s.playAutomation.undo.slice(0,8); }
   /* Runs mutator; if it returns false nothing is recorded. Returns the mutator's message or false. */
@@ -219,7 +226,7 @@ function create(getState, opts) {
     ensurePlayAutomationState(); const s=S(), last=s.playAutomation.undo[0];
     if(!last) return {ok:false,message:'No action to undo.'};
     if(!last.changes) return {ok:false,message:'This older action uses a full snapshot. Undo is unavailable to protect later edits.'};
-    if((last.items||[]).some(item=>JSON.stringify(s.inventory[item.slot])!==JSON.stringify(item.after))||last.changes.some(c=>JSON.stringify(actionValue(c.path))!==JSON.stringify(c.hadAfter?c.after:undefined))) return {ok:false,message:'Cannot undo: an affected value changed later. Your edits have been kept.'};
+    if((last.items||[]).some(item=>!sameValue(s.inventory[item.slot],item.after))||last.changes.some(c=>!sameValue(actionValue(c.path),c.hadAfter?c.after:undefined))) return {ok:false,message:'Cannot undo: an affected value changed later. Your edits have been kept.'};
     for(const c of last.changes){const parent=c.path.slice(0,-1).reduce((v,k)=>v[k],s);const key=c.path.at(-1);if(c.hadBefore)parent[key]=deepCopy(c.before);else delete parent[key];}
     s.playAutomation.undo.shift();
     s.playAutomation.log.unshift({label:'UNDO',detail:'Reverted '+last.label+'. Rolls remain in history.',time:playTimeStamp(),wound:s.stats.woundState,stress:s.stats.stress,heat:s.stats.heat});
@@ -234,7 +241,7 @@ function create(getState, opts) {
 
   /* Reload an equipped weapon from the ammo source. -> {ok, message} */
   function canReload(which){ const s=S(), w=equippedItem(which), ai=normalizeEquipIndex(s.equipment&&s.equipment.ammoSource), ammo=ai===null?null:s.inventory[ai]; if(!w||!isWeaponClass(w)||!itemAllows(w,'reload')||!ammo||!isAmmoClass(ammo)||!sameAmmoType(w,ammo)) return false; const wc=counts(w),ac=counts(ammo); return wc.max>0&&wc.cur<wc.max&&ac.cur>0; }
-  function reloadEquipped(which){ const s=S(), idx=normalizeEquipIndex(s.equipment[which]); if(idx===null) return {ok:false,message:'No '+which+' weapon equipped.'}; const weapon=s.inventory[idx], ai=normalizeEquipIndex(s.equipment.ammoSource); if(!isWeaponClass(weapon)) return {ok:false,message:'Equipped '+which+' item is not a weapon.'}; if(ai===null) return {ok:false,message:'No ammo source selected.'}; const ammo=s.inventory[ai], wc=counts(weapon), ac=counts(ammo); if(!isAmmoClass(ammo)||!sameAmmoType(weapon,ammo)||wc.max<=0||wc.cur>=wc.max||ac.cur<=0) return {ok:false,message:'Reload blocked: check ammo source, matching type, weapon capacity, and available ammo.'}; const moved=Math.min(wc.max-wc.cur,ac.cur); setCur(weapon,wc.cur+moved); setCur(ammo,ac.cur-moved); const removed=removeIfNoRefillZero(ai); return {ok:true,message:'Reloaded '+(weapon.name||'weapon')+' with '+moved+' from '+(ammo.name||'ammo')+'.'+(removed?' Removed empty NO REFILL '+removed+'.':'')}; }
+  function reloadEquipped(which){ const s=S(), idx=normalizeEquipIndex((s.equipment||{})[which]); if(idx===null) return {ok:false,message:'No '+which+' weapon equipped.'}; const weapon=s.inventory[idx], ai=normalizeEquipIndex(s.equipment.ammoSource); if(!isWeaponClass(weapon)) return {ok:false,message:'Equipped '+which+' item is not a weapon.'}; if(ai===null) return {ok:false,message:'No ammo source selected.'}; const ammo=s.inventory[ai], wc=counts(weapon), ac=counts(ammo); if(!isAmmoClass(ammo)||!sameAmmoType(weapon,ammo)||wc.max<=0||wc.cur>=wc.max||ac.cur<=0) return {ok:false,message:'Reload blocked: check ammo source, matching type, weapon capacity, and available ammo.'}; const moved=Math.min(wc.max-wc.cur,ac.cur); setCur(weapon,wc.cur+moved); setCur(ammo,ac.cur-moved); const removed=removeIfNoRefillZero(ai); return {ok:true,message:'Reloaded '+(weapon.name||'weapon')+' with '+moved+' from '+(ammo.name||'ammo')+'.'+(removed?' Removed empty NO REFILL '+removed+'.':'')}; }
 
   /* Push: after a roll, +2 dice for +1 Stress. Refused at full Stress. -> {ok, message} */
   function canPush(){ const s=S(); return toNum(s.stats.stress,0)<stressCap(s.character.level); }
@@ -249,7 +256,7 @@ function create(getState, opts) {
     skillRankRaw, skillValue, stressCap, heatCap, defenseFromReflex, currentWoundIndex, currentConditions, classifyAttackProfile,
     rawAttackSteps, rollDicePool, countSuccesses, outcomeForCheck, woundRollPenalty, conditionRollEffects, buildPool,
     ensurePlayAutomationState, playSnapshot, actionChanges, actionValue, playTimeStamp, clearSlotByIndex, removeIfNoRefillZero,
-    deriveCore, resolveAttack, attackPool, pushRoll, recordAction, act, canUndo, undoLast, canUse, useSlot, usePreview,
+    sameValue, deriveCore, resolveAttack, attackPool, pushRoll, recordAction, act, canUndo, undoLast, canUse, useSlot, usePreview,
     canReload, reloadEquipped, canPush, payPush
   };
 }

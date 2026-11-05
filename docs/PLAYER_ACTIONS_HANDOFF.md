@@ -1,5 +1,12 @@
 # Player actions — Codex / Claude coordination
 
+> **Update 2026-11-05: integrated.** PR #8's rules now live in `apps/engine.js`, the shared engine both
+> character screens run. Edit sheet keeps its Now panel; the one-page Sheet has its own Now box (Attack,
+> Reload, Use, Push, Undo, tap a skill to roll) on the same engine and the same save, so Undo works across
+> both screens. The behavioral contract below still holds and is covered by `tools/engine-checks.mjs`,
+> `tools/player-actions-checks.mjs` and `tools/sheet-now-checks.mjs`. Undo's "changed later" test now
+> compares card content, not storage details (see `sameValue` in the engine).
+
 Branch: `codex/player-actions`, based on `main` at `66c6cf7`.
 
 ## Scope and ownership
