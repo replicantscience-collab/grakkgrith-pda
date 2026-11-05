@@ -111,3 +111,11 @@ body.pda-art::before{display:none}
   .pda-art .subNav{flex-wrap:wrap!important;justify-content:center!important;overflow:visible!important;padding:6px 4px 2px!important;gap:5px}
   .pda-art .subTab{min-height:36px;padding:5px 11px;font-size:12px}
 }
+
+/* Hide it (panic switch to City ID), beside the character chip */
+.charGroup{display:flex;align-items:stretch;gap:8px}
+.pda-art .hideIt{display:inline-flex;align-items:center;gap:6px;min-height:44px;padding:6px 12px;border:1px solid rgba(252,108,116,.6);border-radius:10px;background:rgba(10,11,22,.85);color:#fc6c74;font:700 13px/1 var(--art-ui);letter-spacing:.1em;text-transform:uppercase;cursor:pointer}
+.pda-art .hideIt .ico{width:18px;height:18px}
+.pda-art .hideIt:hover{background:rgba(252,108,116,.12)}
+.pda-art .hideIt:focus-visible{outline:var(--art-focus);outline-offset:2px}
+@media (max-width:520px){.pda-art .hideIt span{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}.pda-art .hideIt{padding:6px 10px}}
