@@ -1,0 +1,94 @@
+/* Slim pass: loaded last on every World panel. Makes the older screens match the newer app screens
+   (apps/screen.css): a short title strip instead of the framed banner, no repeated character buttons,
+   and the character note only when there is a character. */
+
+/* Title strip (every World panel except the old Start, which apps/start.html replaced) */
+body.pda-art .hero[data-has]{display:flex!important;align-items:flex-end;justify-content:space-between;gap:16px;flex-wrap:wrap;
+  min-height:0!important;padding:4px 0 14px!important;border:0!important;border-bottom:1px solid rgba(118,80,45,.7)!important;border-radius:0!important;
+  background:none!important;box-shadow:none!important;overflow:visible}
+body.pda-art .hero[data-has]::before,body.pda-art .hero[data-has]::after{content:none!important;display:none!important}
+body.pda-art .hero[data-has] .kicker{font-size:13px}
+body.pda-art .hero[data-has] .title{margin:4px 0 6px!important;font-size:clamp(32px,4.6vw,50px)!important;line-height:1!important;text-shadow:3px 4px 0 #48213f!important;text-transform:none}
+/* Each page opens with its own lead line, so the strip's summary line would say it twice */
+body.pda-art .hero[data-has] .copy{display:none!important}
+body.pda-art .hero[data-has] .actions{display:none!important}
+/* The character chip in the top bar already shows who is active, so the note is hidden either way */
+body.pda-art .hero[data-has] .ops{display:none!important}
+body.pda-art .hero[data-has="1"] .ops{transform:none!important;padding:8px 12px!important;border-left-width:4px!important;box-shadow:none!important;max-width:260px}
+body.pda-art .hero[data-has="1"] .ops strong{font:700 11px/1.2 var(--art-ui)!important;letter-spacing:.12em;text-transform:uppercase;color:#5b254e!important}
+body.pda-art .hero[data-has="1"] .ops p:nth-of-type(1){margin:2px 0 0;font-size:16px}
+body.pda-art .hero[data-has="1"] .ops p:nth-of-type(2){display:none}
+body.pda-art .dashboard{margin-top:14px!important}
+
+/* Reference pages (Quickstart, Rules, Build, Anchors, Magic & tech, Stickers) were a green terminal; bring them onto the kit */
+body.pda-art,body.pda-art .panel,body.pda-art .panel p,body.pda-art .panel li{font-family:var(--art-body)}
+body.pda-art .panel :is(h2,h3){font-family:var(--art-title)!important;color:#ffc55f!important;text-shadow:none!important;letter-spacing:.01em}
+body.pda-art .panel h2{font-size:26px!important}
+body.pda-art .panel h3{font-size:21px!important}
+body.pda-art .panel :is(pre,code){font-family:var(--art-ui)}
+
+/* Folded explainers ("How this works") */
+body.pda-art details.howto{margin:12px 0;border:1px solid rgba(118,80,45,.8);border-radius:8px;background:rgba(10,11,22,.6)}
+body.pda-art details.howto>summary{cursor:pointer;list-style:none;padding:10px 14px;color:var(--art-cyan);font:700 14px/1.2 var(--art-ui);letter-spacing:.08em;text-transform:uppercase}
+body.pda-art details.howto>summary::-webkit-details-marker{display:none}
+body.pda-art details.howto>summary::before{content:"+ ";color:var(--art-magenta)}
+body.pda-art details.howto[open]>summary::before{content:"– "}
+body.pda-art details.howto>.howtoBody{padding:0 14px 12px}
+
+@media (max-width:860px){
+  body.pda-art .hero[data-has="1"] .ops{max-width:none;width:100%}
+}
+
+/* The title strip already names the page; the panel's own first heading repeated it */
+body.pda-art #panel>h1:first-child{display:none!important}
+
+/* ---------- Character Sheet: one of everything ----------
+   Done here, not in apps/player.html, so it doesn't collide with the codex/player-actions branch.
+   Hidden buttons still work: the quick bar presses them for you. */
+/* The "sheet wisdom" banner, and the hint line under every section header */
+body[data-panel="sheet"] .compactGuide,body[data-panel="sheet"] .accordionHint{display:none!important}
+/* Three ways to jump around became one: Scene Shape stays; "Scurry to" and the Hurts/Clatter/Loot/Lurkwork buttons go
+   (the stat tiles and section headers already open their sections) */
+body[data-panel="sheet"] .compactJumpBar,body[data-panel="sheet"] .quickActions{display:none!important}
+/* Hurt and Stress buttons appeared three times (quick bar, automation panel, wound/stress tracks). Keep the quick bar's. */
+body[data-panel="sheet"] :is(#autoDamageBtn,#autoPatchBtn,#autoStressBtn,#autoCoolBtn,#autoFireActiveBtn,#undoPlayActionBtn,#woundDownBtn,#woundUpBtn,#stressDownBtn,#stressUpBtn){display:none!important}
+body[data-panel="sheet"] .quickTrackerControls [data-quick-open="system"]{display:none!important}
+body[data-panel="sheet"] .quickTrackerControls{grid-template-columns:repeat(auto-fit,minmax(110px,1fr))!important}
+/* Calmer chrome */
+body[data-panel="sheet"] .compactModeBar{margin:8px 0!important;padding:6px 0!important;border:0!important;background:none!important;box-shadow:none!important}
+body[data-panel="sheet"] .playAutomationHead strong{font-size:12px}
+/* Caps already show in the Nerves/Heat tiles (0/6); graze help and the "no warnings" line are noise */
+body[data-panel="sheet"] .twocol:has(#stressCapDisplay),body[data-panel="sheet"] .field:has(#grazeFlagCheck) .small,body[data-panel="sheet"] .playAlert.ok{display:none!important}
+/* Loadout: five small slots in a row instead of five tall boxes stacked; the long how-slots-work note goes */
+body[data-panel="sheet"] .equipGrid{grid-template-columns:repeat(auto-fit,minmax(170px,1fr))!important}
+body[data-panel="sheet"] .equipBox{min-height:0!important;grid-template-columns:auto 1fr!important;padding:8px 10px!important}
+body[data-panel="sheet"] .equipBox .equipImg{width:56px}
+body[data-panel="sheet"] .equipBox .equipImg.hidden{display:none}
+body[data-panel="sheet"] #armorConditionPanel+.small{display:none!important}
+/* Stats table: drop rows the tiles and loadout slots already show (Tracks, Armor/Back slot, Active, Secondary, Ammo) */
+body[data-panel="sheet"] #combatSummary>.combatLine:is(:nth-child(3),:nth-child(5),:nth-child(6),:nth-child(9),:nth-child(10),:nth-child(11)){display:none!important}
+body[data-panel="sheet"] #combatSummary>.combatLine:nth-child(12):has(.combatVal:empty){display:none!important}
+/* No armor on: no armor-repair controls */
+body[data-panel="sheet"] #armorConditionPanel:has(#armorConditionReadout>.small:only-child){display:none!important}
+
+/* ---------- Shiny Bit Details lives in the Workshop (Item cards) ---------- */
+body[data-panel="sheet"]:not([data-view="items"]) .accordionSection[data-section-id="item"]{display:none!important}
+body[data-panel="sheet"]:not([data-view="items"]) .accordionSection[data-section-id="inventory"]>.accordionBody::after{content:"Make or edit item cards in the Workshop, under Item cards.";display:block;margin-top:10px;color:var(--art-muted);font-size:14px}
+/* Item cards view: just the Stuff Sack and the card editor, both open */
+body[data-view="items"] :is(.compactGuide,.compactQuickBar,.compactModeBar,.compactJumpBar){display:none!important}
+body[data-view="items"] .accordionSection:not([data-section-id="inventory"]):not([data-section-id="item"]){display:none!important}
+body[data-view="items"] .accordionSection:is([data-section-id="inventory"],[data-section-id="item"])>.accordionBody{display:block!important}
+body[data-view="items"] .accordionSection .pinToggle,body[data-view="items"] .accordionSection .accordionChevron{display:none!important}
+/* Authoring mode ignores bag limits, so it shows all 80 slots: keep the first 20, plus any further slot in use */
+body[data-view="items"] #invGrid>.slot:nth-child(n+21):not(.selected):has(.name:empty){display:none!important}
+/* Equipping is the sheet's job */
+body[data-view="items"] :is(#setActiveBtn,#setSecondaryBtn,#setAmmoSourceBtn,#setArmorBtn,#setBackBtn,#clearEquipBtn){display:none!important}
+
+/* Stickers page: Pulse's Patchkin sticker crops on each sigil */
+body.pda-art .stkRow{display:flex;flex-wrap:wrap;gap:10px;margin:8px 0 10px}
+body.pda-art .stkRow.wide{gap:12px}
+body.pda-art .stk{margin:0;width:96px;text-align:center}
+body.pda-art .stk img{display:block;width:96px;height:96px;object-fit:cover;border-radius:12px;border:1px solid rgba(215,172,97,.45);background:#0b0c16}
+body.pda-art .stk figcaption{margin-top:4px;color:var(--art-cream);font:700 11px/1.2 var(--art-ui);letter-spacing:.06em;text-transform:uppercase}
+@media (max-width:520px){body.pda-art .stk,body.pda-art .stk img{width:76px}body.pda-art .stk img{height:76px}}
+body.pda-art .stk figcaption{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}

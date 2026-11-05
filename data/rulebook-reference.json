@@ -1,6 +1,6 @@
 {
   "_about": "Checkable facts copied from the GRAKKGRITH First Edition rulebook. tools/check-rules.mjs compares data/rules.json against this. When the rulebook changes, update this file first; the check will then show exactly what rules.json still needs.",
-  "rulebook": "First Edition v1.47",
+  "rulebook": "First Edition v1.52",
   "races": {
     "Goblin": {
       "mods": {
@@ -9,7 +9,8 @@
         "root": 1
       },
       "resistance": [
-        "Chemical"
+        "Chemical",
+        "Disease"
       ],
       "vulnerability": []
     },
@@ -329,5 +330,73 @@
     "rulebook": [
       "Vampire"
     ]
-  }
+  },
+  "costOfLiving": {
+    "housing": {
+      "commons": 40,
+      "mixed": 80,
+      "corporate": 150
+    },
+    "food": 20,
+    "gear": [
+      10,
+      30
+    ],
+    "chrome": [
+      20,
+      50
+    ]
+  },
+  "heatLadder": [
+    {
+      "min": 0,
+      "max": 1
+    },
+    {
+      "min": 2,
+      "max": 3
+    },
+    {
+      "min": 4,
+      "max": 5
+    },
+    {
+      "min": 6,
+      "max": 8
+    }
+  ],
+  "nonDamageResistances": [
+    "Disease"
+  ],
+  "reacts": [
+    "Dodge",
+    "Block",
+    "Return Fire",
+    "Riposte",
+    "Interrupt"
+  ],
+  "jobs": [
+    "Power Tap Installation",
+    "Generator Repair",
+    "Patch Grid Maintenance",
+    "Courier Work",
+    "Extract",
+    "Transit Fraud",
+    "Data Theft",
+    "Surveillance",
+    "Missing Person Retrieval",
+    "Eviction Interference",
+    "Protection Work",
+    "Illegal Rooftop Market Security",
+    "Medicine Smuggling",
+    "Off-Book Medical Care",
+    "Spotter Work",
+    "Bloom Clearance",
+    "Radio Sewers Support",
+    "Document Forgery",
+    "Compliance Obstruction",
+    "Black Market Acquisition",
+    "Faction Mediation",
+    "Sample Run"
+  ]
 }

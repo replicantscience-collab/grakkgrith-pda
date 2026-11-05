@@ -78,3 +78,6 @@ body.pda-art .footer{color:var(--art-muted)}
   body.pda-art .module{flex:0 0 auto}
 }
 @media (prefers-reduced-motion:reduce){body.pda-art .ops{transform:none}}
+
+/* The shell's section tabs and sub-tabs drive navigation now; the page's own panel rail is redundant. */
+body.pda-art .rail{display:none!important}

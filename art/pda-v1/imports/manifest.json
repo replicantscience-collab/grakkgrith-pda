@@ -1,0 +1,350 @@
+{
+  "name": "Adyta PDA faction & Patchkin art reference pack",
+  "version": "2026-10-30-a",
+  "count_originals": 10,
+  "policy": {
+    "provenance": "User-supplied prior art; original files preserved in originals.",
+    "official_vs_unofficial": "Faction posters are concept campaign material; Patchkin imagery is maker/Sideways material. Neither changes official rules, maps, identities, or governance.",
+    "text": "All source slogans, labels and claims are baked into the images. For UI render authoritative text via HTML/data, not extracted graphic text.",
+    "image_crops": "Web optimized full sheets are safe to use as visual references. Rough-crop stickers have rectangular black backgrounds and should receive proper masks if used as production die-cut art.",
+    "integration": "Place this archive at the repository root; these relative art paths resolve under art/pda-v1/imports/. Do not modify canon/data to match artwork. Bump sw.js after integration."
+  },
+  "items": [
+    {
+      "kind": "faction-poster",
+      "slug": "velvet-signal",
+      "title": "Velvet Signal",
+      "poster": "factions/posters/velvet-signal.webp",
+      "card": "factions/cards/velvet-signal-scene.webp",
+      "visual_identity": "Neon magenta & electric cyan",
+      "description": "Corporate media / narrative management",
+      "canon": "Visual proposal/reference only; review with Nib, including slogans and statistics before publishing."
+    },
+    {
+      "kind": "faction-poster",
+      "slug": "new-halo",
+      "title": "New Halo",
+      "poster": "factions/posters/new-halo.webp",
+      "card": "factions/cards/new-halo-scene.webp",
+      "visual_identity": "Warm gold & midnight black",
+      "description": "Crownline residential development campaign",
+      "canon": "Visual proposal/reference only; review with Nib, including slogans and statistics before publishing."
+    },
+    {
+      "kind": "faction-poster",
+      "slug": "crownline",
+      "title": "Crownline",
+      "poster": "factions/posters/crownline.webp",
+      "card": "factions/cards/crownline-scene.webp",
+      "visual_identity": "Silver white & institutional blue",
+      "description": "Transit, access control & infrastructure",
+      "canon": "Visual proposal/reference only; review with Nib, including slogans and statistics before publishing."
+    },
+    {
+      "kind": "faction-poster",
+      "slug": "bastion-dynamics",
+      "title": "Bastion Dynamics",
+      "poster": "factions/posters/bastion-dynamics.webp",
+      "card": "factions/cards/bastion-dynamics-scene.webp",
+      "visual_identity": "Black, matte gold & steel",
+      "description": "Private security & enforcement",
+      "canon": "Visual proposal/reference only; review with Nib, including slogans and statistics before publishing."
+    },
+    {
+      "kind": "sticker-sheet",
+      "slug": "patchkin-utility",
+      "title": "Patchkin Utility Sigils",
+      "sheet": "stickers/sheets/patchkin-utility.webp",
+      "display_text": "Baked into source image; verify before publishing as item icons.",
+      "canon": "Brand / maker art, not automatically a canonical gameplay effect.",
+      "rough_crops": [
+        {
+          "label": "Fix",
+          "path": "stickers/rough-crops/patchkin-utility/01-fix.webp",
+          "quality": "rough rectangular crop, no transparent die-cut mask"
+        },
+        {
+          "label": "Anchor",
+          "path": "stickers/rough-crops/patchkin-utility/02-anchor.webp",
+          "quality": "rough rectangular crop, no transparent die-cut mask"
+        },
+        {
+          "label": "Shield",
+          "path": "stickers/rough-crops/patchkin-utility/03-shield.webp",
+          "quality": "rough rectangular crop, no transparent die-cut mask"
+        },
+        {
+          "label": "Focus",
+          "path": "stickers/rough-crops/patchkin-utility/04-focus.webp",
+          "quality": "rough rectangular crop, no transparent die-cut mask"
+        },
+        {
+          "label": "Charge",
+          "path": "stickers/rough-crops/patchkin-utility/05-charge.webp",
+          "quality": "rough rectangular crop, no transparent die-cut mask"
+        },
+        {
+          "label": "Seal",
+          "path": "stickers/rough-crops/patchkin-utility/06-seal.webp",
+          "quality": "rough rectangular crop, no transparent die-cut mask"
+        },
+        {
+          "label": "Cleanse",
+          "path": "stickers/rough-crops/patchkin-utility/07-cleanse.webp",
+          "quality": "rough rectangular crop, no transparent die-cut mask"
+        },
+        {
+          "label": "Route",
+          "path": "stickers/rough-crops/patchkin-utility/08-route.webp",
+          "quality": "rough rectangular crop, no transparent die-cut mask"
+        },
+        {
+          "label": "Patch",
+          "path": "stickers/rough-crops/patchkin-utility/09-patch.webp",
+          "quality": "rough rectangular crop, no transparent die-cut mask"
+        },
+        {
+          "label": "Boost",
+          "path": "stickers/rough-crops/patchkin-utility/10-boost.webp",
+          "quality": "rough rectangular crop, no transparent die-cut mask"
+        },
+        {
+          "label": "Safe Enough",
+          "path": "stickers/rough-crops/patchkin-utility/11-safe-enough.webp",
+          "quality": "rough rectangular crop, no transparent die-cut mask"
+        },
+        {
+          "label": "Shop Safe",
+          "path": "stickers/rough-crops/patchkin-utility/12-shop-safe.webp",
+          "quality": "rough rectangular crop, no transparent die-cut mask"
+        }
+      ]
+    },
+    {
+      "kind": "sticker-sheet",
+      "slug": "patchkin-mischief",
+      "title": "Patchkin Mischief Sigils",
+      "sheet": "stickers/sheets/patchkin-mischief.webp",
+      "display_text": "Baked into source image; verify before publishing as item icons.",
+      "canon": "Brand / maker art, not automatically a canonical gameplay effect.",
+      "rough_crops": [
+        {
+          "label": "Distract",
+          "path": "stickers/rough-crops/patchkin-mischief/01-distract.webp",
+          "quality": "rough rectangular crop, no transparent die-cut mask"
+        },
+        {
+          "label": "Detour",
+          "path": "stickers/rough-crops/patchkin-mischief/02-detour.webp",
+          "quality": "rough rectangular crop, no transparent die-cut mask"
+        },
+        {
+          "label": "Glitch",
+          "path": "stickers/rough-crops/patchkin-mischief/03-glitch.webp",
+          "quality": "rough rectangular crop, no transparent die-cut mask"
+        },
+        {
+          "label": "Jam",
+          "path": "stickers/rough-crops/patchkin-mischief/04-jam.webp",
+          "quality": "rough rectangular crop, no transparent die-cut mask"
+        },
+        {
+          "label": "Mute",
+          "path": "stickers/rough-crops/patchkin-mischief/05-mute.webp",
+          "quality": "rough rectangular crop, no transparent die-cut mask"
+        },
+        {
+          "label": "Misplace",
+          "path": "stickers/rough-crops/patchkin-mischief/06-misplace.webp",
+          "quality": "rough rectangular crop, no transparent die-cut mask"
+        },
+        {
+          "label": "Hide",
+          "path": "stickers/rough-crops/patchkin-mischief/07-hide.webp",
+          "quality": "rough rectangular crop, no transparent die-cut mask"
+        },
+        {
+          "label": "Sneak",
+          "path": "stickers/rough-crops/patchkin-mischief/08-sneak.webp",
+          "quality": "rough rectangular crop, no transparent die-cut mask"
+        },
+        {
+          "label": "Delay",
+          "path": "stickers/rough-crops/patchkin-mischief/09-delay.webp",
+          "quality": "rough rectangular crop, no transparent die-cut mask"
+        },
+        {
+          "label": "Confuse",
+          "path": "stickers/rough-crops/patchkin-mischief/10-confuse.webp",
+          "quality": "rough rectangular crop, no transparent die-cut mask"
+        },
+        {
+          "label": "Ghost",
+          "path": "stickers/rough-crops/patchkin-mischief/11-ghost.webp",
+          "quality": "rough rectangular crop, no transparent die-cut mask"
+        },
+        {
+          "label": "Not My Problem",
+          "path": "stickers/rough-crops/patchkin-mischief/12-not-my-problem.webp",
+          "quality": "rough rectangular crop, no transparent die-cut mask"
+        }
+      ]
+    },
+    {
+      "kind": "sticker-sheet",
+      "slug": "patchkin-ritual",
+      "title": "Patchkin Ritual Labels",
+      "sheet": "stickers/sheets/patchkin-ritual.webp",
+      "display_text": "Baked into source image; verify before publishing as item icons.",
+      "canon": "Brand / maker art, not automatically a canonical gameplay effect.",
+      "rough_crops": [
+        {
+          "label": "Attuned",
+          "path": "stickers/rough-crops/patchkin-ritual/01-attuned.webp",
+          "quality": "rough rectangular crop, no transparent die-cut mask"
+        },
+        {
+          "label": "Do Not Open",
+          "path": "stickers/rough-crops/patchkin-ritual/02-do-not-open.webp",
+          "quality": "rough rectangular crop, no transparent die-cut mask"
+        },
+        {
+          "label": "Containment",
+          "path": "stickers/rough-crops/patchkin-ritual/03-containment.webp",
+          "quality": "rough rectangular crop, no transparent die-cut mask"
+        },
+        {
+          "label": "No Blood",
+          "path": "stickers/rough-crops/patchkin-ritual/04-no-blood.webp",
+          "quality": "rough rectangular crop, no transparent die-cut mask"
+        },
+        {
+          "label": "No Promises",
+          "path": "stickers/rough-crops/patchkin-ritual/05-no-promises.webp",
+          "quality": "rough rectangular crop, no transparent die-cut mask"
+        },
+        {
+          "label": "Soul Adjacent",
+          "path": "stickers/rough-crops/patchkin-ritual/06-soul-adjacent.webp",
+          "quality": "rough rectangular crop, no transparent die-cut mask"
+        },
+        {
+          "label": "Murr",
+          "path": "stickers/rough-crops/patchkin-ritual/07-murr.webp",
+          "quality": "rough rectangular crop, no transparent die-cut mask"
+        },
+        {
+          "label": "Thrik",
+          "path": "stickers/rough-crops/patchkin-ritual/08-thrik.webp",
+          "quality": "rough rectangular crop, no transparent die-cut mask"
+        },
+        {
+          "label": "Shop Safe",
+          "path": "stickers/rough-crops/patchkin-ritual/09-shop-safe.webp",
+          "quality": "rough rectangular crop, no transparent die-cut mask"
+        },
+        {
+          "label": "Safe Enough",
+          "path": "stickers/rough-crops/patchkin-ritual/10-safe-enough.webp",
+          "quality": "rough rectangular crop, no transparent die-cut mask"
+        },
+        {
+          "label": "Not For Voth",
+          "path": "stickers/rough-crops/patchkin-ritual/11-not-for-voth.webp",
+          "quality": "rough rectangular crop, no transparent die-cut mask"
+        },
+        {
+          "label": "Sideways",
+          "path": "stickers/rough-crops/patchkin-ritual/12-sideways.webp",
+          "quality": "rough rectangular crop, no transparent die-cut mask"
+        }
+      ]
+    },
+    {
+      "kind": "sticker-sheet",
+      "slug": "patchkin-technomancy",
+      "title": "Patchkin Technomancy Stickers",
+      "sheet": "stickers/sheets/patchkin-technomancy.webp",
+      "display_text": "Baked into source image; verify before publishing as item icons.",
+      "canon": "Brand / maker art, not automatically a canonical gameplay effect.",
+      "rough_crops": [
+        {
+          "label": "Signal Loop",
+          "path": "stickers/rough-crops/patchkin-technomancy/01-signal-loop.webp",
+          "quality": "rough rectangular crop, no transparent die-cut mask"
+        },
+        {
+          "label": "Circuit Ward",
+          "path": "stickers/rough-crops/patchkin-technomancy/02-circuit-ward.webp",
+          "quality": "rough rectangular crop, no transparent die-cut mask"
+        },
+        {
+          "label": "Tinker Hex",
+          "path": "stickers/rough-crops/patchkin-technomancy/03-tinker-hex.webp",
+          "quality": "rough rectangular crop, no transparent die-cut mask"
+        },
+        {
+          "label": "Static Prayer",
+          "path": "stickers/rough-crops/patchkin-technomancy/04-static-prayer.webp",
+          "quality": "rough rectangular crop, no transparent die-cut mask"
+        },
+        {
+          "label": "Debug Rite",
+          "path": "stickers/rough-crops/patchkin-technomancy/05-debug-rite.webp",
+          "quality": "rough rectangular crop, no transparent die-cut mask"
+        },
+        {
+          "label": "Spark Seal",
+          "path": "stickers/rough-crops/patchkin-technomancy/06-spark-seal.webp",
+          "quality": "rough rectangular crop, no transparent die-cut mask"
+        },
+        {
+          "label": "Attune",
+          "path": "stickers/rough-crops/patchkin-technomancy/07-attune.webp",
+          "quality": "rough rectangular crop, no transparent die-cut mask"
+        },
+        {
+          "label": "Frequency Lock",
+          "path": "stickers/rough-crops/patchkin-technomancy/08-frequency-lock.webp",
+          "quality": "rough rectangular crop, no transparent die-cut mask"
+        },
+        {
+          "label": "Vekkspar",
+          "path": "stickers/rough-crops/patchkin-technomancy/09-vekkspar.webp",
+          "quality": "rough rectangular crop, no transparent die-cut mask"
+        },
+        {
+          "label": "Battery Saint",
+          "path": "stickers/rough-crops/patchkin-technomancy/10-battery-saint.webp",
+          "quality": "rough rectangular crop, no transparent die-cut mask"
+        },
+        {
+          "label": "Wrench Rune",
+          "path": "stickers/rough-crops/patchkin-technomancy/11-wrench-rune.webp",
+          "quality": "rough rectangular crop, no transparent die-cut mask"
+        },
+        {
+          "label": "Node Key",
+          "path": "stickers/rough-crops/patchkin-technomancy/12-node-key.webp",
+          "quality": "rough rectangular crop, no transparent die-cut mask"
+        }
+      ]
+    },
+    {
+      "kind": "sticker-sheet",
+      "slug": "patchkin-mischief-alt",
+      "title": "Patchkin Mischief Sigils (alternate export)",
+      "sheet": "stickers/sheets/patchkin-mischief-alt.webp",
+      "display_text": "Baked into source image; verify before publishing as item icons.",
+      "canon": "Brand / maker art, not automatically a canonical gameplay effect."
+    },
+    {
+      "kind": "sticker-sheet",
+      "slug": "patchkin-marks-collage",
+      "title": "Patchkin Technomancy / Marks Collage",
+      "sheet": "stickers/sheets/patchkin-marks-collage.webp",
+      "display_text": "Baked into source image; verify before publishing as item icons.",
+      "canon": "Brand / maker art, not automatically a canonical gameplay effect."
+    }
+  ]
+}
