@@ -484,6 +484,7 @@
         "legality": "restricted"
       }
     ],
-    "failHeat": 1
+    "failHeat": 1,
+    "blurb": "Take a run off the board, walk or tram it in Explore, and get paid when you arrive. Each run takes a downtime action."
   }
 }

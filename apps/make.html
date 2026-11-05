@@ -57,6 +57,7 @@ input:focus,select:focus{outline:none;border-color:var(--art-cyan);box-shadow:0 
   </div>
 </div>
 <div class="toast" id="toast" role="status" aria-live="polite"></div>
+<script src="./screen.js"></script>
 <script src="./week.js"></script>
 <script src="./make.js"></script>
 <script>
@@ -117,7 +118,7 @@ function sheetsHtml() { const sheets = ((window.ART && ART.items) || []).filter(
 /* Runner delivery board: real runs on the Explore map. */
 function boardHtml(s) {
   const t = now(), jobs = MK.board(s, M, PLACES, t), left = MK.downtimeLeft(s), next = (Math.floor(t / (M.deliveries.refreshHours * 3600000)) + 1) * M.deliveries.refreshHours * 3600000;
-  return `<p class="note" style="margin-top:14px">${esc(M.deliveries._about)} New jobs ${esc(WK.untilText(next - t).replace(' left', ''))} from now.</p>` + jobs.map(j => `<article class="letter ${j.cargo.legality === 'restricted' ? 'notice' : 'bill'}"><div class="from">${esc(j.from.name)} · ${esc(j.from.districtName)}</div>
+  return `<p class="note" style="margin-top:14px">${esc(M.deliveries.blurb)} New runs ${esc(WK.untilText(next - t).replace(' left', ''))} from now.</p>` + jobs.map(j => `<article class="letter ${j.cargo.legality === 'restricted' ? 'notice' : 'bill'}"><div class="from">${esc(j.from.name)} · ${esc(j.from.districtName)}</div>
     <h3>${esc(j.cargo.name)} to ${esc(j.to.name)}</h3>${j.cargo.legality === 'restricted' ? '<span class="tag2">restricted</span>' : ''}${j.cargo.noLate ? '<span class="tag2">no late delivery</span>' : ''}
     <p>${esc(j.cargo.text)}</p><dl class="order" style="display:grid;grid-template-columns:auto 1fr;gap:4px 14px;margin:8px 0"><dt>Pick up</dt><dd>${esc(j.from.name)}, ${esc(j.from.districtName)}</dd><dt>Drop off</dt><dd>${esc(j.to.name)}, ${esc(j.to.districtName)}</dd><dt>Pays</dt><dd><b>${j.pay} cr</b> on arrival</dd><dt>Deadline</dt><dd>${j.hours} Adyta hours once you take it</dd></dl>
     <div class="actions">${j.taken ? '<span class="stamp read" style="position:static;transform:none">taken</span>' : `<button class="primary" data-take="${j.id}" ${left ? '' : 'disabled'}>Take it</button>`}<button class="ghost" data-go="${j.from.place}">See it on the map</button></div></article>`).join('')
@@ -154,7 +155,7 @@ function workHtml(s) {
 
 function render() {
   const s = load();
-  if (!hasChar(s)) { $('who').textContent = 'No character yet. Make one in Character Setup first.'; ['strip', 'maker', 'work'].forEach(id => $(id).innerHTML = ''); return; }
+  GRAKK_SCREEN.noChar(!hasChar(s), 'Your Workshop is where you make and sell things from your class. Make a character to open it.'); if (!hasChar(s)) { ['strip', 'maker', 'work'].forEach(id => $(id).innerHTML = ''); return; }
   MK.ensure(s);
   $('who').textContent = `${s.character.name}, ${s.character.class || 'no class'}${s.character.subclass ? ' (' + s.character.subclass + ')' : ''}. Each Make takes one of your two downtime actions.`;
   const heat = Number(s.stats?.heat || 0);

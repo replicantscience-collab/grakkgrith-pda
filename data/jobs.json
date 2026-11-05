@@ -178,9 +178,9 @@
   },
   "outcome": {
     "partialPay": 0.5,
-    "partialNote": "Draft: the book fixes payment before the job; how much a partial result earns is the table's call. Half is the PDA's default.",
+    "partialNote": "A partial result pays half unless the table says otherwise.",
     "marks": 1,
-    "marksNote": "Rulebook: completing a job objective, fully or partially, earns a Mark (max 3 Marks per session)."
+    "marksNote": "Finishing a job, fully or partly, earns a Mark (max 3 per session)."
   },
   "jobs": [
     {

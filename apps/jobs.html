@@ -27,8 +27,8 @@
 .closeout input[type=radio],.closeout input[type=checkbox]{width:20px;height:20px;flex:none;margin-top:1px;accent-color:#7a2f6a}
 .closeout input[type=number],.closeout textarea{width:100%;min-height:44px;padding:8px;border:1px solid #8a6a48;border-radius:6px;background:#fffaf0;color:#2c1c18;font:16px var(--art-body)}
 .closeout h4{margin:8px 0 2px;color:#7a2f6a;font:700 12px var(--art-ui);letter-spacing:.1em;text-transform:uppercase}
-.rules{font-size:14px}
-.rules p{margin:6px 0}
+.rules,#rules{font-size:14px}
+.rules p,#rules p{margin:6px 0}
 @media (max-width:860px){.board{grid-template-columns:1fr}}
 </style>
 </head>
@@ -41,7 +41,7 @@
     <section class="frame" aria-labelledby="boardH"><h2 id="boardH">Posted today</h2><p class="note" id="boardNote"></p><div class="board" id="board"></div></section>
     <aside>
       <section class="frame" aria-labelledby="mineH"><h2 id="mineH">Your jobs</h2><div id="mine"></div></section>
-      <section class="frame rules" aria-labelledby="rulesH"><h2 id="rulesH">How jobs work</h2><div id="rules"></div></section>
+      <details class="howto"><summary>How jobs work</summary><div class="howtoBody" id="rules"></div></details>
     </aside>
   </div>
 </div>
@@ -80,7 +80,7 @@ function mineCard(j) {
     h += `<div class="actions">${j.status === 'taken' ? `<button class="primary" data-start="${j.id}">We're on the job</button>` : ''}${j.status === 'on' && !j.twist ? `<button data-twist="${j.id}">Something's off (the twist)</button>` : ''}<button class="ghost" data-go="${j.place.place}">Map</button><button class="ghost" data-drop="${j.id}">Walk away</button></div>`;
     if (j.status === 'on') h += `<form class="closeout" data-close="${j.id}"><h4>Close it out</h4>
       <label><input type="radio" name="o" value="success" checked> <span><b>Done.</b> ${j.pay != null ? `${j.pay} cr.` : ''} +1 Mark.</span></label>
-      <label><input type="radio" name="o" value="partial"> <span><b>Partly done.</b> ${j.pay != null ? `${Math.round(j.pay * J.outcome.partialPay)} cr (draft: half).` : ''} +1 Mark.</span></label>
+      <label><input type="radio" name="o" value="partial"> <span><b>Partly done.</b> ${j.pay != null ? `${Math.round(j.pay * J.outcome.partialPay)} cr (half).` : ''} +1 Mark.</span></label>
       <label><input type="radio" name="o" value="failed"> <span><b>Failed.</b> No pay, no Mark. Heat still comes.</span></label>
       ${j.pay == null ? `<label style="display:block"><b>What it actually paid</b><input type="number" name="paid" min="0" value="0" aria-label="What it actually paid"></label>` : ''}
       <h4>What happened (execution Heat)</h4>${J.heat.execution.map(e => `<label><input type="checkbox" name="x" value="${e.heat}"> <span><b>+${e.heat}</b> ${esc(e.text)}</span></label>`).join('')}
@@ -100,7 +100,7 @@ function render() {
   $('mine').innerHTML = list.length ? list.map(mineCard).join('') : `<p class="muted">${named ? 'Nothing taken. Pick something off the board.' : 'Make a character to take jobs.'}</p>`;
   $('rules').innerHTML = `<p>${esc(J.structure)}</p><p><b>Complications</b> come in three tiers: one you know before (d6), one that surfaces during (d8), and sometimes a twist late that changes what success means (d6).</p>
     <p><b>Heat:</b> base ${Object.entries(J.heat.base).map(([k, v]) => `${k} for ${v.toLowerCase()}`).join('; ')}. Execution Heat stacks on top.</p>
-    <p><b>Pay scale:</b> ${J.paymentScale.map(p => `${p.scale} ${p.pay[0]}${p.pay[1] ? '–' + p.pay[1] : '+'}`).join(' · ')}.</p><p class="note">${esc(J.outcome.marksNote)} ${esc(J.outcome.partialNote)} Job types and wording: rulebook ${esc(J.rulebook)}, Chapter Eighteen.</p>`;
+    <p><b>Pay scale:</b> ${J.paymentScale.map(p => `${p.scale} ${p.pay[0]}${p.pay[1] ? '–' + p.pay[1] : '+'}`).join(' · ')}.</p><p class="note">${esc(J.outcome.marksNote)} ${esc(J.outcome.partialNote)}</p>`;
 }
 document.addEventListener('click', e => {
   const b = e.target.closest('button'); if (!b || (b.type === 'submit' && b.closest('form'))) return; const t = now();

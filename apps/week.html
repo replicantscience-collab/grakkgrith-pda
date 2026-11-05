@@ -24,6 +24,7 @@
   </div>
 </div>
 <div class="toast" id="toast" role="status" aria-live="polite"></div>
+<script src="./screen.js"></script>
 <script src="./week.js"></script>
 <script src="./make.js"></script>
 <script>
@@ -73,7 +74,7 @@ let HAS_FILING = false;
 function render() {
   const s = load();
   HAS_FILING = !!(s && MK && MK.apaFiling(s));
-  if (!hasChar(s)) { $('who').textContent = 'No character yet. Make one in Character Setup and the city will find your address.'; ['strip', 'mail', 'debts', 'costs', 'log'].forEach(id => $(id).innerHTML = ''); return; }
+  GRAKK_SCREEN.noChar(!hasChar(s), 'Make a character and the city will find your address: rent, bills and notices arrive here on Adyta time.'); if (!hasChar(s)) { ['strip', 'mail', 'debts', 'costs', 'log'].forEach(id => $(id).innerHTML = ''); return; }
   const w = WK.ensure(s), t = now(), heat = Number(s.stats?.heat || 0), band = W.heatBands.find(b => b.id === WK.band(W, heat));
   $('who').textContent = `${s.character.name}'s inbox. Rent runs on Adyta time, weekly from Monday.`;
   const owed = WK.owed(s);

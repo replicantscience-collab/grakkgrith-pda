@@ -102,3 +102,12 @@ body.pda-art::before{display:none}
   .pda-art .subTab{flex:0 0 auto}
   .pda-art .charGroup .navMenu{position:fixed;left:0;right:0}
 }
+
+/* Phones: all eight sections visible at once (two rows of four) and sub-tabs that wrap instead of hiding off the edge */
+@media (max-width:640px){
+  .pda-art .sectionNav{display:grid!important;grid-template-columns:repeat(4,minmax(0,1fr));gap:4px;overflow:visible!important}
+  .pda-art .secTab{min-width:0!important;min-height:46px!important;padding:5px 2px 4px!important;gap:2px;font-size:11px!important;letter-spacing:.03em}
+  .pda-art .secTab .ico{width:19px;height:19px}
+  .pda-art .subNav{flex-wrap:wrap!important;justify-content:center!important;overflow:visible!important;padding:6px 4px 2px!important;gap:5px}
+  .pda-art .subTab{min-height:36px;padding:5px 11px;font-size:12px}
+}

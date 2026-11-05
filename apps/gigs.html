@@ -61,11 +61,12 @@
 </head>
 <body class="pda-art">
 <div class="wrap">
-  <div class="kicker">ADYTA PDA / APPS</div>
+  <div class="kicker">ADYTA PDA / POCKET CHANGE</div>
   <p class="muted" id="who" style="margin:6px 0 0">General Side Jobs for anyone. One downtime action each.</p>
   <div class="app" id="app"></div>
 </div>
 <div class="toast" id="toast" role="status" aria-live="polite"></div>
+<script src="./screen.js"></script>
 <script src="./week.js"></script>
 <script src="./make.js"></script>
 <script src="./gigs.js"></script>
@@ -105,7 +106,7 @@ function gigCard(s, j, mine) {
 
 function render() {
   const s = load();
-  if (!hasChar(s)) { $('who').textContent = 'No character yet. Make one in Character Setup first.'; $('app').innerHTML = ''; return; }
+  GRAKK_SCREEN.noChar(!hasChar(s), 'Pocket Change is where anyone picks up small paid jobs. Make a character to take one.'); if (!hasChar(s)) { $('app').innerHTML = ''; return; }
   const t = now(), b = GG.board(s, G, R, PL, t), g = GG.ensure(s), active = g.jobs.filter(j => j.status === 'active'), past = g.jobs.filter(j => j.status !== 'active').slice(0, 10);
   $('who').textContent = `${s.character.name} on ${G.app.name}. Each gig is a Side Job: one of your two downtime actions.`;
   $('app').innerHTML = `<div class="appbar"><div class="logo" aria-hidden="true">¢</div><div><h1>${esc(G.app.name)}</h1><p>${esc(G.app.tagline)} · by ${esc(G.app.owner)}</p></div></div>

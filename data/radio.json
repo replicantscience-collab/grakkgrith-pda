@@ -145,7 +145,8 @@
         "difficulty": 2,
         "blurb": "Sit with a handset on a rooftop and keep the chain alive till dawn."
       }
-    ]
+    ],
+    "blurb": "The station always needs hands: a part, a relay fixed, a new spot scouted, gear moved before Velvet sweeps. Pays a little, earns Standing. Each one takes a downtime action."
   },
   "broadcast": {
     "minStanding": 4,

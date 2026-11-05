@@ -1,0 +1,42 @@
+/* Slim pass: loaded last on every World panel. Makes the older screens match the newer app screens
+   (apps/screen.css): a short title strip instead of the framed banner, no repeated character buttons,
+   and the character note only when there is a character. */
+
+/* Title strip (every World panel except the old Start, which apps/start.html replaced) */
+body.pda-art .hero[data-has]{display:flex!important;align-items:flex-end;justify-content:space-between;gap:16px;flex-wrap:wrap;
+  min-height:0!important;padding:4px 0 14px!important;border:0!important;border-bottom:1px solid rgba(118,80,45,.7)!important;border-radius:0!important;
+  background:none!important;box-shadow:none!important;overflow:visible}
+body.pda-art .hero[data-has]::before,body.pda-art .hero[data-has]::after{content:none!important;display:none!important}
+body.pda-art .hero[data-has] .kicker{font-size:13px}
+body.pda-art .hero[data-has] .title{margin:4px 0 6px!important;font-size:clamp(32px,4.6vw,50px)!important;line-height:1!important;text-shadow:3px 4px 0 #48213f!important;text-transform:none}
+body.pda-art .hero[data-has] .copy{max-width:68ch;color:var(--art-muted)!important;font-size:16px!important}
+body.pda-art .hero[data-has] .actions{display:none!important}
+/* The character chip in the top bar already shows who is active, so the note is hidden either way */
+body.pda-art .hero[data-has] .ops{display:none!important}
+body.pda-art .hero[data-has="1"] .ops{transform:none!important;padding:8px 12px!important;border-left-width:4px!important;box-shadow:none!important;max-width:260px}
+body.pda-art .hero[data-has="1"] .ops strong{font:700 11px/1.2 var(--art-ui)!important;letter-spacing:.12em;text-transform:uppercase;color:#5b254e!important}
+body.pda-art .hero[data-has="1"] .ops p:nth-of-type(1){margin:2px 0 0;font-size:16px}
+body.pda-art .hero[data-has="1"] .ops p:nth-of-type(2){display:none}
+body.pda-art .dashboard{margin-top:14px!important}
+
+/* Reference pages (Quickstart, Rules, Build, Anchors, Magic & tech, Stickers) were a green terminal; bring them onto the kit */
+body.pda-art,body.pda-art .panel,body.pda-art .panel p,body.pda-art .panel li{font-family:var(--art-body)}
+body.pda-art .panel :is(h2,h3){font-family:var(--art-title)!important;color:#ffc55f!important;text-shadow:none!important;letter-spacing:.01em}
+body.pda-art .panel h2{font-size:26px!important}
+body.pda-art .panel h3{font-size:21px!important}
+body.pda-art .panel :is(pre,code){font-family:var(--art-ui)}
+
+/* Folded explainers ("How this works") */
+body.pda-art details.howto{margin:12px 0;border:1px solid rgba(118,80,45,.8);border-radius:8px;background:rgba(10,11,22,.6)}
+body.pda-art details.howto>summary{cursor:pointer;list-style:none;padding:10px 14px;color:var(--art-cyan);font:700 14px/1.2 var(--art-ui);letter-spacing:.08em;text-transform:uppercase}
+body.pda-art details.howto>summary::-webkit-details-marker{display:none}
+body.pda-art details.howto>summary::before{content:"+ ";color:var(--art-magenta)}
+body.pda-art details.howto[open]>summary::before{content:"– "}
+body.pda-art details.howto>.howtoBody{padding:0 14px 12px}
+
+@media (max-width:860px){
+  body.pda-art .hero[data-has="1"] .ops{max-width:none;width:100%}
+}
+
+/* The title strip already names the page; the panel's own first heading repeated it */
+body.pda-art #panel>h1:first-child{display:none!important}

@@ -67,3 +67,14 @@ details.filed .letter{opacity:.82}
 .toast.on{opacity:1}
 @media (max-width:860px){.cols{grid-template-columns:1fr}.strip{grid-template-columns:repeat(2,minmax(0,1fr))}.strip>button{grid-column:1/-1}}
 @media (prefers-reduced-motion:reduce){.toast{transition:none}}
+/* No character yet: one card instead of empty boxes */
+body.nochar .strip,body.nochar .cols,body.nochar #who,body.nochar .app{display:none!important}
+.nocharCard{max-width:560px}
+.nocharCard p{margin:0 0 14px;color:var(--art-cream)}
+/* Folded explainers: "How this works", opened on demand */
+details.howto{margin-top:16px;border:1px solid rgba(118,80,45,.8);border-radius:8px;background:rgba(10,11,22,.6)}
+details.howto>summary{cursor:pointer;list-style:none;padding:12px 14px;min-height:44px;color:var(--art-cyan);font:700 14px/1.4 var(--art-ui);letter-spacing:.08em;text-transform:uppercase}
+details.howto>summary::-webkit-details-marker{display:none}
+details.howto>summary::before{content:"+ ";color:var(--art-magenta)}
+details.howto[open]>summary::before{content:"– "}
+details.howto>.howtoBody{padding:0 14px 12px}
