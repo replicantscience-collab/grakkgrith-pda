@@ -98,6 +98,20 @@
       "image": "maps/official/noble-heights.jpg",
       "width": 1536,
       "height": 1024
+    },
+    "sewers-town": {
+      "title": "Sewers Town & the Deeper Sewers",
+      "short": "Sewers Town",
+      "kind": "district",
+      "district": "the-sewers",
+      "districts": [
+        "the-sewers",
+        "deep-tunnels"
+      ],
+      "status": "canon candidate",
+      "image": "maps/official/sewers-town.jpg",
+      "width": 1448,
+      "height": 1646
     }
   },
   "districts": {
@@ -598,7 +612,8 @@
         "factions": "Sewers Community; Antitoxin; Radio Sewers; Emergency Management.",
         "missions": "Route Check: Murr Corridor; Pipe 37 Marked Access.",
         "wisdom": "The tunnels listen. Your secrets do not."
-      }
+      },
+      "map": "sewers-town"
     },
     "deep-tunnels": {
       "name": "Deep Tunnels",
@@ -623,7 +638,8 @@
         "factions": "Antitoxin; ABI; old infrastructure ghosts.",
         "missions": "Pipe 37 Breach; post-incident restriction overlay.",
         "wisdom": "If the map agrees too easily, it is bait."
-      }
+      },
+      "map": "sewers-town"
     },
     "forgotten-depths": {
       "name": "Forgotten Depths",
@@ -1967,6 +1983,289 @@
         "approx": true
       },
       "note": "The booth is easy to find. The shop is not. That's on purpose."
+    },
+    {
+      "id": "the-sewers--upper-walkways",
+      "district": "the-sewers",
+      "name": "Upper Walkways",
+      "type": "street",
+      "blurb": "Walkway routes over the canal. Bridges are crowded at peak hours.",
+      "pin": {
+        "map": "sewers-town",
+        "x": 0.5076,
+        "y": 0.1124
+      }
+    },
+    {
+      "id": "the-sewers--old-pipe-gate",
+      "district": "the-sewers",
+      "name": "Old Pipe Gate",
+      "type": "transit",
+      "blurb": "Gate to the Maintenance Tunnels.",
+      "pin": {
+        "map": "sewers-town",
+        "x": 0.6872,
+        "y": 0.0717
+      }
+    },
+    {
+      "id": "the-sewers--grub-guts",
+      "district": "the-sewers",
+      "name": "Grub & Guts",
+      "type": "food",
+      "blurb": "Food, on the upper level.",
+      "pin": {
+        "map": "sewers-town",
+        "x": 0.3232,
+        "y": 0.1823
+      }
+    },
+    {
+      "id": "the-sewers--scrap-bone",
+      "district": "the-sewers",
+      "name": "Scrap & Bone",
+      "type": "shop",
+      "blurb": "Workshop and service.",
+      "pin": {
+        "map": "sewers-town",
+        "x": 0.8232,
+        "y": 0.1592
+      }
+    },
+    {
+      "id": "the-sewers--tinker-house",
+      "district": "the-sewers",
+      "name": "Tinker House",
+      "type": "shop",
+      "blurb": "Workshop and service.",
+      "pin": {
+        "map": "sewers-town",
+        "x": 0.232,
+        "y": 0.26
+      }
+    },
+    {
+      "id": "the-sewers--slop-house",
+      "district": "the-sewers",
+      "name": "Slop House",
+      "type": "food",
+      "blurb": "Food and a place to sit.",
+      "pin": {
+        "map": "sewers-town",
+        "x": 0.7873,
+        "y": 0.2843
+      }
+    },
+    {
+      "id": "the-sewers--west-pipe-gate",
+      "district": "the-sewers",
+      "name": "West Pipe Gate",
+      "type": "transit",
+      "blurb": "Gate to the Outer Sewers.",
+      "pin": {
+        "map": "sewers-town",
+        "x": 0.1215,
+        "y": 0.3111
+      }
+    },
+    {
+      "id": "the-sewers--main-canal",
+      "district": "the-sewers",
+      "name": "Main Canal",
+      "type": "landmark",
+      "blurb": "The water route through town. Watch the currents.",
+      "pin": {
+        "map": "sewers-town",
+        "x": 0.5283,
+        "y": 0.3554
+      }
+    },
+    {
+      "id": "the-sewers--market-blocks",
+      "district": "the-sewers",
+      "name": "Market Blocks",
+      "type": "market",
+      "blurb": "Goods, food, parts and services.",
+      "pin": {
+        "map": "sewers-town",
+        "x": 0.8391,
+        "y": 0.3572
+      }
+    },
+    {
+      "id": "the-sewers--pit-pub",
+      "district": "the-sewers",
+      "name": "Pit Pub",
+      "type": "venue",
+      "blurb": "Pub and entertainment.",
+      "pin": {
+        "map": "sewers-town",
+        "x": 0.2224,
+        "y": 0.4192
+      }
+    },
+    {
+      "id": "the-sewers--doll-works",
+      "district": "the-sewers",
+      "name": "Doll Works",
+      "type": "shop",
+      "blurb": "Warhammer and Pixie's Doll Works.",
+      "pin": {
+        "map": "sewers-town",
+        "x": 0.7113,
+        "y": 0.486
+      }
+    },
+    {
+      "id": "the-sewers--south-runoff",
+      "district": "the-sewers",
+      "name": "South Runoff",
+      "type": "transit",
+      "blurb": "Runoff exit to the Filtration Fields.",
+      "pin": {
+        "map": "sewers-town",
+        "x": 0.9669,
+        "y": 0.48
+      }
+    },
+    {
+      "id": "the-sewers--deep-tunnels-entrance",
+      "district": "the-sewers",
+      "name": "Deep Tunnels Entrance",
+      "type": "transit",
+      "blurb": "Down to the Deep Tunnels. Unknown depths. Deep tunnels are unstable.",
+      "pin": {
+        "map": "sewers-town",
+        "x": 0.4178,
+        "y": 0.6075
+      }
+    },
+    {
+      "id": "deep-tunnels--gate-4",
+      "district": "deep-tunnels",
+      "name": "Gate 4",
+      "type": "transit",
+      "blurb": "Controlled access and a survey point. Maps disagree past here.",
+      "pin": {
+        "map": "sewers-town",
+        "x": 0.3536,
+        "y": 0.805
+      }
+    },
+    {
+      "id": "deep-tunnels--third-gate",
+      "district": "deep-tunnels",
+      "name": "Third Gate",
+      "type": "transit",
+      "blurb": "Ask the Sewers Community before using this path.",
+      "pin": {
+        "map": "sewers-town",
+        "x": 0.2155,
+        "y": 0.8293
+      }
+    },
+    {
+      "id": "deep-tunnels--sealed-gate",
+      "district": "deep-tunnels",
+      "name": "Sealed Gate",
+      "type": "transit",
+      "blurb": "Maintenance lock dead.",
+      "pin": {
+        "map": "sewers-town",
+        "x": 0.6961,
+        "y": 0.8384
+      }
+    },
+    {
+      "id": "the-sewers--radio-sewers",
+      "district": "the-sewers",
+      "name": "Radio Sewers",
+      "type": "venue",
+      "blurb": "The people's signal. News, support, coordination.",
+      "pin": {
+        "map": "sewers-town",
+        "x": 0.5525,
+        "y": 0.2734,
+        "approx": true
+      }
+    },
+    {
+      "id": "the-sewers--the-lantern-exchange",
+      "district": "the-sewers",
+      "name": "The Lantern Exchange",
+      "type": "market",
+      "blurb": "Trade, contracts, and the city's unofficial community board.",
+      "pin": {
+        "map": "sewers-town",
+        "x": 0.4834,
+        "y": 0.2005,
+        "approx": true
+      }
+    },
+    {
+      "id": "the-sewers--the-listening-bench",
+      "district": "the-sewers",
+      "name": "The Listening Bench",
+      "type": "venue",
+      "blurb": "Stories, signals, and the rumors that actually matter.",
+      "pin": {
+        "map": "sewers-town",
+        "x": 0.663,
+        "y": 0.2005,
+        "approx": true
+      }
+    },
+    {
+      "id": "the-sewers--the-span-market",
+      "district": "the-sewers",
+      "name": "The Span Market",
+      "type": "market",
+      "blurb": "Salvage, supplies, rare finds, and questionable deals.",
+      "pin": {
+        "map": "sewers-town",
+        "x": 0.3867,
+        "y": 0.2855,
+        "approx": true
+      }
+    },
+    {
+      "id": "the-sewers--the-patch-table",
+      "district": "the-sewers",
+      "name": "The Patch Table",
+      "type": "shop",
+      "blurb": "Repairs, mods, upgrades, and keeping people running.",
+      "pin": {
+        "map": "sewers-town",
+        "x": 0.7044,
+        "y": 0.3402,
+        "approx": true
+      }
+    },
+    {
+      "id": "the-sewers--murr-corridor",
+      "district": "the-sewers",
+      "name": "Murr Corridor",
+      "type": "street",
+      "blurb": "A busy connector with friendly faces, sharp eyes, and shifting control.",
+      "pin": {
+        "map": "sewers-town",
+        "x": 0.3246,
+        "y": 0.4982,
+        "approx": true
+      }
+    },
+    {
+      "id": "the-sewers--pipe-37",
+      "district": "the-sewers",
+      "name": "Pipe 37",
+      "type": "industrial",
+      "blurb": "Infrastructure hub, maintenance runs, and more questions than answers.",
+      "pin": {
+        "map": "sewers-town",
+        "x": 0.4834,
+        "y": 0.565,
+        "approx": true
+      }
     }
   ],
   "routes": [
