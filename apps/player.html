@@ -10,6 +10,7 @@ window.GRAKK_RULES = window.GRAKK_RULES || (function () {
   return JSON.parse(x.responseText);
 })();
 </script>
+<script src="./engine.js"></script>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>GRAKKGRITH — Character Sheet</title>
@@ -320,6 +321,9 @@ body.compactSheetBody #modeNotice{margin:0}
 <script>
 (function(){
 'use strict';
+/* The rules engine is shared with the one-page Sheet: apps/engine.js. */
+const E = window.GRAKK_ENGINE.create(() => state, { shops: (document.body.dataset.pageMode || 'player').toLowerCase() === 'shops' });
+const { toNum, clampInt, deepCopy, itemType, isWeaponClass, isAmmoClass, isConsumableClass, isBackClass, itemNoRefill, defaultActionsForClass, getItemActions, itemAllows, counts, setCur, gearCategory, damageType, ammoType, sameAmmoType, parseSignedTags, applyItemMods, parseItemLocalMods, blankArmorProfile, legacyArmorFromItem, normalizeArmorProfileData, normalizeArmorProfile, slotBonusFromText, backSlotBonus, normalizeEquipIndex, equippedItem, unlockedSlotCount, attrNames, skillRankRaw, skillValue, stressCap, heatCap, defenseFromReflex, currentWoundIndex, currentConditions, classifyAttackProfile, rawAttackSteps, rollDicePool, countSuccesses, outcomeForCheck, woundRollPenalty, conditionRollEffects, buildPool, ensurePlayAutomationState, playSnapshot, actionChanges, actionValue, playTimeStamp, clearSlotByIndex, removeIfNoRefillZero } = E;
 const PAGE_MODE = (document.body.dataset.pageMode || 'player').toLowerCase();
 const IS_SHOPS = PAGE_MODE === 'shops';
 const IS_PLAYER = !IS_SHOPS;
@@ -328,25 +332,23 @@ const CLASS_DATA=window.GRAKK_RULES.classes;
 const ATTRIBUTE_LABELS=Object.fromEntries(window.GRAKK_RULES.attributes.map(a => [a.id, a.label]));
 const KEY = 'adyta_offline_inventory_v44_shared';
 const OLD_KEYS = ['adyta_offline_inventory_v43_shared','adyta_offline_inventory_v42_shared','adyta_offline_inventory_v41_shared','adyta_offline_inventory_v40_shared','adyta_offline_inventory_v39_shared','adyta_offline_inventory_v38_shared','adyta_offline_inventory_v37_shared','adyta_offline_inventory_v36_shared','adyta_offline_inventory_v35_shared','adyta_offline_inventory_v34_shared','adyta_offline_inventory_v33_shared','adyta_offline_inventory_v32_shared','adyta_offline_inventory_v31_shared','adyta_offline_inventory_v30_shared','adyta_offline_inventory_v29_shared','adyta_offline_inventory_v28_shared','adyta_offline_inventory_v27_shared','adyta_offline_inventory_v26_shared','adyta_offline_inventory_v20_shared','adyta_offline_inventory_v20','adyta_offline_inventory_v18','adyta_offline_inventory_v17'];
-const SLOT_COUNT = 80;
-const BASE_UNLOCKED_SLOTS = 10;
-const COUNT_LIMIT = 200;
-const EMPTY_ITEM = () => ({name:'', class:'', desc:'', img:'', shopName:'', shopIcon:'', adds:Array(8).fill(''), attackProfile:{attribute:'',skill:'',category:'',damageType:'',ap:'0',properties:''}, armorProfile:{base:{ballistic:'0',blade:'0',impact:'0',energy:'0'},current:{ballistic:'0',blade:'0',impact:'0',energy:'0'}}, actions:[], noRefill:false});
+const { SLOT_COUNT, BASE_UNLOCKED_SLOTS, COUNT_LIMIT } = window.GRAKK_ENGINE;
+const EMPTY_ITEM = window.GRAKK_ENGINE.EMPTY_ITEM;
 const DEFAULT_STATE = () => ({version:44, character:{name:'',alias:'',race:'',class:'',subclass:'',origin:'',life:'',background:'',grith:'',level:'1',tier:'Street',status:'Capable, locally known'}, originDetail:{standing:'',contact:'',skill:'',signatureTrait:'',hook:'',obligation:'',complication:''}, lifeDetail:{standing:'',contact:'',skill:'',hook:'',obligation:'',complication:''}, cityRelations:{}, stats:{woundState:'0',stress:'0',condition1:'',condition2:'',heat:'0',muscle:'1',reflex:'1',wit:'1',savvy:'1',spark:'1',root:'1'}, skills:{brawl:'0',melee:'0',intimidate:'0',endure:'0',breach:'0',haul:'0',dash:'0',climb:'0',dodge:'0',pickpocket:'0',drive:'0',ranged:'0',repair:'0',salvage:'0',medic:'0',forge:'0',hack:'0',persuade:'0',deceive:'0',negotiate:'0',perform:'0',streetwise:'0',attune:'0',cast:'0',ward:'0',sense:'0',disrupt:'0',navigate:'0',network:'0',hideout:'0',intel:'0',layLow:'0'}, coins:{credits:'',debt:'',favorsOwed:'',favorsDue:'',obligations:''}, notes:'', magic:{streetTag:'',streetTagSource:'',resonance:'0',location:'',resonanceNote:'',arcaneSkills:{attune:'0',sense:'0',ward:'0',disrupt:'0'},knownWorkings:[]}, combatFlags:{grazeActive:false}, playAutomation:{log:[],undo:[]}, shopStamp:{name:'',icon:''}, inventoryRules:{slotLimitsEnabled:true}, selected:0, equipment:{active:null,secondary:null,ammoSource:null,armor:null,back:null}, rollHistory:[], downtime:{cycle:1,actionsRemaining:2,marks:0,location:'',history:[],lastResult:''}, builder:{base:{muscle:'1',reflex:'1',wit:'1',savvy:'1',spark:'1',root:'1'},humanBonus:'',customMods:{muscle:'0',reflex:'0',wit:'0',savvy:'0',spark:'0',root:'0'},showLockedSubclasses:false}, inventory:Array.from({length:SLOT_COUNT}, EMPTY_ITEM)});
 let state = loadState();
 let selected = clampInt(state.selected,0,SLOT_COUNT-1);
 let saveTimer = null;
 const $ = id => document.getElementById(id);
 const invGrid=$('invGrid'), saveState=$('saveState'), slotTitle=$('slotTitle'), itemName=$('itemName'), itemClass=$('itemClass'), itemDesc=$('itemDesc'), itemImageInput=$('itemImageInput'), itemPreview=$('itemPreview'), dropText=$('dropText'), dropZone=$('dropZone'), shopName=$('shopName'), shopIconInput=$('shopIconInput'), shopIconPreview=$('shopIconPreview'), shopIconName=$('shopIconName'), adds=$('adds'), cardCanvas=$('cardCanvas'), ctx=cardCanvas.getContext('2d'), activeItemBox=$('activeItemBox'), secondaryItemBox=$('secondaryItemBox'), ammoSourceBox=$('ammoSourceBox'), combatSummary=$('combatSummary'), itemActionReadout=$('itemActionReadout'), attrRuleSummary=$('attrRuleSummary'), skillRuleSummary=$('skillRuleSummary'), stressCapDisplay=$('stressCapDisplay'), heatCapDisplay=$('heatCapDisplay'), rollAttr=$('rollAttr'), rollSkill=$('rollSkill'), rollSkillName=$('rollSkillName'), rollSkillValue=$('rollSkillValue'), rollContext=$('rollContext'), rollDifficulty=$('rollDifficulty'), rollModifier=$('rollModifier'), rollLabel=$('rollLabel'), rollPushLastBtn=$('rollPushLastBtn'), rollTargetDefense=$('rollTargetDefense'), rollTargetSoak=$('rollTargetSoak'), rollTargetTrait=$('rollTargetTrait'), rollResult=$('rollResult'), rollHistory=$('rollHistory'), attackAttribute=$('attackAttribute'), attackSkill=$('attackSkill'), attackCategory=$('attackCategory'), attackDamageType=$('attackDamageType'), attackAP=$('attackAP'), attackProperties=$('attackProperties'), slotLimitsToggle=$('slotLimitsToggle'), armorBallistic=$('armorBallistic'), armorBlade=$('armorBlade'), armorImpact=$('armorImpact'), armorEnergy=$('armorEnergy');
-function deepCopy(o){ return JSON.parse(JSON.stringify(o)); }
-function clampInt(n,min,max){ n=parseInt(n,10); if(!Number.isFinite(n)) n=0; return Math.min(max,Math.max(min,n)); }
-function toNum(v,d=0){ const n=Number(v); return Number.isFinite(n)?n:d; }
+/* deepCopy: apps/engine.js */
+/* clampInt: apps/engine.js */
+/* toNum: apps/engine.js */
 const SKILL_DOMAINS=Object.fromEntries(Object.entries(window.GRAKK_RULES.skills).map(([d, v]) => [d.toUpperCase(), v[1].map(s => window.GRAKK_RULES.skillKeys[s])]));
 const SKILL_LABELS=Object.fromEntries(Object.values(window.GRAKK_RULES.skills).flatMap(v => v[1].map(s => [window.GRAKK_RULES.skillKeys[s], s])));
 function skillKeys(){ return Object.values(SKILL_DOMAINS).flat(); }
 function skillLabels(){ return SKILL_LABELS; }
-function skillRankRaw(key){ return Math.max(0,Math.min(4,Math.floor(toNum(state.skills?.[key],0)))); }
-function skillValue(key){ const r=skillRankRaw(key); return r>=4?3:r; }
+/* skillRankRaw: apps/engine.js */
+/* skillValue: apps/engine.js */
 function skillRankNameFromValue(v){ v=Math.max(0,Math.min(4,Math.floor(toNum(v,0)))); return ['Untrained','Novice','Trained','Expert','Mastery'][v] || 'Untrained'; }
 function normalizeSkillRules(){
   if(!state.skills) state.skills={};
@@ -382,15 +384,15 @@ function escapeHtml(s){ return String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;'
 function getPath(obj,path){ return path.split('.').reduce((o,k)=>o?o[k]:undefined,obj); }
 function setPath(obj,path,value){ const parts=path.split('.'); let o=obj; for(let i=0;i<parts.length-1;i++){ if(!o[parts[i]]||typeof o[parts[i]]!=='object') o[parts[i]]={}; o=o[parts[i]]; } o[parts[parts.length-1]]=value; }
 /* v37 removed obsolete duplicate: normalizeItem */
-function normalizeEquipIndex(v){ if(v===null||v===undefined||v==='') return null; const n=Number(v); return Number.isInteger(n)&&n>=0&&n<SLOT_COUNT?n:null; }
+/* normalizeEquipIndex: apps/engine.js */
 
-function attrNames(){ return ['muscle','reflex','wit','savvy','spark','root']; }
+/* attrNames: apps/engine.js */
 /* v37 removed obsolete duplicate: normalizeCoreRules */
 function attrIncreaseUnlocked(level){ level=Math.max(0,Math.floor(toNum(level,0))); return [3,7,12,17].filter(x=>level>=x).length; }
 function attrPointBudget(level){ return 8 + attrIncreaseUnlocked(level); }
 function attrCap(level){ return toNum(level,0)>=12 ? 5 : 4; }
-function heatCap(level){ level=toNum(level,0); return level>=17 ? 8 : (level>=7 ? 7 : 6); }
-function stressCap(level){ return toNum(level,0)>=12 ? 8 : 6; }
+/* heatCap: apps/engine.js */
+/* stressCap: apps/engine.js */
 /* v37 removed obsolete duplicate: baseAttributeValues */
 function attributePointsSpent(vals){ vals=vals||baseAttributeValues(); return attrNames().reduce((sum,k)=>sum+Math.max(0,vals[k]-1),0); }
 function ruleStatusClass(ok,warn){ return ok?'ok':(warn?'warn':'bad'); }
@@ -450,18 +452,18 @@ $('setActiveBtn').addEventListener('click',()=>toggleEquip('active',selected)); 
 $('fireBtn').addEventListener('click',()=>playApply('SPEND AMMO','',()=>{const item=getCurrentItem(),c=counts(item);if(!isWeaponClass(item)||!itemAllows(item,'fire')||c.cur<1||c.max<=0)return false;setCur(item,c.cur-1);return (item.name||'Weapon')+' ammo '+c.cur+' → '+(c.cur-1)+'.';})); $('burstBtn').addEventListener('click',()=>finishAction('Jam cleared. This still costs the Action required by the fiction.')); $('autoBtn').addEventListener('click',()=>{}); $('reloadBtn').addEventListener('click',()=>playApply('RELOAD','Reloaded selected weapon.',()=>{ const item=getCurrentItem(); const source=state.inventory[normalizeEquipIndex(state.equipment.ammoSource)]; if(!isWeaponClass(item)||!itemAllows(item,'reload')||!source||!isAmmoClass(source)||!sameAmmoType(item,source)||counts(item).max<=counts(item).cur||counts(source).cur<1)return false; reloadWeapon(); return 'Reloaded '+item.name+'.'; })); $('useBtn').addEventListener('click',()=>useConsumable());
 document.querySelectorAll('[data-card-action]').forEach(ch=>ch.addEventListener('change',()=>{ if(!IS_SHOPS){ ch.checked=itemAllows(getCurrentItem(),ch.dataset.cardAction); return; } setItemAction(getCurrentItem(),ch.dataset.cardAction,ch.checked); updateActionPanel(); renderCard(false); scheduleSave(); }));
 document.querySelectorAll('[data-card-flag="noRefill"]').forEach(ch=>ch.addEventListener('change',()=>{ if(!IS_SHOPS){ ch.checked=itemNoRefill(getCurrentItem()); return; } getCurrentItem().noRefill=!!ch.checked; syncActionEditor(); updateActionPanel(); renderCard(false); scheduleSave(); }));
-function itemType(item){ return String(item&&item.class||'').trim().toUpperCase(); } function isWeaponClass(item){ return /WEAPON|GUN|FIREARM|BOW|CROSSBOW/.test(itemType(item)); } function isAmmoClass(item){ return /AMMO|AMMOBAG|AMMO PACK|AMMUNITION/.test(itemType(item)); } function isConsumableClass(item){ return /ITEM|CONSUMABLE|FOOD|DRINK|MED|MEDKIT|POTION|STIM|USABLE/.test(itemType(item)); }
-function defaultActionsForClass(item){ if(isWeaponClass(item)) return ['fire','reload']; if(isConsumableClass(item)&&!isAmmoClass(item)&&!isWeaponClass(item)) return ['use']; return []; }
-function getItemActions(item){ if(!item) return []; if(!Array.isArray(item.actions)) item.actions=IS_SHOPS?defaultActionsForClass(item):[]; return item.actions.map(v=>String(v).toLowerCase()).filter(Boolean); }
-function itemAllows(item,action){ return getItemActions(item).includes(String(action).toLowerCase()); }
+/* itemType: apps/engine.js */ /* isWeaponClass: apps/engine.js */ /* isAmmoClass: apps/engine.js */ /* isConsumableClass: apps/engine.js */
+/* defaultActionsForClass: apps/engine.js */
+/* getItemActions: apps/engine.js */
+/* itemAllows: apps/engine.js */
 function setItemAction(item,action,enabled){ if(!IS_SHOPS){ alert('PLAYER page cannot edit card actions. Use SHOPS page.'); return; } if(!item) return; let arr=getItemActions(item); action=String(action).toLowerCase(); if(enabled&&!arr.includes(action)) arr.push(action); if(!enabled) arr=arr.filter(x=>x!==action); item.actions=arr; }
-function itemNoRefill(item){ return !!(item&&item.noRefill); }
-function clearSlotByIndex(idx){ idx=normalizeEquipIndex(idx); if(idx===null) return; state.inventory[idx]=EMPTY_ITEM(); if(state.equipment.active===idx) state.equipment.active=null; if(state.equipment.secondary===idx) state.equipment.secondary=null; if(state.equipment.ammoSource===idx) state.equipment.ammoSource=null; }
-function removeIfNoRefillZero(idx){ idx=normalizeEquipIndex(idx); if(idx===null) return ''; const item=state.inventory[idx]; if(!itemNoRefill(item)) return ''; if(counts(item).cur>0) return ''; const nm=item.name||('slot '+String(idx+1).padStart(2,'0')); clearSlotByIndex(idx); return nm; }
-function counts(item){ const a=item.adds||[]; let cur=clampInt(a[6],0,COUNT_LIMIT), max=clampInt(a[7],0,COUNT_LIMIT); if(max>0) cur=Math.min(cur,max); return {cur,max}; }
-function setCur(item,n){ const c=counts(item); const max=c.max; item.adds[6]=String(max>0?Math.min(Math.max(0,n),max):Math.max(0,n)); }
-function ammoType(item){ const a=item.adds||[]; return String(a[2]||a[3]||'').trim(); }
-function sameAmmoType(w,a){ const wt=ammoType(w).toLowerCase(), at=ammoType(a).toLowerCase(); return wt && at && wt===at; }
+/* itemNoRefill: apps/engine.js */
+/* clearSlotByIndex: apps/engine.js */
+/* removeIfNoRefillZero: apps/engine.js */
+/* counts: apps/engine.js */
+/* setCur: apps/engine.js */
+/* ammoType: apps/engine.js */
+/* sameAmmoType: apps/engine.js */
 function consumeWeaponAmmo(amount,label){ const item=getCurrentItem(); const act=label.toLowerCase(); if(!isWeaponClass(item)){ alert('Selected item is not WEAPON.'); return; } if(!itemAllows(item,act)){ alert('This weapon card does not allow '+label.toUpperCase()+'. Set it on SHOPS page.'); return; } const c=counts(item); if(c.max<=0){ alert('Weapon has no capacity. Set box 8 first.'); return; } if(c.cur<amount){ alert(label+' needs '+amount+' loaded ammo, but only '+c.cur+' remain.'); return; } setCur(item,c.cur-amount); const removed=removeIfNoRefillZero(selected); finishAction(label+': -'+amount+' loaded ammo.'+(removed?'\nNO REFILL: '+removed+' reached 0 and was removed from inventory.':'')); }
 function reloadWeapon(){ const weapon=getCurrentItem(); if(!isWeaponClass(weapon)){ alert('Selected item is not WEAPON.'); return; } if(!itemAllows(weapon,'reload')){ alert('This weapon card does not allow RELOAD. Set it on SHOPS page.'); return; } const ai=normalizeEquipIndex(state.equipment.ammoSource); if(ai===null){ alert('No AMMO SOURCE selected. Select an AMMO item slot and click Set Ammo Source.'); return; } const ammo=state.inventory[ai]; if(!ammo){ alert('Ammo source slot is empty.'); return; } if(!isAmmoClass(ammo)){ alert('Ammo source is not class AMMO.'); return; } if(!sameAmmoType(weapon,ammo)){ alert('Ammo type mismatch. Weapon needs "'+(ammoType(weapon)||'?')+'", source is "'+(ammoType(ammo)||'?')+'".'); return; } const wc=counts(weapon), ac=counts(ammo); if(wc.max<=0){ alert('Weapon has no max capacity in box 8.'); return; } if(wc.cur>=wc.max){ alert('Weapon is already full.'); return; } if(ac.cur<=0){ alert('Ammo source is empty.'); return; } const need=wc.max-wc.cur, moved=Math.min(need,ac.cur); const ammoName=ammo.name||'Ammo Source'; setCur(weapon,wc.cur+moved); setCur(ammo,ac.cur-moved); const removed=removeIfNoRefillZero(ai); finishAction('Reloaded '+moved+' from '+ammoName+'. Weapon '+(wc.cur+moved)+' / '+wc.max+'. Ammo source '+(ac.cur-moved)+' / '+(ac.max||'?')+'.'+(removed?'\nNO REFILL: '+removed+' reached 0 and was removed from inventory.':'')); }
 /* v37 removed obsolete duplicate: useConsumable */
@@ -472,7 +474,7 @@ function buildActionReadout(item){ const c=counts(item), type=ammoType(item)||'n
 function renderEquipBox(el,title,idx){ const img=el.querySelector('.equipImg'), meta=el.querySelector('.equipMeta'); idx=normalizeEquipIndex(idx); if(idx===null){ img.classList.add('hidden'); meta.innerHTML='None selected'; return; } const item=state.inventory[idx]; if(item.img){ img.src=item.img; img.classList.remove('hidden'); } else img.classList.add('hidden'); const c=counts(item); meta.innerHTML='<strong>'+escapeHtml(item.name||'Unnamed')+'</strong><br>Slot '+String(idx+1).padStart(2,'0')+' / '+escapeHtml(item.class||'No class')+' / '+escapeHtml(ammoType(item)||'no type')+'<br>'+c.cur+' / '+(c.max||0); }
 /* v37 removed obsolete duplicate: updateComputed */
 function combatLine(k,v){ return '<div class="combatLine"><div class="combatKey">'+escapeHtml(k)+'</div><div class="combatVal">'+v+'</div></div>'; } function signedText(n){ return n?(n>0?' +'+n:' '+n):''; } function signedNumber(n){ return n>0?'+'+n:String(n); }
-function equippedItem(which){ const idx=normalizeEquipIndex(state.equipment[which]); return idx===null?null:state.inventory[idx]; }
+/* equippedItem: apps/engine.js */
 /* v37 removed obsolete duplicate: deriveCombat */
 /* v37 removed obsolete duplicate: parseSignedTags */
 /* v37 removed obsolete duplicate: applyItemMods */
@@ -715,54 +717,33 @@ function updateWoundStress(){
 function moveWound(d){state.stats.woundState=String(clampInt(toNum(state.stats.woundState,0)+d,0,3));updateWoundStress();updateComputed();scheduleSave();}
 function moveStress(d){state.stats.stress=String(clampInt(toNum(state.stats.stress,0)+d,0,stressCap(state.character.level)));updateWoundStress();updateConditionEffects();updateComputed();scheduleSave();}
 function updateMeters(){ updateWoundStress(); updateConditionEffects(); }
-function ensurePlayAutomationState(){ if(!state.playAutomation||typeof state.playAutomation!=='object') state.playAutomation={}; if(!Array.isArray(state.playAutomation.log)) state.playAutomation.log=[]; if(!Array.isArray(state.playAutomation.undo)) state.playAutomation.undo=[]; }
-function playSnapshot(){ return {stats:deepCopy(state.stats),equipment:deepCopy(state.equipment),inventory:deepCopy(state.inventory),combatFlags:deepCopy(state.combatFlags||{})}; }
+/* ensurePlayAutomationState: apps/engine.js */
+/* playSnapshot: apps/engine.js */
 function restorePlaySnapshot(snap){ if(!snap)return; state.stats=deepCopy(snap.stats||state.stats); state.equipment=deepCopy(snap.equipment||state.equipment); state.inventory=deepCopy(snap.inventory||state.inventory); state.combatFlags=deepCopy(snap.combatFlags||state.combatFlags||{}); selected=clampInt(state.selected,0,SLOT_COUNT-1); }
-function playTimeStamp(){ const d=new Date(); return d.toLocaleTimeString([], {hour:'2-digit', minute:'2-digit'}); }
-function recordPlayAutomation(label,detail,before){ ensurePlayAutomationState(); state.playAutomation.log.unshift({label,detail,time:playTimeStamp(),wound:state.stats.woundState,stress:state.stats.stress,heat:state.stats.heat}); state.playAutomation.log=state.playAutomation.log.slice(0,30); const changes=actionChanges(before,playSnapshot()); const slots=[...new Set(changes.filter(c=>c.path[0]==='inventory').map(c=>c.path[1]))]; state.playAutomation.undo.unshift({label,changes,items:slots.map(slot=>({slot,after:deepCopy(state.inventory[slot])}))}); state.playAutomation.undo=state.playAutomation.undo.slice(0,8); renderPlayAutomation(); }
+/* playTimeStamp: apps/engine.js */
+function recordPlayAutomation(label,detail,before){ E.recordAction(label,detail,before); renderPlayAutomation(); }
 function playRefreshAfterAction(){ updateMeters(); refreshBoundInputs(); renderGrid(); loadEditor(); updateComputed(); renderPlayAutomation(); if(window.__compactReady)compactUpdateSummaries(); scheduleSave(); }
 function playApply(label,detail,mutator){ ensurePlayAutomationState(); const before=playSnapshot(); const result=mutator(); if(result===false)return; recordPlayAutomation(label,result||detail,before); playRefreshAfterAction(); saveNow(); actionReceipt(result||detail); }
-function undoPlayAutomation(){
-  ensurePlayAutomationState(); const last=state.playAutomation.undo[0];
-  if(!last){actionReceipt('No action to undo.');return;}
-  if(!last.changes){actionReceipt('This older action uses a full snapshot. Undo is unavailable to protect later edits.');return;}
-  if((last.items||[]).some(item=>JSON.stringify(state.inventory[item.slot])!==JSON.stringify(item.after))||last.changes.some(c=>JSON.stringify(actionValue(c.path))!==JSON.stringify(c.hadAfter?c.after:undefined))){actionReceipt('Cannot undo: an affected value changed later. Your edits have been kept.');return;}
-  for(const c of last.changes){const parent=c.path.slice(0,-1).reduce((v,k)=>v[k],state);const key=c.path.at(-1);if(c.hadBefore)parent[key]=deepCopy(c.before);else delete parent[key];}
-  state.playAutomation.undo.shift();setPendingPush(null);
-  state.playAutomation.log.unshift({label:'UNDO',detail:'Reverted '+last.label+'. Rolls remain in history.',time:playTimeStamp(),wound:state.stats.woundState,stress:state.stats.stress,heat:state.stats.heat});
-  state.playAutomation.log=state.playAutomation.log.slice(0,30);playRefreshAfterAction();saveNow();actionReceipt('Undid '+last.label+'. Rolls remain in history.');
-}
+function undoPlayAutomation(){ const r=E.undoLast(); if(!r.ok){actionReceipt(r.message);return;} setPendingPush(null); playRefreshAfterAction(); saveNow(); actionReceipt(r.message); }
 function buildPlayAlerts(){ const level=toNum(state.character.level,1),wound=toNum(state.stats.woundState,0),stress=toNum(state.stats.stress,0),heat=toNum(state.stats.heat,0),sc=stressCap(level),hc=heatCap(level),alerts=[]; if(wound>=3)alerts.push({sev:'critical',text:'Critical: one Action per turn; medical attention is needed this scene or death clock starts.'}); else if(wound>=2)alerts.push({sev:'critical',text:'Wounded: -2 dice on all checks and must be treated before rest.'}); else if(wound>=1)alerts.push({sev:'attention',text:'Hurt: -1 die on physical checks.'}); if(stress>=6)alerts.push({sev:'critical',text:'Breakdown active: act on both Conditions; GM gains a scene complication.'}); else if(stress>=3)alerts.push({sev:'attention',text:'Condition threshold reached: pick or enforce a Condition.'}); if(stress>=sc)alerts.push({sev:'critical',text:'Stress is capped at '+sc+'. Further pressure should become consequences.'}); if(heat>=hc)alerts.push({sev:'critical',text:'Heat cap reached: institutional consequences are imminent.'}); else if(heat>=Math.max(4,hc-2))alerts.push({sev:'attention',text:'Heat is loud. Expect patrols, files, or faction attention.'}); const active=equippedItem('active'); if(active&&isWeaponClass(active)&&counts(active).max>0&&counts(active).cur===0)alerts.push({sev:'attention',text:'Active weapon is empty; reload or swap before firing.'}); const armor=equippedItem('armor'); if(armor){ const p=normalizeArmorProfile(armor); if(['ballistic','blade','impact','energy'].some(k=>toNum(p.current[k],0)<toNum(p.base[k],0)))alerts.push({sev:'attention',text:'Armor has degraded soak; repair during downtime or with fiction.'}); } if(!alerts.length)alerts.push({sev:'ok',text:'No immediate automation warnings.'}); return alerts; }
 function renderPlayAutomation(){ ensurePlayAutomationState(); const alerts=$('playAlertStrip'); if(alerts)alerts.innerHTML=buildPlayAlerts().map(a=>'<div class="playAlert '+(a.sev==='critical'?'critical':a.sev==='ok'?'ok':'')+'">'+escapeHtml(a.text)+'</div>').join(''); const log=$('playSessionLog'); if(log){ const entries=state.playAutomation.log||[]; log.innerHTML=entries.length?entries.map(e=>'<div class="playLogEntry"><strong>'+escapeHtml(e.label||'AUTO')+'</strong>: '+escapeHtml(e.detail||'')+'<small>'+escapeHtml(e.time||'')+' · '+woundName()+' · Stress '+escapeHtml(e.stress??state.stats.stress)+' · Heat '+escapeHtml(e.heat??state.stats.heat)+'</small></div>').join(''):'No automated actions yet.'; } const undo=$('undoPlayActionBtn'); if(undo)undo.disabled=!(state.playAutomation.undo&&state.playAutomation.undo.length); }
 function fireEquippedAutomation(which){ const idx=normalizeEquipIndex(state.equipment[which]); if(idx===null){ alert('No '+which+' weapon equipped.'); return false; } const old=selected; selected=idx; const item=getCurrentItem(); if(!isWeaponClass(item)){ selected=old; alert('Equipped '+which+' item is not a weapon.'); return false; } const c=counts(item); if(!itemAllows(item,'fire')||c.max<=0||c.cur<1){ selected=old; alert((item.name||'Weapon')+' has no loaded ammo.'); return false; } setCur(item,c.cur-1); selected=old; return (item.name||'Weapon')+' fired: loaded ammo '+c.cur+' → '+(c.cur-1)+'.'; }
-function reloadEquippedAutomation(which){ const idx=normalizeEquipIndex(state.equipment[which]); if(idx===null){ alert('No '+which+' weapon equipped.'); return false; } const old=selected; selected=idx; const weapon=getCurrentItem(), ai=normalizeEquipIndex(state.equipment.ammoSource); if(!isWeaponClass(weapon)){ selected=old; alert('Equipped '+which+' item is not a weapon.'); return false; } if(ai===null){ selected=old; alert('No ammo source selected.'); return false; } const ammo=state.inventory[ai], wc=counts(weapon), ac=counts(ammo); if(!isAmmoClass(ammo)||!sameAmmoType(weapon,ammo)||wc.max<=0||wc.cur>=wc.max||ac.cur<=0){ selected=old; alert('Reload blocked: check ammo source, matching type, weapon capacity, and available ammo.'); return false; } const moved=Math.min(wc.max-wc.cur,ac.cur); setCur(weapon,wc.cur+moved); setCur(ammo,ac.cur-moved); const removed=removeIfNoRefillZero(ai); selected=old; return 'Reloaded '+(weapon.name||'weapon')+' with '+moved+' from '+(ammo.name||'ammo')+'.'+(removed?' Removed empty NO REFILL '+removed+'.':''); }
-function useSelectedAutomation(){ const item=getCurrentItem(), c=counts(item); if(isWeaponClass(item)||isAmmoClass(item)||!itemAllows(item,'use')||c.cur<1){ alert('Selected card cannot be used right now.'); return false; } const a=item.adds||[],recovery=Math.max(0,Math.floor(toNum(a[4],0))),relief=Math.max(0,Math.floor(toNum(a[5],0))),oldW=toNum(state.stats.woundState,0),oldS=toNum(state.stats.stress,0); state.stats.woundState=String(clampInt(oldW-recovery,0,3)); state.stats.stress=String(clampInt(oldS-relief,0,stressCap(state.character.level))); setCur(item,c.cur-1); const removed=removeIfNoRefillZero(selected); return 'Used '+(item.name||'selected item')+': -1 use, wound '+oldW+' → '+state.stats.woundState+', stress '+oldS+' → '+state.stats.stress+'.'+(removed?' Removed empty NO REFILL '+removed+'.':''); }
+function reloadEquippedAutomation(which){ const r=E.reloadEquipped(which); if(!r.ok){ alert(r.message); return false; } return r.message; }
+function useSelectedAutomation(){ const r=E.useSlot(selected); if(!r.ok){ alert(r.message); return false; } return r.message; }
 function bindPlayAutomation(){ ensurePlayAutomationState(); const bind=(id,label,detail,fn)=>{const el=$(id); if(el)el.onclick=()=>playApply(label,detail,fn);}; bind('autoDamageBtn','TAKE HIT','Wound worsened by 1.',()=>{const before=toNum(state.stats.woundState,0); state.stats.woundState=String(clampInt(before+1,0,3)); return 'Wound '+before+' → '+state.stats.woundState+'.';}); bind('autoPatchBtn','PATCH WOUND','Wound improved by 1.',()=>{const before=toNum(state.stats.woundState,0); state.stats.woundState=String(clampInt(before-1,0,3)); return 'Wound '+before+' → '+state.stats.woundState+'.';}); bind('autoStressBtn','GAIN STRESS','Stress increased by 1.',()=>{const before=toNum(state.stats.stress,0); state.stats.stress=String(clampInt(before+1,0,stressCap(state.character.level))); return 'Stress '+before+' → '+state.stats.stress+'.';}); bind('autoCoolBtn','CLEAR STRESS','Stress reduced by 1.',()=>{const before=toNum(state.stats.stress,0); state.stats.stress=String(clampInt(before-1,0,stressCap(state.character.level))); return 'Stress '+before+' → '+state.stats.stress+'.';}); bind('autoHeatBtn','HEAT +1','Heat increased by 1.',()=>{const before=toNum(state.stats.heat,0); state.stats.heat=String(clampInt(before+1,0,heatCap(state.character.level))); return 'Heat '+before+' → '+state.stats.heat+'.';}); bind('autoFireActiveBtn','FIRE ACTIVE','Spent one active weapon ammo.',()=>fireEquippedAutomation('active')); bind('autoReloadActiveBtn','RELOAD ACTIVE','Reloaded active weapon from ammo source.',()=>reloadEquippedAutomation('active')); bind('autoUseItemBtn','USE ITEM','Used selected item.',useSelectedAutomation); bind('autoArmorBlockBtn','ARMOR BLOCK','Armor absorbed a full block.',()=>{const armor=equippedItem('armor'); if(!armor){alert('Equip armor first.');return false;} const family=$('armorBlockFamily')?.value||'ballistic', amount=Math.max(1,Math.floor(toNum($('armorBlockedAmount')?.value,1))), p=normalizeArmorProfile(armor), before=toNum(p.current[family],0), blocked=Math.min(before,amount); if(blocked<=0){alert('That armor family is already at 0.');return false;} p.current[family]=String(Math.max(0,before-blocked)); state.stats.stress=String(Math.min(stressCap(state.character.level),toNum(state.stats.stress,0)+1)); state.combatFlags=state.combatFlags||{}; state.combatFlags.grazeActive=true; return (armor.name||'Armor')+' blocked '+blocked+' '+family+'; soak '+before+' → '+p.current[family]+', +1 Stress, graze flag set.';}); bind('autoLogSceneBtn','SCENE BEAT','Marked a scene beat.',()=> 'Scene beat marked: '+woundName()+', Stress '+state.stats.stress+', Heat '+state.stats.heat+'.'); const undo=$('undoPlayActionBtn'); if(undo)undo.onclick=undoPlayAutomation; renderPlayAutomation(); }
 function useConsumable(){ previewUse(); }
-function defenseFromReflex(reflex){ return 1+Math.floor(Math.max(1,toNum(reflex,1))/2); }
-function blankArmorProfile(){ return {base:{ballistic:'0',blade:'0',impact:'0',energy:'0'},current:{ballistic:'0',blade:'0',impact:'0',energy:'0'}}; }
+/* defenseFromReflex: apps/engine.js */
+/* blankArmorProfile: apps/engine.js */
 function armorNumber(v){ return String(Math.max(0,Math.floor(toNum(v,0)))); }
-function legacyArmorFromItem(x){
-  const out={ballistic:0,blade:0,impact:0,energy:0};
-  const txt=[x?.desc,(x?.adds||[]).join(' '),x?.properties].join(' ');
-  const aliases={BALLISTIC:'ballistic',BAL:'ballistic',BLADE:'blade',BLA:'blade',IMPACT:'impact',IMP:'impact',ENERGY:'energy',ENE:'energy'};
-  const re=/\b(BALLISTIC|BAL|BLADE|BLA|IMPACT|IMP|ENERGY|ENE)\s*\+?(\d+)\b/gi; let m;
-  while((m=re.exec(txt))) out[aliases[m[1].toUpperCase()]]=Math.max(out[aliases[m[1].toUpperCase()]],toNum(m[2],0));
-  return out;
-}
-function normalizeArmorProfileData(raw,item){
-  const legacy=legacyArmorFromItem(item||{}), base=raw?.base||raw||{}, cur=raw?.current||{};
-  const p=blankArmorProfile();
-  ['ballistic','blade','impact','energy'].forEach(k=>{ const b=Math.max(0,Math.floor(toNum(base[k],legacy[k]||0))); const c=Math.max(0,Math.min(b,Math.floor(toNum(cur[k],b)))); p.base[k]=String(b); p.current[k]=String(c); });
-  return p;
-}
-function normalizeArmorProfile(item){ if(!item) return blankArmorProfile(); item.armorProfile=normalizeArmorProfileData(item.armorProfile,item); return item.armorProfile; }
+/* legacyArmorFromItem: apps/engine.js */
+/* normalizeArmorProfileData: apps/engine.js */
+/* normalizeArmorProfile: apps/engine.js */
 function armorFamily(type){ const t=String(type||'').toLowerCase(); if(/ballistic|bullet|firearm|slug|pellet/.test(t))return'ballistic'; if(/slash|blade|pierc|knife|sword|arrow|claw/.test(t))return'blade'; if(/impact|bludge|hammer|fist|baton|fall|blast/.test(t))return'impact'; return'energy'; }
 function currentArmorValue(item,family){ return Math.max(0,toNum(normalizeArmorProfile(item).current[family],0)); }
 function baseArmorValue(item,family){ return Math.max(0,toNum(normalizeArmorProfile(item).base[family],0)); }
-function gearCategory(item){const a=item?.adds||[];const c=String(item?.attackProfile?.category||a[0]||'').trim().toLowerCase();return ['unarmed','light','standard','heavy','special'].includes(c)?c:'standard';}
+/* gearCategory: apps/engine.js */
 function gearQuality(item){return clampInt(item?.adds?.[1]||1,1,5);}
-function damageType(item){return String(item?.attackProfile?.damageType||item?.adds?.[2]||item?.adds?.[3]||'').trim()||'Untyped';}
+/* damageType: apps/engine.js */
 function calcWeaponDamage(item,mods){if(!item)return{shortText:'none',longText:'none'};const c=gearCategory(item),q=gearQuality(item);let rule=c==='light'||c==='unarmed'?'Maximum 1 Wound step on a hit':c==='standard'?'1 Wound step per success over Defense':c==='heavy'?'Minimum 1 on hit; 2 steps per excess success':'Use the item special rule';return{shortText:c.toUpperCase()+' Q'+q,longText:c.toUpperCase()+' / Quality '+q+' / '+rule};}
 /* v37 removed obsolete duplicate: deriveCombat */
 /* v37 removed obsolete duplicate: updateComputed */
@@ -804,54 +785,19 @@ function renderRollHistory(){
   if(!hist.length){ rollHistory.innerHTML='No rolls yet.'; return; }
   rollHistory.innerHTML=hist.map(entry=>'<div class="rollHistoryEntry"><div><span class="rollTag">'+escapeHtml(entry.kind||'ROLL')+'</span><strong>'+escapeHtml(entry.title||'Roll')+'</strong></div><div class="small" style="margin-top:4px">'+escapeHtml(entry.summary||'')+'</div><div class="small" style="margin-top:2px">'+escapeHtml((entry.dice||[]).join(', '))+'</div></div>').join('');
 }
-function pushRollHistory(entry){
-  if(!Array.isArray(state.rollHistory)) state.rollHistory=[];
-  state.rollHistory.unshift(entry);
-  state.rollHistory=state.rollHistory.slice(0,20);
-  renderRollHistory();
-  scheduleSave();
-}
-function currentWoundIndex(){ return clampInt(state.stats.woundState,0,3); }
-function currentConditions(){ return [state.stats.condition1,state.stats.condition2].filter(Boolean); }
-function woundRollPenalty(context){
-  const ws=currentWoundIndex();
-  if(ws===1 && context==='physical') return {mod:-1, notes:['Hurt: -1 die on physical checks.']};
-  if(ws===2) return {mod:-2, notes:['Wounded: -2 dice on all checks.']};
-  if(ws===3) return {mod:0, notes:['Critical: one Action per turn only; must receive medical attention this scene or die.']};
-  return {mod:0, notes:[]};
-}
-function conditionRollEffects(attr,context){
-  let mod=0, notes=[]; const seen={};
-  currentConditions().forEach(c=>{
-    if(seen[c]) return; seen[c]=1;
-    if(c==='Paranoid' && attr==='savvy'){ mod-=1; notes.push('Paranoid: -1 die on Savvy checks.'); }
-    else if(c==='Burnt Out' && (attr==='wit'||attr==='spark')){ mod-=1; notes.push('Burnt Out: -1 die on Wit and Spark checks.'); }
-    else if(c==='Going Through It' && context==='social'){ mod-=1; notes.push('Going Through It: -1 die on social checks.'); }
-    else if(c==='Locked In'){ notes.push('Locked In: cannot retreat or de-escalate in combat without a Savvy check.'); }
-    else if(c==='Frozen'){ notes.push('Frozen: lose React for the scene; may need to spend an Action to reorient.'); }
-  });
-  if(toNum(state.stats.stress,0)>=6) notes.push('Breakdown: act on both Conditions until both clear.');
-  return {mod,notes};
-}
+function pushRollHistory(entry){ E.pushRoll(entry); renderRollHistory(); scheduleSave(); }
+/* currentWoundIndex: apps/engine.js */
+/* currentConditions: apps/engine.js */
+/* woundRollPenalty: apps/engine.js */
+/* conditionRollEffects: apps/engine.js */
 let pendingPush=null;
 function setPendingPush(handler){ pendingPush=typeof handler==='function'?handler:null; if(rollPushLastBtn) rollPushLastBtn.disabled=!pendingPush; }
-function consumePush(){ if(!pendingPush)return; if(toNum(state.stats.stress,0)>=stressCap(state.character.level)){actionReceipt('Stress is full. Resolve further pressure with the GM before pushing.');return;} const handler=pendingPush; playApply('PUSH','Added 2 dice and 1 Stress.',()=>{setPendingPush(null);state.stats.stress=String(toNum(state.stats.stress,0)+1);handler(rollDicePool(2));}); }
-function rollDicePool(n){ const out=[]; for(let i=0;i<n;i++) out.push(1+Math.floor(Math.random()*6)); return out; }
-function countSuccesses(dice){ return dice.reduce((sum,d)=>sum+(d>=5?1:0),0); }
+function consumePush(){ if(!pendingPush)return; if(!E.canPush()){actionReceipt('Stress is full. Resolve further pressure with the GM before pushing.');return;} const handler=pendingPush; playApply('PUSH','Added 2 dice and 1 Stress.',()=>{setPendingPush(null);const r=E.payPush();handler(r.dice);}); }
+/* rollDicePool: apps/engine.js */
+/* countSuccesses: apps/engine.js */
 function titleCaseKey(k){ const map={muscle:'Muscle',reflex:'Reflex',wit:'Wit',savvy:'Savvy',spark:'Spark',root:'Root',brawl:'Brawl',melee:'Melee',ranged:'Ranged',dodge:'Dodge',dash:'Dash',cast:'Cast'}; return map[k]||SKILL_LABELS[k]||String(k||''); }
-function buildPool(attr,skillValue,context,situational,extra,label){
-  const d=deriveCombat(); const attrVal=Math.max(1,toNum(d.final[attr],1)); const wound=woundRollPenalty(context); const cond=conditionRollEffects(attr,context);
-  const totalRaw=attrVal+Math.max(0,toNum(skillValue,0))+toNum(situational,0)+toNum(extra,0)+wound.mod+cond.mod;
-  const total=Math.max(0,Math.min(10,Math.floor(totalRaw)));
-  return {attrVal,wound,cond,pushBonus:0,total,totalRaw,skillValue:Math.max(0,toNum(skillValue,0)),situational:toNum(situational,0),extra:toNum(extra,0),label:label||'Roll'};
-}
-function outcomeForCheck(successes,target){
-  target=Math.max(1,toNum(target,1));
-  if(successes===0) return {kind:'Complete Failure',text:'0 successes. The action fails and the situation gets worse.'};
-  if(successes<target) return successes===target-1?{kind:'Partial Success',text:'One short. You succeed, but with a cost.'}:{kind:'Failure',text:'Not enough successes to meet the difficulty.'};
-  if(successes-target>=3) return {kind:'Critical Success',text:'Three or more successes over the target.'};
-  return {kind:'Success',text:'Target met.'};
-}
+/* buildPool: apps/engine.js */
+/* outcomeForCheck: apps/engine.js */
 function renderRollResultCard(title,kind,summary,breakdown,dice,notes){
   if(!rollResult) return;
   const diceHtml=(dice||[]).map(d=>'<div class="diePill'+(d>=5?' success':'')+'">'+d+'</div>').join('');
@@ -865,37 +811,13 @@ function performQuickRoll(){
   const render=(dice,pushed)=>{ const successes=countSuccesses(dice), outcome=outcomeForCheck(successes,target); const breakdown='Pool '+pool.total+' = '+titleCaseKey(attr)+' '+pool.attrVal+' + '+escapeHtml(skillName)+' '+pool.skillValue+(pool.situational?(' '+signedNumber(pool.situational)):'')+(pool.extra?(' '+signedNumber(pool.extra)):'')+(pool.wound.mod?(' '+signedNumber(pool.wound.mod)):'')+(pool.cond.mod?(' '+signedNumber(pool.cond.mod)):'')+(pool.totalRaw!==pool.total?' (capped at 10)':'')+(pushed?' | Push +2 dice, +1 Stress':'')+' | Successes '+successes+' vs Difficulty '+target; const notes=[...pool.wound.notes,...pool.cond.notes]; if(pushed) notes.unshift('Push used after the original roll: +1 Stress, two additional dice appended.'); renderRollResultCard(title,outcome.kind,outcome.text,breakdown,dice,notes); pushRollHistory({kind:outcome.kind,title,summary:'Successes '+successes+' vs Difficulty '+target+(pushed?' after Push':''),dice}); };
   render(originalDice,false); setPendingPush(pushDice=>render(originalDice.concat(pushDice),true));
 }
-function parseItemLocalMods(item){
-  const mods={atk:0,ap:0};
-  const text=[item?.name,item?.class,item?.desc,item?.adds?.[2],item?.adds?.[4],item?.adds?.[5]].join(' ');
-  parseSignedTags(text).forEach(t=>{ if(['ATK','ATTACK','DICE'].includes(t.key)) mods.atk+=t.val; if(t.key==='AP') mods.ap+=t.val; });
-  return mods;
-}
-function classifyAttackProfile(item){
-  if(!item) return {attack:false,attr:'reflex',skill:'ranged',type:'Unknown',category:'standard'};
-  const explicit=Object.assign({attribute:'',skill:'',category:'',damageType:'',ap:'0',properties:''},item.attackProfile||{});
-  if(explicit.attribute && explicit.skill){ return {attack:isWeaponClass(item),attr:explicit.attribute,skill:explicit.skill,type:explicit.damageType||damageType(item)||'Untyped',category:explicit.category||gearCategory(item),ap:Math.max(0,toNum(explicit.ap,0)),properties:explicit.properties||'',source:'explicit'}; }
-  const cat=gearCategory(item), text=String([item.name,item.class,item.desc,item.adds?.[2]].join(' ')).toLowerCase();
-  let attr='muscle', skill='melee', type=damageType(item)||'Untyped';
-  if(/energy|arcane|spell|hex|neural|psychic|magic|ward|curse|shade|spark/.test(text)){ attr='spark'; skill='cast'; }
-  else if(cat==='unarmed' || /fist|claw|brass knuckles|punch|kick|unarmed/.test(text)){ attr='muscle'; skill='brawl'; }
-  else if(/ballistic|pistol|rifle|shotgun|smg|gun|crossbow|bow|dart|thrown|ranged/.test(text)){ attr='reflex'; skill='ranged'; }
-  else if(cat==='light' || /knife|dagger|shiv|holdout|short blade/.test(text)){ attr='reflex'; skill='melee'; }
-  return {attack:isWeaponClass(item),attr,skill,type,category:cat,ap:0,properties:'',source:'legacy inference'};
-}
-function rawAttackSteps(category,successes,defense){
-  const excess=Math.max(0,successes-defense);
-  if(successes<=defense) return 0;
-  if(category==='light' || category==='unarmed') return 1;
-  if(category==='heavy') return Math.max(1,excess*2);
-  if(category==='special') return Math.max(1,excess);
-  return excess;
-}
+/* parseItemLocalMods: apps/engine.js */
+/* classifyAttackProfile: apps/engine.js */
+/* rawAttackSteps: apps/engine.js */
 function performAttackRoll(which){
   const item=equippedItem(which); if(!item){ alert('No '+which+' item equipped.'); return; } if(!isWeaponClass(item)){ alert('Equipped '+which+' item is not a weapon card.'); return; }
   const d=deriveCombat(), profile=classifyAttackProfile(item), localMods=parseItemLocalMods(item), skillValue=toNum(d.skills[profile.skill],0); const context=profile.attr==='savvy'?'social':'physical'; const pool=buildPool(profile.attr,skillValue,context,toNum(rollModifier?.value,0),toNum(d.mods.atk,0),item.name||'Attack'); const originalDice=rollDicePool(pool.total); const defense=Math.max(1,toNum(rollTargetDefense?.value,1)); const targetSoak=Math.max(0,toNum(rollTargetSoak?.value,0)), trait=rollTargetTrait?.value||'none', ap=Math.max(0,toNum(profile.ap,0)+toNum(localMods.ap,0));
-  const render=(dice,pushed)=>{ const successes=countSuccesses(dice); let kind='Miss', summary='Attack misses.', notes=[...pool.wound.notes,...pool.cond.notes]; if(pushed) notes.unshift('Push used after the original roll: +1 Stress, two additional dice appended.'); const cat=profile.category||gearCategory(item), raw=rawAttackSteps(cat,successes,defense), traitDelta=trait==='resist'?-1:(trait==='vulnerable'?1:0), afterTrait=Math.max(0,raw+traitDelta), effectiveSoak=Math.max(0,targetSoak-ap), finalSteps=Math.max(0,afterTrait-effectiveSoak);
-    if(successes<defense){ kind='Miss'; summary='Miss. No hit.'; } else if(successes===defense){ kind='Graze'; summary='Graze. Target takes -1 die on its next action.'; notes.push('Armor is irrelevant to a Graze.'); } else if(finalSteps===0){ kind='Armored Graze'; summary='Armor or resistance soaked the hit to 0. Target takes 1 Stress and -1 die on its next action.'; } else { kind=cat==='special'?'Hit (Special)':'Hit'; summary='Hit for '+finalSteps+' Wound step'+(finalSteps===1?'':'s')+'.'; if(cat==='special') notes.push('Resolve any additional special rule from the item text.'); }
+  const render=(dice,pushed)=>{ const successes=countSuccesses(dice); let kind='Miss', summary='Attack misses.', notes=[...pool.wound.notes,...pool.cond.notes]; if(pushed) notes.unshift('Push used after the original roll: +1 Stress, two additional dice appended.'); const cat=profile.category||gearCategory(item), hit=E.resolveAttack(successes,defense,cat,targetSoak,trait,ap), {raw,traitDelta,afterTrait,effectiveSoak,finalSteps}=hit; kind=hit.kind; summary=hit.summary; notes.push(...hit.notes);
     state.combatFlags=state.combatFlags||{}; state.combatFlags.grazeActive=(kind==='Graze'||kind==='Armored Graze'); const box=$('grazeFlagCheck'); if(box) box.checked=state.combatFlags.grazeActive;
     let breakdown='Pool '+pool.total+' = '+titleCaseKey(profile.attr)+' '+pool.attrVal+' + '+titleCaseKey(profile.skill)+' '+skillValue+(pool.situational?(' '+signedNumber(pool.situational)):'')+(pool.extra?(' '+signedNumber(pool.extra)):'')+(pool.wound.mod?(' '+signedNumber(pool.wound.mod)):'')+(pool.cond.mod?(' '+signedNumber(pool.cond.mod)):'')+(pool.totalRaw!==pool.total?' (capped at 10)':'')+(pushed?' | Push +2 dice, +1 Stress':'')+' | Successes '+successes+' vs Defense '+defense+' | '+cat.toUpperCase()+' / '+escapeHtml(profile.type)+' / AP '+ap; if(successes>defense) breakdown+=' | Raw '+raw+' -> Trait '+(traitDelta>=0?'+':'')+traitDelta+' = '+afterTrait+' -> Soak '+effectiveSoak+' = '+finalSteps;
     renderRollResultCard((item.name||'Weapon')+' Attack',kind,summary,breakdown,dice,notes); pushRollHistory({kind,title:(item.name||'Weapon')+' Attack',summary:'Successes '+successes+' vs Defense '+defense+' / '+summary+(pushed?' after Push':''),dice}); scheduleSave(); };
@@ -906,17 +828,10 @@ function performAttackRoll(which){
 
 /* === v36 equipment slots, armor/backpack, unlocked inventory override === */
 function isArmorClass(item){ return /ARMOR|VEST|JACKET|SHIELD|PLATE|PROTECTION/.test(itemType(item)); }
-function isBackClass(item){ return /BACK|BACKPACK|BAG|POUCH|PACK|SATCHEL|RIG|HARNESS|BELT/.test(itemType(item)); }
-function slotBonusFromText(text){ let best=0; const re=/\b(SLOTS?|INV|INVENTORY|BACK)\s*([+-]?\d+)\b/gi; let m; while((m=re.exec(String(text||'')))) best=Math.max(best,toNum(m[2],0)); return best; }
-function backSlotBonus(item){
-  if(!item) return 0;
-  const a=item.adds||[];
-  const text=[item.class,item.name,item.desc,a[2],a[4],a[5],a[7]].join(' ');
-  let n=slotBonusFromText(text);
-  if(!n && isBackClass(item)) n=toNum(a[7],0);
-  return Math.max(0,Math.min(SLOT_COUNT-BASE_UNLOCKED_SLOTS,Math.floor(n||0)));
-}
-function unlockedSlotCount(){ if(IS_SHOPS || state.inventoryRules?.slotLimitsEnabled===false) return SLOT_COUNT; const back=equippedItem('back'); return Math.max(BASE_UNLOCKED_SLOTS,Math.min(SLOT_COUNT,BASE_UNLOCKED_SLOTS+backSlotBonus(back))); }
+/* isBackClass: apps/engine.js */
+/* slotBonusFromText: apps/engine.js */
+/* backSlotBonus: apps/engine.js */
+/* unlockedSlotCount: apps/engine.js */
 function isSlotUnlocked(i){ return i>=0 && i<unlockedSlotCount(); }
 function ensureSelectedUnlocked(){ if(!isSlotUnlocked(selected)) selected=0; state.selected=selected; }
 function gearLabel(item){ if(!item) return 'None'; const c=counts(item); return escapeHtml(item.name||'Unnamed')+'<br>Slot '+String((state.inventory||[]).indexOf(item)+1).padStart(2,'0')+' / '+escapeHtml(item.class||'No class')+' / '+escapeHtml(ammoType(item)||'no type')+'<br>'+c.cur+' / '+(c.max||0); }
@@ -1067,12 +982,7 @@ function mergeState(raw){
   out.version=44;
   return out;
 }
-function parseSignedTags(text){
-  const out=[];
-  const re=/\b(MUSCLE|MUS|REFLEX|REF|WIT|SAVVY|SAV|SPARK|SPK|ROOT|DEFENSE|DEF|ATTACK|ATK|DICE|DAMAGE|DMG|AP|STRESSMAX|STRESS|BALLISTIC|BAL|BLADE|BLA|IMPACT|IMP|ENERGY|ENE|SOAK|SLOTS?|INV|INVENTORY|BACK|MOVEMENT|MOVE|MOBILITY|SPEED|DASH|DODGE|INIT|INITIATIVE)\s*([+-]?\d+)\b/gi;
-  let m; while((m=re.exec(String(text||'')))) out.push({key:m[1].toUpperCase(),val:toNum(m[2],0),raw:m[1].toUpperCase()+(Number(m[2])>=0?'+':'')+Number(m[2])});
-  return out;
-}
+/* parseSignedTags: apps/engine.js */
 function isPenaltyTag(t){ return ['REF','REFLEX','MOVE','MOVEMENT','MOBILITY','SPEED','DASH','DODGE','INIT','INITIATIVE'].includes(String(t.key||'').toUpperCase()) && Number(t.val)<0; }
 function penaltySummary(item){
   if(!item) return '';
@@ -1080,39 +990,11 @@ function penaltySummary(item){
   const tags=parseSignedTags([item.class,item.name,a[2],a[4],a[5],item.desc].join(' ')).filter(isPenaltyTag).map(t=>t.raw);
   return tags.length ? ' / Penalty: '+escapeHtml(tags.join(', ')) : '';
 }
-function applyItemMods(item,final,mods,soak,tags){
-  const a=item.adds||[]; const text=[item.class,item.name,a[2],a[4],a[5],item.desc].join(' ');
-  parseSignedTags(text).forEach(t=>{ tags.push(t.raw); const k=t.key,v=t.val;
-    if(k==='MUS'||k==='MUSCLE') final.muscle+=v;
-    else if(k==='REF'||k==='REFLEX') final.reflex+=v;
-    else if(k==='WIT') final.wit+=v;
-    else if(k==='SAV'||k==='SAVVY') final.savvy+=v;
-    else if(k==='SPK'||k==='SPARK') final.spark+=v;
-    else if(k==='ROOT') final.root+=v;
-    else if(k==='DEF'||k==='DEFENSE') mods.def+=v;
-    else if(k==='ATK'||k==='ATTACK'||k==='DICE') mods.atk+=v;
-    else if(k==='DMG'||k==='DAMAGE') mods.dmg+=v;
-    else if(k==='AP') mods.ap+=v;
-    else if(k==='BAL'||k==='BALLISTIC') soak.ballistic+=v;
-    else if(k==='BLADE'||k==='BLA') soak.blade+=v;
-    else if(k==='IMPACT'||k==='IMP') soak.impact+=v;
-    else if(k==='ENERGY'||k==='ENE') soak.energy+=v;
-    else if(k==='SOAK'){soak.ballistic+=v;soak.blade+=v;soak.impact+=v;soak.energy+=v;}
-    else if(k==='DASH') mods.dash+=v;
-    else if(k==='DODGE') mods.dodge+=v;
-    else if(k==='INIT'||k==='INITIATIVE') mods.init+=v;
-    else if(k==='MOVE'||k==='MOVEMENT'||k==='MOBILITY'||k==='SPEED'){ mods.move+=v; mods.dash+=v; mods.init+=v; }
-  });
-}
+/* applyItemMods: apps/engine.js */
 function deriveCombat(){
-  const final={muscle:Math.max(1,toNum(state.stats.muscle,1)),reflex:Math.max(1,toNum(state.stats.reflex,1)),wit:Math.max(1,toNum(state.stats.wit,1)),savvy:Math.max(1,toNum(state.stats.savvy,1)),spark:Math.max(1,toNum(state.stats.spark,1)),root:Math.max(1,toNum(state.stats.root,1))};
-  const skills={brawl:skillValue('brawl'),melee:skillValue('melee'),ranged:skillValue('ranged'),dodge:skillValue('dodge'),dash:skillValue('dash'),cast:skillValue('cast')};
-  const mods={atk:0,def:0,dmg:0,ap:0,dash:0,dodge:0,move:0,init:0}; const soak={ballistic:0,blade:0,impact:0,energy:0}; const tags=[];
-  [equippedItem('armor'),equippedItem('active'),equippedItem('secondary'),equippedItem('back')].filter(Boolean).forEach(item=>applyItemMods(item,final,mods,soak,tags)); const equippedArmor=equippedItem('armor'); if(equippedArmor){ const p=normalizeArmorProfile(equippedArmor); ['ballistic','blade','impact','energy'].forEach(k=>{ if(toNum(p.base[k],0)>0) soak[k]=toNum(p.current[k],0); }); }
-  attrNames().forEach(k=>final[k]=Math.max(1,Math.floor(final[k]||1)));
-  skills.dash=Math.max(0,Math.floor(skills.dash+mods.dash)); skills.dodge=Math.max(0,Math.floor(skills.dodge+mods.dodge));
+  const core=E.deriveCore(), {final,skills,mods}=core;
   const active=equippedItem('active'), secondary=equippedItem('secondary'), ammo=equippedItem('ammoSource'), armor=equippedItem('armor'), back=equippedItem('back');
-  return {final,skills,mods,soak,tags,defense:defenseFromReflex(final.reflex),init:Math.max(1,final.reflex+skills.dash+mods.init),activeLine:buildAttackLine(active,final,skills,mods),secondaryLine:buildAttackLine(secondary,final,skills,mods),ammoLine:ammo?escapeHtml(ammo.name||'Ammo')+' / '+escapeHtml(ammoType(ammo)||'no type')+' / '+counts(ammo).cur+' / '+(counts(ammo).max||0):'none',armorLine:armor?escapeHtml(armor.name||'Armor')+' / '+escapeHtml(armor.class||'ARMOR')+penaltySummary(armor):'none',backLine:back?escapeHtml(back.name||'Back')+' / +'+backSlotBonus(back)+' slots / '+unlockedSlotCount()+' total'+penaltySummary(back):'none',damageLine:buildDamageSummary(active,'A',mods)+(active&&secondary?' | ':'')+buildDamageSummary(secondary,'S',mods)};
+  return {...core,activeLine:buildAttackLine(active,final,skills,mods),secondaryLine:buildAttackLine(secondary,final,skills,mods),ammoLine:ammo?escapeHtml(ammo.name||'Ammo')+' / '+escapeHtml(ammoType(ammo)||'no type')+' / '+counts(ammo).cur+' / '+(counts(ammo).max||0):'none',armorLine:armor?escapeHtml(armor.name||'Armor')+' / '+escapeHtml(armor.class||'ARMOR')+penaltySummary(armor):'none',backLine:back?escapeHtml(back.name||'Back')+' / +'+backSlotBonus(back)+' slots / '+unlockedSlotCount()+' total'+penaltySummary(back):'none',damageLine:buildDamageSummary(active,'A',mods)+(active&&secondary?' | ':'')+buildDamageSummary(secondary,'S',mods)};
 }
 function updateComputed(){
   renderEquipment(); const d=deriveCombat(), level=Math.max(1,Math.min(20,Math.floor(toNum(state.character?.level,1))));
@@ -1433,14 +1315,8 @@ window.addEventListener('message',e=>{
 });
 
 /* PLAYER ACTIONS: see docs/PLAYER_ACTIONS_HANDOFF.md before coordinating edits. */
-function actionChanges(before, after, path=[]) {
-  if (JSON.stringify(before)===JSON.stringify(after)) return [];
-  if (before && after && typeof before==='object' && typeof after==='object' && Array.isArray(before)===Array.isArray(after)) {
-    return [...new Set([...Object.keys(before),...Object.keys(after)])].flatMap(key=>actionChanges(before[key],after[key],[...path,key]));
-  }
-  return [{path,before:before===undefined?null:deepCopy(before),after:after===undefined?null:deepCopy(after),hadBefore:before!==undefined,hadAfter:after!==undefined}];
-}
-function actionValue(path) { return path.reduce((value,key)=>value?.[key],state); }
+/* actionChanges: apps/engine.js */
+/* actionValue: apps/engine.js */
 function actionReceipt(message) { const el=$('playerActionReceipt'); if(el)el.textContent=message; }
 function actionPoolText(pool,attr,skill) {
   return pool.total+' dice = '+titleCaseKey(attr)+' '+pool.attrVal+' + '+skill+' '+pool.skillValue+' + situation '+pool.situational+' + gear '+pool.extra+' + wounds '+pool.wound.mod+' + conditions '+pool.cond.mod+(pool.totalRaw!==pool.total?' (limited to 0–10)':'');
