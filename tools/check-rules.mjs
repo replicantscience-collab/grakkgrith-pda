@@ -68,6 +68,38 @@ for (const [domain, list] of Object.entries(ref.skills)) {
 const allSkills = Object.values(ref.skills).flat();
 for (const s of allSkills) if (!rules.skillKeys[s]) bad('skillKeys', `no key for ${s}`);
 
+// --- Mixed Heritage (Chapter 15) and Afflictions (Chapter 20) ---------------------
+{
+  const mh = rules.mixedHeritage, want = ref.mixedHeritage;
+  if (!mh) bad('mixedHeritage', 'missing');
+  else {
+    if (!same(mh.mortal, want.mortal)) bad('mixedHeritage.mortal', `is [${mh.mortal}], rulebook says [${want.mortal}]`);
+    if (!same(Object.keys(mh.marks), want.markLists)) bad('mixedHeritage.marks', `lists [${Object.keys(mh.marks)}], rulebook has [${want.markLists}]`);
+    for (const [sp, m] of Object.entries(mh.marks)) {
+      if (!rules.races[sp]) bad(`mixedHeritage.marks.${sp}`, 'not a race');
+      if (m.marks.length !== want.marksEach) bad(`mixedHeritage.marks.${sp}`, `has ${m.marks.length} marks, rulebook has ${want.marksEach}`);
+    }
+    if (mh.complications.length !== want.complications) bad('mixedHeritage.complications', `has ${mh.complications.length}, rulebook has ${want.complications}`);
+    if (mh.registrations.length !== want.registrations) bad('mixedHeritage.registrations', `has ${mh.registrations.length}, rulebook has ${want.registrations}`);
+  }
+  const af = rules.afflictions, wa = ref.afflictions;
+  if (!af) bad('afflictions', 'missing');
+  else {
+    if (JSON.stringify(af.stages) !== JSON.stringify(wa.stages)) bad('afflictions.stages', `is [${af.stages}], rulebook says [${wa.stages}]`);
+    for (const n of wa.rulebook) if (!af.list[n]) bad('afflictions', `missing ${n}`);
+    for (const s of af.startingStages) if (!af.stages.includes(s)) bad('afflictions.startingStages', `${s} is not a stage`);
+    for (const [n, a] of Object.entries(af.list)) {
+      for (const part of ['passive', 'active', 'compulsion', 'weakness']) if (!a[part]) bad(`afflictions.${n}`, `missing ${part} (every Affliction has all five parts)`);
+      if (!['rulebook', 'draft'].includes(a.status)) bad(`afflictions.${n}.status`, 'must be rulebook or draft');
+      if (a.status === 'rulebook' && !wa.rulebook.includes(n)) bad(`afflictions.${n}`, 'marked rulebook but not in the rulebook; mark it draft');
+      const choices = a.adaptation?.choices === 'aspect' ? (a.aspects || []).map(x => x.adaptation) : (a.adaptation?.choices || []);
+      for (const ch of choices) if (!ref.attributes.includes(ch)) bad(`afflictions.${n}.adaptation`, `${ch} is not an attribute`);
+      for (const ln of a.lines || []) for (const bn of ln.banes || []) if (!(a.banes || []).includes(bn)) bad(`afflictions.${n}.lines.${ln.name}`, `Bane ${bn} is not in the Bane list`);
+      for (const st of Object.keys(a.progression || {})) if (!af.stages.includes(st)) bad(`afflictions.${n}.progression`, `${st} is not a stage`);
+    }
+  }
+}
+
 // --- Internal consistency -----------------------------------------------------
 for (const [kind, table] of [['origins', rules.origins], ['lives', rules.lives]]) {
   for (const [name, entry] of Object.entries(table)) {
