@@ -45,14 +45,16 @@
       "name": "Helix Systems",
       "role": "Cybernetics, biotechnology, experimental medicine, and personal data.",
       "about": "Implants, prosthetics, neural interfaces and treatment you can't get anywhere else, with maintenance, monitoring and licensing attached. Its interest in you doesn't end when your treatment does.",
-      "art": null
+      "art": "helix-systems",
+      "claim": "Better life, by design."
     },
     {
       "id": "meridian",
       "name": "Meridian Logistics",
       "role": "Shipping, freight, transport infrastructure, and supply movement.",
       "about": "Profits from movement, whatever the cargo: relief supplies, eviction equipment, stolen machinery. Often partners with Crownline, but answers to its own contracts.",
-      "art": null
+      "art": "meridian-logistics",
+      "claim": "Every route, right on time."
     },
     {
       "id": "velvet",

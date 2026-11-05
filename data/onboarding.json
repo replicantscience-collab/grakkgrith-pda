@@ -1,0 +1,28 @@
+{
+  "_about": "Onboarding cutscenes. Art by Eko/Pulse (art/pda-v1/imports/onboarding, originals in source/). 'text' transcribes what each frame shows, for screen readers and for reduced-motion players; 'flash' marks glitch frames that reduced motion skips. ms is how long a beat holds when it plays on its own. Plays once per browser; City ID can replay the registration.",
+  "artBase": "art/pda-v1/imports/onboarding/",
+  "registry": {
+    "id": "civic-registry",
+    "label": "Adyta Civic Registry: identity registration",
+    "beats": [
+      { "src": "registry/00.webp", "ms": 1500, "text": "New Halo, a Crownline initiative. Adyta Civic Registry: identity registration. Initializing secure session…" },
+      { "src": "registry/01.webp", "ms": 1500, "text": "Verifying identity…" },
+      { "src": "registry/02.webp", "ms": 2400, "text": "Registration complete. Identity verified. Civic status: Resident. Network access: granted." },
+      { "src": "registry/03.webp", "ms": 600, "text": "Signal interruption.", "flash": true },
+      { "src": "registry/04.webp", "ms": 1000, "text": "Velvet Signal: unauthorized transmission." },
+      { "src": "registry/05.webp", "ms": 500, "text": "Velvet Signal: unauthorized transmission.", "flash": true },
+      { "src": "registry/06.webp", "ms": 1700, "text": "Sideways override. Radio Sewers connecting…" },
+      { "src": "registry/07.webp", "ms": 1900, "text": "Radio Sewers, 88.7 FM. Network online." },
+      { "src": "registry/08.webp", "ms": 3000, "text": "“Psst… Yeah, you. Not the City.”" },
+      { "src": "registry/09.webp", "ms": 3200, "text": "“You spent that time building someone interesting…”" },
+      { "src": "registry/10.webp", "ms": 3400, "text": "“…just to hand them over to a filing cabinet? Nah.”" },
+      { "src": "registry/11.webp", "ms": 3400, "text": "Welcome to the other Adyta. Your city. Your story. Your signal." }
+    ]
+  },
+  "radio": {
+    "id": "radio-hide-it",
+    "label": "Radio Sewers: hide it",
+    "clip": { "src": "radio-hide-it.webp", "still": "radio-hide-it-still.webp", "ms": 6400 },
+    "text": "Radio Sewers is patched in. If a street sweep or an ID check comes, hit Hide it: the PDA flips to your City ID, and the station was never here."
+  }
+}

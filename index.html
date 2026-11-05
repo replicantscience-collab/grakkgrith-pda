@@ -55,6 +55,7 @@ button.primary,.navPill.active{border-color:rgba(184,50,50,.75);background:linea
   <button id="sec-inventory" class="navPill secTab" data-sec="inventory"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M9 5h6l-1 3h-4z"/><path d="M10 8C6 10 5 14 5 17a3 3 0 0 0 3 3h8a3 3 0 0 0 3-3c0-3-1-7-5-9"/></svg><span>Inventory</span><span id="mailBadge" class="miniBadge mailBadge" hidden></span></button>
  </nav>
  <div class="navGroup charGroup">
+  <button id="hideItBtn" class="hideIt" type="button" title="Hide it: flip to your City ID" aria-label="Hide it: show your City ID"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3l18 18"/><path d="M10.6 6.1A9.8 9.8 0 0 1 12 6c5 0 9 6 9 6a17 17 0 0 1-3 3.4M6.2 7.6C4.1 9.1 3 12 3 12s4 6 9 6c1.5 0 2.9-.4 4.1-1"/><path d="M9.9 10a3 3 0 0 0 4.1 4.1"/></svg><span>Hide it</span></button>
   <button id="toolsBtn" class="charChip navToggle" data-help="" aria-haspopup="true"><span class="chipLabel">Character</span><span id="characterBadge" class="miniBadge"></span></button>
   <div class="navMenu toolsMenu">
    <button id="charHubBtn" data-help="">Player Hub</button>
@@ -254,6 +255,8 @@ document.getElementById('charHubBtn').onclick=()=>showCharacterHub();
 /* City ID: the Adyta Resident ID, issued at the end of Setup. */
 function showCityId(fresh){if(currentUrl){URL.revokeObjectURL(currentUrl);currentUrl=''}mode='cityid';frame.src='./apps/cityid.html'+(fresh?'?issued':'');setActiveShell('cityid');statusEl.textContent=''}
 document.getElementById('cityIdBtn').onclick=()=>showCityId(false);
+/* Hide it: one tap flips the PDA to the boring civic ID (the Radio Sewers intro shows it). */
+document.getElementById('hideItBtn').onclick=()=>{document.querySelectorAll('.navMenu.open,.navToggle[aria-expanded="true"]').forEach(x=>{x.classList.remove('open');x.setAttribute&&x.getAttribute('aria-expanded')&&x.setAttribute('aria-expanded','false')});showCityId(false)};
 /* Sheet = the one-page sheet (apps/sheet.html); Edit sheet = the full editable sheet. */
 function showSheet(){if(currentUrl){URL.revokeObjectURL(currentUrl);currentUrl=''}mode='player';frame.src='./apps/sheet.html';setActiveShell('player');statusEl.textContent=''}
 document.getElementById('sheetBtn').onclick=()=>showSheet();

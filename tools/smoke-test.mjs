@@ -79,15 +79,16 @@ try {
     await step('a Start card opens its section', async () => { await f.click('.card [data-nav="exploreBtn"]'); await page.waitForTimeout(1500); return page.evaluate(() => document.querySelector('.secTab.active').dataset.sec === 'explore'); });
     await step('section tabs show their pages as sub-tabs', async () => { await page.evaluate(() => document.getElementById('sec-missions').click()); await page.waitForTimeout(1200);
       const subs = await page.$$eval('#subNav .subTab', b => b.map(x => x.textContent)); return (subs.join('|') === 'Job Board|Pocket Change|Radio Sewers') || subs.join('|'); });
-    await step('Corporations shows five, with Pulse\'s posters and New Halo under Crownline', async () => { await page.evaluate(() => document.getElementById('corpsBtn').click()); await page.waitForTimeout(1500); const g = frame(page); await g.waitForFunction(() => window.GRAKK_CORPS_READY);
+    await step('Corporations shows five, every one with a poster, and New Halo under Crownline', async () => { await page.evaluate(() => document.getElementById('corpsBtn').click()); await page.waitForTimeout(1500); const g = frame(page); await g.waitForFunction(() => window.GRAKK_CORPS_READY);
       const n = await g.$$eval('.corp', x => x.length), imgs = await g.$$eval('.corp img', x => x.length), nh = await g.evaluate(() => !!document.querySelector('#crownline .campaign')), sub = await page.evaluate(() => document.querySelector('.secTab.active').dataset.sec);
-      return (n === 5 && imgs === 4 && nh && sub === 'factions') || `${n} corps, ${imgs} posters, New Halo under Crownline ${nh}, tab ${sub}`; });
+      return (n === 5 && imgs === 6 && nh && sub === 'factions') || `${n} corps, ${imgs} posters, New Halo under Crownline ${nh}, tab ${sub}`; });
     f = await open('loreBtn', 1500);
     await step('Factions, Lore and Logs use the Sideways skin', async () => { for (const id of ['factions', 'lore', 'downtime']) { await f.evaluate(id => showPanel(id), id); if (!(await f.evaluate(() => document.body.classList.contains('pda-art')))) return `${id} is unskinned`; } return true; });
     await step('No doubles: Inventory has four pages, Guides three, Missions three', async () => { const subs = async sec => { await page.evaluate(id => document.getElementById(id).click(), 'sec-' + sec); await page.waitForTimeout(900); return page.$$eval('#subNav .subTab', b => b.map(x => x.firstChild.textContent).join('|')); };
       const inv = await subs('inventory'), gd = await subs('guides'); return (inv === 'Sheet|Workshop|Mail & bills|Logs' && gd === 'Species|Quickstart|Rules') || `${inv} / ${gd}`; });
     await step('Rules holds the full rules, Quickstart the build guide', async () => { f = await open('rulesBtn', 1200); const r = await f.evaluate(() => !!document.querySelector('#panel details.howto') && /Push, Stress/.test(document.querySelector('#panel details.howto').textContent)); f = await open('quickstartBtn', 1200); const q = await f.evaluate(() => /Building your character/.test(document.getElementById('panel').innerText)); return (r && q) || `rules ${r}, quickstart ${q}`; });
     await step('Job Board carries the story missions and pins one as the active operation', async () => { f = await open('jobsBtn', 1500); await f.waitForFunction(() => window.GRAKK_JOBS_READY); const n = await f.$$eval('#arc .letter, #side .letter', x => x.length); await f.evaluate(() => document.querySelector('[data-op="routeLock"]').click()); const on = await f.evaluate(() => /Route Lock/.test(document.getElementById('activeOp').innerText)); await f.evaluate(() => document.querySelector('[data-op-clear]').click()); return (n === 7 && on) || `${n} missions, pinned ${on}`; });
+    await step('Job Board story cards and side board show their scene art', async () => { const r = await f.evaluate(async () => { const imgs = [...document.querySelectorAll('#arc .scene, #sideArt .scene')]; for (const i of imgs) { i.loading = 'eager'; if (!i.complete) await new Promise(ok => { i.onload = i.onerror = ok; }); } return { n: imgs.length, ok: imgs.filter(i => i.naturalWidth > 0).length }; }); return (r.n === 4 && r.ok === 4) || `${r.ok} of ${r.n} scenes loaded`; });
 
     // Guides: all 11 races, and a card opens its entry.
     f = await open('guidesBtn', 1200);
@@ -145,6 +146,22 @@ try {
     await ctx.close();
   }
 
+  // Reduced motion: no autoplay, no flashing beats, a still instead of the clip, and Next / Continue to move on.
+  {
+    const ctx = await browser.newContext({ viewport: { width: 390, height: 844 }, reducedMotion: 'reduce', serviceWorkers: 'block' });
+    const page = await ctx.newPage(), errors = []; page.on('pageerror', e => errors.push(e.message));
+    await page.goto(BASE + '/apps/cityid.html?issued'); await page.waitForSelector('.gIntro', { timeout: 6000 });
+    const beats = await page.$$eval('.gIntro .dots i', x => x.length);
+    await page.waitForTimeout(2500); const still = await page.evaluate(() => document.querySelector('.gIntro img.on').src.includes('registry/00'));
+    let presses = 0; while (presses < 15 && await page.$('.gIntro')) { await page.click('.gIntro .next'); presses++; }
+    check('reduced motion: registry drops the flashing beats and waits for Next', beats === 10 && still && presses === 10, JSON.stringify({ beats, still, presses }));
+    await page.goto(BASE + '/apps/radio.html'); await page.waitForSelector('.gIntro', { timeout: 6000 });
+    const src = await page.evaluate(() => document.querySelector('.gIntro img.on').src); await page.click('.gIntro .next');
+    check('reduced motion: Radio shows a still and a Continue button', /radio-hide-it-still\.webp$/.test(src) && !(await page.$('.gIntro')), src);
+    check('reduced motion: no script errors', errors.length === 0, errors.slice(0, 3).join(' | '));
+    await ctx.close();
+  }
+
   // The alpha's core loop, as a brand-new player on a phone: nothing saved -> build a character by clicking
   // through every Character Setup step -> sheet -> walk somewhere in Explore.
   {
@@ -178,6 +195,12 @@ try {
       return (c.name === 'Smoke Runner' && c.class === 'Runner' && !!c.subclass) || `saved ${JSON.stringify(c).slice(0, 80)}`;
     });
     await step('finishing Setup issues the City ID', async () => { await page.waitForTimeout(800); const g = frame(page); await g.waitForFunction(() => window.GRAKK_CITYID_READY, null, { timeout: 5000 }); const r = await g.evaluate(() => ({ name: document.querySelector('.cell div')?.parentElement && [...document.querySelectorAll('.cell')].find(x => /Full name/.test(x.textContent))?.querySelector('div').textContent, reg: JSON.parse(localStorage.getItem('grakkgrith_character_tool_v8_state')).cityId?.registry, issued: !!document.querySelector('.issued'), wide: document.documentElement.scrollWidth - innerWidth })); return (r.name === 'Smoke Runner' && /^ACR-7X-SMO-\d{4}$/.test(r.reg) && r.issued && r.wide <= 1) || JSON.stringify(r); });
+    await step('finishing Setup plays the Civic Registry intro; Skip ends it and it stays seen', async () => {
+      const g = frame(page); await g.waitForSelector('.gIntro', { timeout: 6000 });
+      const r = await g.evaluate(() => ({ beats: document.querySelectorAll('.gIntro .dots i').length, first: /registry\/\d\d\.webp$/.test(document.querySelector('.gIntro img.on')?.src || ''), focus: document.activeElement?.classList.contains('skip'), label: document.querySelector('.gIntro').getAttribute('aria-label') }));
+      await g.click('.gIntro .skip'); const gone = await g.evaluate(() => !document.querySelector('.gIntro') && !!JSON.parse(localStorage.getItem('grakkgrith-intros-seen'))['civic-registry']);
+      return (r.beats === 12 && r.first && r.focus && /Civic Registry/.test(r.label) && gone) || JSON.stringify({ ...r, gone });
+    });
     await step('the sheet shows the new character', async () => { await page.evaluate(() => document.getElementById('fullSheetBtn').click()); await page.waitForTimeout(1600); return frame(page).evaluate(() => document.body.innerText.includes('Smoke Runner') && document.getElementById('raceSelect').value === 'Goblin'); });
     await step('Explore can send them somewhere', async () => { await page.evaluate(() => document.getElementById('exploreBtn').click()); await page.waitForTimeout(1500); return frame(page).evaluate(() => { const X = window.GRAKK_EXPLORE, t = { district: 'low-halo', place: 'low-halo--rust-market' }; X.startTrip(t, X.planTrip(t)[0]); return !!JSON.parse(localStorage.getItem('grakkgrith_character_tool_v8_state')).world.presence.transit; }); });
     // The Week: rent on the Adyta clock and Heat mail, from a fresh character.
@@ -246,6 +269,13 @@ try {
       const pic = await f.evaluate(() => { const i = document.querySelector('.djpic'); return !!i && i.complete && i.naturalWidth > 0; });
       return (pic && ['Smokier', 'DJ Sludge', 'DJ Stormbird'].includes(dj) && /goblinnib/.test(link) && segs >= 10 && w <= 1) || `${dj}, ${link}, ${segs} segments, ${w}px too wide`;
     });
+    await step('first visit to Radio Sewers plays the Hide it clip; Escape skips; it does not come back', async () => {
+      await f.waitForSelector('.gIntro .wide', { timeout: 6000 }); const clip = await f.evaluate(() => document.querySelector('.gIntro img.on').src);
+      await f.evaluate(() => document.body.focus()); await f.press('body', 'Escape'); const gone = await f.evaluate(() => !document.querySelector('.gIntro'));
+      await page.evaluate(() => document.getElementById('radioBtn').click()); await page.waitForTimeout(1500); f = frame(page); const again = await f.evaluate(() => !!document.querySelector('.gIntro'));
+      return (/radio-hide-it\.webp$/.test(clip) && gone && !again) || `clip ${clip}, closed ${gone}, came back ${again}`;
+    });
+    await step('Hide it flips the PDA to the City ID', async () => { await page.click('#hideItBtn'); await page.waitForTimeout(1200); const g = frame(page); return /cityid\.html/.test(g.url()) && await g.evaluate(() => !document.querySelector('.gIntro')) || g.url(); });
     await step('Job Board: take a rulebook job, go on it, close it out', async () => {
       await page.evaluate(() => document.getElementById('jobsBtn').click()); await page.waitForTimeout(1500); f = frame(page); await f.waitForFunction(() => window.GRAKK_JOBS_READY);
       const posted = await f.$$eval('#board .contract', x => x.length); const before = Number((await ST()).stats.heat || 0);

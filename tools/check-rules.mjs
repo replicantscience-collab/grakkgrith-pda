@@ -211,6 +211,9 @@ for (const it of ART.items) for (const k of ['poster', 'card', 'sheet']) if (it[
 const artSlugs = new Set(ART.items.map(i => i.slug));
 const SPRINT = load('art/pda-v1/imports/manifest-sprint-01.json');
 for (const it of SPRINT.assets) if (!existsSync(new URL('../art/pda-v1/imports/' + it.file, import.meta.url))) bad(`art.sprint01.${it.id}`, `${it.file} is missing`);
+const MISS = load('data/missions.json');
+for (const f of [...MISS.missions.map(m => m.art).filter(Boolean), MISS.sideBoardArt].filter(Boolean)) if (!existsSync(new URL('../' + MISS.artBase + f, import.meta.url))) bad('missions.art', `${f} is missing`);
+for (const c of CORPS.corporations) if (!c.art) bad(`corporations.${c.id}`, 'no poster yet');
 const GUIDE = load('data/guides/races.json');
 for (const [name, g] of Object.entries(GUIDE.races)) if (!g.card) bad(`guides.races.${name}`, 'no card art'); else if (!existsSync(new URL('../' + g.card, import.meta.url))) bad(`guides.races.${name}`, `${g.card} is missing`);
 for (const sl of RADIO_.slots || []) if (sl.portrait && !existsSync(new URL('../' + sl.portrait, import.meta.url))) bad(`radio.slots.${sl.id}`, `${sl.portrait} is missing`);
