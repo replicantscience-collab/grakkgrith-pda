@@ -32,6 +32,8 @@
 @media (max-width:860px){.board{grid-template-columns:1fr}}
 .story{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px;margin-top:10px}
 .story .letter{margin:0}
+.story .scene{display:block;width:calc(100% + 36px);max-width:none;height:auto;aspect-ratio:16/9;object-fit:cover;margin:-16px -18px 12px;border-radius:0 6px 0 0;border-bottom:2px solid rgba(58,23,48,.35);background:#151124}
+#sideArt .scene.wide{display:block;width:100%;height:auto;aspect-ratio:16/5;object-fit:cover;margin:6px 0 4px;border:2px solid rgba(58,23,48,.35);border-radius:8px}
 .story .phase{color:#7a2f6a;font:700 11px/1.4 var(--art-ui);letter-spacing:.1em;text-transform:uppercase}
 .story h3{margin:2px 0 4px;color:#3a1730;font:400 22px/1.1 var(--art-title)}
 .story .meta{color:#5b4630;font-size:14px}
@@ -57,7 +59,7 @@
   <div class="kicker">ADYTA PDA / MISSIONS</div>
   <h1>Job Board</h1>
   <p class="muted" id="who">Small, specific, usually connected to the gap between what the city provides and what people need.</p>
-  <section class="frame" aria-labelledby="storyH"><h2 id="storyH">The story so far</h2><p class="note">The crew's running arc. Start one to pin it as the active operation; Logs picks it up.</p><div id="activeOp"></div><div class="story" id="arc"></div><h2 style="margin-top:18px">Side board</h2><p class="note">Leads, complications and downtime hooks around the arc.</p><div class="story side" id="side"></div></section>
+  <section class="frame" aria-labelledby="storyH"><h2 id="storyH">The story so far</h2><p class="note">The crew's running arc. Start one to pin it as the active operation; Logs picks it up.</p><div id="activeOp"></div><div class="story" id="arc"></div><h2 style="margin-top:18px">Side board</h2><div id="sideArt"></div><p class="note">Leads, complications and downtime hooks around the arc.</p><div class="story side" id="side"></div></section>
   <div class="cols">
     <section class="frame" aria-labelledby="boardH"><h2 id="boardH">Posted today</h2><p class="note" id="boardNote"></p><div class="board" id="board"></div></section>
     <aside>
@@ -116,8 +118,9 @@ function mineCard(j) {
 }
 /* Story missions (the old Contracts page): one card each, full brief folded */
 const ul = a => a && a.length ? `<ul>${a.map(x => `<li>${esc(x)}</li>`).join('')}</ul>` : '';
+const sceneImg = (file, alt, cls = 'scene') => file && MS.artBase ? `<img class="${cls}" src="../${esc(MS.artBase + file)}" alt="${esc(alt)}" loading="lazy" decoding="async" width="1600" height="900">` : '';
 function storyCard(m, active) {
-  return `<article class="letter ${active ? 'active' : ''}" id="m-${esc(m.id)}"><div class="phase">${esc(m.phase)}${active ? ' · active' : ''}</div><h3>${esc(m.title)}</h3>
+  return `<article class="letter ${active ? 'active' : ''}" id="m-${esc(m.id)}">${sceneImg(m.art, `Scene for ${m.title}`)}<div class="phase">${esc(m.phase)}${active ? ' · active' : ''}</div><h3>${esc(m.title)}</h3>
     <p class="meta">${esc(m.loc)} · ${esc(m.pay)}</p><p>${esc(m.stakes || m.ask)}</p>
     <details class="book brief"><summary>Full brief</summary><dl><dt>Client</dt><dd>${esc(m.client)}</dd><dt>Objective</dt><dd>${esc(m.ask)}</dd><dt>Known risk</dt><dd>${esc(m.risk)}</dd><dt>Useful crew</dt><dd>${esc(m.needs)}</dd><dt>Factions</dt><dd>${esc(m.factions)}</dd><dt>Heat</dt><dd>${esc(m.heat)}</dd></dl>
       <h4>Intel leads</h4>${ul(m.intel)}<h4>Approaches</h4>${ul(m.approach)}<h4>Pressure</h4>${ul(m.clocks)}<h4>If it goes wrong</h4><p>${esc(m.fallout)}</p>${m.next ? `<h4>Next</h4><p>${esc(m.next)}</p>` : ''}${m.discord ? `<h4>Post it in Discord</h4><p>${esc(m.discord)}</p>` : ''}</details>
@@ -127,6 +130,7 @@ function renderStory() {
   const a = opGet(), cur = MS.missions.find(m => m.id === a);
   $('activeOp').innerHTML = cur ? `<div class="opbar"><b>Active operation:</b> ${esc(cur.title)} <button class="ghost" type="button" data-op-clear>Clear</button></div>` : '';
   $('arc').innerHTML = MS.missions.filter(m => !/^SIDE BOARD/.test(m.phase)).map(m => storyCard(m, m.id === a)).join('');
+  $('sideArt').innerHTML = sceneImg(MS.sideBoardArt, 'The side board: four pinned job notes', 'scene wide');
   $('side').innerHTML = MS.missions.filter(m => /^SIDE BOARD/.test(m.phase)).map(m => storyCard(m, m.id === a)).join('');
 }
 function render() {

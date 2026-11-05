@@ -1,7 +1,7 @@
 {
   "name": "Adyta PDA faction & Patchkin art reference pack",
   "version": "2026-10-30-a",
-  "count_originals": 10,
+  "count_originals": 12,
   "policy": {
     "provenance": "User-supplied prior art; original files preserved in originals.",
     "official_vs_unofficial": "Faction posters are concept campaign material; Patchkin imagery is maker/Sideways material. Neither changes official rules, maps, identities, or governance.",
@@ -49,6 +49,26 @@
       "visual_identity": "Black, matte gold & steel",
       "description": "Private security & enforcement",
       "canon": "Visual proposal/reference only; review with Nib, including slogans and statistics before publishing."
+    },
+    {
+      "kind": "faction-poster",
+      "slug": "meridian-logistics",
+      "title": "Meridian Logistics",
+      "poster": "factions/posters/meridian-logistics.webp",
+      "card": "factions/cards/meridian-logistics-scene.webp",
+      "visual_identity": "Night teal & sodium amber",
+      "description": "Freight / routes / distribution",
+      "canon": "Visual proposal/reference only; review with Nib, including slogans and statistics before publishing. Added 2026-11-05 from Eko."
+    },
+    {
+      "kind": "faction-poster",
+      "slug": "helix-systems",
+      "title": "Helix Systems",
+      "poster": "factions/posters/helix-systems.webp",
+      "card": "factions/cards/helix-systems-scene.webp",
+      "visual_identity": "Violet & acid lime",
+      "description": "Biotech / gene-work / continuity care",
+      "canon": "Visual proposal/reference only; review with Nib, including slogans and statistics before publishing. Added 2026-11-05 from Eko."
     },
     {
       "kind": "sticker-sheet",

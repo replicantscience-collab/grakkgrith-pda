@@ -35,7 +35,8 @@
       "heat": "Starts contained because the job is deniable. Heat spikes if the crew exposes the death publicly, attacks responders, opens deeper access, or lets someone else define the answer.",
       "fallout": "Truth can protect Low Halo, justify a lockdown, empower Antitoxin, trigger ABI attention, close sewer routes, or make the crew responsible for a dangerous answer.",
       "next": "Mission 02: Route Lock begins from whatever route, evidence, or blame the crew leaves behind.",
-      "discord": "INTENT: what answer are you trying to bring back? APPROACH: who do you trust on the way down? BACKUP: what do you do if the answer is worse than the job brief?"
+      "discord": "INTENT: what answer are you trying to bring back? APPROACH: who do you trust on the way down? BACKUP: what do you do if the answer is worse than the job brief?",
+      "art": "missions/pipe37.webp"
     },
     {
       "id": "routeLock",
@@ -70,7 +71,8 @@
       "heat": "Heat shifts from incident Heat to movement Heat. Officials notice who keeps people moving after a closure order.",
       "fallout": "A route survives, burns, becomes official, becomes secret, or becomes bait. The crew may gain local trust while earning institutional suspicion.",
       "next": "Mission 03: What the File Says starts when the route story and the official file stop matching.",
-      "discord": "INTENT: what route are you trying to keep alive? APPROACH: public pressure, quiet bypass, repair, negotiation, or sabotage? BACKUP: who gets moved first if the route collapses?"
+      "discord": "INTENT: what route are you trying to keep alive? APPROACH: public pressure, quiet bypass, repair, negotiation, or sabotage? BACKUP: who gets moved first if the route collapses?",
+      "art": "missions/route-lock.webp"
     },
     {
       "id": "fileSays",
@@ -105,7 +107,8 @@
       "heat": "Case Heat. Once files move, investigators, lawyers, fixers, and narrative brokers all start watching.",
       "fallout": "The arc can end with public accountability, a dangerous bargain, protected witnesses, a buried truth, or a new enemy who knows the crew touched the file.",
       "next": "Downtime should record Heat, Standing, protected witnesses, exposed evidence, closed routes, and the next faction move.",
-      "discord": "INTENT: what do you want the file to prove? APPROACH: expose, redact, trade, protect, or destroy? BACKUP: what truth are you unwilling to sacrifice?"
+      "discord": "INTENT: what do you want the file to prove? APPROACH: expose, redact, trade, protect, or destroy? BACKUP: what truth are you unwilling to sacrifice?",
+      "art": "missions/file-says.webp"
     },
     {
       "id": "burnwire",
@@ -242,5 +245,8 @@
       "next": "Can feed wider infrastructure politics after Route Lock.",
       "discord": "INTENT: protect power, prove ownership, delay seizure, or expose the claim? APPROACH: records, repair, crowd, or extraction?"
     }
-  ]
+  ],
+  "sideBoardArt": "missions/side-board-wide.webp",
+  "artBase": "art/pda-v1/imports/",
+  "artStatus": "Scene art drafts (Claude, 2026-11-05), pending Nib’s review"
 }
