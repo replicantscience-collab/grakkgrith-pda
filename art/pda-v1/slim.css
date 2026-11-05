@@ -41,3 +41,32 @@ body.pda-art details.howto>.howtoBody{padding:0 14px 12px}
 
 /* The title strip already names the page; the panel's own first heading repeated it */
 body.pda-art #panel>h1:first-child{display:none!important}
+
+/* ---------- Character Sheet: one of everything ----------
+   Done here, not in apps/player.html, so it doesn't collide with the codex/player-actions branch.
+   Hidden buttons still work: the quick bar presses them for you. */
+/* The "sheet wisdom" banner, and the hint line under every section header */
+body[data-panel="sheet"] .compactGuide,body[data-panel="sheet"] .accordionHint{display:none!important}
+/* Three ways to jump around became one: Scene Shape stays; "Scurry to" and the Hurts/Clatter/Loot/Lurkwork buttons go
+   (the stat tiles and section headers already open their sections) */
+body[data-panel="sheet"] .compactJumpBar,body[data-panel="sheet"] .quickActions{display:none!important}
+/* Hurt and Stress buttons appeared three times (quick bar, automation panel, wound/stress tracks). Keep the quick bar's. */
+body[data-panel="sheet"] :is(#autoDamageBtn,#autoPatchBtn,#autoStressBtn,#autoCoolBtn,#autoFireActiveBtn,#undoPlayActionBtn,#woundDownBtn,#woundUpBtn,#stressDownBtn,#stressUpBtn){display:none!important}
+body[data-panel="sheet"] .quickTrackerControls [data-quick-open="system"]{display:none!important}
+body[data-panel="sheet"] .quickTrackerControls{grid-template-columns:repeat(auto-fit,minmax(110px,1fr))!important}
+/* Calmer chrome */
+body[data-panel="sheet"] .compactModeBar{margin:8px 0!important;padding:6px 0!important;border:0!important;background:none!important;box-shadow:none!important}
+body[data-panel="sheet"] .playAutomationHead strong{font-size:12px}
+/* Caps already show in the Nerves/Heat tiles (0/6); graze help and the "no warnings" line are noise */
+body[data-panel="sheet"] .twocol:has(#stressCapDisplay),body[data-panel="sheet"] .field:has(#grazeFlagCheck) .small,body[data-panel="sheet"] .playAlert.ok{display:none!important}
+/* Loadout: five small slots in a row instead of five tall boxes stacked; the long how-slots-work note goes */
+body[data-panel="sheet"] .equipGrid{grid-template-columns:repeat(auto-fit,minmax(170px,1fr))!important}
+body[data-panel="sheet"] .equipBox{min-height:0!important;grid-template-columns:auto 1fr!important;padding:8px 10px!important}
+body[data-panel="sheet"] .equipBox .equipImg{width:56px}
+body[data-panel="sheet"] .equipBox .equipImg.hidden{display:none}
+body[data-panel="sheet"] #armorConditionPanel+.small{display:none!important}
+/* Stats table: drop rows the tiles and loadout slots already show (Tracks, Armor/Back slot, Active, Secondary, Ammo) */
+body[data-panel="sheet"] #combatSummary>.combatLine:is(:nth-child(3),:nth-child(5),:nth-child(6),:nth-child(9),:nth-child(10),:nth-child(11)){display:none!important}
+body[data-panel="sheet"] #combatSummary>.combatLine:nth-child(12):has(.combatVal:empty){display:none!important}
+/* No armor on: no armor-repair controls */
+body[data-panel="sheet"] #armorConditionPanel:has(#armorConditionReadout>.small:only-child){display:none!important}
