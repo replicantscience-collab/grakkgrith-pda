@@ -86,6 +86,23 @@ Changes stay in your browser until you do step 3.
 
 ## Changing anything else
 
+### Player-sheet actions
+
+The sheet's **Now** panel offers skill rolls, equipped attacks, reloads, item use,
+and Undo. Skill and attack previews show the dice pool and accept situational
+modifiers. Attacks spend one round for weapons with tracked ammunition; Push
+adds dice and stress without spending another round. Use previews the selected
+card's recovery and remaining uses. Reload uses the selected matching ammo source.
+
+Undo preserves unrelated edits and refuses to overwrite changed values or
+replacement gear. Rolls remain in history. Old snapshot-only undo entries cannot
+be safely reversed by the new controls. Back up a character before moving between
+different development versions.
+
+For concurrent Claude/Codex work, read
+[`docs/PLAYER_ACTIONS_HANDOFF.md`](docs/PLAYER_ACTIONS_HANDOFF.md) for ownership,
+shared files, integration notes, and verification evidence.
+
 - **Bump the cache** whenever you change a file: edit `CACHE_NAME` in `sw.js` (`grakkgrith-v41` → `grakkgrith-v42`) so installed copies pick up the update.
 - **Adding a file** that should work offline: add it to the `ASSETS` list in `sw.js`. Maps and other big images stay off that list; they are saved the first time someone opens them, so a first visit stays small (about 2 MB).
 - **New map art:** save it as JPG (quality around 85), not PNG. A map PNG is 3 MB or more; the JPG looks the same at a fifth of the size.

@@ -91,6 +91,35 @@ table{width:100%;border-collapse:collapse}
 .attack p{margin:2px 0;font-size:13px}
 .attack b{color:var(--cy)}
 .empty{color:var(--art-muted);font-size:14px}
+/* Now: play actions, all rules from apps/engine.js */
+.now{margin-top:12px}
+.nowStatus{margin:0 0 10px;color:var(--art-cream);font:700 15px var(--art-ui);letter-spacing:.04em}
+.nowBar{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+.nowBar button,.nowBar select{min-height:44px}
+.nowBar button{padding:6px 14px;border:1px solid var(--line);background:#070b14;color:var(--art-cream);font:700 14px var(--art-ui);letter-spacing:.04em}
+.nowBar button.hot{border-color:var(--pink);background:#2a1230;color:#fff}
+.nowBar button:disabled{opacity:.4}
+.nowBar select{max-width:min(100%,260px);padding:6px 10px;border:1px solid var(--line2);border-radius:4px;background:#070b14;color:var(--art-cream);font:600 14px var(--art-body)}
+.nowUse{display:flex;gap:6px;flex:0 1 auto;min-width:0}
+.nowUse select{flex:1 1 auto;min-width:0}
+.nowResult{margin-top:10px;padding:10px 12px;border:1px solid var(--line2);border-radius:6px;background:#070b14}
+.nowResult b.kind{display:inline-block;margin-right:8px;padding:0 8px;border:1px solid var(--pink);border-radius:999px;color:var(--pink);font:700 12px/1.7 var(--art-ui);letter-spacing:.06em;text-transform:uppercase}
+.nowResult .bd{margin:6px 0;color:var(--art-muted);font-size:12px;overflow-wrap:anywhere}
+.dice{display:flex;flex-wrap:wrap;gap:4px}
+.dice i{display:grid;place-items:center;width:28px;height:28px;border:1px solid var(--line2);border-radius:5px;font:700 14px var(--art-ui);font-style:normal;color:var(--art-muted)}
+.dice i.hit{border-color:var(--cy);color:#fff;background:rgba(34,218,228,.15)}
+.sg td button.sk{min-height:28px;padding:0;border:0;background:none;box-shadow:none;color:var(--art-cream);font:inherit;text-align:left;text-decoration:underline dotted rgba(34,218,228,.55);text-underline-offset:3px;cursor:pointer}
+.sg td button.sk:hover,.sg td button.sk:focus-visible{color:var(--cy)}
+dialog.act{width:min(440px,calc(100vw - 32px));padding:16px;border:1px solid var(--pink);border-radius:10px;background:#0a0b16;color:var(--art-cream)}
+dialog.act::backdrop{background:rgba(5,5,11,.75)}
+dialog.act h3{margin:0 0 8px;color:var(--pink);font:700 19px var(--art-ui);letter-spacing:.05em;text-transform:uppercase}
+dialog.act pre{margin:0 0 10px;white-space:pre-wrap;font:600 14px/1.5 var(--art-body);color:var(--art-cream)}
+.actFields{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:12px}
+.actFields label[hidden]{display:none}
+.actFields label{display:grid;gap:4px;margin:0;color:var(--cy);font:700 11px var(--art-ui);letter-spacing:.08em;text-transform:uppercase}
+.actFields input,.actFields select{min-height:40px;padding:4px 8px;border:1px solid var(--line2);border-radius:4px;background:#070b14;color:var(--art-cream);font:600 15px var(--art-body)}
+.actBar{display:flex;justify-content:flex-end;gap:8px}
+.actBar button{min-height:44px;min-width:96px}
 @media (max-width:1000px){.row1{grid-template-columns:1fr 1fr}.portrait{grid-column:2;grid-row:1}.row1 .attrBox{grid-column:1/-1}.row2{grid-template-columns:1fr}}
 @media (max-width:700px){.row1{grid-template-columns:1fr}.portrait{grid-column:auto;grid-row:auto}.portrait img{min-height:0;max-height:none;aspect-ratio:4/5}.ident{grid-template-columns:1fr}.skills{grid-template-columns:1fr 1fr}.turn{grid-template-columns:1fr}.wpn .hideS{display:none}}
 @media (max-width:700px){.portrait{max-width:240px;justify-self:center;width:100%}}
@@ -107,6 +136,18 @@ table{width:100%;border-collapse:collapse}
   <div id="app"></div>
 </div>
 <div class="toast" id="toast" role="status" aria-live="polite"></div>
+<dialog class="act" id="actDlg" aria-labelledby="actTitle"><form method="dialog">
+  <h3 id="actTitle"></h3><pre id="actDetails"></pre>
+  <div class="actFields">
+    <label data-f="mod">Situation<input id="actMod" type="number" min="-5" max="5" step="1" value="0"></label>
+    <label data-f="diff">Difficulty<select id="actDiff"><option value="1">Routine 1</option><option value="2" selected>Challenging 2</option><option value="3">Hard 3</option><option value="4">Severe 4</option><option value="5">Legendary 5</option></select></label>
+    <label data-f="def">Target Defense<input id="actDef" type="number" min="1" max="10" step="1" value="1"></label>
+    <label data-f="soak">Target soak<input id="actSoak" type="number" min="0" max="10" step="1" value="0"></label>
+    <label data-f="trait">Target<select id="actTrait"><option value="none">Normal</option><option value="resist">Resists this damage</option><option value="vulnerable">Vulnerable to it</option></select></label>
+  </div>
+  <div class="actBar"><button type="button" id="actCancel">Cancel</button><button type="button" class="primary" id="actOk">Roll</button></div>
+</form></dialog>
+<script src="./engine.js"></script>
 <script src="./screen.js"></script>
 <script>
 'use strict';
@@ -120,34 +161,19 @@ const hasChar = s => !!(s && s.character && String(s.character.name || '').trim(
 const nav = to => parent.postMessage({ type: 'grakkgrith-nav', to }, '*');
 let R = null, G = null;
 
-/* Same rules as the full sheet (apps/player.html) */
-const stressCap = lvl => num(lvl) >= 12 ? 8 : 6;
-const heatCap = lvl => { lvl = num(lvl); return lvl >= 17 ? 8 : lvl >= 7 ? 7 : 6; };
+/* Rules come from the shared engine (apps/engine.js), the same code Edit sheet runs. CUR is the character it reads. */
+let CUR = null;
+const E = window.GRAKK_ENGINE.create(() => CUR);
+const stressCap = lvl => E.stressCap(lvl), heatCap = lvl => E.heatCap(lvl);
 const ATTR_LINE = { muscle: 'raw power, endurance', reflex: 'speed, precision', wit: 'improvisation', savvy: 'reading people', spark: 'the weird little current', root: 'the city knows you back' };
 const WOUNDS = [['Unharmed', ''], ['Hurt', '-1 die on physical checks'], ['Wounded', '-2 dice on all checks'], ['Critical', '1 Action a turn; treat or die']];
 const CONDITIONS = ['Paranoid', 'Burnt Out', 'Locked In', 'Going Through It', 'Frozen'];
 const TAG_RE = /\b(MUSCLE|MUS|REFLEX|REF|WIT|SAVVY|SAV|SPARK|SPK|ROOT|ATTACK|ATK|DICE|DASH|INIT|INITIATIVE)\s*([+-]?\d+)\b/gi;
 const TAG_ATTR = { MUSCLE: 'muscle', MUS: 'muscle', REFLEX: 'reflex', REF: 'reflex', WIT: 'wit', SAVVY: 'savvy', SAV: 'savvy', SPARK: 'spark', SPK: 'spark', ROOT: 'root' };
-const isWeapon = it => /WEAPON|GUN|FIREARM|BOW|CROSSBOW/i.test(it.class || '') || !!(it.attackProfile && it.attackProfile.category);
-const slotItem = (s, which) => { const i = s.equipment && s.equipment[which]; return (i === null || i === undefined || i === '') ? null : (s.inventory || [])[Number(i)] || null; };
-
-function derive(s) {
-  const final = {}, mods = { atk: 0, dash: 0, init: 0 };
-  for (const a of R.attributes) final[a.id] = Math.max(1, num(s.stats && s.stats[a.id], 1));
-  for (const it of ['armor', 'active', 'secondary', 'back'].map(w => slotItem(s, w)).filter(Boolean)) {
-    const text = [it.class, it.name, (it.adds || [])[2], (it.adds || [])[4], (it.adds || [])[5], it.desc].join(' '); let m; TAG_RE.lastIndex = 0;
-    while ((m = TAG_RE.exec(text))) { const k = m[1].toUpperCase(), v = num(m[2]); if (TAG_ATTR[k]) final[TAG_ATTR[k]] += v; else if (/^(ATTACK|ATK|DICE)$/.test(k)) mods.atk += v; else if (k === 'DASH') mods.dash += v; else mods.init += v; }
-  }
-  for (const k in final) final[k] = Math.max(1, Math.floor(final[k]));
-  const rank = k => Math.max(0, Math.min(4, Math.floor(num(s.skills && s.skills[k])))), dice = k => Math.min(3, rank(k));
-  return { final, mods, rank, dice, defense: 1 + Math.floor(final.reflex / 2), init: Math.max(1, final.reflex + Math.max(0, dice('dash') + mods.dash) + mods.init) };
-}
-function attackOf(it) {
-  const p = it.attackProfile || {}, cat = String(p.category || '').toLowerCase();
-  let attr = String(p.attribute || '').toLowerCase(), skill = String(p.skill || '').toLowerCase();
-  if (!attr || !skill) { if (/ranged|gun|bow/.test(cat + ' ' + (it.class || '').toLowerCase())) { attr = attr || 'reflex'; skill = skill || 'ranged'; } else if (/heavy/.test(cat)) { attr = attr || 'muscle'; skill = skill || 'melee'; } else if (/unarmed|brawl/.test(cat)) { attr = attr || 'muscle'; skill = skill || 'brawl'; } else { attr = attr || 'reflex'; skill = skill || 'melee'; } }
-  return { attr, skill, cat: p.category || '', type: p.damageType || '', props: p.properties || '', ap: num(p.ap) };
-}
+function derive(s) { CUR = s; const c = E.deriveCore(); return { ...c, rank: k => E.skillRankRaw(k), dice: k => Math.min(3, E.skillRankRaw(k)) }; }
+function attackOf(it) { const p = E.classifyAttackProfile(it); return { attr: p.attr, skill: p.skill, cat: p.category, type: p.type, props: p.properties, ap: p.ap }; }
+/* Dice you would roll now with this weapon: attribute + skill + gear, with Wound and Condition penalties, capped at 10. */
+const weaponPool = (d, a) => E.buildPool(a.attr, num(d.skills[a.skill], E.skillValue(a.skill)), a.attr === 'savvy' ? 'social' : 'physical', 0, num(d.mods.atk)).total;
 const label = k => { const a = R.attributes.find(x => x.id === k); if (a) return a.label; const e = Object.entries(R.skillKeys).find(([, v]) => v === k); return e ? e[0] : k; };
 
 function portraitSrc(s) {
@@ -164,7 +190,8 @@ function render() {
   const base = (s.builder && s.builder.base) || {};
   const f = (l, v, cls = '') => `<div class="f ${cls}"><span>${esc(l)}</span><b>${esc(v || '—')}</b></div>`;
   const tag = s.magic && s.magic.streetTag;
-  let h = `<div class="grid row1">
+  let h = nowHtml(s, lvl);
+  h += `<div class="grid row1">
     <section class="box"><h2><span class="n">1</span> Identity</h2><div class="ident">
       ${f('Name', c.name)}${f('Race', c.heritage && c.heritage.on && c.heritage.secondary ? `${c.race}-${c.heritage.secondary} (mixed)` : c.race)}
       ${f('Alias', c.alias, 'wide')}
@@ -195,19 +222,19 @@ function render() {
     </section>
     <section class="box"><h2><span class="n">4</span> Skills <small>N novice +1 · T trained +2 · E expert +3 · M mastery (level 16)</small></h2><div class="skills">
       ${Object.entries(R.skills).map(([grp, [attr, list]]) => `<div class="sg"><h3>${esc(grp)} <em>(${esc(attr)})</em></h3><table><tr><td></td>${['N', 'T', 'E', 'M'].map(x => `<th>${x}</th>`).join('')}</tr>
-        ${list.map(n => { const k = R.skillKeys[n], r = d.rank(k); return `<tr><td>${esc(n)}</td>${[1, 2, 3, 4].map(i => `<td class="c"><span class="dot ${r === i ? 'on' : ''}"></span></td>`).join('')}</tr>`; }).join('')}</table></div>`).join('')}
+        ${list.map(n => { const k = R.skillKeys[n], r = d.rank(k); return `<tr><td><button type="button" class="sk" data-roll="${esc(k)}" title="Roll ${esc(n)}">${esc(n)}</button></td>${[1, 2, 3, 4].map(i => `<td class="c"><span class="dot ${r === i ? 'on' : ''}"></span></td>`).join('')}</tr>`; }).join('')}</table></div>`).join('')}
     </div>
     <div class="turn"><div class="box"><b>Turn</b><span>Action / Move / React</span></div><div class="box"><b>Init</b><span>${d.init} = Reflex + Dash</span></div></div></section>
   </div>`;
 
-  const weapons = (s.inventory || []).map((it, i) => ({ it, i })).filter(x => x.it && (x.it.name || '').trim() && isWeapon(x.it));
+  const weapons = (s.inventory || []).map((it, i) => ({ it, i })).filter(x => x.it && (x.it.name || '').trim() && E.isWeaponClass(x.it));
   const eq = i => { const e = s.equipment || {}; return num(e.active, -1) === i && e.active !== null ? 'Active' : (num(e.secondary, -1) === i && e.secondary !== null ? 'Secondary' : ''); };
   h += `<section class="box" style="margin-top:12px"><h2><span class="n">5</span> Weapons <small>Unarmed: Muscle + Brawl · Light melee: Reflex + Melee · Heavy melee: Muscle + Melee · Ranged: Reflex + Ranged</small></h2>
-    ${weapons.length ? `<table class="wpn"><tr><th>Weapon</th><th class="hideS">Category</th><th>Roll</th><th class="hideS">Damage</th><th>Properties</th></tr>${weapons.map(({ it, i }) => { const a = attackOf(it), pool = Math.max(0, (d.final[a.attr] || 0) + d.dice(a.skill) + d.mods.atk), e = eq(i);
+    ${weapons.length ? `<table class="wpn"><tr><th>Weapon</th><th class="hideS">Category</th><th>Roll</th><th class="hideS">Damage</th><th>Properties</th></tr>${weapons.map(({ it, i }) => { const a = attackOf(it), pool = weaponPool(d, a), e = eq(i);
       return `<tr><td>${esc(it.name)}${e ? `<span class="tag">${e}</span>` : ''}</td><td class="hideS">${esc(a.cat || it.class || '')}</td><td>${esc(label(a.attr))} + ${esc(label(a.skill))}<small>${pool} dice</small></td><td class="hideS">${esc(a.type || '—')}${a.ap ? ` · AP ${a.ap}` : ''}</td><td>${esc(a.props || '—')}</td></tr>`; }).join('')}</table>` : `<p class="empty">No weapons in your Stuff Sack. Fists probably: Muscle + Brawl, ${(d.final.muscle || 0) + d.dice('brawl')} dice.</p>`}
   </section>`;
 
-  const armor = slotItem(s, 'armor');
+  CUR = s; const armor = E.equippedItem('armor');
   let soak = '';
   if (armor) { const p = armor.armorProfile || {}, b = p.base || {}, cur = p.current || b; soak = ['ballistic', 'blade', 'impact', 'energy'].filter(k => num(b[k]) > 0).map(k => `<span class="${num(cur[k]) < num(b[k]) ? 'low' : ''}">${k[0].toUpperCase() + k.slice(1)} ${num(cur[k], num(b[k]))}${num(cur[k]) < num(b[k]) ? ' / ' + num(b[k]) : ''}</span>`).join(''); }
   h += `<section class="box" style="margin-top:12px"><h2><span class="n">6</span> Armor <small>Soaks wound steps after a hit, by damage type</small></h2>
@@ -219,10 +246,87 @@ function render() {
   $('app').innerHTML = h;
 }
 
+/* ---------- Now: play actions ---------- */
+let LAST = null, PENDING = null;
+const WOUND_NAMES = ['Unharmed', 'Hurt', 'Wounded', 'Critical'];
+function nowHtml(s, lvl) {
+  CUR = s; const st = s.stats || {}, act = E.equippedItem('active'), sec = E.equippedItem('secondary');
+  const wpn = it => it && E.isWeaponClass(it), ammo = it => { const c = E.counts(it); return c.max > 0 ? ` · Ammo ${c.cur}/${c.max}` : ''; };
+  const usable = (s.inventory || []).map((it, i) => ({ it, i })).filter(x => x.it && (x.it.name || '').trim() && E.canUse(x.it));
+  const reloadable = E.canReload('active') || E.canReload('secondary');
+  const status = `${WOUND_NAMES[E.clampInt(st.woundState, 0, 3)]} · Stress ${num(st.stress)}/${stressCap(lvl)} · ` + (wpn(act) ? esc(act.name) + ammo(act) : 'No active weapon');
+  const res = LAST ? `<div class="nowResult" id="nowResult"><div><b class="kind">${esc(LAST.kind)}</b><strong>${esc(LAST.title)}</strong> · ${esc(LAST.summary)}</div><div class="bd">${esc(LAST.breakdown)}</div><div class="dice">${LAST.dice.map(v => `<i class="${v >= 5 ? 'hit' : ''}">${v}</i>`).join('')}</div>${LAST.notes.length ? `<div class="bd">${LAST.notes.map(esc).join('<br>')}</div>` : ''}</div>` : '';
+  return `<section class="box pinkbox now" id="nowBox" aria-label="Now"><h2><span class="n">▶</span> Now <small>Tap a skill name below to roll it</small></h2>
+    <p class="nowStatus" id="nowStatus">${status}</p>
+    <div class="nowBar">
+      <button type="button" data-now="attack" data-which="active" ${wpn(act) ? '' : 'disabled'}>${wpn(act) ? 'Attack · ' + esc(act.name) : 'Attack'}</button>
+      ${wpn(sec) ? `<button type="button" data-now="attack" data-which="secondary">Attack · ${esc(sec.name)}</button>` : ''}
+      <button type="button" data-now="reload" ${reloadable ? '' : 'disabled'}>Reload</button>
+      <span class="nowUse"><select id="nowUseSel" aria-label="Item to use" ${usable.length ? '' : 'disabled'}>${usable.length ? usable.map(x => `<option value="${x.i}">${esc(x.it.name)} (${E.counts(x.it).cur})</option>`).join('') : '<option>No usable items</option>'}</select><button type="button" data-now="use" ${usable.length ? '' : 'disabled'}>Use</button></span>
+      <button type="button" data-now="push" class="${PENDING ? 'hot' : ''}" ${PENDING ? '' : 'disabled'} title="After a roll: +2 dice for 1 Stress">Push +2</button>
+      <button type="button" data-now="undo" ${E.canUndo() ? '' : 'disabled'}>Undo</button>
+    </div>${res}</section>`;
+}
+const poolText = (p, attr, skill) => `${p.total} dice = ${label(attr)} ${p.attrVal} + ${label(skill)} ${p.skillValue}` + (p.situational ? ` + situation ${p.situational}` : '') + (p.extra ? ` + gear ${p.extra}` : '') + (p.wound.mod ? ` ${p.wound.mod} wounds` : '') + (p.cond.mod ? ` ${p.cond.mod} conditions` : '') + (p.totalRaw !== p.total ? ' (capped at 10)' : '');
+/* Load, run, save, redraw. Every action works on a fresh copy of the save. */
+function withChar(fn) { const s = load(); if (!hasChar(s)) return; CUR = s; const out = fn(s); save(s); render(); return out; }
+function preview(title, fields, okLabel, describe, apply) {
+  const dlg = $('actDlg'), val = () => ({ mod: num($('actMod').value), diff: Math.max(1, num($('actDiff').value, 2)), def: Math.max(1, num($('actDef').value, 1)), soak: Math.max(0, num($('actSoak').value)), trait: $('actTrait').value });
+  $('actTitle').textContent = title; $('actOk').textContent = okLabel; $('actMod').value = '0';
+  dlg.querySelectorAll('[data-f]').forEach(l => { l.hidden = !fields.includes(l.dataset.f); });
+  const update = () => { CUR = load(); const r = describe(val()); $('actDetails').textContent = r.text; $('actOk').disabled = !!r.blocked; };
+  dlg.querySelectorAll('input,select').forEach(x => { x.oninput = update; });
+  $('actOk').onclick = () => { const v = val(); CUR = load(); if (describe(v).blocked) return update(); dlg.close(); apply(v); };
+  $('actCancel').onclick = () => dlg.close();
+  update(); dlg.showModal(); $('actCancel').focus();
+}
+function showRoll(r) { LAST = r; E.pushRoll({ kind: r.kind, title: r.title, summary: r.history, dice: r.dice }); }
+function rollSkill(key) {
+  const name = Object.keys(R.skillKeys).find(n => R.skillKeys[n] === key) || key;
+  const group = Object.values(R.skills).find(([, list]) => list.includes(name)); const attr = String(group ? group[0] : 'wit').toLowerCase();
+  const ctx = ['muscle', 'reflex'].includes(attr) ? 'physical' : attr === 'savvy' ? 'social' : 'general';
+  const pool = mod => E.buildPool(attr, Math.min(3, E.skillRankRaw(key)), ctx, mod, 0, name);
+  preview('Roll ' + name, ['mod', 'diff'], 'Roll', v => { const p = pool(v.mod); return { text: poolText(p, attr, key) + '\nDifficulty ' + v.diff + [...p.wound.notes, ...p.cond.notes].map(n => '\n' + n).join('') + '\nPush is optional after rolling: +2 dice, +1 Stress.' }; },
+    v => withChar(() => {
+      const p = pool(v.mod), first = E.rollDicePool(p.total);
+      const out = (dice, pushed) => { const n = E.countSuccesses(dice), o = E.outcomeForCheck(n, v.diff); showRoll({ title: name, kind: o.kind, summary: o.text, dice, notes: [...(pushed ? ['Pushed: +1 Stress, two dice added.'] : []), ...p.wound.notes, ...p.cond.notes], breakdown: 'Pool ' + poolText(p, attr, key) + (pushed ? ' | Push +2' : '') + ' | Successes ' + n + ' vs Difficulty ' + v.diff, history: 'Successes ' + n + ' vs Difficulty ' + v.diff + (pushed ? ' after Push' : '') }); };
+      out(first, false); PENDING = extra => out(first.concat(extra), true); toast('Rolled ' + name + '.');
+    }));
+}
+function attack(which) {
+  CUR = load(); if (!E.attackPool(which, 0)) return toast('Equip a weapon first.');
+  preview('Attack · ' + E.attackPool(which, 0).item.name, ['mod', 'def', 'soak', 'trait'], 'Attack', v => {
+    const a = E.attackPool(which, v.mod);
+    return { blocked: !a.canFire, text: poolText(a.pool, a.profile.attr, a.profile.skill) + '\nTarget Defense ' + v.def + ' · Soak ' + v.soak + ' · ' + (v.trait === 'none' ? 'normal' : v.trait) + '\n' + (a.spends ? 'Ammo: ' + a.ammo.cur + ' → ' + Math.max(0, a.ammo.cur - 1) + ' (one round)' : 'No tracked ammo.') + (a.canFire ? '' : '\nOut of ammo, or Fire is off on this card. Reload first.') + '\nPush is optional after rolling: +2 dice, +1 Stress.' };
+  }, v => withChar(() => {
+    let msg = '';
+    E.act('ATTACK', '', () => {
+      const a = E.attackPool(which, v.mod); if (!a || !a.canFire) return false;
+      const first = E.rollDicePool(a.pool.total), name = a.item.name || 'Weapon';
+      const out = (dice, pushed) => { const n = E.countSuccesses(dice), hit = E.resolveAttack(n, v.def, a.category, v.soak, v.trait, a.ap); CUR.combatFlags = CUR.combatFlags || {}; CUR.combatFlags.grazeActive = hit.kind === 'Graze' || hit.kind === 'Armored Graze';
+        showRoll({ title: name + ' Attack', kind: hit.kind, summary: hit.summary, dice, notes: [...(pushed ? ['Pushed: +1 Stress, two dice added.'] : []), ...hit.notes, ...a.pool.wound.notes, ...a.pool.cond.notes], breakdown: 'Pool ' + poolText(a.pool, a.profile.attr, a.profile.skill) + (pushed ? ' | Push +2' : '') + ' | Successes ' + n + ' vs Defense ' + v.def + ' | ' + String(a.category).toUpperCase() + ' / AP ' + a.ap + (n > v.def ? ' | Raw ' + hit.raw + ', trait ' + (hit.traitDelta >= 0 ? '+' : '') + hit.traitDelta + ', soak ' + hit.effectiveSoak + ' = ' + hit.finalSteps : ''), history: 'Successes ' + n + ' vs Defense ' + v.def + ' / ' + hit.summary + (pushed ? ' after Push' : '') }); };
+      out(first, false); PENDING = extra => out(first.concat(extra), true);
+      if (a.spends) E.setCur(a.item, a.ammo.cur - 1);
+      return msg = name + ' attack rolled.' + (a.spends ? ' Ammo ' + a.ammo.cur + ' → ' + (a.ammo.cur - 1) + '.' : '');
+    });
+    if (msg) toast(msg);
+  }));
+}
+function useItem() {
+  const idx = num($('nowUseSel') && $('nowUseSel').value, -1); if (idx < 0) return;
+  CUR = load(); const name = (CUR.inventory[idx] || {}).name || 'item';
+  preview('Use · ' + name, [], 'Use', () => E.usePreview(idx), () => withChar(() => { const m = E.act('USE ITEM', '', () => { const r = E.useSlot(idx); return r.ok ? r.message : false; }); toast(m || 'That card cannot be used right now.'); }));
+}
+function reload() { withChar(() => { const which = E.canReload('active') ? 'active' : 'secondary'; let fail = ''; const m = E.act('RELOAD', '', () => { const r = E.reloadEquipped(which); if (!r.ok) fail = r.message; return r.ok ? r.message : false; }); toast(m || fail); }); }
+function push() { if (!PENDING) return; withChar(() => { const fn = PENDING; let fail = ''; const m = E.act('PUSH', 'Added 2 dice and 1 Stress.', () => { const r = E.payPush(); if (!r.ok) { fail = r.message; return false; } PENDING = null; fn(r.dice); return 'Added 2 dice and 1 Stress.'; }); toast(m ? 'Pushed: +2 dice, +1 Stress.' : fail); }); }
+function undo() { withChar(() => { const r = E.undoLast(); if (r.ok) PENDING = null; toast(r.message); }); }
+
 function setStat(fn) { const s = load(); if (!hasChar(s)) return; s.stats = s.stats || {}; fn(s.stats, s); save(s); render(); }
 document.addEventListener('click', e => {
   const b = e.target.closest('button'); if (!b) return;
   if (b.id === 'editBtn') return nav('fullSheetBtn');
+  if (b.dataset.roll) return rollSkill(b.dataset.roll);
+  if (b.dataset.now) { const a = b.dataset.now; return a === 'attack' ? attack(b.dataset.which) : a === 'use' ? useItem() : a === 'reload' ? reload() : a === 'push' ? push() : undo(); }
   if (b.dataset.wound) return setStat(st => { st.woundState = b.dataset.wound; });
   if (b.dataset.pip) { const kind = b.closest('[data-track]').dataset.track, n = num(b.dataset.pip);
     return setStat((st, s) => { const cur = num(st[kind]); st[kind] = String(cur === n ? n - 1 : n); }); }
