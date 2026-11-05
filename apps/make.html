@@ -114,9 +114,8 @@ function makerHtml(s) {
   return h + othersHtml(cls);
 }
 function othersHtml(cls) { const others = M.recipes.filter(x => x.class !== cls); return `<details class="others"><summary>What the other classes make</summary><table>${others.map(x => `<tr><td>${esc(x.class)}</td><td><b>${esc(x.name)}</b>. ${esc(x.summary)}</td></tr>`).join('')}</table></details>` + sheetsHtml(); }
-/* Pulse's Patchkin sticker sheets: a gallery for now. Individual stickers become makeable once their rules exist. */
-function sheetsHtml() { const sheets = ((window.ART && ART.items) || []).filter(i => i.kind === 'sticker-sheet' && !/alt/.test(i.slug)); if (!sheets.length) return '';
-  return `<details class="others"><summary>Patchkin sigil sheets (${sheets.length})</summary><p class="note">Maker art from Sideways. The labels on these are proposals, not rules: a sticker does what its Make says, nothing more.</p><div class="sheets">${sheets.map(i => `<a href="../art/pda-v1/imports/${esc(i.sheet || i.web || '')}" target="_blank" rel="noopener"><img src="../art/pda-v1/imports/${esc(i.sheet || i.web || '')}" alt="${esc(i.title)} sticker sheet" loading="lazy" decoding="async" width="1200" height="1200"><span>${esc(i.title)}</span></a>`).join('')}</div></details>`; }
+/* Patchkin stickers live on the Stickers page (Lore), one per sigil; the Workshop just points there. */
+function sheetsHtml() { return `<p class="note">Patchkin stickers and what each sigil means are on the <button class="ghost" type="button" onclick="parent.postMessage({ type: 'grakkgrith-nav', to: 'signalStickersBtn' }, '*')">Stickers page</button>. A sticker does what its Make says, nothing more.</p>`; }
 /* Runner delivery board: real runs on the Explore map. */
 function boardHtml(s) {
   const t = now(), jobs = MK.board(s, M, PLACES, t), left = MK.downtimeLeft(s), next = (Math.floor(t / (M.deliveries.refreshHours * 3600000)) + 1) * M.deliveries.refreshHours * 3600000;

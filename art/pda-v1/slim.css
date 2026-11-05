@@ -83,3 +83,12 @@ body[data-view="items"] .accordionSection .pinToggle,body[data-view="items"] .ac
 body[data-view="items"] #invGrid>.slot:nth-child(n+21):not(.selected):has(.name:empty){display:none!important}
 /* Equipping is the sheet's job */
 body[data-view="items"] :is(#setActiveBtn,#setSecondaryBtn,#setAmmoSourceBtn,#setArmorBtn,#setBackBtn,#clearEquipBtn){display:none!important}
+
+/* Stickers page: Pulse's Patchkin sticker crops on each sigil */
+body.pda-art .stkRow{display:flex;flex-wrap:wrap;gap:10px;margin:8px 0 10px}
+body.pda-art .stkRow.wide{gap:12px}
+body.pda-art .stk{margin:0;width:96px;text-align:center}
+body.pda-art .stk img{display:block;width:96px;height:96px;object-fit:cover;border-radius:12px;border:1px solid rgba(215,172,97,.45);background:#0b0c16}
+body.pda-art .stk figcaption{margin-top:4px;color:var(--art-cream);font:700 11px/1.2 var(--art-ui);letter-spacing:.06em;text-transform:uppercase}
+@media (max-width:520px){body.pda-art .stk,body.pda-art .stk img{width:76px}body.pda-art .stk img{height:76px}}
+body.pda-art .stk figcaption{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
