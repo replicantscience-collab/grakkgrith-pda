@@ -1,0 +1,191 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>City ID</title>
+<link rel="stylesheet" href="../fonts/fonts.css">
+<link rel="stylesheet" href="../art/pda-v1/tokens.css">
+<link rel="stylesheet" href="./screen.css">
+<style>
+/* Adyta Resident ID, after Pulse's ID card mockups. Filled from the character file; the civic details are editable and live in state.cityId. */
+.wrap{max-width:1080px}
+.issued{margin:10px 0 0;padding:10px 14px;border:1px solid rgba(154,242,105,.5);border-radius:8px;background:rgba(154,242,105,.07)}
+.issued b{color:var(--art-lime)}
+.card{--cy:#22dae4;--pk:#ef46ba;position:relative;margin-top:14px;padding:22px 24px 20px;border:2px solid var(--cy);border-radius:26px;background:radial-gradient(circle at 20% 0,rgba(34,218,228,.10),transparent 40%),linear-gradient(180deg,#05080f,#020409);box-shadow:0 0 0 6px #04070d,0 0 0 7px rgba(34,218,228,.35),0 20px 50px rgba(0,0,0,.6);display:grid;grid-template-columns:minmax(0,1fr) 300px;gap:18px;overflow:hidden}
+.card::before,.card::after{content:"";position:absolute;height:4px;border-radius:4px;background:var(--pk);top:9px}
+.card::before{left:22%;width:12%}.card::after{right:20%;width:9%}
+.card .edge{position:absolute;left:8px;top:30%;display:grid;gap:7px}.card .edge i{display:block;width:5px;height:5px;border-radius:50%;background:var(--cy)}
+.head{display:grid;grid-template-columns:86px 1fr;gap:12px;align-items:center}
+.emblem{width:86px;height:86px}
+.head b{display:block;color:var(--cy);font:800 clamp(26px,4vw,44px)/1 var(--art-ui);letter-spacing:.05em}
+.head span{display:block;margin-top:2px;color:var(--pk);font:700 clamp(11px,1.6vw,15px) var(--art-ui);letter-spacing:.12em}
+.cells{display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-top:12px}
+.cell{min-width:0;padding:5px 12px 6px;border:1px solid rgba(34,218,228,.6);border-radius:6px 14px 6px 6px}
+.cell.w{grid-column:1/-1}
+.cell small{display:block;color:var(--cy);font:600 11px var(--art-ui);letter-spacing:.1em;text-transform:uppercase}
+.cell div{color:#e9fbff;font:600 clamp(14px,1.8vw,18px)/1.25 var(--art-ui);letter-spacing:.08em;text-transform:uppercase;overflow-wrap:anywhere}
+.cell.doc{display:flex;justify-content:space-between;align-items:center}.cell.doc div{font-size:15px}
+.lower{display:grid;grid-template-columns:96px minmax(0,1fr) minmax(0,1fr);gap:8px;margin-top:8px}
+.chip{display:grid;place-items:center;border:1px solid rgba(34,218,228,.4);border-radius:8px}
+.chip svg{width:70px}
+.list{padding:6px 12px;border:1px solid rgba(34,218,228,.5);border-radius:6px}
+.list small{display:block;color:var(--cy);font:600 11px var(--art-ui);letter-spacing:.1em}
+.list p{margin:3px 0;color:#e9fbff;font:600 13px/1.3 var(--art-ui);letter-spacing:.08em;text-transform:uppercase}
+.list p::before{content:"▸ ";color:var(--cy)}
+.list p.k::before{content:""}
+.list .k b{color:var(--cy);font-weight:600}
+.bottom{display:grid;grid-template-columns:96px minmax(0,1fr) minmax(0,1.1fr);gap:8px;margin-top:8px}
+.frameBox{border:1px solid rgba(34,218,228,.4);border-radius:8px;position:relative}
+.frameBox::before{content:"";position:absolute;inset:16px;border:2px solid rgba(34,218,228,.5);border-radius:2px;clip-path:polygon(0 0,30% 0,30% 2px,2px 2px,2px 30%,0 30%,0 70%,2px 70%,2px calc(100% - 2px),30% calc(100% - 2px),30% 100%,70% 100%,70% calc(100% - 2px),calc(100% - 2px) calc(100% - 2px),calc(100% - 2px) 70%,100% 70%,100% 30%,calc(100% - 2px) 30%,calc(100% - 2px) 2px,70% 2px,70% 0,100% 0,100% 100%,0 100%)}
+.bar{padding:8px 12px;border:1px solid rgba(34,218,228,.5);border-radius:6px}
+.bar .code{height:44px;background:repeating-linear-gradient(90deg,var(--b))}
+.bar .dates{display:flex;justify-content:space-between;margin-top:4px;color:var(--cy);font:600 11px var(--art-ui);letter-spacing:.08em}
+.bar .dates b{display:block;color:#e9fbff;font-weight:600}
+.sec{padding:6px 12px;border:1px solid rgba(34,218,228,.5);border-radius:6px}
+.sec small{display:block;color:var(--cy);font:600 11px var(--art-ui);letter-spacing:.1em}
+.sec p{margin:2px 0;color:#e9fbff;font:600 13px/1.3 var(--art-ui);letter-spacing:.08em;text-transform:uppercase}
+.sec p b{color:var(--cy);font-weight:600}
+/* right column */
+.photo{position:relative;border:1px solid rgba(34,218,228,.6);border-radius:10px 22px 10px 10px;overflow:hidden;aspect-ratio:1/1;background:#070b14}
+.photo img{width:100%;height:100%;object-fit:cover;object-position:top}
+.photo::after{content:"";position:absolute;inset:0 0 0 50%;border-left:1px solid rgba(140,240,255,.8);background:linear-gradient(rgba(20,120,200,.42),rgba(20,120,200,.42)),repeating-linear-gradient(0deg,rgba(140,240,255,.18) 0 1px,transparent 1px 12px),repeating-linear-gradient(90deg,rgba(140,240,255,.18) 0 1px,transparent 1px 12px);mix-blend-mode:screen}
+.verified{margin:6px 0;text-align:center;color:var(--cy);font:600 14px var(--art-ui);letter-spacing:.12em}
+.verified::before,.verified::after{content:" • ";color:var(--cy)}
+.bio{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.bio>div{display:grid;place-items:center;aspect-ratio:1/1;border:1px solid rgba(34,218,228,.4);border-radius:10px}
+.bio svg{width:78%;height:78%}
+.sig{margin-top:8px;padding:6px 12px;border:1px solid rgba(34,218,228,.5);border-radius:6px;min-height:76px}
+.sig small{color:var(--cy);font:600 11px var(--art-ui);letter-spacing:.1em}
+.sig div{margin-top:2px;color:#c9d4de;font:400 30px/1.1 var(--art-title);transform:rotate(-3deg);transform-origin:left;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.stamp{position:absolute;left:14px;top:14px;z-index:2;width:max-content;max-width:120px;padding:2px 7px;border:1.5px solid var(--art-lime);border-radius:5px;color:var(--art-lime);font:400 11px/1.15 var(--art-title);transform:rotate(-10deg);background:rgba(2,4,9,.78);pointer-events:none}
+.actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:14px}
+/* edit form */
+.edit{margin-top:16px}
+.edit .gridF{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:4px 14px}
+.edit input,.edit textarea{width:100%;min-height:44px;padding:8px 10px;border:1px solid rgba(118,80,45,.9);border-radius:6px;background:#0b0c16;color:var(--art-cream);font:16px var(--art-body)}
+.edit textarea{min-height:70px}
+.edit .w{grid-column:1/-1}
+.edit .note{margin-top:8px}
+@media (max-width:900px){.card{grid-template-columns:1fr}.right{display:grid;grid-template-columns:1fr 1fr;gap:10px}.right .photo{grid-row:span 3}.edit .gridF{grid-template-columns:1fr 1fr}}
+@media (max-width:560px){.card{padding:16px 14px;border-radius:18px}.cells{grid-template-columns:1fr}.lower,.bottom{grid-template-columns:1fr}.chip,.frameBox{display:none}.right{display:contents}.right .photo{order:-1;max-width:260px;width:100%;justify-self:center;margin-top:18px}.left{order:0}.verified,.bio,.sig{order:1}.bio{max-width:300px;width:100%;justify-self:center}.head{grid-template-columns:56px 1fr}.emblem{width:56px;height:56px}.edit .gridF{grid-template-columns:1fr}}
+@media print{body{background:#000}.actions,.edit,.issued,.kicker,h1,#who,nav{display:none!important}}
+</style>
+</head>
+<body class="pda-art">
+<div class="wrap">
+  <div class="kicker">ADYTA PDA / CIVIC REGISTRY</div>
+  <h1>City ID</h1>
+  <p class="muted" id="who">Your Adyta Resident ID. Show it when a Street Sweep asks.</p>
+  <div id="app"></div>
+</div>
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+<script src="./screen.js"></script>
+<script src="./week.js"></script>
+<script>
+'use strict';
+const KEY = 'grakkgrith_character_tool_v8_state', PORTRAIT_KEY = 'grakkgrith_sheet_portrait_v1';
+const $ = id => document.getElementById(id), WK = window.GRAKK_WEEK;
+const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+const num = (v, d = 0) => { const n = Number(v); return Number.isFinite(n) ? n : d; };
+const load = () => { try { return JSON.parse(localStorage.getItem(KEY)); } catch (e) { return null; } };
+const save = s => { try { localStorage.setItem(KEY, JSON.stringify(s)); } catch (e) {} try { parent.postMessage({ type: 'grakkgrith-week-changed' }, '*'); } catch (e) {} };
+const hasChar = s => !!(s && s.character && String(s.character.name || '').trim());
+const FRESH = new URLSearchParams(location.search).has('issued');
+let PL = null, G = null, editing = false;
+function hash(str) { let h = 2166136261; for (const c of String(str)) { h ^= c.charCodeAt(0); h = Math.imul(h, 16777619); } return h >>> 0; }
+
+/* Civic details: what the registry knows about you. Anything not set falls back to the character file. */
+function ensureId(s) {
+  const c = s.character, id = s.cityId = s.cityId || {};
+  if (!id.registry) id.registry = `ACR-7X-${(c.name.replace(/[^A-Za-z]/g, '').toUpperCase() + 'XXX').slice(0, 3)}-${String(hash(c.name + '|' + (c.race || '')) % 10000).padStart(4, '0')}`;
+  if (!id.issued) id.issued = PL ? WK.adytaNow(PL.clock, Date.now()) : Date.now();
+  return id;
+}
+const ymd = ms => { const d = new Date(ms); return `YY-${String(d.getUTCMonth() + 1).padStart(2, '0')}-${String(d.getUTCDate()).padStart(2, '0')}`; };
+function threat(s) { const h = num(s.stats && s.stats.heat); return h <= 1 ? 'Low' : h <= 3 ? 'Low-moderate' : h <= 5 ? 'Elevated' : 'High. Expect a Sweep'; }
+function districtName(s) {
+  const id = s.cityId || {}; if (id.district) return id.district;
+  const loc = s.world && s.world.presence && s.world.presence.location; const d = loc && PL && PL.districts[loc.district];
+  return d ? d.name : 'Unassigned';
+}
+function portrait(s) { try { const p = JSON.parse(localStorage.getItem(PORTRAIT_KEY) || 'null'); if (p && p.name === s.character.name && p.data) return p.data; } catch (e) {} const g = G && G.races && G.races[s.character.race]; return g && g.card ? '../' + g.card : ''; }
+function barcode(id) { const r = []; let pos = 0, h = hash(id); while (pos < 100) { h = Math.imul(h ^ (h >>> 13), 2246822507) >>> 0; const w = 0.6 + (h % 4) * 0.55, gap = 0.6 + ((h >>> 3) % 3) * 0.6; r.push(`#9eefff ${pos.toFixed(1)}%`, `#9eefff ${(pos + w).toFixed(1)}%`, `transparent ${(pos + w).toFixed(1)}%`, `transparent ${(pos + w + gap).toFixed(1)}%`); pos += w + gap; } return r.join(','); }
+
+const EMBLEM = `<svg class="emblem" viewBox="0 0 100 100" aria-hidden="true" fill="none" stroke="#22dae4" stroke-width="2.4" stroke-linejoin="round"><path d="M50 4 92 30 92 70 50 96 8 70 8 30Z" opacity=".55"/><path d="M50 14 84 34 84 66 50 86 16 66 16 34Z" stroke-width="1.4" opacity=".4"/><path d="M50 24V80M50 24l-6 10M50 24l6 10M34 34v22c0 8 7 14 16 14s16-6 16-14V34M34 34l-5 8M66 34l5 8"/><path d="M42 80h16" /></svg>`;
+const CHIP = `<svg viewBox="0 0 80 64" aria-hidden="true"><rect x="2" y="2" width="76" height="60" rx="10" fill="#2b3036" stroke="#9aa3ab"/><path d="M2 22h24v20H2M78 22H54v20h24M26 2v20h28V2M26 62V42h28v20M26 22h28v20H26Z" fill="none" stroke="#9aa3ab" stroke-width="1.5"/></svg>`;
+const PRINT = `<svg viewBox="0 0 60 60" aria-hidden="true" fill="none" stroke="#22dae4" stroke-width="1.3" stroke-linecap="round">${[6, 10, 14, 18, 22, 26].map(r => `<path d="M${30 - r} 38a${r} ${r + 4} 0 0 1 ${r * 2} 0"/>`).join('')}<path d="M30 34v16M24 40v10M36 40v8"/></svg>`;
+const SEAL = `<svg viewBox="0 0 100 100" aria-hidden="true"><defs><path id="arcT" d="M18 50a32 32 0 0 1 64 0"/><path id="arcB" d="M14 52a36 36 0 0 0 72 0"/></defs><circle cx="50" cy="50" r="44" fill="none" stroke="#22dae4" stroke-width="2"/><circle cx="50" cy="50" r="24" fill="none" stroke="#22dae4" stroke-width="1.5"/><text fill="#22dae4" font-size="9.5" font-family="Saira Condensed, sans-serif" letter-spacing="1.5"><textPath href="#arcT" startOffset="50%" text-anchor="middle">ADYTA CIVIC REGISTRY</textPath></text><text fill="#22dae4" font-size="9.5" font-family="Saira Condensed, sans-serif" letter-spacing="1.5"><textPath href="#arcB" startOffset="50%" text-anchor="middle">AUTHENTICATED</textPath></text><path d="M50 26v8M50 66v8M26 50h8M66 50h8" stroke="#ef46ba" stroke-width="2"/></svg>`;
+
+function render() {
+  const s = load();
+  GRAKK_SCREEN.noChar(!hasChar(s), 'Make a character and the Civic Registry will issue your Resident ID.');
+  if (!hasChar(s)) { $('app').innerHTML = ''; return; }
+  const fresh = !s.cityId || !s.cityId.registry, id = ensureId(s); if (fresh) save(s);
+  const c = s.character, sideways = /sideways/i.test(id.arrival || 'Unrecorded / Sideways');
+  const cell = (l, v, w) => `<div class="cell ${w ? 'w' : ''}"><small>${esc(l)}:</small><div>${esc(v || '—')}</div></div>`;
+  const traits = String(id.traits || '').split('\n').map(x => x.trim()).filter(Boolean).slice(0, 5);
+  let h = FRESH ? `<p class="issued"><b>Registration approved.</b> The Civic Registry issued ${esc(c.name)}'s Resident ID. Check the details and fix anything the clerk got wrong.</p>` : '';
+  h += `<article class="card" aria-label="Adyta Resident ID for ${esc(c.name)}">
+    ${sideways ? '<div class="stamp">Not counterfeit /<br>filed Sideways</div>' : ''}
+    <div class="edge"><i></i><i></i><i></i><i></i><i></i></div>
+    <div class="left">
+      <div class="head">${EMBLEM}<div><b>ADYTA RESIDENT ID</b><span>OFFICIAL CIVIC REGISTRY IDENTITY CARD</span></div></div>
+      <div class="cells">
+        <div class="cell w doc"><small>Document class:</small><div>Official</div></div>
+        ${cell('Full name', c.name)}${cell('Alias / street name', c.alias)}
+        ${cell('Registry ID', id.registry)}${cell('Date of birth / est. age', id.age ? 'Est. age: ' + id.age : 'Unrecorded')}
+        ${cell('Sex / gender', id.gender)}${cell('Species / race', c.heritage && c.heritage.on && c.heritage.secondary ? `${c.race}-${c.heritage.secondary}` : c.race)}
+        ${cell('District / intended residence', [districtName(s), id.address].filter(Boolean).join(' / '), 1)}
+        ${cell('Status', id.status || 'Resident')}${cell('Occupation / affiliation', id.occupation || [c.class, c.subclass].filter(Boolean).join(' / '))}
+        ${cell('Arrival gate', id.arrival || 'Unrecorded / Sideways', 1)}
+      </div>
+      <div class="lower">
+        <div class="chip">${CHIP}</div>
+        <div class="list"><small>PHYSICAL SUMMARY:</small><p class="k"><b>Eyes:</b> ${esc(id.eyes || '—')}</p><p class="k"><b>Build:</b> ${esc(id.build || '—')}</p></div>
+        <div class="list"><small>VISIBLE TRAITS / MARKS:</small>${traits.length ? traits.map(t => `<p>${esc(t)}</p>`).join('') : '<p class="k">None recorded</p>'}</div>
+      </div>
+      <div class="bottom">
+        <div class="frameBox"></div>
+        <div class="bar"><div class="code" style="--b:${barcode(id.registry)}"></div><div class="dates"><span>ISSUE DATE:<b>${ymd(id.issued)}</b></span><span>REVIEW / EXPIRY:<b>${ymd(id.issued)} / +3 YRS</b></span></div></div>
+        <div class="sec"><small>SECURITY / CLEARANCE:</small><p><b>Threat level:</b> ${esc(threat(s))}</p><p><b>Clearance:</b> ${esc(id.clearance || 'Resident, provisional')}</p>${id.notes ? `<p><b>Notes:</b> ${esc(id.notes)}</p>` : ''}</div>
+      </div>
+    </div>
+    <div class="right">
+      <div class="photo"><img src="${esc(portrait(s))}" alt="${esc(c.name)}"></div>
+      <div class="verified">BIOMETRIC VERIFIED</div>
+      <div class="bio"><div>${PRINT}</div><div>${SEAL}</div></div>
+      <div class="sig"><small>RESIDENT SIGNATURE:</small><div>${esc(id.signature || c.name)}</div></div>
+    </div>
+  </article>
+  <div class="actions"><button class="primary" type="button" id="editBtn">${editing ? 'Done' : 'Edit details'}</button>${FRESH ? '<button type="button" data-nav="charHubBtn">Go to your Player Hub</button>' : ''}<button class="ghost" type="button" id="printBtn">Print</button></div>`;
+  if (editing) {
+    const inp = (k, l, ph = '', w) => `<div class="${w ? 'w' : ''}"><label for="id-${k}">${esc(l)}</label><input id="id-${k}" data-k="${k}" value="${esc(id[k] || '')}" placeholder="${esc(ph)}"></div>`;
+    const dl = PL ? Object.values(PL.districts).map(d => d.name).sort() : [];
+    h += `<section class="frame edit"><h2>Registry details</h2><div class="gridF">
+      ${inp('gender', 'Sex / gender', 'Genderfluid')}${inp('age', 'Est. age', 'Young adult')}${inp('status', 'Status', 'Resident')}
+      <div><label for="id-district">District</label><input id="id-district" data-k="district" list="districts" value="${esc(id.district || '')}" placeholder="${esc(districtName(s))}"><datalist id="districts">${dl.map(n => `<option value="${esc(n)}">`).join('')}</datalist></div>
+      ${inp('address', 'Address / lodging', 'Hollowrunner Berth')}${inp('occupation', 'Occupation / affiliation', [c.class, c.subclass].filter(Boolean).join(' / '))}
+      ${inp('arrival', 'Arrival gate', 'Unrecorded / Sideways')}${inp('eyes', 'Eyes', 'Amber-green')}${inp('build', 'Build', 'Compact / wiry')}
+      ${inp('clearance', 'Clearance', 'Resident, provisional')}${inp('signature', 'Signature', c.name)}${inp('notes', 'Notes', 'Filed sideways. Still valid.')}
+      <div class="w"><label for="id-traits">Visible traits / marks (one per line, up to five)</label><textarea id="id-traits" data-k="traits" placeholder="Large pointed ears&#10;Sharp teeth">${esc(id.traits || '')}</textarea></div>
+    </div><p class="note">Threat level follows your Heat. The picture is the one on your sheet. Arrival gate with "Sideways" in it gets the stamp.</p></section>`;
+  }
+  $('app').innerHTML = h;
+}
+document.addEventListener('click', e => {
+  const b = e.target.closest('button'); if (!b) return;
+  if (b.id === 'editBtn') { editing = !editing; render(); if (editing) $('id-gender') && $('id-gender').focus(); }
+  else if (b.id === 'printBtn') window.print();
+  else if (b.dataset.nav) parent.postMessage({ type: 'grakkgrith-nav', to: b.dataset.nav }, '*');
+});
+let t = 0;
+document.addEventListener('input', e => {
+  const k = e.target.dataset && e.target.dataset.k; if (!k) return;
+  const s = load(); if (!hasChar(s)) return; ensureId(s)[k] = e.target.value.slice(0, k === 'traits' ? 300 : 80); save(s);
+  clearTimeout(t); t = setTimeout(() => { const f = document.activeElement && document.activeElement.id; const pos = document.activeElement && document.activeElement.selectionStart; render(); if (f && $(f)) { $(f).focus(); try { $(f).setSelectionRange(pos, pos); } catch (x) {} } }, 500);
+});
+Promise.all([fetch('../data/places.json').then(r => r.json()), fetch('../data/guides/races.json').then(r => r.json()).catch(() => null)]).then(([p, g]) => { PL = p; G = g; render(); window.GRAKK_CITYID_READY = true; });
+</script>
+</body>
+</html>

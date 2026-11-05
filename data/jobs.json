@@ -1,0 +1,676 @@
+{
+  "_about": "The Job Board. Every job type is the rulebook's own (First Edition v1.52, Chapter Eighteen: Jobs That Actually Exist), word for word. Structure, complication tables and Heat guidance are Chapter Nine. Board mechanics (how many post a day, partial pay, which base Heat each type gets) are PDA drafts applying the book's guidance, and the GM can override any of it at the table.",
+  "rulebook": "First Edition v1.52",
+  "status": "draft mechanics, rulebook content",
+  "board": {
+    "perDay": 4,
+    "_about": "The same board for the whole crew: it is seeded by the Adyta day, not by character."
+  },
+  "structure": "Every job has five components: Client, Objective, Complication, Payment, and Heat Cost. Payment is established before the job starts. Non-negotiable after. Every job generates Heat regardless of how cleanly it's run.",
+  "paymentScale": [
+    {
+      "scale": "Minor",
+      "pay": [
+        200,
+        500
+      ],
+      "feel": "Covers rent for a few weeks"
+    },
+    {
+      "scale": "Standard",
+      "pay": [
+        600,
+        2000
+      ],
+      "feel": "Covers a month or two of real expenses"
+    },
+    {
+      "scale": "Major",
+      "pay": [
+        3000,
+        8000
+      ],
+      "feel": "Life-improving, worth serious risk"
+    },
+    {
+      "scale": "Critical",
+      "pay": [
+        10000,
+        null
+      ],
+      "feel": "Life-changing, someone powerful is involved"
+    }
+  ],
+  "complications": {
+    "known": {
+      "die": 6,
+      "name": "Known complication",
+      "when": "The party knows before the job",
+      "list": [
+        [
+          "Timed",
+          "Hard deadline. Miss it and the objective becomes impossible or consequences double."
+        ],
+        [
+          "Watched",
+          "Location or target under active surveillance. Standard approach generates Heat immediately."
+        ],
+        [
+          "Contested",
+          "Another party wants the same thing."
+        ],
+        [
+          "Restricted Access",
+          "Getting to the objective requires passing through space controlled by a hostile faction."
+        ],
+        [
+          "Fragile",
+          "The objective must be delivered without damage. Collateral is not acceptable."
+        ],
+        [
+          "Exposed",
+          "Taking the job is already visible to at least one opposing faction."
+        ]
+      ]
+    },
+    "emerging": {
+      "die": 8,
+      "name": "Emerging complication",
+      "when": "Surfaces during the job",
+      "list": [
+        [
+          "Wrong Information",
+          "Something the client told you was incorrect. The situation is different from the briefing."
+        ],
+        [
+          "Civilian Presence",
+          "Unexpected non-combatants in the location."
+        ],
+        [
+          "Competing Client",
+          "Someone else hired a different party for a related, incompatible job."
+        ],
+        [
+          "Faction Interest",
+          "A faction you didn't expect has a stake in the outcome."
+        ],
+        [
+          "The Asset Has Opinions",
+          "A person involved in the job has their own agenda."
+        ],
+        [
+          "Equipment Failure",
+          "Something you were counting on doesn't work."
+        ],
+        [
+          "Escalation",
+          "The opposition brought more than expected."
+        ],
+        [
+          "Time Crunch",
+          "Something external accelerates the timeline."
+        ]
+      ]
+    },
+    "twist": {
+      "die": 6,
+      "name": "The twist",
+      "when": "Surfaces late, changes what success means",
+      "list": [
+        [
+          "The Client Lied",
+          "The stated objective was not the real objective."
+        ],
+        [
+          "Collateral Consequence",
+          "Completing the objective will cause significant harm to a third party."
+        ],
+        [
+          "It's a Setup",
+          "The job was designed to place the party in a specific situation for someone else's benefit."
+        ],
+        [
+          "The Objective Changed",
+          "Circumstances shifted and the client's needs are no longer what they were."
+        ],
+        [
+          "Someone Knows",
+          "A faction has identified the party before the job is complete. Heat generates now."
+        ],
+        [
+          "The Cost",
+          "Completing the job requires paying a price that wasn't in the contract."
+        ]
+      ]
+    }
+  },
+  "heat": {
+    "rule": "Did this create witnesses, records, attribution, or commitment? If yes, it probably generates Heat. If it creates more than one, it probably generates more than 1.",
+    "base": {
+      "1": "A standard discreet job",
+      "2": "Watched, contested, or public-adjacent",
+      "3": "Direct action against civic, corporate, or high-profile interests"
+    },
+    "raiseTo2": [
+      "Watched",
+      "Exposed"
+    ],
+    "execution": [
+      {
+        "heat": 1,
+        "text": "Seen by credible witnesses, a usable trail, loud gear, ordinary surveillance, restricted gear where it matters, standard approach in a watched location."
+      },
+      {
+        "heat": 2,
+        "text": "Public violence, a visible magical event, attacking a civic official or protected role, forcing a faction to formally acknowledge it, tied to your known identity."
+      },
+      {
+        "heat": 3,
+        "text": "Assaulting inspectors in public, scene-wide chaos, bodies that guarantee investigation, burning an address, route, or contact network."
+      },
+      {
+        "heat": 4,
+        "text": "Killing a protected corporate asset, anything triggering mandatory ABI or Bastion-scale follow-up, anything that changes the city's response tier."
+      }
+    ],
+    "someoneKnows": 1,
+    "note": "Where a stat block or item names an exact Heat value, that value is the rule."
+  },
+  "outcome": {
+    "partialPay": 0.5,
+    "partialNote": "A partial result pays half unless the table says otherwise.",
+    "marks": 1,
+    "marksNote": "Finishing a job, fully or partly, earns a Mark (max 3 per session)."
+  },
+  "jobs": [
+    {
+      "id": "power-tap-installation",
+      "category": "Power & Infrastructure",
+      "title": "Power Tap Installation",
+      "text": "A building or residence has lost official grid access — unpaid bills, Crownline compliance notice, or the grid never reached here to begin with. Someone needs power. The job: install an unsanctioned tap from the nearest live line without getting caught, without burning anything down, and without giving Crownline’s smart meters enough of a signal to notice.",
+      "complications": [
+        "The nearest live line is on a Crownline-monitored trunk.",
+        "The building’s internal wiring is thirty years old and not rated for what’s being asked of it.",
+        "A compliance crew has been through this block twice this week."
+      ],
+      "pays": "200-600 credits. Sometimes a favor from whoever lives there. Sometimes both.",
+      "pay": [
+        200,
+        600
+      ],
+      "pendingPay": false,
+      "baseHeat": 2,
+      "clients": [
+        "A family on the sixth floor",
+        "A residents' committee"
+      ],
+      "payKind": "credits"
+    },
+    {
+      "id": "generator-repair",
+      "category": "Power & Infrastructure",
+      "title": "Generator Repair",
+      "text": "The backup generator for a building, clinic, or community space has failed. Could be fuel, could be components, could be sabotage. Life in the Commons runs on backup power because official power cannot be trusted. When the backup dies, everything that depends on it dies with it.",
+      "complications": [
+        "The part needed is discontinued.",
+        "The only supplier who has it is black market and wants something in exchange.",
+        "The generator failing was not an accident."
+      ],
+      "pays": "150-400 credits. Free meals for a month from whoever runs the kitchen. Information about who tampered with it.",
+      "pay": [
+        150,
+        400
+      ],
+      "pendingPay": false,
+      "baseHeat": 1,
+      "clients": [
+        "The kitchen that runs the soup line",
+        "A Commons clinic"
+      ],
+      "payKind": "credits"
+    },
+    {
+      "id": "patch-grid-maintenance",
+      "category": "Power & Infrastructure",
+      "title": "Patch Grid Maintenance",
+      "text": "Informal community power networks require ongoing maintenance. Connections degrade. Loads shift. New households tap in without telling anyone. The job is routine inspection and repair of a patch grid serving anywhere from a single building to an entire block — finding the weak points before they become failures, and fixing them without the tools or materials a licensed electrician would use.",
+      "complications": [
+        "Someone has been drawing significantly more power than they reported.",
+        "One connection is dangerously overloaded.",
+        "Crownline has been mapping this grid from outside and the map is almost complete."
+      ],
+      "pays": "100-300 credits per maintenance run, often paid in installments by the community the grid serves.",
+      "pay": [
+        100,
+        300
+      ],
+      "pendingPay": false,
+      "baseHeat": 1,
+      "clients": [
+        "The block's grid committee"
+      ],
+      "payKind": "credits"
+    },
+    {
+      "id": "courier-work",
+      "category": "Movement & Logistics",
+      "title": "Courier Work",
+      "text": "Move a package from point A to point B without it being opened, traced, or intercepted. The package could be documents, medicine, contraband, or something the client refuses to specify. The route might cross three districts or just two city blocks. The job is the delivery, clean.",
+      "complications": [
+        "Someone is already watching the pickup location.",
+        "The package is heavier than described.",
+        "The intended recipient is not where they were supposed to be."
+      ],
+      "pays": "50-300 credits depending on distance, sensitivity, and how many people want to intercept it.",
+      "pay": [
+        50,
+        300
+      ],
+      "pendingPay": false,
+      "baseHeat": 1,
+      "clients": [
+        "Anonymous",
+        "A fence who pays on time"
+      ],
+      "payKind": "credits"
+    },
+    {
+      "id": "extract",
+      "category": "Movement & Logistics",
+      "title": "Extract",
+      "text": "Someone is somewhere they shouldn’t be and needs to not be there anymore. Could be a person held by a gang, a worker trapped in a corporate facility after hours, a witness who needs to disappear before a hearing. The job is getting them out without leaving a trail.",
+      "complications": [
+        "The person doesn’t fully want to leave.",
+        "The location has more security than the briefing suggested.",
+        "Someone on the outside is working against the extraction."
+      ],
+      "pays": "500-2,000 credits. Sometimes the person being extracted pays. Sometimes a faction pays. Sometimes both, from different directions.",
+      "pay": [
+        500,
+        2000
+      ],
+      "pendingPay": false,
+      "baseHeat": 3,
+      "clients": [
+        "Someone who needs out",
+        "A faction that won't say which"
+      ],
+      "payKind": "credits"
+    },
+    {
+      "id": "transit-fraud",
+      "category": "Movement & Logistics",
+      "title": "Transit Fraud",
+      "text": "Tram passes, ferry tickets, elevator access codes, restricted transit credentials — the city moves on access and access costs money most people don’t have. The job is acquiring, producing, or distributing fraudulent transit credentials for a community or individual client. Could be a one-time forgery or an ongoing distribution network.",
+      "complications": [
+        "The transit authority has updated their authentication system.",
+        "The person who needed credentials is using them in ways that are drawing attention.",
+        "ACW has been tipped off about the distribution point."
+      ],
+      "pays": "100-500 credits for a batch. Ongoing work pays less per unit but more overall.",
+      "pay": [
+        100,
+        500
+      ],
+      "pendingPay": false,
+      "baseHeat": 2,
+      "clients": [
+        "A Three Wires fixer"
+      ],
+      "payKind": "credits"
+    },
+    {
+      "id": "data-theft",
+      "category": "Information & Intelligence",
+      "title": "Data Theft",
+      "text": "A corporation, civic body, or private individual has information someone else wants. The job is getting it out — from a terminal, a server, a private network, or a physical file — without triggering an alert, without leaving traces, and without the source knowing what was taken until it’s too late to matter.",
+      "complications": [
+        "The target system is air-gapped.",
+        "Physical files are in a location that requires bypassing two separate security systems.",
+        "The data is larger than expected and will take time to copy."
+      ],
+      "pays": "400-2,000 credits depending on the sensitivity of the data and who wants it.",
+      "pay": [
+        400,
+        2000
+      ],
+      "pendingPay": false,
+      "baseHeat": 3,
+      "clients": [
+        "An anonymous buyer"
+      ],
+      "payKind": "credits"
+    },
+    {
+      "id": "surveillance",
+      "category": "Information & Intelligence",
+      "title": "Surveillance",
+      "text": "Watch a person, location, or operation and report what you see. Could be a jealous faction tracking a rival’s movements, a community trying to document Crownline activity before a compliance hearing, or an individual trying to find out if they’re being followed. The job is observation without being observed.",
+      "complications": [
+        "The target is surveillance-aware.",
+        "The location requires maintaining a cover for an extended period.",
+        "Something unexpected is happening that wasn’t in the original brief."
+      ],
+      "pays": "200-800 credits depending on duration and risk. Documentation that can be used as leverage is worth more than verbal reports.",
+      "pay": [
+        200,
+        800
+      ],
+      "pendingPay": false,
+      "baseHeat": 2,
+      "clients": [
+        "A worried client",
+        "A Broker with questions"
+      ],
+      "payKind": "credits"
+    },
+    {
+      "id": "missing-person-retrieval",
+      "category": "Information & Intelligence",
+      "title": "Missing Person Retrieval",
+      "text": "Someone is gone and someone else needs to find them. Maybe they left voluntarily. Maybe they didn’t. The city swallows people — into the Sewers, into debt, into a faction’s orbit, into something worse. The job is finding them and determining whether they want to be found.",
+      "complications": [
+        "The missing person is hiding deliberately.",
+        "They are in debt to someone who doesn’t want them found.",
+        "Finding them first requires beating another party who is also looking."
+      ],
+      "pays": "300-1,000 credits. Sometimes the person being found pays separately once located, for reasons that weren’t in the original job description.",
+      "pay": [
+        300,
+        1000
+      ],
+      "pendingPay": false,
+      "baseHeat": 1,
+      "clients": [
+        "A family",
+        "A friend who won't give their name"
+      ],
+      "payKind": "credits"
+    },
+    {
+      "id": "eviction-interference",
+      "category": "Community & Protection",
+      "title": "Eviction Interference",
+      "text": "Crownline or a landlord has served notice. The building has a week, maybe less. The job is finding the legal mechanism to slow it down, the procedural error that voids the notice, the documentation that forces a review, or the community response that makes the eviction too costly to proceed with quietly. The APA fights these battles officially. This job is the version that happens when the official channels are too slow.",
+      "complications": [
+        "The notice is technically valid.",
+        "The landlord has already hired Bastion for the physical removal.",
+        "The community being defended is divided about whether to fight or negotiate."
+      ],
+      "pays": "200-600 credits from community collections. Sometimes a faction pays for reasons of their own. Sometimes nobody can pay and it’s done anyway.",
+      "pay": [
+        200,
+        600
+      ],
+      "pendingPay": false,
+      "baseHeat": 2,
+      "clients": [
+        "A tenants' collective"
+      ],
+      "payKind": "credits"
+    },
+    {
+      "id": "protection-work",
+      "category": "Community & Protection",
+      "title": "Protection Work",
+      "text": "A person, location, or event needs someone present who can handle trouble if it arrives. Could be a Radio Sewers broadcast location for a sensitive transmission. Could be a community meeting in a district where it’s not safe to meet. Could be a single individual who has received a threat they take seriously. The job is being there and being capable.",
+      "complications": [
+        "The threat arrives earlier than expected.",
+        "There are more of them than anticipated.",
+        "Someone inside the protected situation is the actual threat."
+      ],
+      "pays": "150-500 credits per shift. Ongoing contracts pay less per day but more for continuity.",
+      "pay": [
+        150,
+        500
+      ],
+      "pendingPay": false,
+      "baseHeat": 1,
+      "clients": [
+        "Radio Sewers",
+        "A community meeting",
+        "Someone who got a threat"
+      ],
+      "payKind": "credits"
+    },
+    {
+      "id": "illegal-rooftop-market-security",
+      "category": "Community & Protection",
+      "title": "Illegal Rooftop Market Security",
+      "text": "Rooftop markets operate outside official channels — no licenses, no taxes, no Crownline smart-meter fees. They also operate without legal protection. The job is keeping the market running, keeping trouble out, and making sure that when official attention arrives there’s enough warning to pack up before it becomes an incident.",
+      "complications": [
+        "A rival market is paying someone to create incidents.",
+        "A ACW officer who knows about the market is about to stop looking the other way.",
+        "Someone is selling something at this market that is going to bring exactly the wrong kind of attention."
+      ],
+      "pays": "100-300 credits per market day plus a cut of the market’s collective earnings.",
+      "pay": [
+        100,
+        300
+      ],
+      "pendingPay": false,
+      "baseHeat": 1,
+      "clients": [
+        "The rooftop market"
+      ],
+      "payKind": "credits"
+    },
+    {
+      "id": "medicine-smuggling",
+      "category": "Medical & Survival",
+      "title": "Medicine Smuggling",
+      "text": "Official medical supply chains are corporate. Helix Systems controls a significant portion of what reaches Commons clinics. The job is acquiring medicine through unofficial channels — stolen, diverted, imported, or manufactured — and getting it to the people who need it without it being seized as contraband.",
+      "complications": [
+        "The medicine requires refrigeration and the cold chain is broken.",
+        "The source is selling to multiple buyers and supply is inconsistent.",
+        "ACW has been alerted to this specific shipment."
+      ],
+      "pays": "300-800 credits. Often partially paid in the medicine itself. Community standing that doesn’t translate to credits but matters anyway.",
+      "pay": [
+        300,
+        800
+      ],
+      "pendingPay": false,
+      "baseHeat": 2,
+      "clients": [
+        "A Commons clinic"
+      ],
+      "payKind": "credits"
+    },
+    {
+      "id": "off-book-medical-care",
+      "category": "Medical & Survival",
+      "title": "Off-Book Medical Care",
+      "text": "Someone needs treatment they cannot get through official channels — no documentation, no Helix Systems data collection, no record that they were ever there. The job is providing or facilitating that care: finding a street medic, acquiring supplies, securing a location, keeping the patient stable until proper treatment is available.",
+      "complications": [
+        "The condition is worse than initially presented.",
+        "The supplies needed are not in current stock.",
+        "Someone is looking for the patient."
+      ],
+      "pays": "Varies enormously. Sometimes significant credits. Sometimes favors. Sometimes nothing, because the person being helped has nothing.",
+      "pay": null,
+      "pendingPay": false,
+      "baseHeat": 1,
+      "clients": [
+        "Someone with no papers"
+      ],
+      "payKind": "varies"
+    },
+    {
+      "id": "spotter-work",
+      "category": "Medical & Survival",
+      "title": "Spotter Work",
+      "text": "A sugar-picker crew is harvesting Sweet Treats spores from a live bloom and needs someone outside the haze holding the other end of the line. The job is watching the picker, and pulling the moment they stop moving, because by the time a picker needs out, they no longer want out. Goblins get hired for the picking. Everyone else gets hired to pull.",
+      "complications": [
+        "The patch is larger than scouted.",
+        "The picker is heavier than expected.",
+        "The bloom is bigger than garbage alone explains, and the crew has theories they won’t say in front of the spotter."
+      ],
+      "pays": "150-400 credits per harvest, or a cut of the take.",
+      "pay": [
+        150,
+        400
+      ],
+      "pendingPay": true,
+      "baseHeat": 1,
+      "clients": [
+        "A sugar-picker crew"
+      ],
+      "payKind": "credits"
+    },
+    {
+      "id": "bloom-clearance",
+      "category": "Medical & Survival",
+      "title": "Bloom Clearance",
+      "text": "A building has started to smell like candy. Somewhere inside it, discarded rag or a colonized resident has seeded a Sweet Treats bloom above the Sewers. The job is finding it, burning it out without anyone standing in the smoke, and making sure it doesn’t come back.",
+      "complications": [
+        "The rag came from someone the residents know.",
+        "The growth is inside a wall.",
+        "A resident has the pink cough, and nobody in the building can afford treatment."
+      ],
+      "pays": "100-300 credits from building collections.",
+      "pay": [
+        100,
+        300
+      ],
+      "pendingPay": true,
+      "baseHeat": 1,
+      "clients": [
+        "The building's residents"
+      ],
+      "payKind": "credits"
+    },
+    {
+      "id": "radio-sewers-support",
+      "category": "Media & Information",
+      "title": "Radio Sewers Support",
+      "text": "Radio Sewers needs things. Transmitter components. Relay box maintenance. New broadcast locations scouted and secured. Equipment moved between locations ahead of a Velvet Signal trace sweep. The station runs on donated labor and scavenged parts. The job is whatever the station needs right now.",
+      "complications": [
+        "The component needed is corporate-manufactured and acquiring it creates a traceable purchase.",
+        "A broadcast location has been compromised and needs to be abandoned in the middle of a live segment.",
+        "Velvet Signal is actively searching this district."
+      ],
+      "pays": "100-300 credits. More often: community standing, information access, and the knowledge that the voice of the Commons stayed on air because of this.",
+      "pay": [
+        100,
+        300
+      ],
+      "pendingPay": false,
+      "baseHeat": 1,
+      "clients": [
+        "Radio Sewers"
+      ],
+      "payKind": "credits"
+    },
+    {
+      "id": "document-forgery",
+      "category": "Media & Information",
+      "title": "Document Forgery",
+      "text": "People in Adyta need papers. Work permits. Residency documentation. Clean financial records. Credentials that prove they exist in a form the city will accept. The ACR proves you exist — but the ACR requires existing proof to register you. The job is creating the documentation that closes that loop, or opens a door that officially stays shut.",
+      "complications": [
+        "The target document has a new authentication feature.",
+        "The client needs the papers faster than the work can be done properly.",
+        "The forgery is intended to be used in front of someone who knows exactly what the real version looks like."
+      ],
+      "pays": "200-600 credits per document set. Rush jobs cost more.",
+      "pay": [
+        200,
+        600
+      ],
+      "pendingPay": false,
+      "baseHeat": 2,
+      "clients": [
+        "Someone the ACR won't see"
+      ],
+      "payKind": "credits"
+    },
+    {
+      "id": "compliance-obstruction",
+      "category": "Faction Work",
+      "title": "Compliance Obstruction",
+      "text": "Crownline has scheduled an inspection, an audit, or a compliance enforcement action. The job is making sure it doesn’t go smoothly — without making it obvious that it was obstructed. Misfiled paperwork. A missing inspector. A last-minute procedural challenge. A community presence large enough that proceeding without incident becomes unlikely. The goal is delay, not defeat.",
+      "complications": [
+        "The inspector is accompanied by Bastion contractors.",
+        "The obstruction needs to be deniable.",
+        "The delay bought last time has expired and the same approach won’t work again."
+      ],
+      "pays": "300-800 credits from community organizations, faction payments, or both.",
+      "pay": [
+        300,
+        800
+      ],
+      "pendingPay": false,
+      "baseHeat": 3,
+      "clients": [
+        "A community organization"
+      ],
+      "payKind": "credits"
+    },
+    {
+      "id": "black-market-acquisition",
+      "category": "Faction Work",
+      "title": "Black Market Acquisition",
+      "text": "Someone needs something the official market won’t sell them. Could be a weapon. Could be a cybernetic component. Could be a substance. Could be information. The job is finding it, acquiring it, and delivering it without the transaction being traceable to the client.",
+      "complications": [
+        "The seller recognizes the item as something that was stolen from them.",
+        "The market price has tripled because someone else is buying everything available.",
+        "What was ordered and what arrives are not the same thing."
+      ],
+      "pays": "Percentage of the item’s value, typically 10-20% plus expenses. Negotiated upfront.",
+      "pay": [
+        10,
+        20
+      ],
+      "pendingPay": false,
+      "baseHeat": 2,
+      "clients": [
+        "A buyer with a list"
+      ],
+      "payKind": "percent"
+    },
+    {
+      "id": "faction-mediation",
+      "category": "Faction Work",
+      "title": "Faction Mediation",
+      "text": "Two parties are in conflict. Left alone they will make things worse for everyone around them. The job is getting them to the table, keeping them there long enough to reach an arrangement, and making sure the arrangement holds long enough to matter. Not peace — arrangements. Nobody expects peace.",
+      "complications": [
+        "One party is negotiating in bad faith.",
+        "A third party has an interest in the conflict continuing.",
+        "The person doing the mediation has a prior relationship with one side that the other side finds out about."
+      ],
+      "pays": "400-1,200 credits, usually split between the parties. Plus whatever the arrangement is worth to whoever wanted it.",
+      "pay": [
+        400,
+        1200
+      ],
+      "pendingPay": false,
+      "baseHeat": 1,
+      "clients": [
+        "Two parties who can't stand each other"
+      ],
+      "payKind": "credits"
+    },
+    {
+      "id": "sample-run",
+      "category": "Faction Work",
+      "title": "Sample Run",
+      "text": "A quiet buyer wants Sweet Treats spores from the oldest bloom in a tunnel section, sealed and uncontaminated. The buyer is almost certainly Helix Systems, which needs wild strains its contained beds can’t produce for Somnara. Helix will not say so. # Chapter Nineteen: Nib’s Rules for Not Dying",
+      "complications": [
+        "A sugar-picker crew already works that patch and considers it theirs.",
+        "The buyer wants a larger sample than a picker can take and walk out.",
+        "The patch is old for a reason."
+      ],
+      "pays": "500-1,200 credits.",
+      "pay": [
+        500,
+        1200
+      ],
+      "pendingPay": true,
+      "baseHeat": 2,
+      "clients": [
+        "A quiet buyer (almost certainly Helix Systems)"
+      ],
+      "payKind": "credits"
+    }
+  ]
+}

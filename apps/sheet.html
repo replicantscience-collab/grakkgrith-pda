@@ -1,0 +1,249 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Character Sheet</title>
+<link rel="stylesheet" href="../fonts/fonts.css">
+<link rel="stylesheet" href="../art/pda-v1/tokens.css">
+<link rel="stylesheet" href="./screen.css">
+<style>
+/* One-page sheet, after Pulse's "GRAKKGRITH Character Sheet, page 1" mockup. Reads and writes the same character file as the full sheet. */
+body{--line:rgba(34,218,228,.55);--line2:rgba(34,218,228,.28);--pink:var(--art-magenta);--cy:var(--art-cyan)}
+.wrap{max-width:1180px}
+.top{display:flex;align-items:flex-end;justify-content:space-between;gap:12px;flex-wrap:wrap;padding-bottom:10px;border-bottom:1px solid var(--line)}
+.brand b{display:block;color:var(--cy);font:800 clamp(30px,5vw,46px)/1 var(--art-ui);letter-spacing:.04em;text-transform:uppercase}
+.brand span{color:var(--pink);font:700 15px/1.2 var(--art-ui);letter-spacing:.32em;text-transform:uppercase}
+.brand small{display:block;margin-top:2px;color:#7fe9ef;font-size:14px}
+.topActions{display:flex;gap:8px;flex-wrap:wrap}
+.grid{display:grid;gap:12px;margin-top:12px}
+.row1{grid-template-columns:minmax(0,1.45fr) minmax(0,1fr) 230px}
+.row2{grid-template-columns:minmax(0,.75fr) minmax(0,1.6fr)}
+.box{position:relative;padding:12px 14px;border:1px solid var(--line);border-radius:8px;background:linear-gradient(180deg,rgba(14,22,36,.92),rgba(6,9,18,.95));box-shadow:inset 0 0 18px rgba(34,218,228,.06)}
+.box>h2{display:flex;align-items:center;gap:10px;margin:0 0 10px;color:var(--cy);font:700 21px/1 var(--art-ui);letter-spacing:.06em;text-transform:uppercase;text-shadow:none}
+.box>h2 .n{color:var(--pink);font-size:24px}
+.box>h2 small{margin-left:auto;color:var(--art-muted);font:600 11px var(--art-ui);letter-spacing:.08em}
+.pinkbox{border-color:rgba(239,70,186,.6)}
+.pinkbox>h2{color:var(--pink)}
+/* identity */
+.ident{display:grid;grid-template-columns:1fr 1fr;gap:6px 14px}
+.f{display:grid;grid-template-columns:78px minmax(0,1fr);align-items:center;gap:8px;min-height:34px}
+.f span{color:var(--cy);font:700 12px/1.1 var(--art-ui);letter-spacing:.08em;text-transform:uppercase}
+.f b{padding:5px 9px;border:1px solid var(--line2);border-radius:4px;background:#070b14;color:var(--art-cream);font:600 15px/1.25 var(--art-body);overflow-wrap:anywhere}
+.f.wide{grid-column:1/-1}
+/* attributes */
+table{width:100%;border-collapse:collapse}
+.attrs td{padding:4px 4px;border-bottom:1px solid rgba(34,218,228,.12)}
+.attrs .an{color:var(--pink);font:700 15px var(--art-ui);letter-spacing:.06em;text-transform:uppercase}
+.attrs .ad{color:var(--art-muted);font-size:12px}
+.attrs .num{width:44px;text-align:center;font:700 17px var(--art-ui)}
+.attrs .num i{display:inline-block;min-width:34px;padding:2px 0;border:1px solid var(--line2);border-radius:4px;font-style:normal}
+.attrs th{color:var(--cy);font:700 10px var(--art-ui);letter-spacing:.1em;text-transform:uppercase;text-align:center}
+.attrs .final i{border-color:var(--cy);color:#fff}
+.note{color:var(--art-muted);font-size:12px;margin:6px 0 0}
+/* portrait */
+.portrait{display:grid;grid-template-rows:minmax(0,1fr) auto;gap:6px;padding:8px;border-color:rgba(239,70,186,.6)}
+.portrait img{width:100%;height:100%;min-height:240px;object-fit:cover;object-position:top;border-radius:6px;background:#070b14}
+.portrait label{margin:0;text-align:center;cursor:pointer;color:var(--cy);font:700 11px var(--art-ui);letter-spacing:.1em}
+.portrait input{display:none}
+/* defense & tracks */
+.def{display:grid;grid-template-columns:auto 1fr;gap:12px;align-items:start}
+.defNum{display:grid;place-items:center;width:84px;height:62px;border:1px solid var(--cy);border-radius:6px;color:#fff;font:800 34px var(--art-ui)}
+.wound{display:grid;gap:4px}
+.wound button{display:flex;justify-content:space-between;gap:8px;min-height:34px;padding:4px 10px;border-color:var(--line2);background:#070b14;color:var(--art-cream);font:700 13px var(--art-ui);text-align:left}
+.wound button small{color:var(--art-muted);font:600 11px var(--art-ui);letter-spacing:.02em;text-transform:none}
+.wound button[aria-pressed=true]{border-color:var(--pink);background:#2a1230;color:#fff}
+.track{margin-top:12px}
+.track h3{display:flex;justify-content:space-between;margin:0 0 6px;color:var(--pink);font:700 17px var(--art-ui);letter-spacing:.06em;text-transform:uppercase}
+.track h3 b{color:#fff}
+.pips{display:flex;gap:5px;flex-wrap:wrap}
+.pips button{width:30px;min-height:30px;padding:0;border:1px solid var(--line);border-radius:3px;background:#070b14;box-shadow:none;color:var(--art-muted);font:600 11px var(--art-ui)}
+.pips button.on{border-color:var(--pink);background:var(--pink);color:#fff}
+.pips button:disabled{opacity:.25}
+.conds{display:grid;grid-template-columns:1fr 1fr;gap:4px 10px;margin-top:6px}
+.conds label{display:flex;align-items:center;gap:7px;margin:0;color:var(--art-cream);font:600 14px var(--art-body);letter-spacing:0;text-transform:none;cursor:pointer}
+.conds input{width:18px;height:18px;accent-color:var(--pink)}
+/* skills */
+.skills{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}
+.sg{padding:8px 10px;border:1px solid rgba(239,70,186,.45);border-radius:6px;background:rgba(7,11,20,.8)}
+.sg:nth-child(3n+2){border-color:rgba(239,70,186,.45)}
+.sg h3{margin:0 0 4px;color:var(--pink);font:700 15px var(--art-ui);letter-spacing:.06em;text-transform:uppercase}
+.sg h3 em{color:var(--art-muted);font-style:normal;font-weight:600;text-transform:none}
+.sg table th{color:var(--art-muted);font:700 10px var(--art-ui);text-align:center;width:22px}
+.sg td{padding:2px 0;font-size:14px}
+.sg td.c{text-align:center}
+.dot{display:inline-block;width:12px;height:12px;border:1px solid var(--line);border-radius:50%}
+.dot.on{border-color:var(--pink);background:var(--pink)}
+.turn{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:10px}
+.turn .box{display:flex;align-items:center;gap:12px;padding:8px 12px}
+.turn b{color:var(--cy);font:700 18px var(--art-ui);letter-spacing:.06em;text-transform:uppercase}
+.turn span{flex:1;padding:4px 9px;border:1px solid var(--line2);border-radius:4px;color:var(--art-cream);font:600 14px var(--art-ui)}
+/* weapons / armor */
+.wpn th{padding:6px 8px;border:1px solid var(--line2);color:var(--cy);font:700 12px var(--art-ui);letter-spacing:.08em;text-transform:uppercase;text-align:left}
+.wpn td{padding:6px 8px;border:1px solid var(--line2);font-size:14px}
+.wpn td small{display:block;color:var(--art-muted)}
+.wpn .tag{display:inline-block;margin-left:6px;padding:0 6px;border:1px solid var(--pink);border-radius:999px;color:var(--pink);font:700 10px/1.6 var(--art-ui);letter-spacing:.06em;text-transform:uppercase}
+.armor{display:flex;flex-wrap:wrap;align-items:center;gap:10px 16px}
+.armor .name{flex:1 1 220px;padding:5px 9px;border:1px solid var(--line2);border-radius:4px;font-weight:600}
+.soak{display:flex;gap:6px;flex-wrap:wrap}
+.soak span{padding:3px 9px;border:1px solid var(--line2);border-radius:4px;font:700 13px var(--art-ui)}
+.soak span.low{border-color:var(--art-alert);color:var(--art-alert)}
+.attack p{margin:2px 0;font-size:13px}
+.attack b{color:var(--cy)}
+.empty{color:var(--art-muted);font-size:14px}
+@media (max-width:1000px){.row1{grid-template-columns:1fr 1fr}.portrait{grid-column:2;grid-row:1}.row1 .attrBox{grid-column:1/-1}.row2{grid-template-columns:1fr}}
+@media (max-width:700px){.row1{grid-template-columns:1fr}.portrait{grid-column:auto;grid-row:auto}.portrait img{min-height:0;max-height:none;aspect-ratio:4/5}.ident{grid-template-columns:1fr}.skills{grid-template-columns:1fr 1fr}.turn{grid-template-columns:1fr}.wpn .hideS{display:none}}
+@media (max-width:700px){.portrait{max-width:240px;justify-self:center;width:100%}}
+@media (max-width:340px){.skills{grid-template-columns:1fr}}
+</style>
+</head>
+<body class="pda-art">
+<div class="wrap">
+  <div class="top">
+    <div class="brand"><b>Grakkgrith</b><span>Character sheet</span><small>Territory you stay in because leaving is harder.</small></div>
+    <div class="topActions"><button class="primary" type="button" id="editBtn">Edit sheet</button></div>
+  </div>
+  <p class="muted" id="who"></p>
+  <div id="app"></div>
+</div>
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+<script src="./screen.js"></script>
+<script>
+'use strict';
+const KEY = 'grakkgrith_character_tool_v8_state', PORTRAIT_KEY = 'grakkgrith_sheet_portrait_v1';
+const $ = id => document.getElementById(id);
+const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+const num = (v, d = 0) => { const n = Number(v); return Number.isFinite(n) ? n : d; };
+const load = () => { try { return JSON.parse(localStorage.getItem(KEY)); } catch (e) { return null; } };
+const save = s => { try { localStorage.setItem(KEY, JSON.stringify(s)); } catch (e) {} try { parent.postMessage({ type: 'grakkgrith-week-changed' }, '*'); } catch (e) {} };
+const hasChar = s => !!(s && s.character && String(s.character.name || '').trim());
+const nav = to => parent.postMessage({ type: 'grakkgrith-nav', to }, '*');
+let R = null, G = null;
+
+/* Same rules as the full sheet (apps/player.html) */
+const stressCap = lvl => num(lvl) >= 12 ? 8 : 6;
+const heatCap = lvl => { lvl = num(lvl); return lvl >= 17 ? 8 : lvl >= 7 ? 7 : 6; };
+const ATTR_LINE = { muscle: 'raw power, endurance', reflex: 'speed, precision', wit: 'improvisation', savvy: 'reading people', spark: 'the weird little current', root: 'the city knows you back' };
+const WOUNDS = [['Unharmed', ''], ['Hurt', '-1 die on physical checks'], ['Wounded', '-2 dice on all checks'], ['Critical', '1 Action a turn; treat or die']];
+const CONDITIONS = ['Paranoid', 'Burnt Out', 'Locked In', 'Going Through It', 'Frozen'];
+const TAG_RE = /\b(MUSCLE|MUS|REFLEX|REF|WIT|SAVVY|SAV|SPARK|SPK|ROOT|ATTACK|ATK|DICE|DASH|INIT|INITIATIVE)\s*([+-]?\d+)\b/gi;
+const TAG_ATTR = { MUSCLE: 'muscle', MUS: 'muscle', REFLEX: 'reflex', REF: 'reflex', WIT: 'wit', SAVVY: 'savvy', SAV: 'savvy', SPARK: 'spark', SPK: 'spark', ROOT: 'root' };
+const isWeapon = it => /WEAPON|GUN|FIREARM|BOW|CROSSBOW/i.test(it.class || '') || !!(it.attackProfile && it.attackProfile.category);
+const slotItem = (s, which) => { const i = s.equipment && s.equipment[which]; return (i === null || i === undefined || i === '') ? null : (s.inventory || [])[Number(i)] || null; };
+
+function derive(s) {
+  const final = {}, mods = { atk: 0, dash: 0, init: 0 };
+  for (const a of R.attributes) final[a.id] = Math.max(1, num(s.stats && s.stats[a.id], 1));
+  for (const it of ['armor', 'active', 'secondary', 'back'].map(w => slotItem(s, w)).filter(Boolean)) {
+    const text = [it.class, it.name, (it.adds || [])[2], (it.adds || [])[4], (it.adds || [])[5], it.desc].join(' '); let m; TAG_RE.lastIndex = 0;
+    while ((m = TAG_RE.exec(text))) { const k = m[1].toUpperCase(), v = num(m[2]); if (TAG_ATTR[k]) final[TAG_ATTR[k]] += v; else if (/^(ATTACK|ATK|DICE)$/.test(k)) mods.atk += v; else if (k === 'DASH') mods.dash += v; else mods.init += v; }
+  }
+  for (const k in final) final[k] = Math.max(1, Math.floor(final[k]));
+  const rank = k => Math.max(0, Math.min(4, Math.floor(num(s.skills && s.skills[k])))), dice = k => Math.min(3, rank(k));
+  return { final, mods, rank, dice, defense: 1 + Math.floor(final.reflex / 2), init: Math.max(1, final.reflex + Math.max(0, dice('dash') + mods.dash) + mods.init) };
+}
+function attackOf(it) {
+  const p = it.attackProfile || {}, cat = String(p.category || '').toLowerCase();
+  let attr = String(p.attribute || '').toLowerCase(), skill = String(p.skill || '').toLowerCase();
+  if (!attr || !skill) { if (/ranged|gun|bow/.test(cat + ' ' + (it.class || '').toLowerCase())) { attr = attr || 'reflex'; skill = skill || 'ranged'; } else if (/heavy/.test(cat)) { attr = attr || 'muscle'; skill = skill || 'melee'; } else if (/unarmed|brawl/.test(cat)) { attr = attr || 'muscle'; skill = skill || 'brawl'; } else { attr = attr || 'reflex'; skill = skill || 'melee'; } }
+  return { attr, skill, cat: p.category || '', type: p.damageType || '', props: p.properties || '', ap: num(p.ap) };
+}
+const label = k => { const a = R.attributes.find(x => x.id === k); if (a) return a.label; const e = Object.entries(R.skillKeys).find(([, v]) => v === k); return e ? e[0] : k; };
+
+function portraitSrc(s) {
+  try { const p = JSON.parse(localStorage.getItem(PORTRAIT_KEY) || 'null'); if (p && p.name === s.character.name && p.data) return p.data; } catch (e) {}
+  const g = G && G.races && G.races[s.character.race]; return g && g.card ? '../' + g.card : '';
+}
+
+function render() {
+  const s = load();
+  GRAKK_SCREEN.noChar(!hasChar(s), 'Your one-page sheet: who you are, your numbers, your tracks and your gear. Make a character to fill it in.');
+  $('editBtn').hidden = !hasChar(s);
+  if (!hasChar(s)) { $('app').innerHTML = ''; return; }
+  const c = s.character, lvl = num(c.level, 1), d = derive(s), st = s.stats || {}, rd = (R.raceDetails || {})[c.race] || {}, race = (R.races || {})[c.race] || {};
+  const base = (s.builder && s.builder.base) || {};
+  const f = (l, v, cls = '') => `<div class="f ${cls}"><span>${esc(l)}</span><b>${esc(v || '—')}</b></div>`;
+  const tag = s.magic && s.magic.streetTag;
+  let h = `<div class="grid row1">
+    <section class="box"><h2><span class="n">1</span> Identity</h2><div class="ident">
+      ${f('Name', c.name)}${f('Race', c.heritage && c.heritage.on && c.heritage.secondary ? `${c.race}-${c.heritage.secondary} (mixed)` : c.race)}
+      ${f('Alias', c.alias, 'wide')}
+      ${f('Class', [c.class, c.subclass].filter(Boolean).join(' / '))}${f('Level', `${lvl} · ${c.tier || 'Street'}`)}
+      ${f('Origin', c.origin)}${f('Life', c.life)}
+      ${f(tag ? 'Magic tag' : 'Grith', tag || c.grith)}${f('Status', c.status)}
+      ${c.affliction && c.affliction.id ? f('Affliction', [c.affliction.id, c.affliction.line, c.affliction.stage].filter(Boolean).join(' · ') + (c.affliction.bane ? ` · bane: ${c.affliction.bane}` : ''), 'wide') : ''}
+      ${f('Resists', rd.resistance && rd.resistance !== 'None' ? rd.resistance : 'None')}${f('Weak to', rd.vulnerability && rd.vulnerability !== 'None' ? rd.vulnerability : 'None')}
+    </div></section>
+    <section class="box attrBox"><h2><span class="n">2</span> Attributes</h2><table class="attrs"><tr><th></th><th>Spent</th><th>Racial</th><th>Final</th></tr>
+      ${R.attributes.map(a => { const fin = d.final[a.id], sp = base[a.id] != null ? num(base[a.id]) : Math.max(1, num(st[a.id], 1) - num((race.mods || {})[a.id])), rm = Math.max(1, num(st[a.id], 1)) - sp; /* racial = everything between what you spent and your file: race, heritage, affliction */
+        return `<tr><td><div class="an">${esc(a.label)}</div><div class="ad">${esc(ATTR_LINE[a.id] || '')}</div></td><td class="num"><i>${sp}</i></td><td class="num"><i>${rm > 0 ? '+' + rm : rm}</i></td><td class="num final"><i>${fin}</i></td></tr>`; }).join('')}
+    </table><p class="note">Racial covers race, heritage and affliction, applied after spending with no ceiling. Gear bonuses are in Final.</p></section>
+    <section class="box portrait"><img id="portraitImg" src="${esc(portraitSrc(s))}" alt="${esc(c.name)}"><label>Change picture<input type="file" accept="image/*" id="portraitIn"></label></section>
+  </div>`;
+
+  const sc = stressCap(lvl), hc = heatCap(lvl), stress = Math.min(sc, num(st.stress)), heat = Math.min(hc, num(st.heat)), w = Math.max(0, Math.min(3, num(st.woundState)));
+  const pips = (kind, val, cap, max) => `<div class="pips" data-track="${kind}">${Array.from({ length: max }, (_, i) => `<button type="button" data-pip="${i + 1}" class="${i < val ? 'on' : ''}" ${i >= cap ? 'disabled title="Unlocks at a higher level"' : ''} aria-label="${kind} ${i + 1}">${i + 1}</button>`).join('')}</div>`;
+  const conds = [st.condition1, st.condition2].filter(Boolean);
+  h += `<div class="grid row2">
+    <section class="box"><h2><span class="n">3</span> Defense &amp; tracks</h2>
+      <div class="def"><div><div class="defNum" title="1 + half Reflex, rounded down">${d.defense}</div><p class="note">1 + half Reflex.<br>Meet it: graze.<br>Beat it: hit.</p></div>
+        <div class="wound" role="group" aria-label="Wound track">${WOUNDS.map(([n, t], i) => `<button type="button" data-wound="${i}" aria-pressed="${i === w}">${n}${t ? `<small>${t}</small>` : ''}</button>`).join('')}</div></div>
+      <div class="track"><h3>Stress <b>${stress} / ${sc}</b></h3>${pips('stress', stress, sc, 8)}</div>
+      <div class="track"><h3>Heat <b>${heat} / ${hc}</b></h3>${pips('heat', heat, hc, 8)}</div>
+      <div class="track"><h3>Conditions <small class="note">${conds.length}/2</small></h3><div class="conds">${CONDITIONS.map(n => `<label><input type="checkbox" data-cond="${esc(n)}" ${conds.includes(n) ? 'checked' : ''}>${esc(n)}</label>`).join('')}</div>
+        <p class="note">At full Stress: breakdown. Act on both Conditions; the GM gets a scene complication.</p></div>
+    </section>
+    <section class="box"><h2><span class="n">4</span> Skills <small>N novice +1 · T trained +2 · E expert +3 · M mastery (level 16)</small></h2><div class="skills">
+      ${Object.entries(R.skills).map(([grp, [attr, list]]) => `<div class="sg"><h3>${esc(grp)} <em>(${esc(attr)})</em></h3><table><tr><td></td>${['N', 'T', 'E', 'M'].map(x => `<th>${x}</th>`).join('')}</tr>
+        ${list.map(n => { const k = R.skillKeys[n], r = d.rank(k); return `<tr><td>${esc(n)}</td>${[1, 2, 3, 4].map(i => `<td class="c"><span class="dot ${r === i ? 'on' : ''}"></span></td>`).join('')}</tr>`; }).join('')}</table></div>`).join('')}
+    </div>
+    <div class="turn"><div class="box"><b>Turn</b><span>Action / Move / React</span></div><div class="box"><b>Init</b><span>${d.init} = Reflex + Dash</span></div></div></section>
+  </div>`;
+
+  const weapons = (s.inventory || []).map((it, i) => ({ it, i })).filter(x => x.it && (x.it.name || '').trim() && isWeapon(x.it));
+  const eq = i => { const e = s.equipment || {}; return num(e.active, -1) === i && e.active !== null ? 'Active' : (num(e.secondary, -1) === i && e.secondary !== null ? 'Secondary' : ''); };
+  h += `<section class="box" style="margin-top:12px"><h2><span class="n">5</span> Weapons <small>Unarmed: Muscle + Brawl · Light melee: Reflex + Melee · Heavy melee: Muscle + Melee · Ranged: Reflex + Ranged</small></h2>
+    ${weapons.length ? `<table class="wpn"><tr><th>Weapon</th><th class="hideS">Category</th><th>Roll</th><th class="hideS">Damage</th><th>Properties</th></tr>${weapons.map(({ it, i }) => { const a = attackOf(it), pool = Math.max(0, (d.final[a.attr] || 0) + d.dice(a.skill) + d.mods.atk), e = eq(i);
+      return `<tr><td>${esc(it.name)}${e ? `<span class="tag">${e}</span>` : ''}</td><td class="hideS">${esc(a.cat || it.class || '')}</td><td>${esc(label(a.attr))} + ${esc(label(a.skill))}<small>${pool} dice</small></td><td class="hideS">${esc(a.type || '—')}${a.ap ? ` · AP ${a.ap}` : ''}</td><td>${esc(a.props || '—')}</td></tr>`; }).join('')}</table>` : `<p class="empty">No weapons in your Stuff Sack. Fists probably: Muscle + Brawl, ${(d.final.muscle || 0) + d.dice('brawl')} dice.</p>`}
+  </section>`;
+
+  const armor = slotItem(s, 'armor');
+  let soak = '';
+  if (armor) { const p = armor.armorProfile || {}, b = p.base || {}, cur = p.current || b; soak = ['ballistic', 'blade', 'impact', 'energy'].filter(k => num(b[k]) > 0).map(k => `<span class="${num(cur[k]) < num(b[k]) ? 'low' : ''}">${k[0].toUpperCase() + k.slice(1)} ${num(cur[k], num(b[k]))}${num(cur[k]) < num(b[k]) ? ' / ' + num(b[k]) : ''}</span>`).join(''); }
+  h += `<section class="box" style="margin-top:12px"><h2><span class="n">6</span> Armor <small>Soaks wound steps after a hit, by damage type</small></h2>
+    <div class="armor"><div class="name">${armor ? esc(armor.name || 'Armor') : 'None worn'}</div><div class="soak">${soak || (armor ? '<span>No soak set</span>' : '')}</div></div></section>`;
+
+  h += `<section class="box pinkbox attack" style="margin-top:12px"><h2><span class="n">7</span> Attack</h2>
+    <p>Raw successes <b>below Defense</b>: miss. <b>Equal</b>: graze (-1 die on their next action). <b>Above</b>: hit. Each success over is a wound step; resist or vulnerable ±1; then armor soak (minus AP). Soaked to 0: <b>armored graze</b> (-1 die, 1 Stress).</p>
+    <p>Light: max 1 step. Heavy: 2 steps per success over, minimum 1. <b>Push</b>: 1 Stress for +2 dice, once per roll. ${(R.reacts && R.reacts.list || []).slice(0, 2).map(r => `<b>${esc(r.name)}</b> (React): ${esc(r.text)}`).join(' ')}</p></section>`;
+  $('app').innerHTML = h;
+}
+
+function setStat(fn) { const s = load(); if (!hasChar(s)) return; s.stats = s.stats || {}; fn(s.stats, s); save(s); render(); }
+document.addEventListener('click', e => {
+  const b = e.target.closest('button'); if (!b) return;
+  if (b.id === 'editBtn') return nav('fullSheetBtn');
+  if (b.dataset.wound) return setStat(st => { st.woundState = b.dataset.wound; });
+  if (b.dataset.pip) { const kind = b.closest('[data-track]').dataset.track, n = num(b.dataset.pip);
+    return setStat((st, s) => { const cur = num(st[kind]); st[kind] = String(cur === n ? n - 1 : n); }); }
+});
+document.addEventListener('change', e => {
+  const t = e.target;
+  if (t.dataset.cond) {
+    const s = load(); const list = [s.stats.condition1, s.stats.condition2].filter(Boolean).filter(x => x !== t.dataset.cond);
+    if (t.checked) { if (list.length >= 2) { t.checked = false; toast('Two Conditions at most. Clear one first.'); return; } list.push(t.dataset.cond); }
+    return setStat(st => { st.condition1 = list[0] || ''; st.condition2 = list[1] || ''; });
+  }
+  if (t.id === 'portraitIn' && t.files && t.files[0]) {
+    const img = new Image(), url = URL.createObjectURL(t.files[0]);
+    img.onload = () => { const w = 480, h = Math.round(img.height * w / img.width), cv = document.createElement('canvas'); cv.width = w; cv.height = h; cv.getContext('2d').drawImage(img, 0, 0, w, h); URL.revokeObjectURL(url);
+      try { localStorage.setItem(PORTRAIT_KEY, JSON.stringify({ name: load().character.name, data: cv.toDataURL('image/jpeg', 0.82) })); } catch (x) { toast('That picture is too big to keep.'); } render(); };
+    img.src = url;
+  }
+});
+function toast(m) { const el = $('toast'); el.textContent = m; el.classList.add('on'); clearTimeout(toast.t); toast.t = setTimeout(() => el.classList.remove('on'), 2600); }
+window.addEventListener('storage', e => { if (e.key === KEY) render(); });
+Promise.all([fetch('../data/rules.json').then(r => r.json()), fetch('../data/guides/races.json').then(r => r.json()).catch(() => null)]).then(([r, g]) => { R = r; G = g; render(); window.GRAKK_SHEET_READY = true; });
+</script>
+</body>
+</html>

@@ -1,0 +1,91 @@
+{
+  "package": "Adyta PDA — Claude prioritized visual fixes, sprint 01",
+  "date": "2026-10-30",
+  "basePath": "art/pda-v1/imports/",
+  "assets": [
+    {
+      "id": "race.fairy",
+      "file": "races/fairy.webp",
+      "kind": "race_card",
+      "canon_text": "Ageless; text based on existing guide data",
+      "status": "visual-draft",
+      "replace": "art/sideways-shops/races/fairy.webp (after approval)"
+    },
+    {
+      "id": "race.orc",
+      "file": "races/orc-lifespan-corrected.webp",
+      "kind": "race_card",
+      "canon_text": "Orc: 70–90 years (user supplied wiki value)",
+      "status": "ready-to-review",
+      "replace": "art/sideways-shops/races/orc.jpg (after approval)"
+    },
+    {
+      "id": "race.dwarf",
+      "file": "races/dwarf-lifespan-corrected.webp",
+      "kind": "race_card",
+      "canon_text": "Dwarf: 150–200 years (user supplied wiki value)",
+      "status": "ready-to-review",
+      "replace": "art/sideways-shops/races/dwarf.jpg (after approval)"
+    },
+    {
+      "id": "radio.smokier",
+      "file": "radio-sewers/smokier-concept.webp",
+      "kind": "dj_portrait",
+      "status": "visual-draft",
+      "note": "Sepia archive treatment; missing status from user"
+    },
+    {
+      "id": "radio.mercury",
+      "file": "radio-sewers/mercury-concept.webp",
+      "kind": "dj_portrait",
+      "status": "visual-draft",
+      "note": "Cool-blue troll interpretation, Nib approval needed"
+    },
+    {
+      "id": "radio.sludge",
+      "file": "radio-sewers/dj-sludge-concept.webp",
+      "kind": "dj_portrait",
+      "status": "visual-draft",
+      "note": "Green masked DJ interpretation; species/design not canonically established"
+    },
+    {
+      "id": "radio.stormbird",
+      "file": "radio-sewers/dj-stormbird-concept.webp",
+      "kind": "dj_portrait",
+      "status": "visual-draft",
+      "note": "Purple avian-mask DJ interpretation; identity/design not canonically established"
+    },
+    {
+      "id": "start.featured-artifacts",
+      "file": "start/featured-artifacts-1600x900.webp",
+      "kind": "background",
+      "status": "ready-to-review",
+      "note": "Text-free brass orb visual for Featured Artifacts card"
+    },
+    {
+      "id": "start.city-hero",
+      "file": "start/city-hero-DRAFT-upscaled.webp",
+      "kind": "background",
+      "status": "lowres-mockup",
+      "note": "Upscaled crop from a composite: 1920x900 output dimensions, NOT native detail; replace before publication"
+    },
+    {
+      "id": "source.fairy",
+      "file": "source/fairy-portrait-master.webp",
+      "kind": "source-illustration",
+      "status": "working-master"
+    }
+  ],
+  "usage": {
+    "rules": "data/rules.json",
+    "guide": "data/guides/races.json",
+    "status": "Only illustration and design changes; no game rules changed",
+    "important": [
+      "Do not use generated collage text as canonical factual information",
+      "All DJ appearance designs require user/Nib review",
+      "Orc and Dwarf corrected labels preserve original illustrated pose from the poster",
+      "Fairy card is a new Sideways depiction; check against approved lore before publishing",
+      "Do not claim 1920px draft city hero is fully detailed high-res artwork"
+    ]
+  }
+}

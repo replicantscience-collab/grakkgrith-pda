@@ -1,8 +1,8 @@
-// GRAKKGRITH Service Worker v51
+// GRAKKGRITH Service Worker v75
 // Caches the app for offline use. Cache busts on version bump.
 // Maps are not downloaded up front: each one is saved the first time you open it (see fetch below).
 
-const CACHE_NAME = 'grakkgrith-v51';
+const CACHE_NAME = 'grakkgrith-v75';
 const ASSETS = [
   './',
   './index.html',
@@ -10,12 +10,30 @@ const ASSETS = [
   './apps/player.html',
   './data/rules.json',
   './apps/explore.html',
+  './apps/week.html',
+  './apps/week.js',
+  './apps/make.html',
+  './apps/sheet.html',
+  './apps/cityid.html',
+  './apps/make.js',
+  './apps/screen.css',
+  './apps/screen.js',
+  './apps/gigs.html',
+  './apps/gigs.js',
+  './apps/radio.html',
+  './apps/radio.js',
+  './apps/start.html',
+  './apps/corps.html',
+  './apps/jobs.html',
+  './apps/jobs.js',
   './apps/guide.html',
   './art/pda-v1/tokens.css',
   './art/pda-v1/shell.css',
   './art/pda-v1/world.css',
   './art/pda-v1/city.css',
   './art/pda-v1/board.css',
+  './art/pda-v1/apps.css',
+  './art/pda-v1/slim.css',
   './art/pda-v1/assets/sideways-sigil.svg',
   './art/pda-v1/assets/nav-tab-idle.svg',
   './art/pda-v1/assets/nav-tab-active.svg',
@@ -46,6 +64,14 @@ const ASSETS = [
   './art/sideways-shops/races/cinderfolk.jpg',
   './art/sideways-shops/races/slimefolk.jpg',
   './data/places.json',
+  './data/week.json',
+  './data/make.json',
+  './data/gigs.json',
+  './data/radio.json',
+  './data/corporations.json',
+  './data/jobs.json',
+  './data/missions.json',
+  './art/pda-v1/imports/manifest.json',
   './manifest.json',
   './icons/icon-192.png',
   './icons/icon-512.png',
