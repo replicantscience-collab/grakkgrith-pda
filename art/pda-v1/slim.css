@@ -9,7 +9,8 @@ body.pda-art .hero[data-has]{display:flex!important;align-items:flex-end;justify
 body.pda-art .hero[data-has]::before,body.pda-art .hero[data-has]::after{content:none!important;display:none!important}
 body.pda-art .hero[data-has] .kicker{font-size:13px}
 body.pda-art .hero[data-has] .title{margin:4px 0 6px!important;font-size:clamp(32px,4.6vw,50px)!important;line-height:1!important;text-shadow:3px 4px 0 #48213f!important;text-transform:none}
-body.pda-art .hero[data-has] .copy{max-width:68ch;color:var(--art-muted)!important;font-size:16px!important}
+/* Each page opens with its own lead line, so the strip's summary line would say it twice */
+body.pda-art .hero[data-has] .copy{display:none!important}
 body.pda-art .hero[data-has] .actions{display:none!important}
 /* The character chip in the top bar already shows who is active, so the note is hidden either way */
 body.pda-art .hero[data-has] .ops{display:none!important}

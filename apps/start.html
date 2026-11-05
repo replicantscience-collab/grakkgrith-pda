@@ -107,7 +107,7 @@ function render() {
   // Species guides
   h += `<article class="card" style="--c:#b06cf0;--img:url('../art/sideways-shops/races/goblin.jpg')"><h2>${icon('guides')}Species Guides</h2><p>Races, lifespans, traits, cultures, and more. With Sideways commentary.</p><button class="go" data-nav="guidesBtn">${races} races <b>›</b></button></article>`;
   // City
-  h += `<article class="card" style="--c:#22dae4;--img:url('../maps/low-halo-district-map.jpg')"><h2>${icon('city')}City Districts</h2><p>Explore neighborhoods, services, shops, and who runs them.</p><button class="go" data-nav="cityBtn">${atlas} districts <b>›</b></button></article>`;
+  h += `<article class="card" style="--c:#22dae4;--img:url('../maps/low-halo-district-map.jpg')"><h2>${icon('city')}City Districts</h2><p>Explore neighborhoods, services, shops, and who runs them.</p><button class="go" data-nav="exploreBtn">${atlas} districts <b>›</b></button></article>`;
   // Missions: what you're on, else what's open
   let items = [];
   if (named) {

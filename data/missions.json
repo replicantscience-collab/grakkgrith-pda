@@ -1,0 +1,246 @@
+{
+  "_about": "Story missions for the crew: the Pipe 37 arc and the side board. Moved from the old Contracts page (index.html missionsData). The active operation is shared with Logs through localStorage key grakkgrith_active_operation_v1.",
+  "opKey": "grakkgrith_active_operation_v1",
+  "missions": [
+    {
+      "id": "pipe37",
+      "title": "Mission 01: Pipe 37",
+      "phase": "FIRST LIVE MISSION",
+      "status": "Ready to run",
+      "loc": "Low Halo / The Sewers / Deeper Sewers",
+      "pay": "35,000 credits",
+      "client": "Antitoxin through a local ACW intermediary",
+      "ask": "Investigate the death near Pipe 37, determine what is operating below, stop or contain the immediate threat if possible, and bring back an answer that does not get Low Halo hurt worse.",
+      "stakes": "The first answer becomes the public story. A clean lie may calm the city, but the wrong answer brought back up can turn care into panic, lockdown, or cover-up.",
+      "risk": "Contamination, restricted access, unreliable maps, deeper sewer wrongness, official containment pressure, community distrust, and a body that may not fit the easy report.",
+      "needs": "A crew that can move through local routes respectfully, read hazard signs, preserve evidence, talk before shooting, and decide what truth is safe to surface.",
+      "factions": "Antitoxin, ACW / Wardens, Sewers Community, Radio Sewers, ABI, Crownline-adjacent cleanup interests.",
+      "intel": [
+        "Low Halo residents know the official map is incomplete.",
+        "Pipe 37 is already marked after the death; access is watched, not truly sealed.",
+        "Antitoxin wants the hazard truth before a cleanup narrative overwrites it.",
+        "The question is not only what killed someone. It is who gets blamed when the answer surfaces."
+      ],
+      "approach": [
+        "Local first: ask sewer residents and Radio Sewers what changed before entering.",
+        "Official cover: use the ACW intermediary to pass a perimeter without starting a public fight.",
+        "Evidence first: preserve samples, route notes, body details, and witness contradictions.",
+        "Containment first: stop the active danger, then decide who deserves the report."
+      ],
+      "clocks": [
+        "Pipe pressure rises if the crew delays or makes noise.",
+        "Public panic rises if official responders seal routes without local explanation.",
+        "Cover-up pressure rises if evidence points toward liability."
+      ],
+      "heat": "Starts contained because the job is deniable. Heat spikes if the crew exposes the death publicly, attacks responders, opens deeper access, or lets someone else define the answer.",
+      "fallout": "Truth can protect Low Halo, justify a lockdown, empower Antitoxin, trigger ABI attention, close sewer routes, or make the crew responsible for a dangerous answer.",
+      "next": "Mission 02: Route Lock begins from whatever route, evidence, or blame the crew leaves behind.",
+      "discord": "INTENT: what answer are you trying to bring back? APPROACH: who do you trust on the way down? BACKUP: what do you do if the answer is worse than the job brief?"
+    },
+    {
+      "id": "routeLock",
+      "title": "Mission 02: Route Lock",
+      "phase": "FIRST ARC FOLLOW-UP",
+      "status": "Unlocked by Pipe 37 fallout",
+      "loc": "Low Halo routes / Sewers access points",
+      "pay": "Standing, access, favors, and negotiated hazard pay",
+      "client": "Whichever side gained trust after Pipe 37",
+      "ask": "Deal with the route closures, false seals, watched corridors, and access disputes created by the first mission before people lose homes, work, medicine, or cover.",
+      "stakes": "The city reacts to danger by closing movement. For Low Halo and the Sewers, movement is survival.",
+      "risk": "Warden seals, Crownline infrastructure claims, desperate locals, bad detours, false maps, panic posts, and opportunists selling safe passage.",
+      "needs": "Route knowledge, social leverage, stealth, tech or magic that can read access systems, and enough restraint not to turn a checkpoint into a war.",
+      "factions": "Sewers Community, Radio Sewers, Wardens, Crownline Infrastructure, Emergency Management, Low Halo residents.",
+      "intel": [
+        "Some closures are real safety measures; some are political theater.",
+        "Official seals do not match lived movement.",
+        "Radio Sewers knows which routes are watched, poisoned, fake, or still usable.",
+        "Every opened route creates a witness and every closed route creates a debt."
+      ],
+      "approach": [
+        "Negotiate: get a legal corridor or community carve-out.",
+        "Bypass: map and protect an unofficial route.",
+        "Expose: prove a seal is false or predatory.",
+        "Stabilize: fix the actual hazard so closure pressure loses ground."
+      ],
+      "clocks": [
+        "Access clock tracks how much movement remains.",
+        "Blame clock tracks who the public holds responsible.",
+        "Trust clock tracks whether locals believe the crew came back for them."
+      ],
+      "heat": "Heat shifts from incident Heat to movement Heat. Officials notice who keeps people moving after a closure order.",
+      "fallout": "A route survives, burns, becomes official, becomes secret, or becomes bait. The crew may gain local trust while earning institutional suspicion.",
+      "next": "Mission 03: What the File Says starts when the route story and the official file stop matching.",
+      "discord": "INTENT: what route are you trying to keep alive? APPROACH: public pressure, quiet bypass, repair, negotiation, or sabotage? BACKUP: who gets moved first if the route collapses?"
+    },
+    {
+      "id": "fileSays",
+      "title": "Mission 03: What the File Says",
+      "phase": "FIRST ARC REVEAL",
+      "status": "Arc escalation",
+      "loc": "ABI files / civic records / Low Halo memory",
+      "pay": "Case leverage, faction standing, and whatever the truth is worth",
+      "client": "ABI contact, Antitoxin, local witness network, or a faction trying to bury the record",
+      "ask": "Compare the official file, physical evidence, route memory, witness accounts, and faction claims until the crew can decide what to reveal, redact, trade, or destroy.",
+      "stakes": "Files decide who is guilty, who is forgotten, who gets paid, and whose suffering becomes administratively convenient.",
+      "risk": "Tampered evidence, legal threats, hostile interviews, memory magic, leaked names, witness intimidation, and a file that protects the wrong people on purpose.",
+      "needs": "Investigation, social reading, digital or archive access, magical resonance sense, and a crew agreement about what truth is for.",
+      "factions": "ABI, Civil Registry, Public Advocacy, Antitoxin, Crownline, Low Halo witnesses, Velvet Signal-style narrative brokers.",
+      "intel": [
+        "The file is not empty; it is curated.",
+        "Someone benefits if Pipe 37 becomes an isolated sewer accident.",
+        "Witness protection may matter more than total disclosure.",
+        "A true report can still hurt people if delivered to the wrong hands."
+      ],
+      "approach": [
+        "Audit: build a contradiction board from file, route, body, hazard, and witness evidence.",
+        "Leak: make the story public before it can be softened.",
+        "Shield: protect vulnerable names while preserving the useful truth.",
+        "Trade: use proof to win access, treatment, route repair, or accountability."
+      ],
+      "clocks": [
+        "Evidence clock tracks what can still be proven.",
+        "Witness clock tracks who remains safe enough to talk.",
+        "Narrative clock tracks which version the city believes."
+      ],
+      "heat": "Case Heat. Once files move, investigators, lawyers, fixers, and narrative brokers all start watching.",
+      "fallout": "The arc can end with public accountability, a dangerous bargain, protected witnesses, a buried truth, or a new enemy who knows the crew touched the file.",
+      "next": "Downtime should record Heat, Standing, protected witnesses, exposed evidence, closed routes, and the next faction move.",
+      "discord": "INTENT: what do you want the file to prove? APPROACH: expose, redact, trade, protect, or destroy? BACKUP: what truth are you unwilling to sacrifice?"
+    },
+    {
+      "id": "burnwire",
+      "title": "Burn-Wire Block Check",
+      "phase": "SIDE BOARD",
+      "status": "Available",
+      "loc": "Low Halo",
+      "pay": "6,500 credits",
+      "client": "Venue block residents through a local fixer",
+      "ask": "Inspect repeated outages in a converted venue block, identify whether the fault is local, external, or deliberate, and keep Crownline from writing the answer before residents know it.",
+      "stakes": "A cultural block stays livable or becomes another reason to clear people out.",
+      "risk": "Unstable wall systems, active meter room, possible magical interference, landlord panic, eviction pressure.",
+      "needs": "Someone who can read wires, lies, and bad paperwork in the same hour.",
+      "factions": "Low Halo residents, Crownline Infrastructure, local fixer network.",
+      "intel": [
+        "The outages follow an ugly pattern.",
+        "The meter room may tell a different story than the bills.",
+        "Residents need answers before contractors arrive."
+      ],
+      "approach": [
+        "Repair first.",
+        "Paperwork first.",
+        "Catch the saboteur or negligent owner in the act."
+      ],
+      "clocks": [
+        "Eviction pressure.",
+        "Electrical failure.",
+        "Crownline narrative."
+      ],
+      "heat": "Low if handled quietly. Heat spikes if Crownline access turns into a public confrontation or evidence disappears.",
+      "fallout": "Venue block remains livable, Crownline gains leverage, or residents lose another place before the truth lands.",
+      "next": "Can feed Route Lock if infrastructure access becomes political.",
+      "discord": "INTENT: what are you proving about the outage? APPROACH: repair, records, stakeout, or confrontation?"
+    },
+    {
+      "id": "murr",
+      "title": "Route Check: Murr Corridor",
+      "phase": "SIDE BOARD / PIPE 37 SUPPORT",
+      "status": "Available",
+      "loc": "The Sewers",
+      "pay": "5,500 credits",
+      "client": "Sewers Community / Antitoxin contact",
+      "ask": "Assess a recently compromised route, identify whether the danger is chemical, magical, deliberate, or structural, and confirm whether the path can be kept alive.",
+      "stakes": "The route is not a shortcut. It is work, shelter, warning, and escape.",
+      "risk": "Contamination, hearing damage, low visibility, emergency closure pressure, bad maps.",
+      "needs": "Route respect, hazard sense, and no surface fool behavior.",
+      "factions": "Sewers Community, Antitoxin, Radio Sewers, Adyta Emergency Management.",
+      "intel": [
+        "Locals changed their walking pattern before the warning became official.",
+        "Bad sound carries in the corridor.",
+        "The hazard may connect to Pipe 37 without admitting it."
+      ],
+      "approach": [
+        "Walk with a local.",
+        "Sample and mark hazards.",
+        "Set warnings and keep moving.",
+        "Close it only if there is no safer choice."
+      ],
+      "clocks": [
+        "Contamination spread.",
+        "Local trust.",
+        "Official closure."
+      ],
+      "heat": "Quiet route work keeps Heat contained. Official closure or panic makes the route politically visible.",
+      "fallout": "A path people actually use survives, gets sealed, or becomes evidence that something deeper is wrong.",
+      "next": "Strong lead-in to Pipe 37 or Route Lock.",
+      "discord": "INTENT: keep, close, map, or diagnose the corridor? APPROACH: local guide, hazard kit, magic read, tech scan, or patrol?"
+    },
+    {
+      "id": "below",
+      "title": "Below-Site Incident Review",
+      "phase": "SIDE BOARD",
+      "status": "Available",
+      "loc": "Old City",
+      "pay": "14,000 credits",
+      "client": "Developer intermediary with too-clean paperwork",
+      "ask": "Enter a newly exposed sealed space, determine whether the hazard is structural, environmental, archival, or occult, and advise whether the site can be contained safely.",
+      "stakes": "The honest version survives, or the room gets buried under a cheaper lie.",
+      "risk": "Lost time, contradictory witness reports, unstable lower chamber, developer pressure, resonance.",
+      "needs": "Calm heads, unusual perception, and someone who knows when a room is wrong before it proves it.",
+      "factions": "Developer intermediary, ABI, Velvet Signal, possible old-city stakeholders.",
+      "intel": [
+        "The room was not on the file until someone needed it to be.",
+        "Witnesses disagree in ways that feel useful, not random.",
+        "Containment advice may be used as legal cover."
+      ],
+      "approach": [
+        "Document everything.",
+        "Refuse unsafe entry.",
+        "Read resonance before touching artifacts.",
+        "Separate worker safety from developer liability."
+      ],
+      "clocks": [
+        "Containment failure.",
+        "Developer pressure.",
+        "Occult exposure."
+      ],
+      "heat": "Private review starts clean. Public exposure, missing workers, or occult proof can make the file explosive.",
+      "fallout": "The honest version survives, the site is buried again, or the room changes what everyone thinks happened.",
+      "next": "Can connect to What the File Says if records contradict physical truth.",
+      "discord": "INTENT: what are you certifying or refusing to certify? APPROACH: safety, archive, occult read, or witness review?"
+    },
+    {
+      "id": "salvage",
+      "title": "Hold the Line on Reclaimed Power",
+      "phase": "SIDE BOARD",
+      "status": "Available",
+      "loc": "Scrapfields",
+      "pay": "8,000 credits + favor weight",
+      "client": "Patchkin / Gremlin Works neighborhood contact",
+      "ask": "Verify the history of a reclaimed assembly, help prevent unjust seizure, and keep several dependent homes powered if possible.",
+      "stakes": "Useful abandoned hardware becomes survival, property, evidence, or violence depending on who gets to name it.",
+      "risk": "Compliance dispute, armed escort, contested tags, toxic salvage environment.",
+      "needs": "Salvage sense, nerves, and somebody who understands ownership claims can be violence.",
+      "factions": "Patchkin / Gremlin Works, Bastion Dynamics, Crownline Infrastructure, local homes.",
+      "intel": [
+        "The tags may be old enough to be meaningless and new enough to be dangerous.",
+        "Several homes are wired into the assembly.",
+        "Corporate memory returns when money or embarrassment is involved."
+      ],
+      "approach": [
+        "Prove abandonment.",
+        "Negotiate a service carve-out.",
+        "Move the dependent homes first.",
+        "Make seizure too public to be easy."
+      ],
+      "clocks": [
+        "Power loss.",
+        "Armed seizure.",
+        "Community resistance."
+      ],
+      "heat": "Street-level unless force enters. Heat rises fast if armed escorts, seized power, or public resistance escalate.",
+      "fallout": "Homes stay powered, salvage rights gain weight, or corporate memory turns abandoned hardware back into property.",
+      "next": "Can feed wider infrastructure politics after Route Lock.",
+      "discord": "INTENT: protect power, prove ownership, delay seizure, or expose the claim? APPROACH: records, repair, crowd, or extraction?"
+    }
+  ]
+}
