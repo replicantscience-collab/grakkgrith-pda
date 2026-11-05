@@ -2,7 +2,7 @@
 // Caches the app for offline use. Cache busts on version bump.
 // Maps are not downloaded up front: each one is saved the first time you open it (see fetch below).
 
-const CACHE_NAME = 'grakkgrith-v72';
+const CACHE_NAME = 'grakkgrith-v73';
 const ASSETS = [
   './',
   './index.html',
@@ -14,6 +14,7 @@ const ASSETS = [
   './apps/week.js',
   './apps/make.html',
   './apps/sheet.html',
+  './apps/cityid.html',
   './apps/make.js',
   './apps/screen.css',
   './apps/screen.js',
