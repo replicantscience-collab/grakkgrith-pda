@@ -49,6 +49,7 @@ input:focus,select:focus{outline:none;border-color:var(--art-cyan);box-shadow:0 
 <div class="wrap">
   <div class="kicker">ADYTA PDA / WORKSHOP</div>
   <h1>Your Workshop</h1>
+  <nav class="wsSwitch" aria-label="Workshop"><button type="button" aria-current="page">Make</button><button type="button" id="toItems">Item cards</button></nav>
   <p class="muted" id="who">Make things the city has to deal with.</p>
   <div class="strip" id="strip"></div>
   <div class="cols">
@@ -58,6 +59,7 @@ input:focus,select:focus{outline:none;border-color:var(--art-cyan);box-shadow:0 
 </div>
 <div class="toast" id="toast" role="status" aria-live="polite"></div>
 <script src="./screen.js"></script>
+<script>document.getElementById('toItems').onclick = () => parent.postMessage({ type: 'grakkgrith-nav', to: 'itemsBtn' }, '*');</script>
 <script src="./week.js"></script>
 <script src="./make.js"></script>
 <script>

@@ -70,3 +70,16 @@ body[data-panel="sheet"] #combatSummary>.combatLine:is(:nth-child(3),:nth-child(
 body[data-panel="sheet"] #combatSummary>.combatLine:nth-child(12):has(.combatVal:empty){display:none!important}
 /* No armor on: no armor-repair controls */
 body[data-panel="sheet"] #armorConditionPanel:has(#armorConditionReadout>.small:only-child){display:none!important}
+
+/* ---------- Shiny Bit Details lives in the Workshop (Item cards) ---------- */
+body[data-panel="sheet"]:not([data-view="items"]) .accordionSection[data-section-id="item"]{display:none!important}
+body[data-panel="sheet"]:not([data-view="items"]) .accordionSection[data-section-id="inventory"]>.accordionBody::after{content:"Make or edit item cards in the Workshop, under Item cards.";display:block;margin-top:10px;color:var(--art-muted);font-size:14px}
+/* Item cards view: just the Stuff Sack and the card editor, both open */
+body[data-view="items"] :is(.compactGuide,.compactQuickBar,.compactModeBar,.compactJumpBar){display:none!important}
+body[data-view="items"] .accordionSection:not([data-section-id="inventory"]):not([data-section-id="item"]){display:none!important}
+body[data-view="items"] .accordionSection:is([data-section-id="inventory"],[data-section-id="item"])>.accordionBody{display:block!important}
+body[data-view="items"] .accordionSection .pinToggle,body[data-view="items"] .accordionSection .accordionChevron{display:none!important}
+/* Authoring mode ignores bag limits, so it shows all 80 slots: keep the first 20, plus any further slot in use */
+body[data-view="items"] #invGrid>.slot:nth-child(n+21):not(.selected):has(.name:empty){display:none!important}
+/* Equipping is the sheet's job */
+body[data-view="items"] :is(#setActiveBtn,#setSecondaryBtn,#setAmmoSourceBtn,#setArmorBtn,#setBackBtn,#clearEquipBtn){display:none!important}

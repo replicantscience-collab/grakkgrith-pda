@@ -78,3 +78,6 @@ details.howto>summary::-webkit-details-marker{display:none}
 details.howto>summary::before{content:"+ ";color:var(--art-magenta)}
 details.howto[open]>summary::before{content:"– "}
 details.howto>.howtoBody{padding:0 14px 12px}
+
+/* Workshop switch: Make | Item cards */
+.wsSwitch{display:flex;gap:6px;margin:4px 0 12px}.wsSwitch button{min-height:40px;padding:6px 16px;border:1px solid rgba(118,80,45,.9);border-radius:999px;background:rgba(10,11,22,.75);color:var(--art-cream);font:700 13px/1 var(--art-ui);letter-spacing:.06em;text-transform:uppercase;cursor:pointer}.wsSwitch button[aria-current]{border-color:var(--art-magenta);background:#2a1230;color:#fff}

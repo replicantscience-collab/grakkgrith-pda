@@ -114,6 +114,9 @@ try {
     f = await open('sheetBtn', 1800);
     await step('Character Sheet loads the character', async () => { const v = await f.evaluate(() => document.getElementById('raceSelect')?.value); return v === 'Goblin' || `race shows "${v}"`; });
     await step('Character Sheet uses the Sideways skin and fits', async () => (await kitted()) ? fits() : 'unskinned');
+    await step('Shiny Bit Details is off the sheet', () => f.evaluate(() => getComputedStyle(document.querySelector('.accordionSection[data-section-id="item"]')).display === 'none'));
+    f = await open('itemsBtn', 2000);
+    await step('Workshop > Item cards edits item cards (Stuff Sack + editor, authoring on)', async () => { const r = await f.evaluate(() => ({ mode: document.body.dataset.pageMode, shown: [...document.querySelectorAll('.accordionSection')].filter(x => getComputedStyle(x).display !== 'none').map(x => x.dataset.sectionId).join(','), editable: !document.getElementById('itemName').readOnly && !document.getElementById('itemName').disabled })); const tab = await page.evaluate(() => document.querySelector('#subNav .subTab.active')?.firstChild.textContent); return (r.mode === 'shops' && r.shown === 'inventory,item' && r.editable && tab === 'Workshop') || JSON.stringify({ ...r, tab }); });
 
     check(`${label}: no script errors or missing files`, errors.length === 0, [...new Set(errors)].slice(0, 5).join(' | '));
     await ctx.close();
