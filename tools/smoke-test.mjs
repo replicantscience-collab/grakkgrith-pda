@@ -83,6 +83,25 @@ try {
     f = await open('guidesBtn', 1200);
     await step('Guides shows 11 races', async () => { const n = await f.evaluate(() => document.querySelectorAll('.card').length); return n === 11 || `found ${n}`; });
     await step('Guide keeps Sideways commentary and rules apart', async () => { await f.evaluate(() => document.querySelector('[data-race="Goblin"]').click()); return f.evaluate(() => !!document.querySelector('#detail .sideways') && /From the rulebook/i.test(document.querySelector('#detail .rules').innerText) && !document.querySelector('#detail .sideways').innerText.includes('Reflex')); });
+    await step('Gremlin archive is hidden until triple seal activation', async () => {
+      await f.evaluate(() => document.querySelector('[data-race="Goblin"]').click());
+      return f.evaluate(() => !document.getElementById('gremlinArchive') && !!document.getElementById('classificationSeal'));
+    });
+    await step('Gremlin archive unlocks from Goblin seal', async () => {
+      return f.evaluate(() => {
+        const seal = document.getElementById('classificationSeal');
+        seal.click(); seal.click();
+        if (document.getElementById('gremlinArchive')) return false;
+        seal.click();
+        const archive = document.getElementById('gremlinArchive');
+        return !!archive && /Oh. There you are/.test(archive.textContent) && !document.querySelector('[data-race="Gremlin"]');
+      });
+    });
+    await step('Gremlin archive resets without changing rulebook race', async () => {
+      await f.evaluate(() => document.querySelector('[data-race="Orc"]').click());
+      await f.evaluate(() => document.querySelector('[data-race="Goblin"]').click());
+      return f.evaluate(() => !document.getElementById('gremlinArchive') && !!document.getElementById('classificationSeal'));
+    });
     await step('Guides opens a race entry', async () => { await f.evaluate(() => document.querySelector('[data-race="Fairy"]').click()); return /Fae Reading/.test(await f.evaluate(() => document.getElementById('detail').innerText)); });
 
     // City: 28 atlas pins, and a pin opens its dossier.
