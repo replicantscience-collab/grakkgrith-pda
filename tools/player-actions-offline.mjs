@@ -9,8 +9,7 @@ export async function checkPlayerOffline(browser, base, check) {
     await page.waitForFunction(()=>!!navigator.serviceWorker.controller);
     await ctx.setOffline(true);
     await page.reload();
-    await page.locator('#toolsBtn').click();
-    await page.locator('#sheetBtn').click();
+    await page.evaluate(()=>document.getElementById('fullSheetBtn').click());
     const f=page.frameLocator('#frame');
     await f.locator('#playerNowRoll').waitFor();
     check('offline: cached sheet exposes Now actions',true);

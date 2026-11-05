@@ -144,6 +144,7 @@ try {
     f = await open('itemsBtn', 2000);
     await step('Workshop > Item cards edits item cards (Stuff Sack + editor, authoring on)', async () => { const r = await f.evaluate(() => ({ mode: document.body.dataset.pageMode, shown: [...document.querySelectorAll('.accordionSection')].filter(x => getComputedStyle(x).display !== 'none').map(x => x.dataset.sectionId).join(','), editable: !document.getElementById('itemName').readOnly && !document.getElementById('itemName').disabled })); const tab = await page.evaluate(() => document.querySelector('#subNav .subTab.active')?.firstChild.textContent); return (r.mode === 'shops' && r.shown === 'inventory,item' && r.editable && tab === 'Workshop') || JSON.stringify({ ...r, tab }); });
 
+    f = await open('fullSheetBtn', 2000);
     await checkPlayerActions(page, f, step, label);
     check(`${label}: no script errors or missing files`, errors.length === 0, [...new Set(errors)].slice(0, 5).join(' | '));
     await ctx.close();

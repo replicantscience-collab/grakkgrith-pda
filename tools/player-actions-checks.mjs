@@ -43,7 +43,7 @@ export async function checkPlayerActions(page, f, step, label) {
     await page.waitForTimeout(300);await click('playerNowUndo');return (await read()).stats.stress==='4'&&(await f.locator('#playerActionReceipt').innerText()).includes('Cannot undo');
   });
   await step('state persists when reopening the sheet',async()=>{
-    await page.evaluate(()=>document.getElementById('sheetBtn').click());await page.waitForTimeout(1200);f=page.frames().find(x=>x!==page.mainFrame());const s=await read();return s.inventory[0].adds[6]==='6'&&s.inventory[1].adds[6]==='3'&&s.stats.heat==='4'&&!s.inventory[2].name;
+    await page.evaluate(()=>document.getElementById('fullSheetBtn').click());await page.waitForTimeout(1200);f=page.frames().find(x=>x!==page.mainFrame());const s=await read();return s.inventory[0].adds[6]==='6'&&s.inventory[1].adds[6]==='3'&&s.stats.heat==='4'&&!s.inventory[2].name;
   });
   await step('skill button chooses its attribute and previews modifiers',async()=>{
     await click('playerNowRoll');await f.getByRole('button',{name:'Roll Brawl',exact:true}).click();await f.locator('#playerActionModifier').fill('2');const text=await f.locator('#playerActionDetails').innerText();await click('playerActionCancel');return text.includes('Muscle')&&text.includes('situation 2');
