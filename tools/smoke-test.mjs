@@ -225,6 +225,20 @@ try {
       const n = await f.$$eval('.gig [data-take]', b => b.length), w = await f.evaluate(() => document.documentElement.scrollWidth - innerWidth);
       return (n >= 1 && w <= 1) || `${n} gigs to take; ${w}px too wide`;
     });
+    await step('downtime Train raises a skill rank, the one-page Sheet shows it, and Undo puts it back', async () => {
+      const K = 'grakkgrith_character_tool_v8_state', rank = k => page.evaluate(([K, k]) => JSON.parse(localStorage.getItem(K)).skills[k], [K, k]);
+      await page.evaluate(K => { const s = JSON.parse(localStorage.getItem(K)); s.character.level = '2'; s.skills.melee = '1'; s.downtime = { ...(s.downtime || {}), marks: 3, actionsRemaining: 2, history: [] }; localStorage.setItem(K, JSON.stringify(s)); }, K);
+      await page.evaluate(() => document.getElementById('fullSheetBtn').click()); await page.waitForTimeout(2200); let g = frame(page);
+      const gated = await g.evaluate(() => { const a = document.getElementById('downtimeActionSelect'); a.value = 'train'; a.dispatchEvent(new Event('change', { bubbles: true })); const o = [...document.querySelectorAll('#dtTrainSkill option')]; const m = o.find(x => x.value === 'melee'), t = o.find(x => / Trained → Expert/.test(x.textContent)); return { melee: m && !m.disabled && /Novice → Trained/.test(m.textContent), expertLocked: !t || t.disabled }; });
+      await g.evaluate(() => { document.getElementById('dtTrainSkill').value = 'melee'; document.getElementById('downtimeApplyBtn').click(); }); await page.waitForTimeout(900);
+      const after = await g.evaluate(() => document.querySelector('[data-skill-rank="melee"]').value);
+      await page.evaluate(() => document.getElementById('sheetBtn').click()); await page.waitForTimeout(2200); g = frame(page);
+      const col = await g.evaluate(() => { const tr = [...document.querySelectorAll('.sg tr')].find(t => t.firstElementChild && t.firstElementChild.textContent === 'Melee'); return ['N', 'T', 'E', 'M'][[...tr.querySelectorAll('.dot')].findIndex(d => d.classList.contains('on'))]; });
+      await page.evaluate(() => document.getElementById('fullSheetBtn').click()); await page.waitForTimeout(2200); g = frame(page);
+      await g.evaluate(() => document.getElementById('undoDowntimeBtn').click()); await page.waitForTimeout(900);
+      const undone = await rank('melee'), marks = await page.evaluate(K => JSON.parse(localStorage.getItem(K)).downtime.marks, K);
+      return (gated.melee && gated.expertLocked && after === '2' && col === 'T' && undone === '1' && marks === 3) || JSON.stringify({ gated, after, col, undone, marks });
+    });
     await step('Radio Sewers is on air with the right DJ and a live link', async () => {
       await page.evaluate(() => document.getElementById('radioBtn').click()); await page.waitForTimeout(1500); f = frame(page);
       const dj = await f.evaluate(() => document.querySelector('.onair h2').textContent), link = await f.evaluate(() => document.querySelector('a.listen').href);
