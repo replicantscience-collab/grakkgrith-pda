@@ -87,6 +87,10 @@ If your character is listed as an owner in `data/businesses.json`, **Mail & bill
 
 Protection belongs to the building. It breaks if you take an offer, if the owner's Heat reaches 4, and never applies to corporate-funded places. Trouble climbs one step at a time, never faster than one step every five days: trouble, a notice, shuttered (the till freezes until you clear the books and reopen), and lost after four weeks shuttered or a Heat 6 crisis aimed at the building. **Close for the season** pauses everything while you're away. Logic: `apps/business.js`, tested by `node tools/business-test.mjs`. All numbers are drafts.
 
+## Radio Sewers on Discord
+
+Once a day, `.github/workflows/radio-bulletin.yml` posts a Radio Sewers bulletin to the group's Discord: three district moods, a rumor and the sticker hint from the same day every PDA shows, voiced by whichever DJ is on shift in Adyta. To turn it on, create a webhook in Discord (Server Settings > Integrations > Webhooks), then add its URL in GitHub as a repository secret named `DISCORD_WEBHOOK_URL`. Without the secret it only prints. Try it locally with `node tools/radio-bulletin.mjs --dry-run`.
+
 ## The Explore map
 
 Explore puts your character somewhere in Adyta. Tap a place for its details, then travel there: on foot, or by tram while the trams run (the last one leaves at 12:17 AM). Travel takes Adyta time, and your character is in transit until they arrive, even if you close the app.
