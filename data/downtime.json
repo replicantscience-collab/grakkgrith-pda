@@ -1,0 +1,391 @@
+{
+  "schema": "GRAKKGRITH_DOWNTIME_SCENES",
+  "schemaVersion": 1,
+  "_about": "A Night Out: each downtime action plays as a short scene in the district you spend the gap in. SAFE is the rulebook action as written. BOLD is the same action with a bonus on a win and a cost on a loss, always opt-in. Scene text can use {district}, {place}, {faction}, {hazard}, {wisdom}, {mood}, {name}; they fill from data/places.json (the district dossier and its places). Add situations freely: one is drawn at random each time. Effects: heat, stress, credits (a cost you can't pay becomes Debt), standing (your Standing in this district's territory), wound (steps toward Unharmed), condition (clear one), lead (a true line from the district dossier lands in your Mail).",
+  "difficulties": {
+    "1": "Routine",
+    "2": "Challenging",
+    "3": "Hard",
+    "4": "Severe",
+    "5": "Legendary"
+  },
+  "nightNames": [
+    "Sunday night",
+    "Monday night",
+    "Tuesday night",
+    "Wednesday night",
+    "Thursday night",
+    "Friday night",
+    "Saturday night"
+  ],
+  "actions": {
+    "layLow": {
+      "name": "Lay Low",
+      "rule": "Heat -1, or -2 in your grith.",
+      "situations": [
+        "{place} is quiet tonight, or quiet enough. Nobody here is looking for you yet.",
+        "A sweep came through {district} an hour ago. The block is still holding its breath.",
+        "Somewhere near {place}, someone owes you a couch and a closed mouth."
+      ],
+      "safe": {
+        "label": "Stay in. Doors shut, lights off.",
+        "effects": {
+          "heat": "layLow"
+        },
+        "text": "Doors shut, lights off, phone face down. The block forgets you were ever loud."
+      },
+      "bold": {
+        "label": "Lie low somewhere you can listen.",
+        "check": {
+          "attr": "root",
+          "skill": "layLow",
+          "diff": 2
+        },
+        "win": {
+          "text": "You keep your head down and your ears open.",
+          "effects": {
+            "heat": "layLow",
+            "lead": 1
+          }
+        },
+        "partial": {
+          "text": "Quiet night. Nothing worth hearing.",
+          "effects": {
+            "heat": "layLow"
+          }
+        },
+        "lose": {
+          "text": "Someone clocked you watching. You still got off the street, but your nerves didn't.",
+          "effects": {
+            "heat": "layLow",
+            "stress": 1
+          }
+        }
+      }
+    },
+    "workContact": {
+      "name": "Work a Contact",
+      "rule": "Savvy + Network. Success or partial: Standing +1 here.",
+      "situations": [
+        "Your contact near {place} is closing up early. Somebody was by today, asking about your crew.",
+        "There's a table at {place} where people trade favors in low voices. Yours is open, for now.",
+        "A friend-of-a-friend in {district} wants to know if you're still good for it."
+      ],
+      "safe": {
+        "label": "Help out. Be the one they can count on.",
+        "check": {
+          "attr": "savvy",
+          "skill": "network",
+          "diff": 2
+        },
+        "win": {
+          "text": "They remember who showed up.",
+          "effects": {
+            "standing": 1
+          }
+        },
+        "partial": {
+          "text": "It cost you an evening and a little face, but they'll vouch.",
+          "effects": {
+            "standing": 1,
+            "stress": 1
+          }
+        },
+        "lose": {
+          "text": "Wrong night. They're polite, and that's all.",
+          "effects": {}
+        }
+      },
+      "bold": {
+        "label": "Ask the question nobody's asking.",
+        "check": {
+          "attr": "savvy",
+          "skill": "network",
+          "diff": 3
+        },
+        "win": {
+          "text": "They tell you more than they meant to, and like you better for asking.",
+          "effects": {
+            "standing": 1,
+            "lead": 1
+          }
+        },
+        "partial": {
+          "text": "You get the nod, not the answer.",
+          "effects": {
+            "standing": 1
+          }
+        },
+        "lose": {
+          "text": "The question got back to the wrong ears.",
+          "effects": {
+            "heat": 1
+          }
+        }
+      }
+    },
+    "recover": {
+      "name": "Recover",
+      "rule": "Clear one Condition, or move the Wound Track one step toward Unharmed.",
+      "situations": [
+        "Everything hurts in the specific way that means you're still alive.",
+        "There's a back-room clinic near {place}. Cash, no names, questionable gloves.",
+        "You could sleep for a week. You've got a night."
+      ],
+      "safe": {
+        "label": "Rest. Actually rest.",
+        "effects": {
+          "recover": 1
+        },
+        "text": "You sleep like it's a job. For once, it pays."
+      },
+      "bold": {
+        "label": "Go to the back-room clinic.",
+        "check": {
+          "attr": "wit",
+          "skill": "medic",
+          "diff": 2
+        },
+        "win": {
+          "text": "They're good. Scary good. You walk out better than you walked in.",
+          "effects": {
+            "recover": 2
+          }
+        },
+        "partial": {
+          "text": "Patched, mostly. The bill is the cure's ugly cousin.",
+          "effects": {
+            "recover": 1,
+            "credits": -100
+          }
+        },
+        "lose": {
+          "text": "One step better, and a bill for the privilege.",
+          "effects": {
+            "recover": 1,
+            "credits": -150
+          }
+        }
+      }
+    },
+    "community": {
+      "name": "Community",
+      "rule": "Spend time with someone who matters. Stress -2, or -3 in your grith.",
+      "situations": [
+        "Somebody saved you a seat at {place}.",
+        "There's food, bad music and worse jokes, and none of it is about work.",
+        "{wisdom}"
+      ],
+      "safe": {
+        "label": "Just be there.",
+        "effects": {
+          "stress": "community"
+        },
+        "text": "Nobody asks about work. Nobody needs to."
+      },
+      "bold": {
+        "label": "Bring them into what you're carrying.",
+        "check": {
+          "attr": "savvy",
+          "skill": "persuade",
+          "diff": 2
+        },
+        "win": {
+          "text": "They're in. The block has your back a little more than yesterday.",
+          "effects": {
+            "stress": "community",
+            "standing": 1
+          }
+        },
+        "partial": {
+          "text": "They listen. They don't promise.",
+          "effects": {
+            "stress": "community"
+          }
+        },
+        "lose": {
+          "text": "It got heavy. You still needed tonight, just less of it landed.",
+          "effects": {
+            "stress": -1
+          }
+        }
+      }
+    },
+    "research": {
+      "name": "Research",
+      "rule": "Investigate a person, place or faction. One true piece of information.",
+      "situations": [
+        "Records about {faction} are supposed to be sealed. Supposed to be.",
+        "Everyone in {district} knows something about {place}. Nobody agrees on what.",
+        "The paper trail for {hazard} leads somewhere nobody wants it to."
+      ],
+      "safe": {
+        "label": "Ask around. Read what's public.",
+        "check": {
+          "attr": "wit",
+          "skill": "intel",
+          "diff": 2
+        },
+        "win": {
+          "text": "One thing you can count on.",
+          "effects": {
+            "lead": 1
+          }
+        },
+        "partial": {
+          "text": "You got it, and somebody noticed you getting it.",
+          "effects": {
+            "lead": 1,
+            "heat": 1
+          }
+        },
+        "lose": {
+          "text": "Dead ends and polite liars.",
+          "effects": {}
+        }
+      },
+      "bold": {
+        "label": "Pull the file you're not supposed to see.",
+        "check": {
+          "attr": "wit",
+          "skill": "intel",
+          "diff": 3
+        },
+        "win": {
+          "text": "Two true things, and the shape of a third.",
+          "effects": {
+            "lead": 2
+          }
+        },
+        "partial": {
+          "text": "You got one, and left a fingerprint.",
+          "effects": {
+            "lead": 1,
+            "heat": 1
+          }
+        },
+        "lose": {
+          "text": "Access logged. Somebody upstairs is going to read it.",
+          "effects": {
+            "heat": 2
+          }
+        }
+      }
+    },
+    "sideJob": {
+      "name": "Side Job",
+      "rule": "Earn credits. A Side Job may generate Heat.",
+      "situations": [
+        "{class}"
+      ],
+      "safe": {
+        "label": "Take the small one.",
+        "pay": 250,
+        "perExtra": 50,
+        "diff": 2,
+        "win": {
+          "text": "Paid, clean, home before the lights go out.",
+          "effects": {}
+        },
+        "partial": {
+          "text": "Half pay. They found something to complain about.",
+          "effects": {}
+        },
+        "lose": {
+          "text": "No pay. Nobody got hurt, at least.",
+          "effects": {}
+        }
+      },
+      "bold": {
+        "label": "Take the one that pays.",
+        "pay": 700,
+        "perExtra": 100,
+        "diff": 3,
+        "win": {
+          "text": "Real money. Someone's going to wonder where it came from.",
+          "effects": {
+            "heat": 1
+          }
+        },
+        "partial": {
+          "text": "Paid, and noticed.",
+          "effects": {
+            "heat": 1
+          }
+        },
+        "lose": {
+          "text": "It went sideways. You walked; the money didn't.",
+          "effects": {
+            "heat": 1,
+            "stress": 1
+          }
+        }
+      }
+    }
+  },
+  "classJobs": {
+    "Wrench": {
+      "attr": "wit",
+      "skill": "repair",
+      "text": "A generator in {district} is coughing itself to death. The owner can pay, a little."
+    },
+    "Striker": {
+      "attr": "muscle",
+      "skill": "intimidate",
+      "text": "{place} needs a door that stays shut tonight. You're the door."
+    },
+    "Ghost": {
+      "attr": "wit",
+      "skill": "hack",
+      "text": "Somebody wants a record in {district} to be less true than it is."
+    },
+    "Signal": {
+      "attr": "savvy",
+      "skill": "perform",
+      "text": "Radio Sewers has a slot open, and a crowd at {place} that wants something loud."
+    },
+    "Shade": {
+      "attr": "spark",
+      "skill": "ward",
+      "text": "A shop near {place} has a feeling in the back room. They'd like it gone, or at least quieter."
+    },
+    "Broker": {
+      "attr": "savvy",
+      "skill": "negotiate",
+      "text": "Two people in {district} want the same thing and won't talk to each other. They'll talk to you."
+    },
+    "Warden": {
+      "attr": "savvy",
+      "skill": "streetwise",
+      "text": "Off-shift security at {place}. Walk the floor, look like trouble wouldn't be worth it."
+    },
+    "Runner": {
+      "attr": "reflex",
+      "skill": "dash",
+      "text": "A package needs to cross {district} faster than the official way allows."
+    },
+    "_any": {
+      "attr": "root",
+      "skill": "streetwise",
+      "text": "There's work in {district} for anyone who shows up and doesn't ask much."
+    }
+  },
+  "records": {
+    "train": {
+      "name": "Train",
+      "rule": "Spend Marks to raise a skill one rank (Trained at level 2, Expert at 11, Mastery at 16)."
+    },
+    "putDownRoots": {
+      "name": "Put Down Roots",
+      "rule": "Gain grithrakt in this district. Needs fiction; the next session's GM confirms it."
+    },
+    "settleAccount": {
+      "name": "Settle an Account",
+      "rule": "Close an open divine Account once its price is met. The GM confirms."
+    },
+    "craft": {
+      "name": "Craft",
+      "rule": "Wrench only. Build or modify gear in the Workshop."
+    }
+  }
+}

@@ -1,0 +1,238 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>A Night Out</title>
+<link rel="stylesheet" href="../fonts/fonts.css">
+<link rel="stylesheet" href="../art/pda-v1/tokens.css">
+<link rel="stylesheet" href="./screen.css">
+<style>
+/* Downtime as a night in Adyta: pick where, draw a scene, choose safe or bold, roll, push or take it. */
+.night{margin-top:16px}
+.nightHead{display:flex;flex-wrap:wrap;align-items:baseline;justify-content:space-between;gap:8px 16px}
+.nightHead h2{margin:0;color:var(--art-cream);font:700 26px/1.1 var(--art-ui);letter-spacing:.04em;text-transform:uppercase}
+.nightHead h2 em{color:var(--art-magenta);font-style:normal}
+.mood{margin:6px 0 0;color:var(--art-muted);font-style:italic}
+.pips{display:flex;gap:6px;align-items:center;color:var(--art-muted);font:700 13px var(--art-ui);letter-spacing:.08em;text-transform:uppercase}
+.pips i{width:14px;height:14px;border:2px solid var(--art-cyan);border-radius:50%}
+.pips i.on{background:var(--art-cyan)}
+/* districts */
+.districts{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:10px;margin-top:12px}
+.district{display:block;width:100%;min-height:96px;padding:12px 14px;border:1px solid rgba(118,80,45,.85);border-radius:10px;background:rgba(10,11,22,.85);color:var(--art-cream);text-align:left;text-transform:none;letter-spacing:0;box-shadow:none}
+.district b{display:block;font:700 18px/1.2 var(--art-ui);letter-spacing:.03em}
+.district span{display:block;margin-top:3px;color:var(--art-muted);font:500 14px/1.35 var(--art-body)}
+.district small{display:inline-block;margin-top:6px;padding:1px 8px;border:1px solid var(--art-lime);border-radius:999px;color:var(--art-lime);font:700 11px/1.6 var(--art-ui);letter-spacing:.08em;text-transform:uppercase}
+.district.home{border-color:var(--art-lime);box-shadow:inset 0 0 0 1px rgba(154,242,105,.25)}
+.district:hover,.district:focus-visible{border-color:var(--art-cyan)}
+/* action deck */
+.deck{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:10px;margin-top:12px}
+.card{display:flex;flex-direction:column;align-items:flex-start;gap:4px;min-height:104px;padding:12px;border:1px solid var(--art-brass-shadow);border-radius:10px;background:linear-gradient(160deg,#21182f,#0d0e19);color:var(--art-cream);text-align:left;text-transform:none;letter-spacing:0;box-shadow:none}
+.card b{font:700 17px/1.15 var(--art-ui);letter-spacing:.04em;text-transform:uppercase;color:var(--art-brass)}
+.card span{color:var(--art-muted);font:500 13px/1.35 var(--art-body)}
+.card:hover,.card:focus-visible{border-color:var(--art-magenta)}
+.card:disabled{opacity:.45}
+.paper{display:flex;flex-wrap:wrap;gap:8px;margin-top:10px}
+.paper button{min-height:40px}
+/* the scene */
+.scene{margin-top:14px}
+.scene .letter{padding-top:20px}
+.scene .say{margin:6px 0 14px;font:600 19px/1.45 var(--art-body)}
+.choices{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.letter .choice{background-image:none;text-shadow:none}
+.choice{display:flex;flex-direction:column;align-items:flex-start;gap:6px;min-height:120px;padding:12px 14px;border:2px solid #8a6a48;border-radius:8px;background:rgba(255,248,230,.72);color:#2c1c18;text-align:left;text-transform:none;letter-spacing:0;box-shadow:none}
+.choice b{font:700 13px var(--art-ui);letter-spacing:.14em;text-transform:uppercase;color:#6b4f2c}
+.choice.bold b{color:#a01f63}
+.choice strong{font:700 17px/1.3 var(--art-body)}
+.choice span{font:500 13px/1.4 var(--art-body);color:#4a3626}
+.choice:hover,.choice:focus-visible{border-color:#3a1730;background:rgba(255,248,230,.85)}
+.choice.bold{border-color:#a01f63}
+.choice:disabled{opacity:.5}
+.sceneBar{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px}
+/* the roll */
+.rolled{display:flex;flex-wrap:wrap;gap:6px;margin:10px 0}
+.rolled .die{width:40px;height:40px;font-size:20px}
+.rolled .die.new{outline:2px dashed #a01f63;outline-offset:2px}
+.tumble .die{animation:tumble .55s cubic-bezier(.3,1.4,.5,1) both}
+.tumble .die:nth-child(2){animation-delay:.05s}.tumble .die:nth-child(3){animation-delay:.1s}.tumble .die:nth-child(4){animation-delay:.15s}.tumble .die:nth-child(5){animation-delay:.2s}.tumble .die:nth-child(6){animation-delay:.25s}.tumble .die:nth-child(n+7){animation-delay:.3s}
+@keyframes tumble{0%{transform:translateY(-14px) rotate(-200deg);opacity:0}100%{transform:none;opacity:1}}
+@media (prefers-reduced-motion:reduce){.tumble .die{animation:none}}
+.verdict{display:inline-block;margin-right:8px;padding:2px 12px;border:2px solid currentColor;border-radius:6px;font:700 15px/1.4 var(--art-ui);letter-spacing:.12em;text-transform:uppercase;transform:rotate(-3deg)}
+.verdict.win{color:#2a6a1c}.verdict.partial{color:#8a4e00}.verdict.lose{color:#9c1f2c}
+.effects{margin:8px 0 0;padding-left:18px}
+.effects li{margin:2px 0}
+/* recap */
+.recap .line{margin:8px 0;padding-left:12px;border-left:3px solid var(--art-magenta)}
+.recap .line b{color:var(--art-brass)}
+.tonight{margin:10px 0 0;padding:0;list-style:none}
+.tonight li{margin:6px 0;padding:8px 10px;border:1px solid rgba(118,80,45,.6);border-radius:8px;background:rgba(10,11,22,.6);font-size:14px}
+.tonight li b{color:var(--art-brass)}
+/* The shell's art kit styles every button with !important; these are cards, not buttons, so they say so. */
+body.pda-art .district,body.pda-art .card,body.pda-art .choice{padding:12px 14px!important;border-radius:10px!important;text-transform:none!important;letter-spacing:0!important;box-shadow:none!important}
+body.pda-art .district{border:1px solid rgba(118,80,45,.85)!important;background:rgba(10,11,22,.85)!important;color:var(--art-cream)!important}
+body.pda-art .district.home{border-color:var(--art-lime)!important}
+body.pda-art .card{border:1px solid var(--art-brass-shadow)!important;background:linear-gradient(160deg,#21182f,#0d0e19)!important;color:var(--art-cream)!important}
+body.pda-art .choice{border:2px solid #8a6a48!important;border-radius:8px!important;background:rgba(255,248,230,.72)!important;color:#2c1c18!important}
+body.pda-art .choice.bold{border-color:#a01f63!important}
+body.pda-art .district:hover,body.pda-art .card:hover{background:#1e2236!important;border-color:var(--art-cyan)!important}
+body.pda-art .choice:hover{background:rgba(255,248,230,.95)!important;border-color:#3a1730!important}
+@media (max-width:620px){.choices{grid-template-columns:1fr}.deck{grid-template-columns:1fr 1fr}.scene .stamp{position:static;display:inline-block;margin:0 0 8px;transform:rotate(-3deg)}}
+</style>
+</head>
+<body class="pda-art">
+<div class="wrap">
+  <div class="kicker">ADYTA PDA / DOWNTIME</div>
+  <h1>A Night Out</h1>
+  <p class="muted" id="who">Two actions between sessions. Where you spend them matters.</p>
+  <div id="main"></div>
+</div>
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+<script src="./screen.js"></script>
+<script src="./engine.js"></script>
+<script src="./week.js"></script>
+<script src="./downtime.js"></script>
+<script>
+'use strict';
+const KEY = 'grakkgrith_character_tool_v8_state';
+const N = window.GRAKK_NIGHT, WK = window.GRAKK_WEEK, $ = id => document.getElementById(id);
+const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+let D = null, P = null, W = null, R = null, CUR = null, SCENE = null, FRESH = false, LAST = null;
+const E = window.GRAKK_ENGINE.create(() => CUR);
+const load = () => { try { return JSON.parse(localStorage.getItem(KEY)); } catch (e) { return null; } };
+const save = s => { try { localStorage.setItem(KEY, JSON.stringify(s)); } catch (e) {} try { parent.postMessage({ type: 'grakkgrith-week-changed' }, '*'); } catch (e) {} };
+const hasChar = s => !!(s && s.character && String(s.character.name || '').trim());
+const now = () => WK.adytaNow(P.clock, Date.now());
+const reduced = () => !!(window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches);
+function toast(msg) { const t = $('toast'); t.textContent = msg; t.classList.add('on'); clearTimeout(toast.t); toast.t = setTimeout(() => t.classList.remove('on'), 4200); }
+/* Read fresh, change, save: other screens may have saved since this one looked. */
+function act(fn) { const s = load(); if (!hasChar(s)) return; CUR = s; N.ensure(s); const r = fn(s); save(s); render(); return r; }
+const label = k => (R.attributes.find(a => a.id === k) || {}).label || Object.keys(R.skillKeys).find(n => R.skillKeys[n] === k) || k;
+const diceHtml = (d, from) => d.map((x, i) => `<span class="die ${x >= 5 ? 'hit' : ''} ${from != null && i >= from ? 'new' : ''}" aria-label="${x}${x >= 5 ? ', hit' : ''}">${x}</span>`).join('');
+
+/* What a choice risks, in plain words, from the scene data itself. */
+function stakes(fx, inGrith) {
+  if (!fx) return '';
+  const out = [];
+  if (fx.heat === 'layLow') out.push(`Heat -${inGrith ? 2 : 1}`); else if (fx.heat) out.push(`Heat ${fx.heat > 0 ? '+' : ''}${fx.heat}`);
+  if (fx.stress === 'community') out.push(`Stress -${inGrith ? 3 : 2}`); else if (fx.stress) out.push(`Stress ${fx.stress > 0 ? '+' : ''}${fx.stress}`);
+  if (fx.recover) out.push(fx.recover > 1 ? 'heal 2 steps' : 'heal 1 step');
+  if (fx.standing) out.push('Standing +1');
+  if (fx.lead) out.push(fx.lead > 1 ? '2 leads' : 'a lead');
+  if (fx.credits) out.push(fx.credits < 0 ? `a ${-fx.credits} cr bill` : `+${fx.credits} cr`);
+  return out.join(', ') || 'nothing';
+}
+function choiceHtml(sc, which) {
+  const A = D.actions[sc.action], side = sc[which], o = A[which], g = sc.inGrith, bold = which === 'bold';
+  let how = side.check ? `${label(side.check.attr)} + ${label(side.check.skill)} · ${side.check.pool.total} dice vs ${side.check.diffName} ${side.check.diff}` : 'No roll.';
+  let risk;
+  if (sc.action === 'sideJob') risk = `Win: ${o.pay}+ cr${stakes(o.win.effects, g) !== 'nothing' ? ', ' + stakes(o.win.effects, g) : ''} · Short by one: ${Math.round(o.pay / 2)} cr · Miss: ${stakes(o.lose.effects, g) === 'nothing' ? 'no pay' : 'no pay, ' + stakes(o.lose.effects, g)}`;
+  else if (side.check) risk = `Win: ${stakes(o.win.effects, g)} · Short by one: ${stakes(o.partial.effects, g)} · Miss: ${stakes(o.lose.effects, g)}`;
+  else risk = `Sure thing: ${stakes(o.effects, g)}`;
+  const locked = bold && sc.bold.locked;
+  return `<button type="button" class="choice ${which}" data-choose="${which}" ${locked ? 'disabled' : ''}><b>${bold ? 'Bold' : 'Safe'}</b><strong>${esc(side.label)}</strong><span>${esc(how)}</span><span>${esc(locked || risk)}</span></button>`;
+}
+
+function render() {
+  const s = load(); CUR = s;
+  window.GRAKK_SCREEN.noChar(!hasChar(s), 'Downtime needs a character. Make one in Setup, then come back for the night.');
+  if (!hasChar(s)) { $('main').innerHTML = ''; return; }
+  const d = N.ensure(s), n = d.night, left = d.actionsRemaining, pend = N.pending(s, E);
+  const pips = `<span class="pips" aria-label="${left} of 2 actions left">${[0, 1].map(i => `<i class="${i < left ? 'on' : ''}"></i>`).join('')} ${left} left · ${d.marks || 0} Marks</span>`;
+  $('who').textContent = `${s.character.alias || s.character.name} · ${WK.fmt(now())} in Adyta. Wounds ${E.clampInt(s.stats.woundState, 0, 3)} · Stress ${s.stats.stress || 0} · Heat ${s.stats.heat || 0} · ${s.coins && s.coins.credits || 0} cr`;
+  let h = '';
+  if (!n) {
+    h = `<section class="frame night"><div class="nightHead"><h2>Where are you spending it?</h2>${pips}</div>
+      <p class="mood">${left ? 'Pick a district. Home ground counts double for Lay Low and Community.' : 'This gap is spent. Start a new one after your next session.'}</p>
+      ${left ? `<div class="districts">${N.districts(s, P).map(x => `<button type="button" class="district ${x.grith ? 'home' : ''}" data-district="${esc(x.id)}"><b>${esc(x.name)}</b><span>${esc(x.tagline || '')}</span>${x.grith ? '<small>Home · your grith</small>' : x.rakt ? '<small>Grithrakt</small>' : ''}</button>`).join('')}</div>` : ''}
+      ${left ? '' : '<div class="sceneBar"><button class="primary" type="button" id="gapBtn">Start a new session gap</button></div>'}</section>`;
+  } else {
+    const dist = P.districts[n.district] || {}, dn = dist.name || n.district;
+    h = `<section class="frame night"><div class="nightHead"><h2>${esc(N.nightName(D, n.at))} · <em>${esc(dn)}</em>${n.inGrith ? ' <small class="muted">(home)</small>' : ''}</h2>${pips}</div><p class="mood">${esc((dist.dossier || {}).mood || dist.tagline || '')}</p>`;
+    if (pend) h += pendingHtml(pend);
+    else if (SCENE) h += sceneHtml(SCENE);
+    else if (LAST) h += resultHtml(LAST);
+    if (!pend && !SCENE && left > 0) h += deckHtml(s);
+    if (!pend && !SCENE && left === 0) h += recapHtml(s);
+    if (n.scenes.length && left > 0 && !pend) h += `<h3 style="margin-top:16px">Tonight so far</h3><ul class="tonight">${n.scenes.map(e => `<li><b>${esc(e.name)}</b>${e.choice === 'bold' ? ' · bold' : ''}: ${esc([e.outcome, ...(e.effects || [])].filter(Boolean).join(' '))}</li>`).join('')}</ul>`;
+    h += '</section>';
+  }
+  $('main').innerHTML = h;
+  if (FRESH) { FRESH = false; const r = document.querySelector('.rolled'); if (r && !reduced()) { r.classList.add('tumble'); } }
+  const sc = document.querySelector('.scene'); if (sc && (SCENE || pend)) sc.scrollIntoView({ block: 'start', behavior: reduced() ? 'auto' : 'smooth' });
+  const focus = document.querySelector('[data-autofocus]'); if (focus) focus.focus({ preventScroll: true });
+}
+function deckHtml(s) {
+  const tip = { layLow: 'Cool off. Sure thing, or listen in for more.', workContact: 'Standing with the block.', recover: 'Wounds or a Condition.', community: 'Shed Stress with your people.', research: 'Learn something true here.', sideJob: `${s.character.class || 'Anyone'} work. Credits.` };
+  const wrench = /wrench/i.test(s.character.class || '');
+  return `<h3 style="margin-top:14px">What do you do?</h3><div class="deck">${N.ACTIONS.map(a => `<button type="button" class="card" data-draw="${a}"><b>${esc(D.actions[a].name)}</b><span>${esc(tip[a])}</span></button>`).join('')}</div>
+    <div class="paper"><button type="button" class="ghost" data-record="train">Train (Marks)</button><button type="button" class="ghost" data-record="putDownRoots">Put Down Roots</button><button type="button" class="ghost" data-record="settleAccount">Settle an Account</button>${wrench ? '<button type="button" class="ghost" data-record="craft">Craft in the Workshop</button>' : ''}</div>`;
+}
+function sceneHtml(sc) {
+  return `<div class="scene"><article class="letter"><div class="stamp">${esc(sc.name)}</div><div class="from">${esc(sc.district)}${sc.inGrith ? ' · home' : ''}</div><p class="say">${esc(sc.text)}</p>
+    <div class="choices">${choiceHtml(sc, 'safe')}${choiceHtml(sc, 'bold')}</div>
+    <p class="note" style="color:#5b4630;margin-top:8px">${esc(sc.rule)}</p>
+    <div class="sceneBar"><button type="button" class="ghost" id="backBtn" data-autofocus>Not this one</button></div></article></div>`;
+}
+function pendingHtml(p) {
+  const v = { win: 'It lands', partial: 'At a cost', lose: 'It slips' }[p.tier], n0 = p.pushed ? p.dice.length - 2 : null;
+  return `<div class="scene"><article class="letter"><div class="stamp">${esc(p.name)}</div><div class="from">${p.choice === 'bold' ? 'Bold' : 'Safe'}: ${esc(p.label)}</div><p class="say">${esc(p.text)}</p>
+    ${p.check ? `<div class="rolled" aria-label="Dice">${diceHtml(p.dice, n0)}</div><p><span class="verdict ${p.tier}">${v}</span>${p.successes} hit${p.successes === 1 ? '' : 's'} vs ${esc(D.difficulties[String(p.check.diff)])} ${p.check.diff}${p.pushed ? ' · pushed' : ''}</p>` : '<p>No roll needed.</p>'}
+    <div class="sceneBar">${p.canPush && p.tier !== 'win' ? '<button type="button" id="pushBtn" class="ghost">Push: +2 dice for 1 Stress</button>' : ''}<button type="button" class="primary" id="acceptBtn" data-autofocus>Take it</button></div></article></div>`;
+}
+function resultHtml(e) {
+  return `<div class="scene"><article class="letter"><div class="stamp">${esc(e.name)}</div>${e.dice && e.dice.length ? `<div class="rolled">${diceHtml(e.dice)}</div>` : ''}<p class="say">${esc(e.outcome)}</p>${e.effects && e.effects.length ? `<ul class="effects">${e.effects.map(x => `<li>${esc(x)}</li>`).join('')}</ul>` : ''}</article></div>`;
+}
+function recapHtml(s) {
+  const r = N.recap(s, D, P); if (!r) return '';
+  return `<div class="frame recap" style="margin-top:14px"><h2>${esc(r.head)}</h2>${r.lines.map(l => `<div class="line"><b>${esc(l.name)}</b>${l.how ? ` · ${esc(l.how)}` : ''}${esc(l.dice)}<br>${esc(l.text)}</div>`).join('')}
+    <div class="sceneBar"><button type="button" class="primary" id="copyBtn" data-autofocus>Copy for Discord</button><button type="button" class="ghost" id="gapBtn">Start a new session gap</button></div>
+    <p class="note">Leads you picked up are in Mail &amp; bills.</p></div>`;
+}
+
+/* Paperwork actions: a small form in the scene slot. */
+function recordForm(kind) {
+  const s = load(); CUR = s; const R2 = D.records[kind];
+  if (kind === 'train') {
+    const opts = N.trainOptions(s, R);
+    $('main').querySelector('.night').insertAdjacentHTML('beforeend', `<div class="scene" id="recordBox"><article class="letter"><div class="stamp">Train</div><p class="say">${esc(R2.rule)}</p>
+      <label>Skill<select id="trainSkill">${opts.map(o => `<option value="${o.key}" ${o.open ? '' : 'disabled'}>${esc(o.label)}: ${o.from} → ${o.to}${o.open ? '' : ' (level ' + o.level + ')'}</option>`).join('')}</select></label>
+      <label>Marks spent<input id="trainCost" type="number" min="1" value="1"></label><p class="note" style="color:#5b4630">You have ${N.ensure(s).marks || 0} Marks.</p>
+      <div class="sceneBar"><button type="button" class="primary" id="trainBtn">Train</button><button type="button" class="ghost" id="backBtn">Cancel</button></div></article></div>`);
+  } else {
+    $('main').querySelector('.night').insertAdjacentHTML('beforeend', `<div class="scene" id="recordBox"><article class="letter"><div class="stamp">${esc(R2.name)}</div><p class="say">${esc(R2.rule)}</p>
+      ${kind === 'craft' ? '' : '<label>What happened<input id="recordNote" type="text" maxlength="160" placeholder="The fiction, in a line"></label>'}
+      <div class="sceneBar"><button type="button" class="primary" id="recordBtn" data-kind="${kind}">${kind === 'craft' ? 'Spend the action and open the Workshop' : 'Record it'}</button><button type="button" class="ghost" id="backBtn">Cancel</button></div></article></div>`);
+  }
+  $('recordBox').scrollIntoView({ block: 'nearest' }); ($('trainSkill') || $('recordNote') || $('recordBtn')).focus();
+}
+
+document.addEventListener('click', e => {
+  const b = e.target.closest('button'); if (!b) return;
+  const t = now();
+  if (b.dataset.district) { act(s => N.startNight(s, P, b.dataset.district, t)); LAST = null; }
+  else if (b.dataset.draw) { const s = load(); CUR = s; SCENE = N.scene(s, D, P, E, b.dataset.draw); LAST = null; render(); }
+  else if (b.dataset.choose) {
+    const r = act(s => N.roll(s, D, P, E, SCENE, b.dataset.choose));
+    if (!r || !r.ok) return toast(r ? r.message : '');
+    SCENE = null; FRESH = true; render();
+    if (r.pending && !r.pending.check) document.getElementById('acceptBtn').click();
+  }
+  else if (b.id === 'pushBtn') { const r = act(s => N.push(s, E)); if (r && !r.ok) toast(r.message); else { FRESH = false; render(); } }
+  else if (b.id === 'acceptBtn') { const r = act(s => N.accept(s, D, P, E, WK, t)); if (r && r.ok) { LAST = r.entry; render(); } }
+  else if (b.id === 'backBtn') { SCENE = null; render(); }
+  else if (b.dataset.record) { SCENE = null; LAST = null; render(); recordForm(b.dataset.record); }
+  else if (b.id === 'trainBtn') { const sel = $('trainSkill'); const r = act(s => N.train(s, sel.value, $('trainCost').value, sel.options[sel.selectedIndex].text.split(':')[0], t)); r && toast(r.message); }
+  else if (b.id === 'recordBtn') { const k = b.dataset.kind, note = ($('recordNote') || {}).value || ''; const r = act(s => N.record(s, D, k, note.trim(), t, WK)); r && toast(r.message); if (r && r.ok && k === 'craft') parent.postMessage({ type: 'grakkgrith-nav', to: 'makeBtn' }, '*'); }
+  else if (b.id === 'copyBtn') { const s = load(); const r = N.recap(s, D, P); const done = () => toast('Copied. Paste it in your Discord channel.'); try { navigator.clipboard.writeText(r.discord).then(done, () => { window.GRAKK_LAST_RECAP = r.discord; toast('Copy was blocked. Select the recap and copy it by hand.'); }); } catch (err) { toast('Copy was blocked. Select the recap and copy it by hand.'); } window.GRAKK_LAST_RECAP = r.discord; }
+  else if (b.id === 'gapBtn') { act(s => N.newGap(s, t)); LAST = null; SCENE = null; toast('New gap: two actions.'); }
+});
+
+Promise.all(['downtime', 'places', 'week', 'rules'].map(n => fetch(`../data/${n}.json`).then(r => r.json()))).then(([d, p, w, r]) => {
+  D = d; P = p; W = w; R = r;
+  const s = load(); if (hasChar(s)) { CUR = s; WK.settle(s, W, P.clock, Date.now()); save(s); }
+  render();
+  window.GRAKK_NIGHT_READY = true;
+});
+</script>
+</body>
+</html>

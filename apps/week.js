@@ -187,6 +187,6 @@
   function pending(s) { const w = s && s.week; if (!w) return 0; return w.mail.filter(m => m.status === 'open').length; }
   function owed(s) { const w = s && s.week; return w ? w.debts.reduce((a, d) => a + Math.max(0, d.amount), 0) : 0; }
 
-  const api = { DAY, WEEK, clockOffset, adytaNow, weekIndex, weekStart, fmt, untilText, band, heatCap, ensure, billLines, weeklyTotal, settle, pay, appeal, answer, payDebt, acknowledgeCrisis, inform, dismiss, sessionStart, setCosts, pending, owed, issueNotice };
+  const api = { DAY, WEEK, clockOffset, adytaNow, weekIndex, weekStart, fmt, untilText, band, heatCap, ensure, billLines, weeklyTotal, settle, pay, appeal, answer, payDebt, acknowledgeCrisis, inform, dismiss, sessionStart, setCosts, pending, owed, issueNotice, openDebt };
   if (typeof module !== 'undefined' && module.exports) module.exports = api; else root.GRAKK_WEEK = api;
 })(typeof window !== 'undefined' ? window : globalThis);

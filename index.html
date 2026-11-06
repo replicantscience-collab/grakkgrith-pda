@@ -67,7 +67,7 @@ button.primary,.navPill.active{border-color:rgba(184,50,50,.75);background:linea
  <nav class="subNav" id="subNav" aria-label="Section pages" hidden></nav>
  <!-- Every screen still has its own button (and id) here; the section tabs and sub-tabs press them. -->
  <div id="legacyNav" hidden><button id="fullSheetBtn">Edit sheet</button><button id="itemsBtn">Item cards</button><button id="sheetBtn" data-help="">Character Sheet</button>
-  <button id="worldBtn">Start</button><button id="exploreBtn">Explore</button><button id="mailBtn">Mail</button><button id="makeBtn">Workshop</button>
+  <button id="worldBtn">Start</button><button id="exploreBtn">Explore</button><button id="mailBtn">Mail</button><button id="nightBtn">Downtime</button><button id="makeBtn">Workshop</button>
   <button id="gigsBtn">Pocket Change</button><button id="radioBtn">Radio Sewers</button><button id="guidesBtn">Guides</button><button id="cityBtn">City</button>
   <button id="missionsBtn">Missions</button><button id="factionsBtn">Factions</button><button id="loreBtn">Lore</button><button id="logsBtn">Logs</button><button id="stateBtn">State</button>
   <button id="quickstartBtn">Player Quickstart</button><button id="rulesBtn">Rules Reference</button><button id="fullRulesBtn">Full Rules</button><button id="buildBtn">Build Guide</button>
@@ -128,7 +128,7 @@ const SECTIONS=[
  {id:'missions',pages:[['jobs','Job Board','jobsBtn'],['gigs','Pocket Change','gigsBtn'],['radio','Radio Sewers','radioBtn']]},
  {id:'factions',pages:[['factions','Factions','factionsBtn'],['corps','Corporations','corpsBtn']]},
  {id:'lore',pages:[['lore','Lore','loreBtn'],['anchors','Anchors','anchorsBtn'],['cybernetics','Magic & tech','cyberneticsBtn'],['signalstickers','Stickers','signalStickersBtn']]},
- {id:'inventory',pages:[['player','Sheet','sheetBtn'],['make','Workshop','makeBtn'],['mail','Mail & bills','mailBtn'],['downtime','Logs','logsBtn']]}];
+ {id:'inventory',pages:[['player','Sheet','sheetBtn'],['night','Downtime','nightBtn'],['make','Workshop','makeBtn'],['mail','Mail & bills','mailBtn'],['downtime','Logs','logsBtn']]}];
 /* Pages reached from the character menu, not a sub-tab: they light up Inventory with no sub-tab picked. */
 const MENU_PAGES={character:'inventory',creator:'inventory',cityid:'inventory'};
 const MODE_ALIAS={fullsheet:'player',items:'make',world:'start',logs:'downtime',state:'downtime',city:'explore',missions:'jobs',fullrules:'rules',build:'quickstart'},LAST_PAGE={};
@@ -227,6 +227,9 @@ document.getElementById('exploreBtn').onclick=()=>showExplore();
 // in the background (not while the sheet or Setup is open, so it never saves over their unsaved edits).
 function showMail(){if(currentUrl){URL.revokeObjectURL(currentUrl);currentUrl=''}mode='mail';frame.src='./apps/week.html';setActiveShell('mail');statusEl.textContent=''}
 document.getElementById('mailBtn').onclick=()=>showMail();
+// Downtime (apps/night.html): the two actions between sessions, played as a night in one district.
+function showNight(){if(currentUrl){URL.revokeObjectURL(currentUrl);currentUrl=''}mode='night';frame.src='./apps/night.html';setActiveShell('night');statusEl.textContent=''}
+document.getElementById('nightBtn').onclick=()=>showNight();
 function showMake(){if(currentUrl){URL.revokeObjectURL(currentUrl);currentUrl=''}mode='make';frame.src='./apps/make.html';setActiveShell('make');statusEl.textContent=''}
 document.getElementById('makeBtn').onclick=()=>showMake();
 document.getElementById('itemsBtn').onclick=()=>showItems();
@@ -239,7 +242,7 @@ const weekReady=Promise.all([fetch('./data/week.json').then(r=>r.json()),fetch('
 async function tickWeek(){await appsReady;await weekReady;const WK=window.GRAKK_WEEK,badge=document.getElementById('mailBadge');if(!WK||!WEEK_DATA||!PLACES)return;
  let s=null;try{s=JSON.parse(localStorage.getItem(TOOL_KEY))}catch(e){}
  const named=s&&s.character&&String(s.character.name||'').trim();
- if(named&&!['player','fullsheet','items','creator','mail','make','gigs','radio','start'].includes(mode)){const MK=window.GRAKK_MAKE,GG=window.GRAKK_GIGS,t=WK.adytaNow(PLACES.clock,Date.now()),a=WK.settle(s,WEEK_DATA,PLACES.clock,Date.now()).length,b=MK&&MAKE_DATA?MK.settle(s,MAKE_DATA,WEEK_DATA,t).length:0,c=GG&&GIGS_DATA?GG.settle(s,GIGS_DATA,t).length:0;if(a||b||c||!s.week)localStorage.setItem(TOOL_KEY,JSON.stringify(s))}
+ if(named&&!['player','fullsheet','items','creator','mail','make','gigs','radio','start','night'].includes(mode)){const MK=window.GRAKK_MAKE,GG=window.GRAKK_GIGS,t=WK.adytaNow(PLACES.clock,Date.now()),a=WK.settle(s,WEEK_DATA,PLACES.clock,Date.now()).length,b=MK&&MAKE_DATA?MK.settle(s,MAKE_DATA,WEEK_DATA,t).length:0,c=GG&&GIGS_DATA?GG.settle(s,GIGS_DATA,t).length:0;if(a||b||c||!s.week)localStorage.setItem(TOOL_KEY,JSON.stringify(s))}
  const n=named?WK.pending(s):0;badge.hidden=!n;badge.textContent=n?String(n):'';document.querySelectorAll('[data-mailcount]').forEach(x=>x.textContent=n?String(n):'')}
 tickWeek();setInterval(tickWeek,60000);
 function showGuides(){if(currentUrl){URL.revokeObjectURL(currentUrl);currentUrl=''}mode='guides';frame.src='./apps/guide.html';setActiveShell('guides');statusEl.textContent=''}

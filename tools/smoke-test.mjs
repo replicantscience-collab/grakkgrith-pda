@@ -87,8 +87,8 @@ try {
       return (n === 5 && imgs === 6 && nh && sub === 'factions') || `${n} corps, ${imgs} posters, New Halo under Crownline ${nh}, tab ${sub}`; });
     f = await open('loreBtn', 1500);
     await step('Factions, Lore and Logs use the Sideways skin', async () => { for (const id of ['factions', 'lore', 'downtime']) { await f.evaluate(id => showPanel(id), id); if (!(await f.evaluate(() => document.body.classList.contains('pda-art')))) return `${id} is unskinned`; } return true; });
-    await step('No doubles: Inventory has four pages, Guides three, Missions three', async () => { const subs = async sec => { await page.evaluate(id => document.getElementById(id).click(), 'sec-' + sec); await page.waitForTimeout(900); return page.$$eval('#subNav .subTab', b => b.map(x => x.firstChild.textContent).join('|')); };
-      const inv = await subs('inventory'), gd = await subs('guides'); return (inv === 'Sheet|Workshop|Mail & bills|Logs' && gd === 'Species|Quickstart|Rules') || `${inv} / ${gd}`; });
+    await step('No doubles: Inventory has five pages (Downtime is its own), Guides three', async () => { const subs = async sec => { await page.evaluate(id => document.getElementById(id).click(), 'sec-' + sec); await page.waitForTimeout(900); return page.$$eval('#subNav .subTab', b => b.map(x => x.firstChild.textContent).join('|')); };
+      const inv = await subs('inventory'), gd = await subs('guides'); return (inv === 'Sheet|Downtime|Workshop|Mail & bills|Logs' && gd === 'Species|Quickstart|Rules') || `${inv} / ${gd}`; });
     await step('Rules holds the full rules, Quickstart the build guide', async () => { f = await open('rulesBtn', 1200); const r = await f.evaluate(() => !!document.querySelector('#panel details.howto') && /Push, Stress/.test(document.querySelector('#panel details.howto').textContent)); f = await open('quickstartBtn', 1200); const q = await f.evaluate(() => /Building your character/.test(document.getElementById('panel').innerText)); return (r && q) || `rules ${r}, quickstart ${q}`; });
     await step('Job Board carries the story missions and pins one as the active operation', async () => { f = await open('jobsBtn', 1500); await f.waitForFunction(() => window.GRAKK_JOBS_READY); const n = await f.$$eval('#arc .letter, #side .letter', x => x.length); await f.evaluate(() => document.querySelector('[data-op="routeLock"]').click()); const on = await f.evaluate(() => /Route Lock/.test(document.getElementById('activeOp').innerText)); await f.evaluate(() => document.querySelector('[data-op-clear]').click()); return (n === 7 && on) || `${n} missions, pinned ${on}`; });
     await step('Job Board story cards and side board show their scene art', async () => { const r = await f.evaluate(async () => { const imgs = [...document.querySelectorAll('#arc .scene, #sideArt .scene')]; for (const i of imgs) { i.loading = 'eager'; if (!i.complete) await new Promise(ok => { i.onload = i.onerror = ok; }); } return { n: imgs.length, ok: imgs.filter(i => i.naturalWidth > 0).length }; }); return (r.n === 4 && r.ok === 4) || `${r.ok} of ${r.n} scenes loaded`; });
@@ -254,19 +254,34 @@ try {
       const n = await f.$$eval('.gig [data-take]', b => b.length), w = await f.evaluate(() => document.documentElement.scrollWidth - innerWidth);
       return (n >= 1 && w <= 1) || `${n} gigs to take; ${w}px too wide`;
     });
-    await step('downtime Train raises a skill rank, the one-page Sheet shows it, and Undo puts it back', async () => {
-      const K = 'grakkgrith_character_tool_v8_state', rank = k => page.evaluate(([K, k]) => JSON.parse(localStorage.getItem(K)).skills[k], [K, k]);
-      await page.evaluate(K => { const s = JSON.parse(localStorage.getItem(K)); s.character.level = '2'; s.skills.melee = '1'; s.downtime = { ...(s.downtime || {}), marks: 3, actionsRemaining: 2, history: [] }; localStorage.setItem(K, JSON.stringify(s)); }, K);
-      await page.evaluate(() => document.getElementById('fullSheetBtn').click()); await page.waitForTimeout(2200); let g = frame(page);
-      const gated = await g.evaluate(() => { const a = document.getElementById('downtimeActionSelect'); a.value = 'train'; a.dispatchEvent(new Event('change', { bubbles: true })); const o = [...document.querySelectorAll('#dtTrainSkill option')]; const m = o.find(x => x.value === 'melee'), t = o.find(x => / Trained → Expert/.test(x.textContent)); return { melee: m && !m.disabled && /Novice → Trained/.test(m.textContent), expertLocked: !t || t.disabled }; });
-      await g.evaluate(() => { document.getElementById('dtTrainSkill').value = 'melee'; document.getElementById('downtimeApplyBtn').click(); }); await page.waitForTimeout(900);
-      const after = await g.evaluate(() => document.querySelector('[data-skill-rank="melee"]').value);
-      await page.evaluate(() => document.getElementById('sheetBtn').click()); await page.waitForTimeout(2200); g = frame(page);
+    await step('Downtime: Train in A Night Out raises a skill rank and the one-page Sheet shows it', async () => {
+      const K = 'grakkgrith_character_tool_v8_state';
+      await page.evaluate(K => { const s = JSON.parse(localStorage.getItem(K)); s.character.level = '2'; s.skills.melee = '1'; s.downtime = { marks: 3, actionsRemaining: 2, history: [] }; localStorage.setItem(K, JSON.stringify(s)); }, K);
+      await page.evaluate(() => document.getElementById('nightBtn').click()); await page.waitForTimeout(1500); let g = frame(page); await g.waitForFunction(() => window.GRAKK_NIGHT_READY);
+      await g.locator('.district').first().click(); await g.locator('[data-record="train"]').click();
+      const gated = await g.evaluate(() => { const o = [...document.querySelectorAll('#trainSkill option')]; const m = o.find(x => x.value === 'melee'); return { melee: !!m && !m.disabled && /Novice → Trained/.test(m.textContent), expertLocked: o.filter(x => / → Expert/.test(x.textContent)).every(x => x.disabled) }; });
+      await g.selectOption('#trainSkill', 'melee'); await g.locator('#trainBtn').click(); await page.waitForTimeout(400);
+      const s = await page.evaluate(K => JSON.parse(localStorage.getItem(K)), K);
+      await page.evaluate(() => document.getElementById('sheetBtn').click()); await page.waitForTimeout(2000); g = frame(page);
       const col = await g.evaluate(() => { const tr = [...document.querySelectorAll('.sg tr')].find(t => t.firstElementChild && t.firstElementChild.textContent === 'Melee'); return ['N', 'T', 'E', 'M'][[...tr.querySelectorAll('.dot')].findIndex(d => d.classList.contains('on'))]; });
-      await page.evaluate(() => document.getElementById('fullSheetBtn').click()); await page.waitForTimeout(2200); g = frame(page);
-      await g.evaluate(() => document.getElementById('undoDowntimeBtn').click()); await page.waitForTimeout(900);
-      const undone = await rank('melee'), marks = await page.evaluate(K => JSON.parse(localStorage.getItem(K)).downtime.marks, K);
-      return (gated.melee && gated.expertLocked && after === '2' && col === 'T' && undone === '1' && marks === 3) || JSON.stringify({ gated, after, col, undone, marks });
+      return (gated.melee && gated.expertLocked && s.skills.melee === '2' && s.downtime.marks === 2 && s.downtime.actionsRemaining === 1 && col === 'T') || JSON.stringify({ gated, rank: s.skills.melee, marks: s.downtime.marks, col });
+    });
+    await step('Downtime: a scene plays safe or bold, rolls real dice, and the night ends in a recap', async () => {
+      await page.evaluate(() => document.getElementById('nightBtn').click()); await page.waitForTimeout(1500); const g = frame(page); await g.waitForFunction(() => window.GRAKK_NIGHT_READY);
+      await g.locator('[data-draw="workContact"]').click();
+      const sc = await g.evaluate(() => ({ text: document.querySelector('.scene .say').textContent, safe: document.querySelector('[data-choose="safe"]').textContent, placeholders: /\{\w+\}/.test(document.getElementById('main').innerText) }));
+      await g.locator('[data-choose="bold"]').click(); await page.waitForTimeout(300);
+      const dice = await g.locator('.rolled .die').count();
+      await g.locator('#acceptBtn').click(); await page.waitForTimeout(300);
+      const recap = await g.evaluate(() => ({ copy: !!document.getElementById('copyBtn'), lines: document.querySelectorAll('.recap .line').length }));
+      await g.locator('#copyBtn').click(); const discord = await g.evaluate(() => window.GRAKK_LAST_RECAP || '');
+      return (sc.text.length > 20 && !sc.placeholders && /Savvy \+ Network/.test(sc.safe) && dice >= 1 && recap.copy && recap.lines === 2 && /^\*\*.+ night in .+\*\* · /.test(discord)) || JSON.stringify({ sc, dice, recap, discord: discord.slice(0, 80) });
+    });
+    await step('Edit sheet points to Downtime instead of a second downtime form', async () => {
+      await page.evaluate(() => document.getElementById('fullSheetBtn').click()); await page.waitForTimeout(2000); const g = frame(page);
+      const r = await g.evaluate(() => ({ btn: !!document.getElementById('openNightBtn'), marksVisible: !document.getElementById('downtimeMarksInput').closest('[hidden]'), oldFormHidden: !!document.getElementById('downtimeApplyBtn').closest('[hidden]') }));
+      await g.evaluate(() => document.getElementById('openNightBtn').click()); await page.waitForTimeout(1500);
+      return (r.btn && r.marksVisible && r.oldFormHidden && /night\.html/.test(frame(page).url())) || JSON.stringify({ ...r, url: frame(page).url() });
     });
     await step('Radio Sewers is on air with the right DJ and a live link', async () => {
       await page.evaluate(() => document.getElementById('radioBtn').click()); await page.waitForTimeout(1500); f = frame(page);
