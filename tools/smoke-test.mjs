@@ -82,6 +82,15 @@ try {
       });
     }
 
+    await step('Sewers redraw retains town pins and deep-route uncertainty', async () => {
+      await f.evaluate(() => window.GRAKK_EXPLORE.showMap('sewers-town'));
+      const pins = await f.$$eval('#world .pin', pins => pins.map(p => p.dataset.id));
+      if (pins.length !== 24 || !pins.includes('deep-tunnels--gate-4') || !pins.includes('the-sewers--broken-wing-forge')) return `${pins.length} pins or missing landmark`;
+      await f.evaluate(() => window.GRAKK_EXPLORE.openPlace('the-sewers--radio-sewers'));
+      const relay = await f.evaluate(() => /local relay/.test(document.getElementById('sheetBody').textContent) && /not a fixed headquarters/.test(document.getElementById('sheetBody').textContent));
+      await f.evaluate(() => window.GRAKK_EXPLORE.openPlace('deep-tunnels--gate-4'));
+      return relay && await f.evaluate(() => /Maps disagree past here/.test(document.getElementById('sheetBody').textContent));
+    });
     await step('Candidate places disclose proposal status and district lore sources', async () => {
       const candidate = catalog.places.find(p => p.id.startsWith('grand-academy--candidate-'));
       if (!candidate) return 'missing detailed candidate places';

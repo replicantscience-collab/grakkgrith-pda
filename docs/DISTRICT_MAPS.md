@@ -22,8 +22,9 @@ catalog. Existing curated City map notes retain their wording and image choice.
 These are proposed illustrations based on the district taglines and dossiers,
 not approved geography. Building arrangements, generic labels, scale markings,
 and illustrated transit are illustrative. They do not establish travel times,
-operating service, named places, or canonical adjacency. No saved character data,
-existing place coordinates, or route durations are changed. Use Explore's Edit
+operating service, named places, or canonical adjacency. The initial twenty-map pass did not change saved character data, existing place
+coordinates, or route durations. The subsequent [Sewers redraw](SEWERS_MAP_REDRAW.md)
+reprojects its existing pins to the new artwork. Use Explore's Edit
 pins to add confirmed places after the layouts are accepted.
 
 `district-render-progress.json` records the render queue and imported dimensions.

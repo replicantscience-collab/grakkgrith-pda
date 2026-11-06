@@ -88,3 +88,10 @@ checked independently. The 125 pre-existing place records and 43 route records
 remain unchanged. There are 200 annotation records, with 190 candidate place pins;
 the Main Roads schematic does not add travel destinations. Approximate pin
 placement and proposed names still require editorial acceptance.
+
+## Subsequent Sewers Town revision
+
+The validation and preservation counts above describe the twenty missing-district
+revisions. The later [Sewers Town redraw](SEWERS_MAP_REDRAW.md) deliberately
+reprojects its 23 existing pins, clarifies the Radio Sewers relay, and adds Broken
+Wing Forge. Those changes have a separate coordinate migration record.

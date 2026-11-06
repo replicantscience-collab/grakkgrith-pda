@@ -108,10 +108,18 @@
         "the-sewers",
         "deep-tunnels"
       ],
-      "status": "canon candidate",
-      "image": "maps/official/sewers-town.jpg",
-      "width": 1448,
-      "height": 1646
+      "status": "design candidate",
+      "image": "maps/candidates/sewers-town-v2.jpg",
+      "width": 1086,
+      "height": 1448,
+      "sources": [
+        "https://www.worldanvil.com/w/adyta-jeeperssheefers/a/sewers-community-settlement",
+        "https://www.worldanvil.com/w/adyta-jeeperssheefers/a/the-deep-sewers-location",
+        "https://www.worldanvil.com/w/adyta-jeeperssheefers/a/radio-sewers-organization",
+        "https://www.worldanvil.com/w/adyta-jeeperssheefers/a/adyta-settlement"
+      ],
+      "brief": "sewers-town",
+      "note": "Existing PDA names are retained in a proposed layout. Radio Sewers is shown as a local relay. Deeper routes are unconfirmed."
     },
     "grand-academy": {
       "title": "Grand Academy District Map",
@@ -2583,7 +2591,8 @@
         "y": 86.0,
         "label": "Sewers",
         "note": "Underground community, hidden movement, warnings, labor, and shelter. Route truth lives here before it becomes a file.",
-        "kind": "mission"
+        "kind": "mission",
+        "districtMap": "sewers-town"
       },
       "dossier": {
         "mood": "Lived underground space: route truth before file truth.",
@@ -2609,7 +2618,8 @@
         "y": 95.0,
         "label": "Deep Tunnels",
         "note": "Forgotten infrastructure, still somewhere, below the readable city and above worse places.",
-        "kind": "area"
+        "kind": "area",
+        "districtMap": "sewers-town"
       },
       "dossier": {
         "mood": "Wrong infrastructure below the readable city.",
@@ -3977,8 +3987,9 @@
       "blurb": "Walkway routes over the canal. Bridges are crowded at peak hours.",
       "pin": {
         "map": "sewers-town",
-        "x": 0.5076,
-        "y": 0.1124
+        "x": 0.459,
+        "y": 0.116,
+        "approx": true
       }
     },
     {
@@ -3989,8 +4000,9 @@
       "blurb": "Gate to the Maintenance Tunnels.",
       "pin": {
         "map": "sewers-town",
-        "x": 0.6872,
-        "y": 0.0717
+        "x": 0.705,
+        "y": 0.105,
+        "approx": true
       }
     },
     {
@@ -4001,8 +4013,9 @@
       "blurb": "Food, on the upper level.",
       "pin": {
         "map": "sewers-town",
-        "x": 0.3232,
-        "y": 0.1823
+        "x": 0.3,
+        "y": 0.195,
+        "approx": true
       }
     },
     {
@@ -4013,8 +4026,9 @@
       "blurb": "Workshop and service.",
       "pin": {
         "map": "sewers-town",
-        "x": 0.8232,
-        "y": 0.1592
+        "x": 0.9,
+        "y": 0.189,
+        "approx": true
       }
     },
     {
@@ -4025,8 +4039,9 @@
       "blurb": "Workshop and service.",
       "pin": {
         "map": "sewers-town",
-        "x": 0.232,
-        "y": 0.26
+        "x": 0.27,
+        "y": 0.315,
+        "approx": true
       }
     },
     {
@@ -4037,8 +4052,9 @@
       "blurb": "Food and a place to sit.",
       "pin": {
         "map": "sewers-town",
-        "x": 0.7873,
-        "y": 0.2843
+        "x": 0.88,
+        "y": 0.329,
+        "approx": true
       }
     },
     {
@@ -4049,8 +4065,9 @@
       "blurb": "Gate to the Outer Sewers.",
       "pin": {
         "map": "sewers-town",
-        "x": 0.1215,
-        "y": 0.3111
+        "x": 0.105,
+        "y": 0.347,
+        "approx": true
       }
     },
     {
@@ -4061,8 +4078,9 @@
       "blurb": "The water route through town. Watch the currents.",
       "pin": {
         "map": "sewers-town",
-        "x": 0.5283,
-        "y": 0.3554
+        "x": 0.513,
+        "y": 0.41,
+        "approx": true
       }
     },
     {
@@ -4073,8 +4091,9 @@
       "blurb": "Goods, food, parts and services.",
       "pin": {
         "map": "sewers-town",
-        "x": 0.8391,
-        "y": 0.3572
+        "x": 0.874,
+        "y": 0.415,
+        "approx": true
       }
     },
     {
@@ -4085,8 +4104,9 @@
       "blurb": "Pub and entertainment.",
       "pin": {
         "map": "sewers-town",
-        "x": 0.2224,
-        "y": 0.4192
+        "x": 0.257,
+        "y": 0.414,
+        "approx": true
       }
     },
     {
@@ -4097,8 +4117,9 @@
       "blurb": "Warhammer and Pixie's Doll Works.",
       "pin": {
         "map": "sewers-town",
-        "x": 0.7113,
-        "y": 0.486
+        "x": 0.65,
+        "y": 0.502,
+        "approx": true
       }
     },
     {
@@ -4109,8 +4130,9 @@
       "blurb": "Runoff exit to the Filtration Fields.",
       "pin": {
         "map": "sewers-town",
-        "x": 0.9669,
-        "y": 0.48
+        "x": 0.916,
+        "y": 0.534,
+        "approx": true
       }
     },
     {
@@ -4121,8 +4143,9 @@
       "blurb": "Down to the Deep Tunnels. Unknown depths. Deep tunnels are unstable.",
       "pin": {
         "map": "sewers-town",
-        "x": 0.4178,
-        "y": 0.6075
+        "x": 0.44,
+        "y": 0.645,
+        "approx": true
       }
     },
     {
@@ -4133,8 +4156,9 @@
       "blurb": "Controlled access and a survey point. Maps disagree past here.",
       "pin": {
         "map": "sewers-town",
-        "x": 0.3536,
-        "y": 0.805
+        "x": 0.39,
+        "y": 0.802,
+        "approx": true
       }
     },
     {
@@ -4145,8 +4169,9 @@
       "blurb": "Ask the Sewers Community before using this path.",
       "pin": {
         "map": "sewers-town",
-        "x": 0.2155,
-        "y": 0.8293
+        "x": 0.278,
+        "y": 0.835,
+        "approx": true
       }
     },
     {
@@ -4157,8 +4182,9 @@
       "blurb": "Maintenance lock dead.",
       "pin": {
         "map": "sewers-town",
-        "x": 0.6961,
-        "y": 0.8384
+        "x": 0.922,
+        "y": 0.816,
+        "approx": true
       }
     },
     {
@@ -4166,13 +4192,16 @@
       "district": "the-sewers",
       "name": "Radio Sewers",
       "type": "venue",
-      "blurb": "The people's signal. News, support, coordination.",
+      "blurb": "A local relay of the distributed Radio Sewers network, carrying warnings, local news and sewer weather. This is not a fixed headquarters.",
       "pin": {
         "map": "sewers-town",
-        "x": 0.5525,
-        "y": 0.2734,
+        "x": 0.703,
+        "y": 0.251,
         "approx": true
-      }
+      },
+      "sources": [
+        "https://www.worldanvil.com/w/adyta-jeeperssheefers/a/radio-sewers-organization"
+      ]
     },
     {
       "id": "the-sewers--the-lantern-exchange",
@@ -4182,8 +4211,8 @@
       "blurb": "Trade, contracts, and the city's unofficial community board.",
       "pin": {
         "map": "sewers-town",
-        "x": 0.4834,
-        "y": 0.2005,
+        "x": 0.44,
+        "y": 0.208,
         "approx": true
       }
     },
@@ -4195,8 +4224,8 @@
       "blurb": "Stories, signals, and the rumors that actually matter.",
       "pin": {
         "map": "sewers-town",
-        "x": 0.663,
-        "y": 0.2005,
+        "x": 0.605,
+        "y": 0.205,
         "approx": true
       }
     },
@@ -4208,8 +4237,8 @@
       "blurb": "Salvage, supplies, rare finds, and questionable deals.",
       "pin": {
         "map": "sewers-town",
-        "x": 0.3867,
-        "y": 0.2855,
+        "x": 0.365,
+        "y": 0.329,
         "approx": true
       }
     },
@@ -4221,8 +4250,8 @@
       "blurb": "Repairs, mods, upgrades, and keeping people running.",
       "pin": {
         "map": "sewers-town",
-        "x": 0.7044,
-        "y": 0.3402,
+        "x": 0.663,
+        "y": 0.404,
         "approx": true
       }
     },
@@ -4234,8 +4263,8 @@
       "blurb": "A busy connector with friendly faces, sharp eyes, and shifting control.",
       "pin": {
         "map": "sewers-town",
-        "x": 0.3246,
-        "y": 0.4982,
+        "x": 0.298,
+        "y": 0.52,
         "approx": true
       }
     },
@@ -4247,8 +4276,8 @@
       "blurb": "Infrastructure hub, maintenance runs, and more questions than answers.",
       "pin": {
         "map": "sewers-town",
-        "x": 0.4834,
-        "y": 0.565,
+        "x": 0.67,
+        "y": 0.578,
         "approx": true
       }
     },
@@ -7529,6 +7558,23 @@
         "map": "forgotten-depths",
         "x": 0.69,
         "y": 0.79,
+        "approx": true
+      }
+    },
+    {
+      "id": "the-sewers--broken-wing-forge",
+      "district": "the-sewers",
+      "name": "Broken Wing Forge",
+      "type": "shop",
+      "blurb": "Vipero's smithy near the Commons edge. The name is established lore; this precise placement is proposed.",
+      "canonStatus": "established name; proposed placement",
+      "sources": [
+        "https://www.worldanvil.com/w/adyta-jeeperssheefers/a/adyta-settlement"
+      ],
+      "pin": {
+        "map": "sewers-town",
+        "x": 0.098,
+        "y": 0.514,
         "approx": true
       }
     }
