@@ -150,12 +150,14 @@ button:focus-visible,[tabindex]:focus-visible{outline:2px solid var(--sodium);ou
 .found img{width:100%;aspect-ratio:1;object-fit:cover;border-radius:8px;border:1px solid var(--kerb)}
 /* Who owns where people live, and what's written on the walls */
 .lease{margin:0 0 12px;padding:10px 12px;border-radius:10px;border:1px solid var(--kerb);background:rgba(233,226,211,.04)}
-.lease b{display:block;font:600 13px/1.2 var(--display);letter-spacing:.06em;text-transform:uppercase;color:var(--ash);margin-bottom:3px}
+.lease > b{display:block;font:600 13px/1.2 var(--display);letter-spacing:.06em;text-transform:uppercase;color:var(--ash);margin-bottom:3px}
 .lease strong{font:600 18px/1.2 var(--display)}
 .lease span{display:block;color:var(--ash);font-size:13px}
 .walls{margin:0 0 12px}
 .walls > b{display:block;font:600 13px/1.2 var(--display);letter-spacing:.06em;text-transform:uppercase;color:var(--ash);margin-bottom:2px}
 .walls .scrawl{margin:6px 0 0}
+.lease .home{color:var(--sodium);font-weight:700;margin-top:6px}
+.lease .act{margin-top:8px;width:100%}
 .walls small{display:block;color:var(--ash);font-size:12px;margin:2px 0 0 4px}
 </style>
 </head>
@@ -179,6 +181,7 @@ button:focus-visible,[tabindex]:focus-visible{outline:2px solid var(--sodium);ou
 <div class="toast" id="toast" role="status"></div>
 
 <script src="cityday.js"></script>
+<script src="week.js"></script>
 <script>
 'use strict';
 /* ---------- Storage ---------- */
@@ -448,7 +451,32 @@ function activeDeliveries() { const s = load(TOOL_KEY, null); return ((s && s.ma
    travel to and peel. Found stickers are saved in the character file (state.world.stickers). */
 const CD = window.GRAKK_CITYDAY;
 let CDD = null, STK = [], dayCache = null;
-let LANDLORDS = null, NOTES = [], BIZ = [], RENT = {};   // data/landlords.json, notes.json, businesses.json; rent tiers from week.json
+let LANDLORDS = null, NOTES = [], BIZ = [], RENT = {}, WEEKDATA = null;   // data/landlords.json, notes.json, businesses.json; rent tiers from week.json
+/* Renting: you have to be standing there, with a character. Mail & bills does the rest. */
+function rentable(l) { return l && !l.notForRent && !l.invitationOnly && l.tier && RENT[l.tier]; }
+function leaseActions(p, l) {
+  const s = charState(), home = s?.week?.home;
+  if (home && home.place === p.id) return '<span class="home">Your home. Rent goes to ' + esc(l.name) + '.</span>';
+  if (!rentable(l) || !window.GRAKK_WEEK || !WEEKDATA) return '';
+  const here = !presence.transit && presence.location.place === p.id;
+  if (!s) return '<span>Make a character to rent here.</span>';
+  if (!here) return '<span>Go there to look at a room.</span>';
+  const opts = [[l.tier, l.findOnly ? 'Move in' : 'Rent here']];
+  if (l.employer) opts.push([l.employer.tier, `Rent as ${l.employer.name} crew`]);
+  return opts.map(([tier, label]) => `<button class="act go" type="button" data-rent="${esc(tier)}"><b>${esc(label)}</b><span>${RENT[tier].credits} credits a week</span></button>`).join('');
+}
+function homeFor(p, l, tier) {
+  const L = {}; for (const k of ['missed', 'review', 'bastion', 'lost']) { const o = (l.letters || {})[k] || (LANDLORDS.letters?.[l.type] || {})[k]; if (o) L[k] = o; }
+  return { place: p.id, placeName: p.name, landlordId: l.id, landlordName: l.name, type: l.type, tier, ladder: LANDLORDS.types[l.type]?.ladder ?? 4, letters: L, floor: LANDLORDS.floor };
+}
+function rentHere(tier) {
+  const p = byId[selected], l = p && LANDLORDS?.landlords.find(x => x.places.includes(p.id)), s = charState();
+  if (!p || !l || !s) return;
+  s.world = { ...(s.world || {}), presence };
+  const r = window.GRAKK_WEEK.moveIn(s, WEEKDATA, homeFor(p, l, tier), adytaNow());
+  if (r.ok) save(TOOL_KEY, s);
+  toast(r.ok ? `${r.msg} Rent shows on next week's bill.` : r.msg); openPlace(p.id);
+}
 function groundHtml(p, did) {
   let h = '';
   const notes = NOTES.filter(n => p ? n.place === p.id : n.district === did && !n.place);
@@ -458,7 +486,7 @@ function groundHtml(p, did) {
   if (l) {
     const t = LANDLORDS.types[l.type], rent = RENT[l.tier];
     const terms = l.notForRent ? 'Not for rent.' : l.findOnly ? 'No listings. Ask around, or explore.' : l.invitationOnly ? `By invitation only.${rent ? ` ${esc(rent.name)}, ${rent.credits}+ credits a week.` : ''}` : rent ? `${esc(rent.name)}: ${rent.credits} credits a week.` : '';
-    h += `<div class="lease"><b>Landlord</b><strong>${esc(l.name)}</strong> · ${esc(t ? t.name : l.type)}<span>${esc(l.who || '')}</span>${terms ? `<span>${terms}</span>` : ''}${l.employer ? `<span>${esc(l.employer.name)} crew pay ${esc(RENT[l.employer.tier]?.credits ?? "")} credits a week.</span>` : ''}</div>`;
+    h += `<div class="lease"><b>Landlord</b><strong>${esc(l.name)}</strong> · ${esc(t ? t.name : l.type)}<span>${esc(l.who || '')}</span>${terms ? `<span>${terms}</span>` : ''}${l.employer ? `<span>${esc(l.employer.name)} crew pay ${esc(RENT[l.employer.tier]?.credits ?? "")} credits a week.</span>` : ''}${leaseActions(p, l)}</div>`;
   }
   const b = BIZ.find(x => x.places.includes(p.id));
   if (b && !p.brand) h += `<p class="note">${esc(b.name)}, run by ${esc(b.owners.join(' and '))}.</p>`;
@@ -572,6 +600,7 @@ function openPlace(id) {
   $('sheetBody').querySelectorAll('[data-goto]').forEach(b => b.onclick = () => { const o = byId[b.dataset.goto]; showMap(o.pin.map, o.id); openPlace(o.id); });
   $('turnBack') && ($('turnBack').onclick = turnBack);
   $('peel') && ($('peel').onclick = peel);
+  $('sheetBody').querySelectorAll('[data-rent]').forEach(b => b.onclick = () => rentHere(b.dataset.rent));
   $('openMap') && ($('openMap').onclick = () => { showMap(d.map); openPlace(id); });
   $('showOnMap') && ($('showOnMap').onclick = () => { showMap(p.pin.map, p.id); openPlace(p.id); });
   if (editing && p) wireEditForm(p);
@@ -717,7 +746,7 @@ function tick() { if (settleTransit()) { render(); if (selected) openPlace(selec
   } catch (e) { CDD = null; }
   try {   // landlords, notes and businesses are extra too
     const [ll, nt, bz, wk] = await Promise.all(['../data/landlords.json', '../data/notes.json', '../data/businesses.json', '../data/week.json'].map(u => fetch(u).then(r => { if (!r.ok) throw new Error(r.status); return r.json(); })));
-    LANDLORDS = ll; NOTES = nt.notes || []; BIZ = bz.businesses || []; RENT = Object.fromEntries(wk.week.housing.map(h => [h.id, h]));
+    LANDLORDS = ll; NOTES = nt.notes || []; BIZ = bz.businesses || []; WEEKDATA = wk; RENT = Object.fromEntries(wk.week.housing.map(h => [h.id, h]));
   } catch (e) { LANDLORDS = null; }
   presence = loadPresence();
   if (!presence || !W.districts[presence.location?.district]) presence = { location: { ...W.start }, transit: null, log: [] };
@@ -730,7 +759,7 @@ function tick() { if (settleTransit()) { render(); if (selected) openPlace(selec
   else showMap(startD.map && W.maps[startD.map] ? startD.map : 'adyta-city', (presence.transit?.to || presence.location).place);
   setInterval(tick, 5000);
   addEventListener('storage', e => { if (e.key === TOOL_KEY || e.key === PRESENCE_KEY) { const p = loadPresence(); if (p) { presence = p; render(); } } });
-  window.GRAKK_EXPLORE = { get presence() { return presence; }, showMap, openPlace, cityDay, openToday, peel, planTrip, startTrip, adytaNow, tramRunning, route, places: () => places };
+  window.GRAKK_EXPLORE = { get presence() { return presence; }, showMap, openPlace, cityDay, openToday, peel, rentHere, planTrip, startTrip, adytaNow, tramRunning, route, places: () => places };
 })();
 </script>
 </body>

@@ -77,6 +77,8 @@ There is no server. `apps/cityday.js` builds the day from the Adyta date alone, 
 - `data/notes.json`: Local Wisdom written on the city, shown as "Written here" on a place or district. Each note has an `author` and a `date` (never shown to players) so anything can be traced and taken out; `signed` is the in-world signature. Today only Eko and Nib write notes; agent NPCs will use `agent:<id>` and players `player:<name>`.
 - `data/businesses.json`: player businesses and their rules (Books, Rep, Exposure, Commons protection, the loss ladder). A business shows on everyone's map once it's listed here.
 
+**Renting.** Go to a housing place in Explore and tap **Rent here**: that place becomes your home, and Mail & bills sends rent to its landlord from next week. Missed rent climbs the landlord's ladder, one letter per unpaid week and never faster than one every five days (so coming back after a long break brings one letter, not an eviction): a reminder, a lease review, Bastion (flagged as a scene hook for the next session, with Public Advocacy's Eviction Interference job as the way to fight it), and finally losing the unit, which moves you to Housing Authority emergency accommodation with your items and debts. Family-run landlords and collectives stop at the review. Paying your landlord back resets the ladder. Picking a different housing tier in Mail means moving out.
+
 All three are drafts until they go to Nib. `node tools/check-rules.mjs` checks every place, tier, author and date in them, and fails if a housing place has no landlord.
 
 ## The Explore map

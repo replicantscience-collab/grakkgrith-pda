@@ -2,14 +2,46 @@
   "_about": "Who owns where people live. Every housing place on the map has an entry here: a landlord, an off-registry arrangement, or not for rent. Rent tiers are the ids in data/week.json (commons 40, mixed 80, corporate 150, none 0 a week). Canon anchors from the World Anvil: the Housing Authority, Public Advocacy's eviction caseload, Bastion as owners' hired enforcement, Crownline contracting with owners but never owning or evicting, Saint Static Arms' three owners. Every name and hook here is a draft by Eko (status: draft) for the next canon handoff to Nib. Roster doc: https://claude.ai/artifact/4Y8jEd8NjboEdymKjwSSxW",
   "status": "draft",
   "types": {
-    "absentee": { "name": "Absentee owner", "about": "A holding name nobody has met. Nothing for weeks, then a sudden rent hike or sale notice." },
-    "slumlord": { "name": "Slumlord", "about": "Present, cheap and counting. Ignored repairs, surcharges, lease threats." },
-    "family": { "name": "Family-run", "about": "Lives in the building or next door. Grace on late rent, favors asked, gossip." },
-    "housing-authority": { "name": "Housing Authority", "about": "Public housing and civic paperwork. Forms, waitlists, inspections. The floor when everything else fails." },
-    "certified": { "name": "Certified management", "about": "Corporate-adjacent, contracted with Crownline. Polite automated notices, and Bastion if you push it." },
-    "collective": { "name": "Residents' collective", "about": "The tenants run it themselves. Work shifts, house votes, shared repair costs." },
-    "off-registry": { "name": "Off-registry", "about": "No landlord the registry can find. Whoever holds the roofs decides who sleeps there." },
-    "estate": { "name": "Family seat", "about": "Old families' homes. Not for rent." }
+    "absentee": {
+      "name": "Absentee owner",
+      "about": "A holding name nobody has met. Nothing for weeks, then a sudden rent hike or sale notice.",
+      "ladder": 4
+    },
+    "slumlord": {
+      "name": "Slumlord",
+      "about": "Present, cheap and counting. Ignored repairs, surcharges, lease threats.",
+      "ladder": 4
+    },
+    "family": {
+      "name": "Family-run",
+      "about": "Lives in the building or next door. Grace on late rent, favors asked, gossip.",
+      "ladder": 2
+    },
+    "housing-authority": {
+      "name": "Housing Authority",
+      "about": "Public housing and civic paperwork. Forms, waitlists, inspections. The floor when everything else fails.",
+      "ladder": 0
+    },
+    "certified": {
+      "name": "Certified management",
+      "about": "Corporate-adjacent, contracted with Crownline. Polite automated notices, and Bastion if you push it.",
+      "ladder": 4
+    },
+    "collective": {
+      "name": "Residents' collective",
+      "about": "The tenants run it themselves. Work shifts, house votes, shared repair costs.",
+      "ladder": 2
+    },
+    "off-registry": {
+      "name": "Off-registry",
+      "about": "No landlord the registry can find. Whoever holds the roofs decides who sleeps there.",
+      "ladder": 0
+    },
+    "estate": {
+      "name": "Family seat",
+      "about": "Old families' homes. Not for rent.",
+      "ladder": 4
+    }
   },
   "temperaments": {
     "decent": "Gives grace, remembers favors, rarely escalates.",
@@ -22,8 +54,11 @@
       "id": "halvard-mercy-holdings",
       "name": "Halvard Mercy Holdings",
       "who": "The third owner since 1987: a name on a letterhead.",
-      "type": "absentee", "temperament": "indifferent",
-      "places": ["low-halo--saint-static-arms"],
+      "type": "absentee",
+      "temperament": "indifferent",
+      "places": [
+        "low-halo--saint-static-arms"
+      ],
       "tier": "commons",
       "hook": "The elevators are still under assessment. A tenant who fixes one gets a thank-you letter and a rent hike for the improved unit."
     },
@@ -31,28 +66,53 @@
       "id": "ma-dresk",
       "name": "Ma Dresk",
       "who": "A dwarf who owns the building and runs the ground-floor fryer.",
-      "type": "family", "temperament": "squeezing",
-      "places": ["low-halo--the-hive"],
+      "type": "family",
+      "temperament": "squeezing",
+      "places": [
+        "low-halo--the-hive"
+      ],
       "tier": "commons",
       "graceWeeks": 1,
-      "hook": "Gives a week's grace on late rent, then calls in a favor: fix her walk-in, run a parcel, scare off a debt collector."
+      "hook": "Gives a week's grace on late rent, then calls in a favor: fix her walk-in, run a parcel, scare off a debt collector.",
+      "letters": {
+        "missed": {
+          "title": "Rent, love",
+          "body": "Rent's late. You've got a week on me, because I like you. After that I'll want a favor: my walk-in's making the noise again. Ma Dresk"
+        },
+        "review": {
+          "title": "Favor time",
+          "body": "Two weeks. Fix my walk-in, run a parcel, or scare off the collector who keeps coming round, and I'll forget the late fee. The rent still needs paying."
+        }
+      }
     },
     {
       "id": "oduya-venn-family",
       "name": "The Oduya-Venn family",
       "who": "Three generations of shopkeepers.",
-      "type": "family", "temperament": "decent",
-      "places": ["market-ring--north-market-neighborhood"],
+      "type": "family",
+      "temperament": "decent",
+      "places": [
+        "market-ring--north-market-neighborhood"
+      ],
       "tier": "mixed",
       "graceWeeks": 2,
-      "hook": "Rent includes a shift at the family stall during festival week. Skipping it is allowed, and remembered."
+      "hook": "Rent includes a shift at the family stall during festival week. Skipping it is allowed, and remembered.",
+      "letters": {
+        "missed": {
+          "title": "From the stall",
+          "body": "Rent was due Monday. Grandmother says don't worry, then worries out loud for an hour. Come by the stall. The Oduya-Venns"
+        }
+      }
     },
     {
       "id": "brightlane-residential",
       "name": "Brightlane Residential",
       "who": "A Crownline-certified property manager with a cheerful logo.",
-      "type": "certified", "temperament": "indifferent",
-      "places": ["market-ring--homes-above-shops"],
+      "type": "certified",
+      "temperament": "indifferent",
+      "places": [
+        "market-ring--homes-above-shops"
+      ],
       "tier": "mixed",
       "corporateFunded": true,
       "hook": "Automated notices. Complaints route to a form that routes to another form."
@@ -61,39 +121,71 @@
       "id": "south-market-tenants-table",
       "name": "The South Market Tenants' Table",
       "who": "The residents, meeting every second Thursday.",
-      "type": "collective", "temperament": "decent",
-      "places": ["market-ring--south-market-neighborhood"],
+      "type": "collective",
+      "temperament": "decent",
+      "places": [
+        "market-ring--south-market-neighborhood"
+      ],
       "tier": "mixed",
       "graceWeeks": 2,
-      "workOff": { "credits": 20, "for": "a weekly repair shift", "classes": ["Wrench", "Runner"] },
+      "workOff": {
+        "credits": 20,
+        "for": "a weekly repair shift",
+        "classes": [
+          "Wrench",
+          "Runner"
+        ]
+      },
       "hook": "Wrenches and Runners can work off part of the rent. House votes post to the tenants' mail."
     },
     {
       "id": "widow-sallow",
       "name": "Widow Sallow",
       "who": "Has outlived two husbands and a lawsuit.",
-      "type": "slumlord", "temperament": "strange",
-      "places": ["ember-court--the-old-lamp-court"],
+      "type": "slumlord",
+      "temperament": "strange",
+      "places": [
+        "ember-court--the-old-lamp-court"
+      ],
       "tier": "mixed",
-      "hook": "The courtyard lamps are never quite off. Rent receipts arrive signed in a hand that isn't hers."
+      "hook": "The courtyard lamps are never quite off. Rent receipts arrive signed in a hand that isn't hers.",
+      "letters": {
+        "missed": {
+          "title": "Late",
+          "body": "The lamps noticed you were late. So did I. Sallow"
+        },
+        "lost": {
+          "title": "The lamps are off in your window",
+          "body": "Your rooms at {place} are let again. Whoever signed this, it was not the Widow."
+        }
+      }
     },
     {
       "id": "harbor-row-lets",
       "name": "Harbor Row Lets",
       "who": "Manages the waterfront homes and Meridian Logistics' crew lodging.",
-      "type": "certified", "temperament": "squeezing",
-      "places": ["dockside--waterfront-homes-crew-lodging"],
+      "type": "certified",
+      "temperament": "squeezing",
+      "places": [
+        "dockside--waterfront-homes-crew-lodging"
+      ],
       "tier": "mixed",
       "corporateFunded": true,
-      "employer": { "name": "Meridian Logistics", "tier": "commons" },
+      "employer": {
+        "name": "Meridian Logistics",
+        "tier": "commons"
+      },
       "hook": "Housing tied to the job: crew pay Commons rent, and if the contract ends the lease reprices next Monday."
     },
     {
       "id": "the-tangle-roofs",
       "name": "Whoever holds the roofs",
       "who": "Clans and crews who decide, stack by stack, who sleeps where.",
-      "type": "off-registry", "temperament": "decent",
-      "places": ["the-tangle--the-tangle"],
+      "type": "off-registry",
+      "temperament": "decent",
+      "places": [
+        "the-tangle--the-tangle"
+      ],
       "tier": "none",
       "findOnly": true,
       "hook": "No listings. Units are found by exploring or through a contact, and paid in favors, work or goods, never credits."
@@ -102,8 +194,11 @@
       "id": "old-families-row",
       "name": "The houses of Old Families' Row",
       "who": "Established houses with a carriage house or a servants' wing to spare.",
-      "type": "estate", "temperament": "strange",
-      "places": ["noble-heights--old-families-row"],
+      "type": "estate",
+      "temperament": "strange",
+      "places": [
+        "noble-heights--old-families-row"
+      ],
       "tier": "corporate",
       "invitationOnly": true,
       "hook": "A carriage house or servants' wing at a Corporate-plus price, by invitation only. Getting invited is a Standing story, not a purchase."
@@ -112,8 +207,14 @@
       "id": "noble-heights-estates",
       "name": "The old families",
       "who": "The households of the great estates.",
-      "type": "estate", "temperament": "indifferent",
-      "places": ["noble-heights--northridge-estates", "noble-heights--silverhallow-estate", "noble-heights--moonspire-house", "noble-heights--arlencourt-manor"],
+      "type": "estate",
+      "temperament": "indifferent",
+      "places": [
+        "noble-heights--northridge-estates",
+        "noble-heights--silverhallow-estate",
+        "noble-heights--moonspire-house",
+        "noble-heights--arlencourt-manor"
+      ],
       "tier": null,
       "notForRent": true,
       "hook": "Family seats. Nobody rents here; people are invited, employed, or escorted out."
@@ -123,7 +224,107 @@
     "id": "housing-authority",
     "name": "Adyta Housing Authority",
     "type": "housing-authority",
-    "tier": "none",
-    "about": "Emergency accommodation for anyone who loses their home: a real address, a waitlist, no rent for now, and a bad mood. Items and debts come along."
+    "tier": "authority",
+    "about": "Emergency accommodation for anyone who loses their home: a real address, a waitlist, no rent for now, and a bad mood. Items and debts come along.",
+    "letter": {
+      "title": "Emergency accommodation",
+      "body": "You've been placed in emergency accommodation while your case is reviewed. You have an address again and no rent for now. Your debts are still yours. Waitlist position: assigned."
+    }
+  },
+  "_ladder": "Missed rent climbs a ladder of letters, one step per unpaid week: 1 missed, 2 review, 3 bastion (a scene hook for the next session, and Public Advocacy's eviction-defense job), 4 lost (the unit goes and the character moves to Housing Authority emergency accommodation; items and debts come along). A type's ladder is how far it climbs: family-run and collectives stop at 2. Paying off the debt to your landlord resets it. {landlord} and {place} fill in.",
+  "letters": {
+    "absentee": {
+      "missed": {
+        "title": "Payment not received",
+        "body": "Our records show no payment for your unit at {place} this week. Please remit at your earliest convenience. This is an automated courtesy. {landlord}"
+      },
+      "review": {
+        "title": "Account under review",
+        "body": "Your tenancy at {place} has been flagged after repeated non-payment. A representative will be assigned to your case."
+      },
+      "bastion": {
+        "title": "Recovery contractor assigned",
+        "body": "{landlord} has engaged Bastion Dynamics to recover possession of your unit at {place}. A contractor will attend. Public Advocacy takes eviction cases: look for Eviction Interference on the Job Board."
+      },
+      "lost": {
+        "title": "Tenancy ended",
+        "body": "{landlord} has recovered possession of your unit at {place}. Your belongings were moved to the curb, where most of them still are."
+      }
+    },
+    "slumlord": {
+      "missed": {
+        "title": "Rent is late",
+        "body": "Rent's late on {place}. Late fee's coming. Don't make me come up there. {landlord}"
+      },
+      "review": {
+        "title": "Your lease",
+        "body": "I'm reviewing your lease. That means I'm looking for a reason, and you keep handing me one."
+      },
+      "bastion": {
+        "title": "I've called Bastion",
+        "body": "I've called Bastion. They'll be round about {place}. Be out or be polite. Public Advocacy takes eviction cases: look for Eviction Interference on the Job Board."
+      },
+      "lost": {
+        "title": "Out",
+        "body": "Your unit at {place} is let to someone who pays. Your things are in the hall. The hall is also let."
+      }
+    },
+    "family": {
+      "missed": {
+        "title": "About the rent",
+        "body": "Rent was due Monday, love. Come by when you can and we will sort it out. {landlord}"
+      },
+      "review": {
+        "title": "We need to talk",
+        "body": "It's two weeks now. Come and talk to us before it's three. We'll work something out, but you have to come in."
+      }
+    },
+    "collective": {
+      "missed": {
+        "title": "The Table noticed",
+        "body": "The Tenants' Table noticed rent for {place} didn't come in. Nobody's angry. Come to Thursday's meeting, or put in a repair shift."
+      },
+      "review": {
+        "title": "House vote",
+        "body": "Your rent is on the agenda at Thursday's meeting. Come and speak for yourself, or someone will speak for you."
+      }
+    },
+    "certified": {
+      "missed": {
+        "title": "Payment reminder",
+        "body": "Hi there! Your rent for {place} is overdue. A late fee has been applied to your account. Thanks for being part of the {landlord} community!"
+      },
+      "review": {
+        "title": "Lease Review",
+        "body": "Following missed payments, your lease at {place} is under review. Continued tenancy may require a risk surcharge. This message was sent automatically. Replies are not monitored."
+      },
+      "bastion": {
+        "title": "Recovery of possession scheduled",
+        "body": "{landlord} has scheduled recovery of possession at {place}, carried out by our partner Bastion Dynamics. We appreciate your cooperation. Public Advocacy takes eviction cases: look for Eviction Interference on the Job Board."
+      },
+      "lost": {
+        "title": "Your tenancy has ended",
+        "body": "Your tenancy at {place} has ended. Remaining items will be held for 72 hours for a storage fee. Thank you for living with {landlord}!"
+      }
+    },
+    "estate": {
+      "missed": {
+        "title": "A word",
+        "body": "The household notes that your payment is late. The household does not usually need to note things twice."
+      },
+      "review": {
+        "title": "The arrangement",
+        "body": "The household has asked that your arrangement at {place} be reconsidered."
+      },
+      "bastion": {
+        "title": "An escort",
+        "body": "The household has asked Bastion Dynamics to see you out of {place}, courteously. Public Advocacy takes eviction cases: look for Eviction Interference on the Job Board."
+      },
+      "lost": {
+        "title": "Invitation withdrawn",
+        "body": "Your invitation to {place} has been withdrawn. The household wishes you well, elsewhere."
+      }
+    },
+    "off-registry": {}
   }
 }
