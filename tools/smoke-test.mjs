@@ -87,8 +87,8 @@ try {
       return (n === 5 && imgs === 6 && nh && sub === 'factions') || `${n} corps, ${imgs} posters, New Halo under Crownline ${nh}, tab ${sub}`; });
     f = await open('loreBtn', 1500);
     await step('Factions, Lore and Logs use the Sideways skin', async () => { for (const id of ['factions', 'lore', 'downtime']) { await f.evaluate(id => showPanel(id), id); if (!(await f.evaluate(() => document.body.classList.contains('pda-art')))) return `${id} is unskinned`; } return true; });
-    await step('No doubles: Inventory has four pages, Guides three, Missions three', async () => { const subs = async sec => { await page.evaluate(id => document.getElementById(id).click(), 'sec-' + sec); await page.waitForTimeout(900); return page.$$eval('#subNav .subTab', b => b.map(x => x.firstChild.textContent).join('|')); };
-      const inv = await subs('inventory'), gd = await subs('guides'); return (inv === 'Sheet|Workshop|Mail & bills|Logs' && gd === 'Species|Quickstart|Rules') || `${inv} / ${gd}`; });
+    await step('No doubles: Inventory has five pages (Downtime is its own), Guides three', async () => { const subs = async sec => { await page.evaluate(id => document.getElementById(id).click(), 'sec-' + sec); await page.waitForTimeout(900); return page.$$eval('#subNav .subTab', b => b.map(x => x.firstChild.textContent).join('|')); };
+      const inv = await subs('inventory'), gd = await subs('guides'); return (inv === 'Sheet|Downtime|Workshop|Mail & bills|Logs' && gd === 'Species|Quickstart|Rules') || `${inv} / ${gd}`; });
     await step('Rules holds the full rules, Quickstart the build guide', async () => { f = await open('rulesBtn', 1200); const r = await f.evaluate(() => !!document.querySelector('#panel details.howto') && /Push, Stress/.test(document.querySelector('#panel details.howto').textContent)); f = await open('quickstartBtn', 1200); const q = await f.evaluate(() => /Building your character/.test(document.getElementById('panel').innerText)); return (r && q) || `rules ${r}, quickstart ${q}`; });
     await step('Job Board carries the story missions and pins one as the active operation', async () => { f = await open('jobsBtn', 1500); await f.waitForFunction(() => window.GRAKK_JOBS_READY); const n = await f.$$eval('#arc .letter, #side .letter', x => x.length); await f.evaluate(() => document.querySelector('[data-op="routeLock"]').click()); const on = await f.evaluate(() => /Route Lock/.test(document.getElementById('activeOp').innerText)); await f.evaluate(() => document.querySelector('[data-op-clear]').click()); return (n === 7 && on) || `${n} missions, pinned ${on}`; });
     await step('Job Board story cards and side board show their scene art', async () => { const r = await f.evaluate(async () => { const imgs = [...document.querySelectorAll('#arc .scene, #sideArt .scene')]; for (const i of imgs) { i.loading = 'eager'; if (!i.complete) await new Promise(ok => { i.onload = i.onerror = ok; }); } return { n: imgs.length, ok: imgs.filter(i => i.naturalWidth > 0).length }; }); return (r.n === 4 && r.ok === 4) || `${r.ok} of ${r.n} scenes loaded`; });
@@ -254,19 +254,69 @@ try {
       const n = await f.$$eval('.gig [data-take]', b => b.length), w = await f.evaluate(() => document.documentElement.scrollWidth - innerWidth);
       return (n >= 1 && w <= 1) || `${n} gigs to take; ${w}px too wide`;
     });
-    await step('downtime Train raises a skill rank, the one-page Sheet shows it, and Undo puts it back', async () => {
-      const K = 'grakkgrith_character_tool_v8_state', rank = k => page.evaluate(([K, k]) => JSON.parse(localStorage.getItem(K)).skills[k], [K, k]);
-      await page.evaluate(K => { const s = JSON.parse(localStorage.getItem(K)); s.character.level = '2'; s.skills.melee = '1'; s.downtime = { ...(s.downtime || {}), marks: 3, actionsRemaining: 2, history: [] }; localStorage.setItem(K, JSON.stringify(s)); }, K);
-      await page.evaluate(() => document.getElementById('fullSheetBtn').click()); await page.waitForTimeout(2200); let g = frame(page);
-      const gated = await g.evaluate(() => { const a = document.getElementById('downtimeActionSelect'); a.value = 'train'; a.dispatchEvent(new Event('change', { bubbles: true })); const o = [...document.querySelectorAll('#dtTrainSkill option')]; const m = o.find(x => x.value === 'melee'), t = o.find(x => / Trained → Expert/.test(x.textContent)); return { melee: m && !m.disabled && /Novice → Trained/.test(m.textContent), expertLocked: !t || t.disabled }; });
-      await g.evaluate(() => { document.getElementById('dtTrainSkill').value = 'melee'; document.getElementById('downtimeApplyBtn').click(); }); await page.waitForTimeout(900);
-      const after = await g.evaluate(() => document.querySelector('[data-skill-rank="melee"]').value);
-      await page.evaluate(() => document.getElementById('sheetBtn').click()); await page.waitForTimeout(2200); g = frame(page);
+    await step('Downtime: Train in A Night Out raises a skill rank and the one-page Sheet shows it', async () => {
+      const K = 'grakkgrith_character_tool_v8_state';
+      await page.evaluate(K => { const s = JSON.parse(localStorage.getItem(K)); s.character.level = '2'; s.skills.melee = '1'; s.downtime = { marks: 3, actionsRemaining: 2, history: [] }; localStorage.setItem(K, JSON.stringify(s)); }, K);
+      await page.evaluate(() => document.getElementById('nightBtn').click()); await page.waitForTimeout(1500); let g = frame(page); await g.waitForFunction(() => window.GRAKK_NIGHT_READY);
+      await g.locator('.district').first().click(); await g.locator('[data-record="train"]').click();
+      const gated = await g.evaluate(() => { const o = [...document.querySelectorAll('#trainSkill option')]; const m = o.find(x => x.value === 'melee'); return { melee: !!m && !m.disabled && /Novice → Trained/.test(m.textContent), expertLocked: o.filter(x => / → Expert/.test(x.textContent)).every(x => x.disabled) }; });
+      await g.selectOption('#trainSkill', 'melee'); await g.locator('#trainBtn').click(); await page.waitForTimeout(400);
+      const s = await page.evaluate(K => JSON.parse(localStorage.getItem(K)), K);
+      await page.evaluate(() => document.getElementById('sheetBtn').click()); await page.waitForTimeout(2000); g = frame(page);
       const col = await g.evaluate(() => { const tr = [...document.querySelectorAll('.sg tr')].find(t => t.firstElementChild && t.firstElementChild.textContent === 'Melee'); return ['N', 'T', 'E', 'M'][[...tr.querySelectorAll('.dot')].findIndex(d => d.classList.contains('on'))]; });
-      await page.evaluate(() => document.getElementById('fullSheetBtn').click()); await page.waitForTimeout(2200); g = frame(page);
-      await g.evaluate(() => document.getElementById('undoDowntimeBtn').click()); await page.waitForTimeout(900);
-      const undone = await rank('melee'), marks = await page.evaluate(K => JSON.parse(localStorage.getItem(K)).downtime.marks, K);
-      return (gated.melee && gated.expertLocked && after === '2' && col === 'T' && undone === '1' && marks === 3) || JSON.stringify({ gated, after, col, undone, marks });
+      return (gated.melee && gated.expertLocked && s.skills.melee === '2' && s.downtime.marks === 2 && s.downtime.actionsRemaining === 1 && col === 'T') || JSON.stringify({ gated, rank: s.skills.melee, marks: s.downtime.marks, col });
+    });
+    await step('Downtime: a scene plays safe or bold, rolls real dice, and the night ends in a recap', async () => {
+      await page.evaluate(() => document.getElementById('nightBtn').click()); await page.waitForTimeout(1500); const g = frame(page); await g.waitForFunction(() => window.GRAKK_NIGHT_READY);
+      await g.locator('[data-draw="workContact"]').click();
+      const sc = await g.evaluate(() => ({ text: document.querySelector('.scene .say').textContent, safe: document.querySelector('[data-choose="safe"]').textContent, placeholders: /\{\w+\}/.test(document.getElementById('main').innerText) }));
+      await g.locator('[data-choose="bold"]').click(); await page.waitForTimeout(300);
+      const dice = await g.locator('.rolled .die').count();
+      await g.locator('#acceptBtn').click(); await page.waitForTimeout(300);
+      const recap = await g.evaluate(() => ({ copy: !!document.getElementById('copyBtn'), lines: document.querySelectorAll('.recap .line').length }));
+      await g.locator('#copyBtn').click(); const discord = await g.evaluate(() => window.GRAKK_LAST_RECAP || '');
+      return (sc.text.length > 20 && !sc.placeholders && /Savvy \+ Network/.test(sc.safe) && dice >= 1 && recap.copy && recap.lines === 2 && /^\*\*.+ night in .+\*\* · /.test(discord)) || JSON.stringify({ sc, dice, recap, discord: discord.slice(0, 80) });
+    });
+    await step('The Hive: Step inside opens the scene, spots move you around, and the elevator rarely works', async () => {
+      const K = 'grakkgrith_character_tool_v8_state';
+      await page.evaluate(() => document.getElementById('exploreBtn').click()); await page.waitForTimeout(1600); let g = frame(page);
+      await g.evaluate(() => openPlace('low-halo--the-hive')); await page.waitForTimeout(300);
+      const art = await g.evaluate(() => !!document.querySelector('.placeArt img'));
+      await g.locator('a.act.scene').click(); await page.waitForTimeout(1200); g = frame(page); await g.waitForFunction(() => window.GRAKK_SCENE_READY);
+      const start = await g.evaluate(() => ({ area: document.querySelector('.where h2').textContent, spots: document.querySelectorAll('.stage .spot').length, list: document.querySelectorAll('.around button').length }));
+      await g.locator('.around button', { hasText: 'The front door' }).click(); await page.waitForTimeout(200);
+      const landing = await g.evaluate(() => document.querySelector('.where h2').textContent);
+      let tries = 0, moved = false; while (tries < 40 && !moved) { tries++; await g.locator('.around button', { hasText: 'Left elevator' }).click(); moved = await g.evaluate(() => /roof/i.test(document.querySelector('.where h2').textContent)); }  // works about 1 in 6
+      return (art && start.area === 'Out front' && start.spots === 5 && start.list === 5 && landing === 'The communal landing' && moved && tries > 0) || JSON.stringify({ art, start, landing, moved, tries });
+    });
+    await step('The Hive: talking to Ma Dresk (FF-style): only when you are there; rent a room, buy a treat, use it from the Sheet', async () => {
+      const K = 'grakkgrith_character_tool_v8_state';
+      await page.evaluate(() => document.getElementById('exploreBtn').click()); await page.waitForTimeout(1500); let g = frame(page);
+      await g.goto(g.url().replace(/explore\.html.*$/, 'scene.html?place=low-halo--the-hive&area=fryer')); await g.waitForFunction(() => window.GRAKK_SCENE_READY);
+      await g.locator('.around button', { hasText: 'Ma Dresk' }).click(); await page.waitForTimeout(200);
+      const away = await g.evaluate(() => ({ note: /Travel here in Explore/.test(document.getElementById('out').innerText), talk: !!document.querySelector('.gTalk') }));
+      await page.evaluate(K => { const s = JSON.parse(localStorage.getItem(K)); s.world = { ...(s.world || {}), presence: { location: { district: 'low-halo', place: 'low-halo--the-hive' }, transit: null, log: [] } }; s.coins = { ...(s.coins || {}), credits: '50' }; s.stats.stress = '2'; localStorage.setItem(K, JSON.stringify(s)); }, K);
+      await g.goto(g.url()); await g.waitForFunction(() => window.GRAKK_SCENE_READY);
+      await g.locator('.around button', { hasText: 'Ma Dresk' }).click();
+      const toChoices = async () => { for (let n = 0; n < 15 && !(await g.$('.gTalk .tChoices button')); n++) { await g.locator('.gTalk .tName').click(); await page.waitForTimeout(120); } await page.waitForTimeout(400); };  // wait out the guard against accidental picks
+      await toChoices(); const name = await g.locator('.gTalk .tName').innerText();
+      await g.locator('.gTalk .tChoices button', { hasText: 'Ask about a room' }).click(); await toChoices();
+      await g.locator('.gTalk .tChoices button', { hasText: 'Deal' }).click(); await toChoices();
+      await g.locator('.gTalk .tChoices button', { hasText: "What's cooking?" }).click(); await page.waitForTimeout(450);
+      await g.locator('.gTalk .tChoices button', { hasText: 'Fry basket' }).click(); await page.waitForTimeout(300);
+      await page.keyboard.press('Escape'); await page.waitForTimeout(150);
+      let s = await page.evaluate(K => JSON.parse(localStorage.getItem(K)), K);
+      const slot = s.inventory.findIndex(x => x && x.name === 'Fry basket');
+      await page.evaluate(() => document.getElementById('sheetBtn').click()); await page.waitForTimeout(1800); g = frame(page); await g.waitForFunction(() => window.GRAKK_SHEET_READY);
+      await g.selectOption('#nowUseSel', String(slot)); await g.locator('[data-now="use"]').click(); await g.locator('#actOk').click(); await page.waitForTimeout(300);
+      s = await page.evaluate(K => JSON.parse(localStorage.getItem(K)), K);
+      return (away.note && !away.talk && /ma dresk/i.test(name) && s.week.housing === 'hive' && slot >= 0 && s.coins.credits === '42' && s.stats.stress === '1' && !(s.inventory[slot] && s.inventory[slot].name)) || JSON.stringify({ away, name, housing: s.week && s.week.housing, slot, credits: s.coins.credits, stress: s.stats.stress });
+    });
+    await step('Edit sheet points to Downtime instead of a second downtime form', async () => {
+      await page.evaluate(() => document.getElementById('fullSheetBtn').click()); await page.waitForTimeout(2000); const g = frame(page);
+      const r = await g.evaluate(() => ({ btn: !!document.getElementById('openNightBtn'), marksVisible: !document.getElementById('downtimeMarksInput').closest('[hidden]'), oldFormHidden: !!document.getElementById('downtimeApplyBtn').closest('[hidden]') }));
+      await g.evaluate(() => document.getElementById('openNightBtn').click()); await page.waitForTimeout(1500);
+      return (r.btn && r.marksVisible && r.oldFormHidden && /night\.html/.test(frame(page).url())) || JSON.stringify({ ...r, url: frame(page).url() });
     });
     await step('Radio Sewers is on air with the right DJ and a live link', async () => {
       await page.evaluate(() => document.getElementById('radioBtn').click()); await page.waitForTimeout(1500); f = frame(page);

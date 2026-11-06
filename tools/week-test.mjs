@@ -80,5 +80,28 @@ WK.settle(s, W, clock, base + 70 * D, one);
 ok('a long absence bills at most 4 weeks', s.week.mail.filter(m => m.kind === 'bill').length === 5, s.week.mail.filter(m => m.kind === 'bill').length);
 ok('Heat never passes the level cap', (() => { const t = char(); t.stats.heat = '6'; WK.ensure(t); t.week.band = 'crisis'; const x = t.week; const nn = WK.issueNotice(W, t, 'scrutiny', 0, ''); nn.due = 0; WK.settle(t, W, clock, base, one); return Number(t.stats.heat) <= 6; })());
 
+// The Hive: Ma Dresk gives a week's grace, then calls in a favor, before rent becomes Debt
+{
+  let h = char(); WK.ensure(h); WK.setCosts(h, { housing: 'hive' }); h.coins = { credits: '0' };
+  WK.settle(h, W, clock, base, one);
+  const b = h.week.mail.find(m => m.kind === 'bill');
+  ok('a Hive bill names Ma Dresk', b.creditor === 'Ma Dresk' && b.landlord && b.landlord.graceDays === 7);
+  WK.settle(h, W, clock, base + 2 * D + H, one);
+  ok('late Hive rent gets a grace week, not Debt', b.status === 'open' && b.graced && h.week.debts.length === 0 && h.week.mail.some(m => m.title === 'A week\'s grace'), JSON.stringify(h.week.debts));
+  WK.settle(h, W, clock, base + 9 * D + 2 * H, one);
+  ok('after the grace week Ma Dresk calls in a favor', b.status === 'open' && b.favor && WK.favors(h).length === 1 && h.week.debts.length === 0);
+  const r = WK.favorDone(h, b.id, base, 'Fix her walk-in');
+  ok('a favor settles the bill with no credits', r.ok && b.status === 'paid' && b.paidBy === 'favor' && h.coins.credits === '0' && WK.favors(h).length === 0);
+  let h2 = char(); WK.ensure(h2); WK.setCosts(h2, { housing: 'hive' }); h2.coins = { credits: '0' };
+  WK.settle(h2, W, clock, base, one); const b2 = h2.week.mail.find(m => m.kind === 'bill');
+  WK.settle(h2, W, clock, base + 2 * D + H, one); WK.settle(h2, W, clock, base + 9 * D + 2 * H, one); WK.settle(h2, W, clock, base + 16 * D + 3 * H, one);
+  ok('an ignored favor becomes Debt to Ma Dresk', b2.status === 'unpaid' && h2.week.debts.some(d => d.creditor === 'Ma Dresk'), JSON.stringify(h2.week.debts));
+  let h3 = char(); WK.ensure(h3); WK.setCosts(h3, { housing: 'hive' }); h3.coins = { credits: '500' };
+  WK.settle(h3, W, clock, base, one); const b3 = h3.week.mail.find(m => m.kind === 'bill'); WK.settle(h3, W, clock, base + 2 * D + H, one);
+  ok('rent can still be paid in cash during the grace week', WK.pay(h3, b3.id, base).ok && b3.status === 'paid');
+  let c = char(); c.coins = { credits: '0' }; WK.settle(c, W, clock, base, one); WK.settle(c, W, clock, base + 2 * D + H, one);
+  ok('plain Commons rent still goes straight to Debt', c.week.debts.length === 1 && !c.week.mail.find(m => m.kind === 'bill').graced);
+}
+
 console.log(fails ? `${passes} passed, ${fails} failed.` : `${passes} week checks passed.`);
 process.exit(fails ? 1 : 0);

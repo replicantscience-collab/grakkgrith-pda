@@ -280,22 +280,24 @@ body.compactSheetBody #modeNotice{margin:0}
       <div class="sectionTitle"><span>2H</span> DOWNTIME ACTIONS</div>
       <div class="downtimeShell" id="downtimePanel">
         <div class="downtimeTop">
-          <div><div style="font-weight:900;color:var(--yellow)">BETWEEN JOBS</div><div class="small">Each character gets two Downtime Actions per session gap. Direct mechanical effects apply immediately; choices that need GM input are recorded without pretending software has narrative authority.</div></div>
+          <div><div style="font-weight:900;color:var(--yellow)">BETWEEN JOBS</div><div class="small">Downtime plays in <b>Inventory › Downtime</b>: pick a district, then play your two actions as scenes. Marks you earn in a session go here.</div></div>
           <div class="downtimeCounter"><strong id="downtimeActionsRemaining">2</strong><span>actions remaining</span></div>
         </div>
-        <div class="controls" style="margin-bottom:9px"><button id="newDowntimeGapBtn">Start New Session Gap</button><button id="undoDowntimeBtn">Undo Last Action</button></div>
+        <div class="controls" style="margin-bottom:9px"><button type="button" class="primary" id="openNightBtn">Play downtime: A Night Out</button></div>
+        <div class="field" style="max-width:240px"><label>Marks Available</label><input id="downtimeMarksInput" type="number" min="0" value="0"></div>
+        <!-- The old downtime form. Downtime now plays in apps/night.html; this stays wired (hidden) until it is removed. -->
+        <div hidden id="legacyDowntime"><div class="controls" style="margin-bottom:9px"><button id="newDowntimeGapBtn">Start New Session Gap</button><button id="undoDowntimeBtn">Undo Last Action</button></div>
         <div class="downtimeGrid">
           <div class="field"><label>Downtime Location</label><select id="downtimeLocationSelect"></select></div>
           <div class="field"><label>Territory Benefit</label><label class="checkPill" style="min-height:38px"><input type="checkbox" id="downtimeInGrith"> THIS IS IN MY GRITH</label></div>
           <div class="field"><label>Downtime Action</label><select id="downtimeActionSelect">
             <option value="layLow">Lay Low</option><option value="workContact">Work a Contact</option><option value="recover">Recover</option><option value="putDownRoots">Put Down Roots</option><option value="settleAccount">Settle an Account</option><option value="train">Train</option><option value="sideJob">Side Job</option><option value="community">Community</option><option value="research">Research</option><option value="craft">Craft (Wrench only)</option>
           </select></div>
-          <div class="field"><label>Marks Available</label><input id="downtimeMarksInput" type="number" min="0" value="0"></div>
         </div>
         <div id="downtimeActionDescription" class="downtimeEffect"></div>
         <div id="downtimeActionOptions" class="downtimeOptionBox"></div>
         <div class="controls" style="margin-top:9px"><button id="downtimeApplyBtn">Use Downtime Action</button></div>
-        <div id="downtimeResult" class="downtimeEffect">No downtime action resolved yet.</div>
+        <div id="downtimeResult" class="downtimeEffect">No downtime action resolved yet.</div></div>
         <div class="field" style="margin-top:10px"><label>Downtime History</label><div id="downtimeHistory" class="downtimeHistory"></div></div>
       </div>
 
@@ -1238,6 +1240,7 @@ function applyDowntimeAction(){
 }
 function undoDowntimeAction(){ensureDowntimeState();const last=state.downtime.history.shift();if(!last)return;if(!confirm('Undo '+last.action+' from Gap '+last.cycle+'?')){state.downtime.history.unshift(last);return;}restoreDowntimeSnapshot(last.before);state.downtime.lastResult='Undid <strong>'+escapeHtml(last.action)+'</strong>.';refreshAll();renderDowntime();scheduleSave();}
 function startNewDowntimeGap(){ensureDowntimeState();if(!confirm('Start a new session gap and reset Downtime Actions to 2?'))return;state.downtime.cycle+=1;state.downtime.actionsRemaining=2;state.downtime.lastResult='Session Gap '+state.downtime.cycle+' started. Two actions available.';renderDowntime();scheduleSave();}
+document.getElementById('openNightBtn').onclick=()=>parent.postMessage({type:'grakkgrith-nav',to:'nightBtn'},'*');
 function initDowntime(){ensureDowntimeState();const loc=$('downtimeLocationSelect'),action=$('downtimeActionSelect'),marks=$('downtimeMarksInput');if(!loc||!action)return;loc.addEventListener('change',()=>{state.downtime.location=loc.value;$('downtimeInGrith').checked=downtimeInferredGrith(loc.value);scheduleSave();renderDowntime();});action.addEventListener('change',renderDowntime);marks.addEventListener('change',()=>{state.downtime.marks=Math.max(0,Math.floor(toNum(marks.value,0)));marks.value=String(state.downtime.marks);scheduleSave();compactQueueRefresh();});$('downtimeApplyBtn').onclick=applyDowntimeAction;$('undoDowntimeBtn').onclick=undoDowntimeAction;$('newDowntimeGapBtn').onclick=startNewDowntimeGap;renderDowntime();}
 /* === END v7 DOWNTIME ACTIONS === */
 

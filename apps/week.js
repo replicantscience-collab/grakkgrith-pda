@@ -91,7 +91,7 @@
       if (from > w.lastWeek + 1) { log(w, now, `You were away ${missed} weeks. The city billed the last ${W.week.maxCatchUpWeeks}.`); }
       for (let k = from; k <= cur; k++) {
         const lines = billLines(W, w), total = lines.reduce((a, l) => a + l.credits, 0), start = fresh ? now : weekStart(k);
-        if (total > 0) { const b = { id: uid('b', start, k), kind: 'bill', week: k, from: 'Cost of living', title: `Week of ${fmt(weekStart(k)).split(' ').slice(0, 2).join(' ')}`, lines, total, issued: start, due: start + W.week.billDueDays * DAY, creditor: costRow(W.week.housing, w.housing).creditor || 'The city', status: 'open' }; w.mail.unshift(b); events.push(b); log(w, start, `Bills: ${total} credits due.`); }
+        if (total > 0) { const b = { id: uid('b', start, k), kind: 'bill', week: k, from: 'Cost of living', title: `Week of ${fmt(weekStart(k)).split(' ').slice(0, 2).join(' ')}`, lines, total, issued: start, due: start + W.week.billDueDays * DAY, creditor: costRow(W.week.housing, w.housing).creditor || 'The city', status: 'open' }; const L = costRow(W.week.housing, w.housing).landlord; if (L) b.landlord = L; w.mail.unshift(b); events.push(b); log(w, start, `Bills: ${total} credits due.`); }
         // Weekly Heat mail: the system keeps noticing you while Heat is 2+ (crisis is not reissued weekly)
         // (only once you were already in that band; rising into a band is handled below)
         const b2 = band(W, heat(s));
@@ -102,7 +102,13 @@
     // 2. Deadlines
     for (const m of [...w.mail]) {
       if (m.status !== 'open' || m.due == null || now < m.due) continue;
-      if (m.kind === 'bill') { m.status = 'unpaid'; openDebt(s, m.creditor, m.total, now, `Unpaid bills, ${m.title}`); events.push(m); }
+      if (m.kind === 'bill') {
+        // A landlord with a hook (The Hive: Ma Dresk) gives a grace week, then calls in a favor, before rent becomes Debt.
+        const L = m.landlord;
+        if (L && L.graceDays && !m.graced) { m.graced = now; m.due = now + L.graceDays * DAY; inform(s, now, m.creditor, 'A week\'s grace', L.grace); events.push(m); continue; }
+        if (L && L.favorDays && !m.favor) { m.favor = { asked: now }; m.due = now + L.favorDays * DAY; inform(s, now, m.creditor, 'Calling in a favor', L.favor); events.push(m); continue; }
+        m.status = 'unpaid'; openDebt(s, m.creditor, m.total, now, `Unpaid bills, ${m.title}`); events.push(m);
+      }
       else if (m.kind === 'notice') escalate(W, s, m, now, events);
     }
     // 3. Heat band changes: rising into a new band sends mail right away
@@ -184,9 +190,13 @@
     log(w, aMs, `Session started. Debt to ${owed.map(d => d.creditor).join(', ')}: Stress +1.`); return { stress: num(s.stats.stress) - before };
   }
   function setCosts(s, patch) { const w = ensure(s); for (const k of ['housing', 'gear', 'chrome']) if (patch[k]) w[k] = patch[k]; }
+  /* Bills whose landlord is waiting on a favor (see settle). */
+  function favors(s) { const w = s && s.week; return w ? w.mail.filter(m => m.kind === 'bill' && m.status === 'open' && m.favor && !m.favor.done) : []; }
+  /* A favor done in Downtime settles that bill: no credits change hands. */
+  function favorDone(s, id, aMs, how) { const m = find(s, id); if (!m || m.status !== 'open' || !m.favor) return { ok: false, msg: 'No favor owed on that.' }; m.favor.done = aMs; m.favor.how = how || ''; m.status = 'paid'; m.paidBy = 'favor'; m.closed = aMs; log(s.week, aMs, `${m.creditor}: favor done${how ? ' (' + how + ')' : ''}. ${m.title} settled.`); return { ok: true, msg: `${m.title} settled with a favor.` }; }
   function pending(s) { const w = s && s.week; if (!w) return 0; return w.mail.filter(m => m.status === 'open').length; }
   function owed(s) { const w = s && s.week; return w ? w.debts.reduce((a, d) => a + Math.max(0, d.amount), 0) : 0; }
 
-  const api = { DAY, WEEK, clockOffset, adytaNow, weekIndex, weekStart, fmt, untilText, band, heatCap, ensure, billLines, weeklyTotal, settle, pay, appeal, answer, payDebt, acknowledgeCrisis, inform, dismiss, sessionStart, setCosts, pending, owed, issueNotice };
+  const api = { DAY, WEEK, clockOffset, adytaNow, weekIndex, weekStart, fmt, untilText, band, heatCap, ensure, billLines, weeklyTotal, settle, pay, appeal, answer, payDebt, acknowledgeCrisis, inform, dismiss, sessionStart, setCosts, pending, owed, issueNotice, openDebt, favors, favorDone };
   if (typeof module !== 'undefined' && module.exports) module.exports = api; else root.GRAKK_WEEK = api;
 })(typeof window !== 'undefined' ? window : globalThis);

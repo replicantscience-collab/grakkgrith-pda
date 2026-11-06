@@ -1,0 +1,155 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Location scene</title>
+<link rel="stylesheet" href="../fonts/fonts.css">
+<link rel="stylesheet" href="../art/pda-v1/tokens.css">
+<link rel="stylesheet" href="./screen.css">
+<style>
+/* A walk-around scene for one place: pictures with hotspots, from data/scenes.json. */
+.where{display:flex;flex-wrap:wrap;gap:6px 14px;align-items:baseline;justify-content:space-between}
+.where h2{margin:0;color:var(--art-cream);font:700 24px/1.1 var(--art-ui);letter-spacing:.04em;text-transform:uppercase}
+.trail{color:var(--art-muted);font:700 12px var(--art-ui);letter-spacing:.1em;text-transform:uppercase}
+.stage{position:relative;margin-top:10px;border:1px solid var(--art-brass-shadow);border-radius:10px;overflow:hidden;background:#05050b}
+.stage img{display:block;width:100%;height:auto;transition:opacity .25s ease}
+.stage.fading img{opacity:0}
+body.pda-art .spot{position:absolute;display:block;min-width:0!important;min-height:0!important;padding:0!important;margin:0!important;border:2px solid transparent!important;border-radius:10px!important;background:transparent!important;box-shadow:none!important;cursor:pointer}
+body.pda-art .spot::after{content:'';position:absolute;left:50%;top:50%;width:16px;height:16px;margin:-8px 0 0 -8px;border:2px solid var(--art-cyan);border-radius:50%;background:rgba(34,218,228,.25);box-shadow:0 0 12px rgba(34,218,228,.8);animation:beacon 2.4s ease-in-out infinite}
+body.pda-art .spot.go::after{border-color:var(--art-lime);background:rgba(154,242,105,.25);box-shadow:0 0 12px rgba(154,242,105,.8)}
+body.pda-art .spot.do::after{border-color:var(--art-magenta);background:rgba(239,70,186,.3);box-shadow:0 0 12px rgba(239,70,186,.85)}
+body.pda-art .spot:hover,body.pda-art .spot:focus-visible{border-color:var(--art-cyan)!important;background:rgba(34,218,228,.08)!important;outline:none}
+.spot span{position:absolute;left:50%;bottom:calc(50% + 14px);transform:translateX(-50%);padding:2px 8px;border-radius:4px;background:rgba(5,5,11,.85);color:var(--art-cream);font:700 12px/1.5 var(--art-ui);letter-spacing:.06em;text-transform:uppercase;white-space:nowrap;opacity:0;transition:opacity .15s;pointer-events:none}
+.spot:hover span,.spot:focus-visible span{opacity:1}
+@keyframes beacon{0%,100%{transform:scale(.85);opacity:.75}50%{transform:scale(1.15);opacity:1}}
+@media (prefers-reduced-motion:reduce){body.pda-art .spot::after{animation:none}.stage img{transition:none}}
+.say{margin:12px 0 0;font:600 17px/1.5 var(--art-body);color:var(--art-cream)}
+.around{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px}
+.around button{min-height:40px}
+.around .go{border-color:var(--art-lime)}
+.around .do{border-color:var(--art-magenta)}
+.out{margin-top:12px}
+.out .letter{padding-top:16px}
+.out p{margin:0 0 8px;font:600 16px/1.5 var(--art-body)}
+.bar{display:flex;flex-wrap:wrap;gap:8px;margin-top:8px}
+.legend{margin-top:10px;color:var(--art-muted);font-size:13px}
+.legend i{display:inline-block;width:10px;height:10px;margin:0 4px 0 10px;border-radius:50%;vertical-align:middle}
+.kicker a{color:var(--art-cyan);text-decoration:none}
+.kicker a:hover,.kicker a:focus-visible{text-decoration:underline}
+@media (max-width:620px){.spot span{display:none}.out .stamp{position:static;display:inline-block;margin:0 0 8px;transform:rotate(-3deg)}}
+</style>
+</head>
+<body class="pda-art">
+<div class="wrap">
+  <div class="kicker"><a href="./explore.html" id="backLink">← Explore</a> / LOCATION</div>
+  <h1 id="title">Location</h1>
+  <p class="muted" id="whereNote"></p>
+  <section class="frame" id="main"></section>
+</div>
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+<script src="./screen.js"></script>
+<script src="./week.js"></script>
+<script src="./engine.js"></script>
+<script src="./talk.js"></script>
+<script>
+'use strict';
+const KEY = 'grakkgrith_character_tool_v8_state';
+const WK = window.GRAKK_WEEK, $ = id => document.getElementById(id);
+const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+const load = () => { try { return JSON.parse(localStorage.getItem(KEY)); } catch (e) { return null; } };
+const save = s => { try { localStorage.setItem(KEY, JSON.stringify(s)); } catch (e) {} try { parent.postMessage({ type: 'grakkgrith-week-changed' }, '*'); } catch (e) {} };
+const hasChar = s => !!(s && s.character && String(s.character.name || '').trim());
+const reduced = () => !!(window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches);
+function toast(msg) { const t = $('toast'); t.textContent = msg; t.classList.add('on'); clearTimeout(toast.t); toast.t = setTimeout(() => t.classList.remove('on'), 4200); }
+const Q = new URLSearchParams(location.search), PLACE = Q.get('place') || '';
+let SC = null, P = null, W = null, AREA = '', OUT = '';
+const now = () => WK.adytaNow(P.clock, Date.now());
+
+/* Are you standing here? (Explore keeps your in-world location in the character file.) */
+function isHere(s) { const pr = s && s.world && s.world.presence; return !!(pr && !pr.transit && pr.location && SC.here.includes(pr.location.place)); }
+function hereNote(s) {
+  if (!hasChar(s)) return 'Make a character to do more than look.';
+  return isHere(s) ? `You're here. ${WK.fmt(now())} in Adyta.` : `You're looking, not standing here. Travel here in Explore to talk to anyone.`;
+}
+
+function render(fade) {
+  const s = load(), a = SC.areas[AREA], here = isHere(s);
+  $('whereNote').textContent = hereNote(s);
+  const cls = x => x.go ? 'go' : (x.do || x.talk) ? 'do' : 'look';
+  $('main').innerHTML = `<div class="where"><h2>${esc(a.title)}</h2><span class="trail">${esc(SC.title)}</span></div>
+    <div class="stage" id="stage"><img src="../${esc(a.img)}" alt="${esc(a.title + ': ' + a.text)}">
+      ${a.spots.map((x, i) => `<button type="button" class="spot ${cls(x)}" data-spot="${i}" style="left:${x.x * 100}%;top:${x.y * 100}%;width:${x.w * 100}%;height:${x.h * 100}%" aria-label="${esc(x.label)}"><span>${esc(x.label)}</span></button>`).join('')}</div>
+    <p class="say">${esc(a.text)}</p>
+    <div class="around" aria-label="Look around">${a.spots.map((x, i) => `<button type="button" class="ghost ${cls(x)}" data-spot="${i}">${x.go ? '→ ' : ''}${esc(x.label)}</button>`).join('')}</div>
+    <p class="legend"><i style="background:var(--art-lime)"></i>go <i style="background:var(--art-cyan)"></i>look <i style="background:var(--art-magenta)"></i>do</p>
+    <div class="out" id="out" aria-live="polite">${OUT}</div>`;
+  if (fade && !reduced()) { const st = $('stage'); st.classList.add('fading'); requestAnimationFrame(() => requestAnimationFrame(() => st.classList.remove('fading'))); }
+}
+function go(area) { AREA = area; OUT = ''; render(true); $('stage').scrollIntoView({ block: 'nearest', behavior: reduced() ? 'auto' : 'smooth' }); }
+const card = (stamp, body) => `<article class="letter"><div class="stamp">${esc(stamp)}</div>${body}</article>`;
+function show(html) { OUT = html; $('out').innerHTML = html; $('out').scrollIntoView({ block: 'nearest', behavior: reduced() ? 'auto' : 'smooth' }); }
+
+/* ---------- built-in 'do' actions ---------- */
+const ELEVATOR_FAILS = ['The button lights up. Nothing else does.', 'Somewhere above, a motor whines and gives up.', 'The doors shudder half an inch, think about it, and stay shut.', 'A grinding noise from the shaft. Then nothing. The stairs it is.', 'The panel reads a floor that doesn\'t exist. You take the stairs.'];
+function elevator() {
+  if (Math.random() < 1 / 6) { OUT = ''; AREA = 'courtyard'; render(true); show(card('Elevator', '<p>Ding. The doors open. It actually works, this time. You ride it all the way to the roof before it changes its mind.</p>')); return; }
+  show(card('Elevator', `<p>${esc(ELEVATOR_FAILS[Math.floor(Math.random() * ELEVATOR_FAILS.length)])}</p><div class="bar"><button type="button" class="primary" data-goto="courtyard">Take the stairs</button><button type="button" class="ghost" data-do="elevator">Try again</button></div>`));
+}
+/* Talking to someone (apps/talk.js). The NPC's lines are data; what they know and can do is decided here. */
+let CUR = null; const E = window.GRAKK_ENGINE.create(() => CUR);
+function rentBill(s) { const w = s.week || {}; return (w.mail || []).filter(m => m.kind === 'bill' && m.status === 'open' && m.creditor === 'Ma Dresk').sort((a, b) => a.due - b.due)[0] || null; }
+function talk(id) {
+  const npc = SC.npcs && SC.npcs[id]; if (!npc) return;
+  let s = load();
+  if (!hasChar(s)) return show(card(npc.name, '<p>Make a character first. Then you can talk to people here.</p>'));
+  if (!isHere(s)) return show(card(npc.name, `<p>You can see ${esc(npc.name)} through the window. Travel here in Explore to talk to her.</p>`));
+  const fresh = () => { s = load(); WK.ensure(s); CUR = s; return s; };
+  const credits = () => Number((load().coins || {}).credits) || 0;
+  let afterClose = null;
+  window.GRAKK_TALK.open(npc, {
+    base: '../',
+    credits,
+    vars: () => { const x = fresh(), b = rentBill(x), row = (W.week.housing || []).find(h => h.id === 'hive'); return { name: x.character.alias || x.character.name, total: b ? b.total : '', due: b ? WK.fmt(b.due) : '', rent: (row ? row.credits : 40) + ' credits', credits: credits() + ' cr' }; },
+    when: cond => { const x = fresh(), b = rentBill(x), tenant = x.week.housing === 'hive'; return cond === 'tenant' ? tenant : cond === 'favor' ? !!(b && b.favor) : cond === 'graced' ? !!(b && b.graced && !b.favor) : cond === 'due' ? !!(b && !b.graced) : false; },
+    act: name => {
+      const x = fresh();
+      if (name === 'pay') { const b = rentBill(x); if (!b) return 'paid'; const r = WK.pay(x, b.id, now()); if (!r.ok) return 'short'; save(x); return 'paid'; }
+      if (name === 'movein') { WK.setCosts(x, { housing: 'hive' }); save(x); return 'movedIn'; }
+      if (name === 'favor') { afterClose = 'nightBtn'; return 'favorSent'; }
+      return false;
+    },
+    buy: item => {
+      const x = fresh(), have = Number((x.coins || {}).credits) || 0;
+      if (have < item.price) return 'broke';
+      if (!Array.isArray(x.inventory)) x.inventory = [];
+      const slots = E.unlockedSlotCount(); let i = 0; while (i < slots && x.inventory[i] && String(x.inventory[i].name || '').trim()) i++;
+      if (i >= slots) return 'full';
+      const card = window.GRAKK_ENGINE.EMPTY_ITEM(); Object.assign(card, { name: item.name, class: 'CONSUMABLE', desc: item.desc, shopName: 'The Ground-Floor Fryer', actions: ['use'], noRefill: true });
+      card.adds = ['', '', '', '', '0', String(item.stress || 0), String(item.uses || 1), String(item.uses || 1)];
+      while (x.inventory.length < i) x.inventory.push(window.GRAKK_ENGINE.EMPTY_ITEM());
+      x.inventory[i] = card; x.coins.credits = String(have - item.price);
+      x.week.log = x.week.log || []; save(x); toast(`Bought ${item.name}: ${item.price} cr. It's in your inventory.`);
+      return 'bought';
+    },
+    onClose: () => { render(false); if (afterClose) { try { parent.postMessage({ type: 'grakkgrith-nav', to: afterClose }, '*'); } catch (e) {} } }
+  });
+}
+
+document.addEventListener('click', e => {
+  const b = e.target.closest('button'); if (!b) return;
+  if (b.dataset.spot != null) { const x = SC.areas[AREA].spots[+b.dataset.spot]; if (x.go) return go(x.go); if (x.look) return show(card(x.label, `<p>${esc(x.look)}</p>`)); if (x.do === 'elevator') return elevator(); if (x.talk) return talk(x.talk); }
+  if (b.dataset.goto) return go(b.dataset.goto);
+  if (b.dataset.do === 'elevator') return elevator();
+});
+
+Promise.all(['scenes', 'places', 'week'].map(n => fetch(`../data/${n}.json`).then(r => r.json()))).then(([scenes, places, week]) => {
+  P = places; W = week; SC = scenes[PLACE];
+  if (!SC) { $('title').textContent = 'No scene here yet'; $('main').innerHTML = '<p>This place doesn\'t have a scene. <a href="./explore.html">Back to Explore</a>.</p>'; window.GRAKK_SCENE_READY = true; return; }
+  document.title = SC.title; $('title').textContent = SC.title; AREA = SC.areas[Q.get('area')] ? Q.get('area') : SC.start;
+  render(false);
+  window.GRAKK_SCENE_READY = true;
+});
+</script>
+</body>
+</html>
