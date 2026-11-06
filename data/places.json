@@ -112,6 +112,206 @@
       "image": "maps/official/sewers-town.jpg",
       "width": 1448,
       "height": 1646
+    },
+    "grand-academy": {
+      "title": "Grand Academy District Map",
+      "short": "Grand Academy",
+      "kind": "district",
+      "district": "grand-academy",
+      "status": "design candidate",
+      "image": "maps/candidates/grand-academy.jpg",
+      "width": 1536,
+      "height": 1024
+    },
+    "new-halo": {
+      "title": "New Halo District Map",
+      "short": "New Halo",
+      "kind": "district",
+      "district": "new-halo",
+      "status": "design candidate",
+      "image": "maps/candidates/new-halo.jpg",
+      "width": 1536,
+      "height": 1024
+    },
+    "governance-district": {
+      "title": "Governance District Map",
+      "short": "Governance District",
+      "kind": "district",
+      "district": "governance-district",
+      "status": "design candidate",
+      "image": "maps/candidates/governance-district.jpg",
+      "width": 1536,
+      "height": 1024
+    },
+    "crownline-industrials": {
+      "title": "Crownline Industrials District Map",
+      "short": "Crownline Industrials",
+      "kind": "district",
+      "district": "crownline-industrials",
+      "status": "design candidate",
+      "image": "maps/candidates/crownline-industrials.jpg",
+      "width": 1536,
+      "height": 1024
+    },
+    "three-spires-monastery": {
+      "title": "Three Spires Monastery District Map",
+      "short": "Three Spires Monastery",
+      "kind": "district",
+      "district": "three-spires-monastery",
+      "status": "design candidate",
+      "image": "maps/candidates/three-spires-monastery.jpg",
+      "width": 1536,
+      "height": 1024
+    },
+    "elven-enclave": {
+      "title": "Elven Enclave District Map",
+      "short": "Elven Enclave",
+      "kind": "district",
+      "district": "elven-enclave",
+      "status": "design candidate",
+      "image": "maps/candidates/elven-enclave.jpg",
+      "width": 1536,
+      "height": 1024
+    },
+    "central-core": {
+      "title": "Central Core District Map",
+      "short": "Central Core",
+      "kind": "district",
+      "district": "central-core",
+      "status": "design candidate",
+      "image": "maps/candidates/central-core.jpg",
+      "width": 1536,
+      "height": 1024
+    },
+    "the-ashrun": {
+      "title": "The Ashrun District Map",
+      "short": "The Ashrun",
+      "kind": "district",
+      "district": "the-ashrun",
+      "status": "design candidate",
+      "image": "maps/candidates/the-ashrun.jpg",
+      "width": 1536,
+      "height": 1024
+    },
+    "far-shipyards": {
+      "title": "Far Shipyards District Map",
+      "short": "Far Shipyards",
+      "kind": "district",
+      "district": "far-shipyards",
+      "status": "design candidate",
+      "image": "maps/candidates/far-shipyards.jpg",
+      "width": 1536,
+      "height": 1024
+    },
+    "greasewick-row": {
+      "title": "Greasewick Row District Map",
+      "short": "Greasewick Row",
+      "kind": "district",
+      "district": "greasewick-row",
+      "status": "design candidate",
+      "image": "maps/candidates/greasewick-row.jpg",
+      "width": 1536,
+      "height": 1024
+    },
+    "old-city": {
+      "title": "Old City District Map",
+      "short": "Old City",
+      "kind": "district",
+      "district": "old-city",
+      "status": "design candidate",
+      "image": "maps/candidates/old-city.jpg",
+      "width": 1536,
+      "height": 1024
+    },
+    "southport-slums": {
+      "title": "Southport Slums District Map",
+      "short": "Southport Slums",
+      "kind": "district",
+      "district": "southport-slums",
+      "status": "design candidate",
+      "image": "maps/candidates/southport-slums.jpg",
+      "width": 1536,
+      "height": 1024
+    },
+    "scrapfields": {
+      "title": "Scrapfields District Map",
+      "short": "Scrapfields",
+      "kind": "district",
+      "district": "scrapfields",
+      "status": "design candidate",
+      "image": "maps/candidates/scrapfields.jpg",
+      "width": 1536,
+      "height": 1024
+    },
+    "outer-farms": {
+      "title": "Outer Farms District Map",
+      "short": "Outer Farms",
+      "kind": "district",
+      "district": "outer-farms",
+      "status": "design candidate",
+      "image": "maps/candidates/outer-farms.jpg",
+      "width": 1536,
+      "height": 1024
+    },
+    "borderlands": {
+      "title": "Borderlands District Map",
+      "short": "Borderlands",
+      "kind": "district",
+      "district": "borderlands",
+      "status": "design candidate",
+      "image": "maps/candidates/borderlands.jpg",
+      "width": 1536,
+      "height": 1024
+    },
+    "southern-industrial-belt": {
+      "title": "S. Industrial Belt District Map",
+      "short": "S. Industrial Belt",
+      "kind": "district",
+      "district": "southern-industrial-belt",
+      "status": "design candidate",
+      "image": "maps/candidates/southern-industrial-belt.jpg",
+      "width": 1536,
+      "height": 1024
+    },
+    "crownless-row": {
+      "title": "Crownless Row District Map",
+      "short": "Crownless Row",
+      "kind": "district",
+      "district": "crownless-row",
+      "status": "design candidate",
+      "image": "maps/candidates/crownless-row.jpg",
+      "width": 1536,
+      "height": 1024
+    },
+    "ash-wastes": {
+      "title": "Ash Wastes District Map",
+      "short": "Ash Wastes",
+      "kind": "district",
+      "district": "ash-wastes",
+      "status": "design candidate",
+      "image": "maps/candidates/ash-wastes.jpg",
+      "width": 1536,
+      "height": 1024
+    },
+    "forgotten-depths": {
+      "title": "Forgotten Depths District Map",
+      "short": "Forgotten Depths",
+      "kind": "district",
+      "district": "forgotten-depths",
+      "status": "design candidate",
+      "image": "maps/candidates/forgotten-depths.jpg",
+      "width": 1536,
+      "height": 1024
+    },
+    "main-roads": {
+      "title": "Main Roads Network Overview",
+      "short": "Main Roads",
+      "kind": "network",
+      "district": "main-roads",
+      "status": "design candidate",
+      "image": "maps/candidates/main-roads.jpg",
+      "width": 1536,
+      "height": 1024
     }
   },
   "districts": {
@@ -147,8 +347,10 @@
         "y": 11.0,
         "label": "Grand Academy",
         "note": "Knowledge and older arrogance. Institutional memory with locked doors.",
-        "kind": "area"
-      }
+        "kind": "area",
+        "districtMap": "grand-academy"
+      },
+      "map": "grand-academy"
     },
     "new-halo": {
       "name": "New Halo",
@@ -163,8 +365,10 @@
         "y": 8.0,
         "label": "New Halo",
         "note": "The Shining Spire, aspirational skyline, prestige pressure, and the polished version of Adyta sold upward.",
-        "kind": "area"
-      }
+        "kind": "area",
+        "districtMap": "new-halo"
+      },
+      "map": "new-halo"
     },
     "governance-district": {
       "name": "Governance District",
@@ -179,8 +383,10 @@
         "y": 14.0,
         "label": "Governance",
         "note": "Paper, power, lies, civic channels, public authority, and procedures that decide who gets heard.",
-        "kind": "area"
-      }
+        "kind": "area",
+        "districtMap": "governance-district"
+      },
+      "map": "governance-district"
     },
     "crownline-industrials": {
       "name": "Crownline Industrials",
@@ -195,7 +401,8 @@
         "y": 18.0,
         "label": "Crownline",
         "note": "Profit, smoke, infrastructure leverage, and the corporate version of stability.",
-        "kind": null
+        "kind": null,
+        "districtMap": "crownline-industrials"
       },
       "dossier": {
         "mood": "Service is strength, and strength sends invoices.",
@@ -205,7 +412,8 @@
         "factions": "Crownline Infrastructure; Bastion Dynamics; civic compromise chain.",
         "missions": "Burn-Wire Block Check; seized power dispute; corridor shutdowns.",
         "wisdom": "They protect you. You pay. Everybody wins, allegedly."
-      }
+      },
+      "map": "crownline-industrials"
     },
     "three-spires-monastery": {
       "name": "Three Spires Monastery",
@@ -220,8 +428,10 @@
         "y": 26.0,
         "label": "Three Spires",
         "note": "Old gods, older secrets, and spiritual leverage that does not fit corporate reporting.",
-        "kind": "area"
-      }
+        "kind": "area",
+        "districtMap": "three-spires-monastery"
+      },
+      "map": "three-spires-monastery"
     },
     "elven-enclave": {
       "name": "Elven Enclave",
@@ -236,8 +446,10 @@
         "y": 28.0,
         "label": "Elven Enclave",
         "note": "Established, elegant, elven. An enclave of older status and polished exclusions.",
-        "kind": "area"
-      }
+        "kind": "area",
+        "districtMap": "elven-enclave"
+      },
+      "map": "elven-enclave"
     },
     "central-core": {
       "name": "Central Core",
@@ -252,8 +464,10 @@
         "y": 32.0,
         "label": "Central Core",
         "note": "Commerce, politics, control, transit for all. The official city explains itself from here.",
-        "kind": null
-      }
+        "kind": null,
+        "districtMap": "central-core"
+      },
+      "map": "central-core"
     },
     "the-ashrun": {
       "name": "The Ashrun",
@@ -268,8 +482,10 @@
         "y": 31.0,
         "label": "The Ashrun",
         "note": "Trade flows, waste flows, stories drown. Water routes carry more than freight.",
-        "kind": "area"
-      }
+        "kind": "area",
+        "districtMap": "the-ashrun"
+      },
+      "map": "the-ashrun"
     },
     "far-shipyards": {
       "name": "Far Shipyards",
@@ -284,8 +500,10 @@
         "y": 31.0,
         "label": "Far Shipyards",
         "note": "Build it, break it, sell it twice. Heavy industry at the edge of the harbor map.",
-        "kind": "area"
-      }
+        "kind": "area",
+        "districtMap": "far-shipyards"
+      },
+      "map": "far-shipyards"
     },
     "the-tangle": {
       "name": "The Tangle",
@@ -444,8 +662,10 @@
         "y": 51.0,
         "label": "Greasewick",
         "note": "Machines, oil, fixers, goblin tech, and repair work that smells like debt and hot metal.",
-        "kind": "area"
-      }
+        "kind": "area",
+        "districtMap": "greasewick-row"
+      },
+      "map": "greasewick-row"
     },
     "old-city": {
       "name": "Old City",
@@ -460,7 +680,8 @@
         "y": 56.0,
         "label": "Old City",
         "note": "Built on ruins, built over lies, still standing. Every wall remembers earlier arrangements.",
-        "kind": "area"
+        "kind": "area",
+        "districtMap": "old-city"
       },
       "dossier": {
         "mood": "Built over ruins, lies, and rooms that still disagree with time.",
@@ -470,7 +691,8 @@
         "factions": "ABI; Velvet Signal; developers; old-city stakeholders.",
         "missions": "Below-Site Incident Review.",
         "wisdom": "Every wall remembers earlier arrangements."
-      }
+      },
+      "map": "old-city"
     },
     "southport-slums": {
       "name": "Southport Slums",
@@ -485,8 +707,10 @@
         "y": 56.0,
         "label": "Southport",
         "note": "Forgotten, abandoned, still surviving. The city forgets people here until it needs them moved.",
-        "kind": "area"
-      }
+        "kind": "area",
+        "districtMap": "southport-slums"
+      },
+      "map": "southport-slums"
     },
     "scrapfields": {
       "name": "Scrapfields",
@@ -501,7 +725,8 @@
         "y": 55.0,
         "label": "Scrapfields",
         "note": "Pickers, scavengers, patchkin goblins, and useful things that refused to stay dead.",
-        "kind": "mission area"
+        "kind": "mission area",
+        "districtMap": "scrapfields"
       },
       "dossier": {
         "mood": "Useful things that refused to stay dead.",
@@ -511,7 +736,8 @@
         "factions": "Patchkin; Gremlin Works; Bastion Dynamics; Crownline.",
         "missions": "Hold the Line on Reclaimed Power.",
         "wisdom": "Abandoned means nobody rich needed it yesterday."
-      }
+      },
+      "map": "scrapfields"
     },
     "outer-farms": {
       "name": "Outer Farms",
@@ -526,8 +752,10 @@
         "y": 64.0,
         "label": "Outer Farms",
         "note": "Scrap gangs, hunters, dustwalker goblins, and the edge where city logic starts to fail.",
-        "kind": "area"
-      }
+        "kind": "area",
+        "districtMap": "outer-farms"
+      },
+      "map": "outer-farms"
     },
     "borderlands": {
       "name": "Borderlands",
@@ -542,8 +770,10 @@
         "y": 65.0,
         "label": "Borderlands",
         "note": "Law fades, survival sharpens, no promises. Good for crossings and deals nobody records.",
-        "kind": "area"
-      }
+        "kind": "area",
+        "districtMap": "borderlands"
+      },
+      "map": "borderlands"
     },
     "southern-industrial-belt": {
       "name": "S. Industrial Belt",
@@ -559,8 +789,10 @@
         "label": "S-Industrial",
         "note": "Smoke, steel, sweat, Ashborn goblins, dwarf strongholds, and work that changes bodies.",
         "kind": "area",
-        "key": "S-INDUSTRIAL BELT"
-      }
+        "key": "S-INDUSTRIAL BELT",
+        "districtMap": "southern-industrial-belt"
+      },
+      "map": "southern-industrial-belt"
     },
     "crownless-row": {
       "name": "Crownless Row",
@@ -570,7 +802,8 @@
         "x": 0.652,
         "y": 0.528,
         "approx": true
-      }
+      },
+      "map": "crownless-row"
     },
     "ash-wastes": {
       "name": "Ash Wastes",
@@ -586,8 +819,10 @@
         "y": 64.0,
         "label": "Ash Wastes",
         "note": "Dead wind, dead things, stay out. Escalation space for fallout and dangerous edges of the map.",
-        "kind": null
-      }
+        "kind": null,
+        "districtMap": "ash-wastes"
+      },
+      "map": "ash-wastes"
     },
     "the-sewers": {
       "name": "The Sewers",
@@ -654,8 +889,10 @@
         "y": 95.0,
         "label": "Forgotten Depths",
         "note": "Where maps stop and worse goes down. Use for deep fallout, lost systems, and hard choices.",
-        "kind": "area"
-      }
+        "kind": "area",
+        "districtMap": "forgotten-depths"
+      },
+      "map": "forgotten-depths"
     },
     "main-roads": {
       "name": "Main Roads",
@@ -666,7 +903,8 @@
         "y": 51.0,
         "label": "Main Roads",
         "note": "Primary surface roads, trade spines, civic transit lanes, and visible routes that official traffic, patrols, freight, and job fallout move through first.",
-        "kind": "roadPin"
+        "kind": "roadPin",
+        "districtMap": "main-roads"
       },
       "dossier": {
         "mood": "Official movement: freight, patrols, transit, paperwork, blame.",
@@ -676,7 +914,8 @@
         "factions": "Wardens; Crownline; Civil Registry; Emergency Management.",
         "missions": "Any public-facing operation or getaway complication.",
         "wisdom": "The legal road is not always the safe road."
-      }
+      },
+      "map": "main-roads"
     }
   },
   "places": [
