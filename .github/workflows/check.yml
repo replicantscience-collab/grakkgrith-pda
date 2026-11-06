@@ -20,6 +20,7 @@ jobs:
       - run: node tools/radio-test.mjs
       - run: node tools/jobs-test.mjs
       - run: node tools/cityday-test.mjs
+      - run: node tools/business-test.mjs
 
   smoke:
     name: Every screen opens

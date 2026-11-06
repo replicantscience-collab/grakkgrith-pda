@@ -81,6 +81,12 @@ There is no server. `apps/cityday.js` builds the day from the Adyta date alone, 
 
 All three are drafts until they go to Nib. `node tools/check-rules.mjs` checks every place, tier, author and date in them, and fails if a housing place has no landlord.
 
+## Businesses
+
+If your character is listed as an owner in `data/businesses.json`, **Mail & bills** shows **Your business**: Books (the business's own money, separate from yours), Rep, Exposure, and whether the Commons is protecting it. Each Adyta week brings sales (fewer when Rep is low) and upkeep. Some weeks bring a **back-room offer**: saying no costs nothing; saying yes pays the books, adds Exposure to the building and ends Commons protection until you **make it even** (Exposure back to zero, plus a favor from your own pocket). Exposure fades by one each quiet week.
+
+Protection belongs to the building. It breaks if you take an offer, if the owner's Heat reaches 4, and never applies to corporate-funded places. Trouble climbs one step at a time, never faster than one step every five days: trouble, a notice, shuttered (the till freezes until you clear the books and reopen), and lost after four weeks shuttered or a Heat 6 crisis aimed at the building. **Close for the season** pauses everything while you're away. Logic: `apps/business.js`, tested by `node tools/business-test.mjs`. All numbers are drafts.
+
 ## The Explore map
 
 Explore puts your character somewhere in Adyta. Tap a place for its details, then travel there: on foot, or by tram while the trams run (the last one leaves at 12:17 AM). Travel takes Adyta time, and your character is in transit until they arrive, even if you close the app.

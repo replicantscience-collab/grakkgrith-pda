@@ -9,19 +9,150 @@
     },
     "protection": {
       "ownerHeatBreaks": 4,
-      "keeps": ["Patch grid repair, generator fixes, feeding people", "Crownline compliance fines for surviving wrong", "Community favors and Commons-approved work"],
-      "loses": ["Underground jobs run from the building", "Fencing stolen goods, back-room deals", "Anything that hurts the neighborhood"],
+      "keeps": [
+        "Patch grid repair, generator fixes, feeding people",
+        "Crownline compliance fines for surviving wrong",
+        "Community favors and Commons-approved work"
+      ],
+      "loses": [
+        "Underground jobs run from the building",
+        "Fencing stolen goods, back-room deals",
+        "Anything that hurts the neighborhood"
+      ],
       "restore": "Make it even: Exposure back to zero, Commons Standing repaired, and a favor that fits the harm."
     },
     "loss": [
-      { "step": "trouble", "name": "Trouble", "when": "Books in debt, Rep falling or Exposure rising", "what": "Mail warns the owner what is wrong and what fixes it." },
-      { "step": "notice", "name": "Notice", "when": "Three weeks of unpaid commercial rent, or Exposure at 4", "what": "A landlord letter, an inspection or a compliance fine." },
-      { "step": "shuttered", "name": "Shuttered", "when": "A notice left unresolved", "what": "Doors closed, stock frozen, pin marked closed. Reopens by clearing the debt, passing the inspection or winning a Public Advocacy appeal." },
-      { "step": "lost", "name": "Lost", "when": "A Heat 6 crisis aimed at the business, or four weeks shuttered", "what": "The place goes to an NPC or rival. Its pin keeps a history line, and buying it back is a story to chase." }
+      {
+        "step": "trouble",
+        "name": "Trouble",
+        "when": "Books in debt, Rep falling or Exposure rising",
+        "what": "Mail warns the owner what is wrong and what fixes it."
+      },
+      {
+        "step": "notice",
+        "name": "Notice",
+        "when": "Three weeks of unpaid commercial rent, or Exposure at 4",
+        "what": "A landlord letter, an inspection or a compliance fine."
+      },
+      {
+        "step": "shuttered",
+        "name": "Shuttered",
+        "when": "A notice left unresolved",
+        "what": "Doors closed, stock frozen, pin marked closed. Reopens by clearing the debt, passing the inspection or winning a Public Advocacy appeal."
+      },
+      {
+        "step": "lost",
+        "name": "Lost",
+        "when": "A Heat 6 crisis aimed at the business, or four weeks shuttered",
+        "what": "The place goes to an NPC or rival. Its pin keeps a history line, and buying it back is a story to chase."
+      }
     ],
     "noticeWeeks": 3,
     "lostAfterShutteredWeeks": 4,
-    "seasonClose": "Owners can close for the season when they're away: rent and trouble pause."
+    "seasonClose": "Owners can close for the season when they're away: rent and trouble pause.",
+    "economy": {
+      "_about": "Draft numbers: the rulebook has no business economy. Small on purpose: the fun is the place, not the money.",
+      "upkeep": 30,
+      "sales": [
+        15,
+        55
+      ],
+      "repStart": 3,
+      "repMax": 5,
+      "exposureDecay": 1,
+      "maxCatchUpWeeks": 4,
+      "stepGapDays": 5,
+      "tillMax": 200,
+      "makeEvenFavor": 50
+    },
+    "offers": {
+      "_about": "Back-room offers: one may arrive each week at an open business. Saying no costs nothing. Saying yes pays well, adds Exposure to the building and ends Commons protection until it's made even.",
+      "chance": 0.5,
+      "list": [
+        {
+          "id": "basement-night",
+          "title": "One night in the basement",
+          "body": "A friend of a friend needs your back room for one night. No questions, no lights, no names.",
+          "pay": 120,
+          "exposure": 1
+        },
+        {
+          "id": "hold-a-crate",
+          "title": "Hold a crate",
+          "body": "A sealed crate, three days, behind your counter. Someone collects it. You never looked inside.",
+          "pay": 90,
+          "exposure": 1
+        },
+        {
+          "id": "wrong-receipts",
+          "title": "Write some receipts",
+          "body": "Someone needs a stack of receipts that say they bought things here. They didn't.",
+          "pay": 80,
+          "exposure": 1
+        },
+        {
+          "id": "fence-the-lot",
+          "title": "Move some stock",
+          "body": "A box of very nice parts, cheap, no paperwork. Sell them over the counter and split the take.",
+          "pay": 150,
+          "exposure": 2
+        },
+        {
+          "id": "meeting-room",
+          "title": "Neutral ground",
+          "body": "Two crews want to meet somewhere nobody owns. They picked you. Close early and stay out of the room.",
+          "pay": 110,
+          "exposure": 1
+        },
+        {
+          "id": "tap-the-grid",
+          "title": "Share your power",
+          "body": "A neighbor's operation needs more power than it should. A cable through your wall, unofficially.",
+          "pay": 70,
+          "exposure": 1
+        },
+        {
+          "id": "forget-a-face",
+          "title": "Forget a face",
+          "body": "If anyone asks, you never saw the person in this photo come through your door last night.",
+          "pay": 60,
+          "exposure": 1
+        },
+        {
+          "id": "underground-drop",
+          "title": "A standing drop",
+          "body": "Underground couriers want to use your place as a drop point, every week, indefinitely.",
+          "pay": 200,
+          "exposure": 2
+        }
+      ]
+    },
+    "mail": {
+      "trouble": {
+        "title": "Trouble at {business}",
+        "body": "Something's off at {business}: {why}. Fix it before it becomes a notice."
+      },
+      "notice": {
+        "title": "Notice: {business}",
+        "body": "{business} has a formal notice: {why}. Clear it within a week or the doors close."
+      },
+      "shuttered": {
+        "title": "{business} is shuttered",
+        "body": "The doors are closed and the stock is frozen. Clear the books, bring Exposure under 4, or win a Public Advocacy appeal, then reopen. Left shuttered for four weeks, it's lost."
+      },
+      "lost": {
+        "title": "{business} is gone",
+        "body": "{business} belongs to someone else now. The sign is new. The regulars still say it used to be yours. Buying it back is a story worth chasing."
+      },
+      "protectionLost": {
+        "title": "The neighborhood noticed",
+        "body": "Word got round about what happened at {business}. The Commons won't keep trouble off your doorstep until you make it even."
+      },
+      "protectionBack": {
+        "title": "Square with the neighborhood",
+        "body": "You made it even. The Commons looks after {business} again."
+      }
+    }
   },
   "businesses": [
     {
@@ -29,8 +160,15 @@
       "name": "Sideways Shops",
       "kind": "shop",
       "brand": "sideways-shops",
-      "places": ["three-wires--sideways-shops", "low-halo--sideways-shops-sewer-door", "low-halo--sideways-tourist-booth"],
-      "owners": ["Ekois", "Pulse"],
+      "places": [
+        "three-wires--sideways-shops",
+        "low-halo--sideways-shops-sewer-door",
+        "low-halo--sideways-tourist-booth"
+      ],
+      "owners": [
+        "Ekois",
+        "Pulse"
+      ],
       "funding": "independent",
       "status": "open",
       "history": []

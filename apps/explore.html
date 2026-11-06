@@ -490,6 +490,11 @@ function groundHtml(p, did) {
   }
   const b = BIZ.find(x => x.places.includes(p.id));
   if (b && !p.brand) h += `<p class="note">${esc(b.name)}, run by ${esc(b.owners.join(' and '))}.</p>`;
+  if (b) {
+    const mine = charState()?.business?.[b.id];
+    if (mine && (mine.status === 'shuttered' || mine.status === 'lost' || mine.status === 'season')) h += `<p class="note"><b>${mine.status === 'shuttered' ? 'Shuttered.' : mine.status === 'lost' ? 'Not yours any more.' : 'Closed for the season.'}</b></p>`;
+    for (const x of b.history || []) h += `<p class="note">${esc(x.text || x)}</p>`;
+  }
   return h;
 }
 function cityDay() { if (!CDD || !CD) return null; const key = CD.dayKey(adytaNow()); if (!dayCache || dayCache.day !== key) dayCache = CD.today(CDD, W, STK, adytaNow()); return dayCache; }

@@ -226,6 +226,13 @@ try {
       const w = await f.evaluate(() => document.documentElement.scrollWidth - innerWidth);
       return (bill && badge === '1' && w <= 1) || `bill ${bill}, badge "${badge}", ${w}px too wide`;
     });
+    await step('an owner sees their business card in Mail', async () => {
+      const K = 'grakkgrith_character_tool_v8_state', rename = n => page.evaluate(([k, n]) => { const s = JSON.parse(localStorage.getItem(k)); s.character.name = n; localStorage.setItem(k, JSON.stringify(s)); }, [K, n]);
+      const was = await page.evaluate(k => JSON.parse(localStorage.getItem(k)).character.name, K);
+      await rename('Ekois'); await frame(page).evaluate(() => location.reload()); await page.waitForTimeout(1800);
+      const r = await frame(page).evaluate(() => (!document.getElementById('bizSec').hidden && /Sideways Shops/.test(document.getElementById('biz').innerText) && /Commons-protected/.test(document.getElementById('biz').innerText)) || document.getElementById('biz').innerText.slice(0, 120));
+      await rename(was); await frame(page).evaluate(() => location.reload()); await page.waitForTimeout(1500);
+      return r; });
     await step('paying rent takes credits and clears the badge', async () => {
       const before = Number((await ST()).coins.credits || 0); await f.click('.letter.bill button[data-pay]'); await page.waitForTimeout(400);
       const after = Number((await ST()).coins.credits || 0), badge = await page.evaluate(() => document.getElementById('mailBadge').textContent);
