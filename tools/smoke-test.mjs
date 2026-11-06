@@ -104,6 +104,11 @@ try {
       return f.evaluate(() => /Provisional expansion from PDA description/.test(document.getElementById('sheetBody').textContent));
     });
     await step('Explore can plan a trip', async () => (await f.evaluate(() => window.GRAKK_EXPLORE.planTrip({ district: 'ember-court', place: 'ember-court--the-ninth-circle-ph' }).length)) > 0);
+    // The living city: the same day for everyone, a mood per district, signs, one hidden sticker.
+    await step('Explore shows what changed today', () => f.evaluate(() => { const X = window.GRAKK_EXPLORE, T = X.cityDay(); X.openToday(); const t = document.getElementById('sheetBody').innerText; return (!!T && /Today in Adyta/.test(t) && document.querySelectorAll('#sheetBody .days li').length === Object.keys(T.districts).length && !!T.sticker) || t.slice(0, 120); }));
+    await step('a district read leads with today', () => f.evaluate(() => { window.GRAKK_EXPLORE.showMap('adyta-city'); window.GRAKK_EXPLORE.openPlace('low-halo'); return !!document.querySelector('#sheetBody .today .scrawl'); }));
+    await step('a housing place names its landlord and rent', () => f.evaluate(() => { const X = window.GRAKK_EXPLORE; X.showMap('low-halo', 'low-halo--the-hive'); X.openPlace('low-halo--the-hive'); const t = document.getElementById('sheetBody').innerText; return (/Ma Dresk/.test(t) && /40 credits a week/.test(t)) || t.slice(0, 200); }));
+    await step('Local Wisdom notes show where they were written', () => f.evaluate(() => { const X = window.GRAKK_EXPLORE; X.openPlace('low-halo--saint-static-arms'); return /Written here/i.test(document.getElementById('sheetBody').innerText); }));
 
     // Sideways art pass: Start wears the kit; Sideways' commentary and the rulebook stay separate in the guide.
     f = await open('worldBtn', 1200);
@@ -235,6 +240,15 @@ try {
       return (r.beats === 12 && r.first && r.focus && /Civic Registry/.test(r.label) && gone) || JSON.stringify({ ...r, gone });
     });
     await step('the sheet shows the new character', async () => { await page.evaluate(() => document.getElementById('fullSheetBtn').click()); await page.waitForTimeout(1600); return frame(page).evaluate(() => document.body.innerText.includes('Smoke Runner') && document.getElementById('raceSelect').value === 'Goblin'); });
+    await step('a character can travel to today\'s sticker and peel it', async () => { await page.evaluate(() => document.getElementById('exploreBtn').click()); await page.waitForTimeout(1500); return frame(page).evaluate(() => {
+      const X = window.GRAKK_EXPLORE, st = X.cityDay().sticker; X.presence.transit = null; X.presence.location = { district: st.district, place: st.place }; X.openPlace(st.place);
+      document.getElementById('peel').click(); const kept = JSON.parse(localStorage.getItem('grakkgrith_character_tool_v8_state')).world.stickers || [];
+      return (kept.length === 1 && kept[0].id === st.id && /Peeled it/.test(document.getElementById('sheetBody').innerText)) || JSON.stringify(kept); }); });
+    await step('a character can rent a room and Mail knows the landlord', async () => { const r = await frame(page).evaluate(() => {
+      const X = window.GRAKK_EXPLORE; X.presence.transit = null; X.presence.location = { district: 'low-halo', place: 'low-halo--the-hive' }; X.showMap('low-halo', 'low-halo--the-hive'); X.openPlace('low-halo--the-hive');
+      const b = document.querySelector('#sheetBody [data-rent]'); if (!b) return 'no Rent button'; b.click();
+      const h = JSON.parse(localStorage.getItem('grakkgrith_character_tool_v8_state')).week?.home; return (h && h.landlordName === 'Ma Dresk' && /Your home/.test(document.getElementById('sheetBody').innerText)) || JSON.stringify(h); });
+      return r; });
     await step('Explore can send them somewhere', async () => { await page.evaluate(() => document.getElementById('exploreBtn').click()); await page.waitForTimeout(1500); return frame(page).evaluate(() => { const X = window.GRAKK_EXPLORE, t = { district: 'low-halo', place: 'low-halo--rust-market' }; X.startTrip(t, X.planTrip(t)[0]); return !!JSON.parse(localStorage.getItem('grakkgrith_character_tool_v8_state')).world.presence.transit; }); });
     // The Week: rent on the Adyta clock and Heat mail, from a fresh character.
     const ST = () => page.evaluate(() => JSON.parse(localStorage.getItem('grakkgrith_character_tool_v8_state')));
@@ -245,6 +259,13 @@ try {
       const w = await f.evaluate(() => document.documentElement.scrollWidth - innerWidth);
       return (bill && badge === '1' && w <= 1) || `bill ${bill}, badge "${badge}", ${w}px too wide`;
     });
+    await step('an owner sees their business card in Mail', async () => {
+      const K = 'grakkgrith_character_tool_v8_state', rename = n => page.evaluate(([k, n]) => { const s = JSON.parse(localStorage.getItem(k)); s.character.name = n; localStorage.setItem(k, JSON.stringify(s)); }, [K, n]);
+      const was = await page.evaluate(k => JSON.parse(localStorage.getItem(k)).character.name, K);
+      await rename('Ekois'); await frame(page).evaluate(() => location.reload()); await page.waitForTimeout(1800);
+      const r = await frame(page).evaluate(() => (!document.getElementById('bizSec').hidden && /Sideways Shops/.test(document.getElementById('biz').innerText) && /Commons-protected/.test(document.getElementById('biz').innerText)) || document.getElementById('biz').innerText.slice(0, 120));
+      await rename(was); await frame(page).evaluate(() => location.reload()); await page.waitForTimeout(1500);
+      return r; });
     await step('paying rent takes credits and clears the badge', async () => {
       const before = Number((await ST()).coins.credits || 0); await f.click('.letter.bill button[data-pay]'); await page.waitForTimeout(400);
       const after = Number((await ST()).coins.credits || 0), badge = await page.evaluate(() => document.getElementById('mailBadge').textContent);
