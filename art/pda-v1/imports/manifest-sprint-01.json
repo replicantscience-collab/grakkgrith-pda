@@ -9,7 +9,8 @@
       "kind": "race_card",
       "canon_text": "Ageless; text based on existing guide data",
       "status": "visual-draft",
-      "replace": "art/sideways-shops/races/fairy.webp (after approval)"
+      "replace": "art/sideways-shops/races/fairy.webp (after approval)",
+      "lettering": "Re-lettered 2026-11-06 to match the Sideways poster cards: brush title with a wing icon, torn parchment, hand-lettered text and traits. Layout: source/fairy-card.html."
     },
     {
       "id": "race.orc",
