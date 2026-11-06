@@ -23,6 +23,13 @@ for this pack remain proposals; Crownless Row is explicitly provisional. Pins
 marked approximate still need editorial acceptance. This pack does not establish
 new canonical route timings or promote uncertain deep tunnels to surveyed routes.
 
+## Integration notes
+
+- Player-facing names and blurbs no longer carry `[candidate]` or "not established canon" text.
+  Canon status stays in the data (`canonStatus`, map `note`) and shows in Explore under a collapsed **Sources** box.
+- The twenty unused first-pass JPGs and their overview were removed; git history keeps them.
+- Service-worker cache v82.
+
 ## Review
 
 - [Twenty-map preview](district-maps-v2-preview.jpg)

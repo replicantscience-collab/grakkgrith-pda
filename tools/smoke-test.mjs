@@ -91,11 +91,11 @@ try {
       await f.evaluate(() => window.GRAKK_EXPLORE.openPlace('deep-tunnels--gate-4'));
       return relay && await f.evaluate(() => /Maps disagree past here/.test(document.getElementById('sheetBody').textContent));
     });
-    await step('Candidate places disclose proposal status and district lore sources', async () => {
+    await step('Candidate places read clean, with canon status tucked under Sources', async () => {
       const candidate = catalog.places.find(p => p.id.startsWith('grand-academy--candidate-'));
       if (!candidate) return 'missing detailed candidate places';
       await f.evaluate(id => window.GRAKK_EXPLORE.openPlace(id), candidate.id);
-      return f.evaluate(() => { const panel = document.getElementById('sheetBody'); return /candidate/.test(panel.querySelector('h2').textContent) && /not established canon/.test(panel.textContent) && /District lore sources/.test(panel.textContent) && !!panel.querySelector('a[href^="https://www.worldanvil.com/w/adyta-jeeperssheefers/"]'); });
+      return f.evaluate(() => { const panel = document.getElementById('sheetBody'); const src = panel.querySelector('details.sources'); return !/candidate/i.test(panel.querySelector('h2').textContent) && !/not established canon/.test(panel.textContent) && !!src && !src.open && /not yet confirmed/.test(src.textContent) && !!src.querySelector('a[href^="https://www.worldanvil.com/w/adyta-jeeperssheefers/"]'); });
     });
     await step('Crownless Row discloses its provisional PDA origin', async () => {
       const candidate = catalog.places.find(p => p.id.startsWith('crownless-row--candidate-'));

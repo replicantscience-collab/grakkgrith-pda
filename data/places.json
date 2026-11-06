@@ -4284,9 +4284,9 @@
     {
       "id": "grand-academy--candidate-charter-gate",
       "district": "grand-academy",
-      "name": "Charter Gate [candidate]",
+      "name": "Charter Gate",
       "type": "landmark",
-      "blurb": "Proposed location and name; not established canon. Visitors queue; credentials checked.",
+      "blurb": "Visitors queue; credentials checked.",
       "canonStatus": "proposed",
       "sources": [
         "https://www.worldanvil.com/w/adyta-jeeperssheefers/a/the-grand-academy-landmark"
@@ -4301,9 +4301,9 @@
     {
       "id": "grand-academy--candidate-the-long-archive",
       "district": "grand-academy",
-      "name": "The Long Archive [candidate]",
+      "name": "The Long Archive",
       "type": "landmark",
-      "blurb": "Proposed location and name; not established canon. Requests outlast their requesters.",
+      "blurb": "Requests outlast their requesters.",
       "canonStatus": "proposed",
       "sources": [
         "https://www.worldanvil.com/w/adyta-jeeperssheefers/a/the-grand-academy-landmark"
@@ -4318,9 +4318,9 @@
     {
       "id": "grand-academy--candidate-index-court",
       "district": "grand-academy",
-      "name": "Index Court [candidate]",
+      "name": "Index Court",
       "type": "landmark",
-      "blurb": "Proposed location and name; not established canon. Readers trade missing references.",
+      "blurb": "Readers trade missing references.",
       "canonStatus": "proposed",
       "sources": [
         "https://www.worldanvil.com/w/adyta-jeeperssheefers/a/the-grand-academy-landmark"
@@ -4335,9 +4335,9 @@
     {
       "id": "grand-academy--candidate-east-teaching-halls",
       "district": "grand-academy",
-      "name": "East Teaching Halls [candidate]",
+      "name": "East Teaching Halls",
       "type": "landmark",
-      "blurb": "Proposed location and name; not established canon. Lectures spill into corridors.",
+      "blurb": "Lectures spill into corridors.",
       "canonStatus": "proposed",
       "sources": [
         "https://www.worldanvil.com/w/adyta-jeeperssheefers/a/the-grand-academy-landmark"
@@ -4352,9 +4352,9 @@
     {
       "id": "grand-academy--candidate-isolated-arcane-labs",
       "district": "grand-academy",
-      "name": "Isolated Arcane Labs [candidate]",
+      "name": "Isolated Arcane Labs",
       "type": "landmark",
-      "blurb": "Proposed location and name; not established canon. Wards; separate from technical systems.",
+      "blurb": "Wards; separate from technical systems.",
       "canonStatus": "proposed",
       "sources": [
         "https://www.worldanvil.com/w/adyta-jeeperssheefers/a/the-grand-academy-landmark"
@@ -4369,9 +4369,9 @@
     {
       "id": "grand-academy--candidate-engineering-yard",
       "district": "grand-academy",
-      "name": "Engineering Yard [candidate]",
+      "name": "Engineering Yard",
       "type": "landmark",
-      "blurb": "Proposed location and name; not established canon. Electrical work; no magical power.",
+      "blurb": "Electrical work; no magical power.",
       "canonStatus": "proposed",
       "sources": [
         "https://www.worldanvil.com/w/adyta-jeeperssheefers/a/the-grand-academy-landmark"
@@ -4386,9 +4386,9 @@
     {
       "id": "grand-academy--candidate-the-brass-observatory",
       "district": "grand-academy",
-      "name": "The Brass Observatory [candidate]",
+      "name": "The Brass Observatory",
       "type": "landmark",
-      "blurb": "Proposed location and name; not established canon. Night study; old instruments.",
+      "blurb": "Night study; old instruments.",
       "canonStatus": "proposed",
       "sources": [
         "https://www.worldanvil.com/w/adyta-jeeperssheefers/a/the-grand-academy-landmark"
@@ -4403,9 +4403,9 @@
     {
       "id": "grand-academy--candidate-patron-steps",
       "district": "grand-academy",
-      "name": "Patron Steps [candidate]",
+      "name": "Patron Steps",
       "type": "landmark",
-      "blurb": "Proposed location and name; not established canon. Endowments buy easier introductions.",
+      "blurb": "Endowments buy easier introductions.",
       "canonStatus": "proposed",
       "sources": [
         "https://www.worldanvil.com/w/adyta-jeeperssheefers/a/the-grand-academy-landmark"
@@ -4420,9 +4420,9 @@
     {
       "id": "grand-academy--candidate-the-secondhand-quill",
       "district": "grand-academy",
-      "name": "The Secondhand Quill [candidate]",
+      "name": "The Secondhand Quill",
       "type": "landmark",
-      "blurb": "Proposed location and name; not established canon. Cheap paper; expensive annotations.",
+      "blurb": "Cheap paper; expensive annotations.",
       "canonStatus": "proposed",
       "sources": [
         "https://www.worldanvil.com/w/adyta-jeeperssheefers/a/the-grand-academy-landmark"
@@ -4437,9 +4437,9 @@
     {
       "id": "grand-academy--candidate-copyists-passage",
       "district": "grand-academy",
-      "name": "Copyists Passage [candidate]",
+      "name": "Copyists Passage",
       "type": "landmark",
-      "blurb": "Proposed location and name; not established canon. Service access behind public halls.",
+      "blurb": "Service access behind public halls.",
       "canonStatus": "proposed",
       "sources": [
         "https://www.worldanvil.com/w/adyta-jeeperssheefers/a/the-grand-academy-landmark"
@@ -4454,9 +4454,9 @@
     {
       "id": "new-halo--candidate-the-shining-spire",
       "district": "new-halo",
-      "name": "The Shining Spire [candidate]",
+      "name": "The Shining Spire",
       "type": "landmark",
-      "blurb": "Established name; proposed location and details. Finance, media and corporate prestige.",
+      "blurb": "Finance, media and corporate prestige.",
       "canonStatus": "established name; proposed placement",
       "sources": [
         "https://www.worldanvil.com/w/adyta-jeeperssheefers/a/new-halo-settlement",
@@ -4472,9 +4472,9 @@
     {
       "id": "new-halo--candidate-glassline-walk",
       "district": "new-halo",
-      "name": "Glassline Walk [candidate]",
+      "name": "Glassline Walk",
       "type": "landmark",
-      "blurb": "Proposed location and name; not established canon. Appointments; polished frontage.",
+      "blurb": "Appointments; polished frontage.",
       "canonStatus": "proposed",
       "sources": [
         "https://www.worldanvil.com/w/adyta-jeeperssheefers/a/new-halo-settlement",
@@ -4490,9 +4490,9 @@
     {
       "id": "new-halo--candidate-the-ninth-floor",
       "district": "new-halo",
-      "name": "The Ninth Floor [candidate]",
+      "name": "The Ninth Floor",
       "type": "landmark",
-      "blurb": "Proposed location and name; not established canon. Curated music; reservation required.",
+      "blurb": "Curated music; reservation required.",
       "canonStatus": "proposed",
       "sources": [
         "https://www.worldanvil.com/w/adyta-jeeperssheefers/a/new-halo-settlement",
@@ -4508,9 +4508,9 @@
     {
       "id": "new-halo--candidate-old-lease-court",
       "district": "new-halo",
-      "name": "Old Lease Court [candidate]",
+      "name": "Old Lease Court",
       "type": "landmark",
-      "blurb": "Proposed location and name; not established canon. Older homes inside redevelopment.",
+      "blurb": "Older homes inside redevelopment.",
       "canonStatus": "proposed",
       "sources": [
         "https://www.worldanvil.com/w/adyta-jeeperssheefers/a/new-halo-settlement",
@@ -4526,9 +4526,9 @@
     {
       "id": "new-halo--candidate-velvet-window",
       "district": "new-halo",
-      "name": "Velvet Window [candidate]",
+      "name": "Velvet Window",
       "type": "landmark",
-      "blurb": "Proposed location and name; not established canon. Media storefront; carefully edited city.",
+      "blurb": "Media storefront; carefully edited city.",
       "canonStatus": "proposed",
       "sources": [
         "https://www.worldanvil.com/w/adyta-jeeperssheefers/a/new-halo-settlement",
@@ -4544,9 +4544,9 @@
     {
       "id": "new-halo--candidate-the-quiet-meter",
       "district": "new-halo",
-      "name": "The Quiet Meter [candidate]",
+      "name": "The Quiet Meter",
       "type": "landmark",
-      "blurb": "Proposed location and name; not established canon. Utilities work; somebody pays.",
+      "blurb": "Utilities work; somebody pays.",
       "canonStatus": "proposed",
       "sources": [
         "https://www.worldanvil.com/w/adyta-jeeperssheefers/a/new-halo-settlement",
@@ -4562,9 +4562,9 @@
     {
       "id": "new-halo--candidate-service-shift-gate",
       "district": "new-halo",
-      "name": "Service Shift Gate [candidate]",
+      "name": "Service Shift Gate",
       "type": "landmark",
-      "blurb": "Proposed location and name; not established canon. Workers enter before residents wake.",
+      "blurb": "Workers enter before residents wake.",
       "canonStatus": "proposed",
       "sources": [
         "https://www.worldanvil.com/w/adyta-jeeperssheefers/a/new-halo-settlement",
@@ -4580,9 +4580,9 @@
     {
       "id": "new-halo--candidate-prospect-arcade",
       "district": "new-halo",
-      "name": "Prospect Arcade [candidate]",
+      "name": "Prospect Arcade",
       "type": "landmark",
-      "blurb": "Proposed location and name; not established canon. Boutiques above delivery doors.",
+      "blurb": "Boutiques above delivery doors.",
       "canonStatus": "proposed",
       "sources": [
         "https://www.worldanvil.com/w/adyta-jeeperssheefers/a/new-halo-settlement",
@@ -4598,9 +4598,9 @@
     {
       "id": "new-halo--candidate-last-original-cafe",
       "district": "new-halo",
-      "name": "Last Original Cafe [candidate]",
+      "name": "Last Original Cafe",
       "type": "landmark",
-      "blurb": "Proposed location and name; not established canon. Regulars remember cheaper coffee.",
+      "blurb": "Regulars remember cheaper coffee.",
       "canonStatus": "proposed",
       "sources": [
         "https://www.worldanvil.com/w/adyta-jeeperssheefers/a/new-halo-settlement",
@@ -4616,9 +4616,9 @@
     {
       "id": "new-halo--candidate-the-soft-border",
       "district": "new-halo",
-      "name": "The Soft Border [candidate]",
+      "name": "The Soft Border",
       "type": "landmark",
-      "blurb": "Established name; proposed location and details. South: Low Halo; disputed edge.",
+      "blurb": "South: Low Halo; disputed edge.",
       "canonStatus": "established name; proposed placement",
       "sources": [
         "https://www.worldanvil.com/w/adyta-jeeperssheefers/a/new-halo-settlement",
@@ -4634,9 +4634,9 @@
     {
       "id": "governance-district--candidate-registry-counter",
       "district": "governance-district",
-      "name": "Registry Counter [candidate]",
+      "name": "Registry Counter",
       "type": "landmark",
-      "blurb": "Proposed location and name; not established canon. ACR branch; identity paperwork.",
+      "blurb": "ACR branch; identity paperwork.",
       "canonStatus": "proposed",
       "sources": [
         "https://www.worldanvil.com/w/adyta-jeeperssheefers/a/adyta-settlement",
@@ -4652,9 +4652,9 @@
     {
       "id": "governance-district--candidate-advocates-steps",
       "district": "governance-district",
-      "name": "Advocates Steps [candidate]",
+      "name": "Advocates Steps",
       "type": "landmark",
-      "blurb": "Proposed location and name; not established canon. APA intake; bring every notice.",
+      "blurb": "APA intake; bring every notice.",
       "canonStatus": "proposed",
       "sources": [
         "https://www.worldanvil.com/w/adyta-jeeperssheefers/a/adyta-settlement",
@@ -4670,9 +4670,9 @@
     {
       "id": "governance-district--candidate-labor-claims-hall",
       "district": "governance-district",
-      "name": "Labor Claims Hall [candidate]",
+      "name": "Labor Claims Hall",
       "type": "landmark",
-      "blurb": "Proposed location and name; not established canon. ALB branch; wages and hazards.",
+      "blurb": "ALB branch; wages and hazards.",
       "canonStatus": "proposed",
       "sources": [
         "https://www.worldanvil.com/w/adyta-jeeperssheefers/a/adyta-settlement",
@@ -4688,9 +4688,9 @@
     {
       "id": "governance-district--candidate-wardens-rest",
       "district": "governance-district",
-      "name": "Wardens Rest [candidate]",
+      "name": "Wardens Rest",
       "type": "landmark",
-      "blurb": "Proposed location and name; not established canon. ACW liaison; civilian protection.",
+      "blurb": "ACW liaison; civilian protection.",
       "canonStatus": "proposed",
       "sources": [
         "https://www.worldanvil.com/w/adyta-jeeperssheefers/a/adyta-settlement",
@@ -4706,9 +4706,9 @@
     {
       "id": "governance-district--candidate-evidence-annex",
       "district": "governance-district",
-      "name": "Evidence Annex [candidate]",
+      "name": "Evidence Annex",
       "type": "landmark",
-      "blurb": "Proposed location and name; not established canon. ABI records; restricted access.",
+      "blurb": "ABI records; restricted access.",
       "canonStatus": "proposed",
       "sources": [
         "https://www.worldanvil.com/w/adyta-jeeperssheefers/a/adyta-settlement",
@@ -4724,9 +4724,9 @@
     {
       "id": "governance-district--candidate-response-court",
       "district": "governance-district",
-      "name": "Response Court [candidate]",
+      "name": "Response Court",
       "type": "landmark",
-      "blurb": "Proposed location and name; not established canon. AEM coordination; exits stay clear.",
+      "blurb": "AEM coordination; exits stay clear.",
       "canonStatus": "proposed",
       "sources": [
         "https://www.worldanvil.com/w/adyta-jeeperssheefers/a/adyta-settlement",
@@ -4742,9 +4742,9 @@
     {
       "id": "governance-district--candidate-the-duplicate",
       "district": "governance-district",
-      "name": "The Duplicate [candidate]",
+      "name": "The Duplicate",
       "type": "landmark",
-      "blurb": "Proposed location and name; not established canon. Copies, stamps and tired clerks.",
+      "blurb": "Copies, stamps and tired clerks.",
       "canonStatus": "proposed",
       "sources": [
         "https://www.worldanvil.com/w/adyta-jeeperssheefers/a/adyta-settlement",
@@ -4760,9 +4760,9 @@
     {
       "id": "governance-district--candidate-appeals-walk",
       "district": "governance-district",
-      "name": "Appeals Walk [candidate]",
+      "name": "Appeals Walk",
       "type": "landmark",
-      "blurb": "Proposed location and name; not established canon. Public queue between agencies.",
+      "blurb": "Public queue between agencies.",
       "canonStatus": "proposed",
       "sources": [
         "https://www.worldanvil.com/w/adyta-jeeperssheefers/a/adyta-settlement",
@@ -4778,9 +4778,9 @@
     {
       "id": "governance-district--candidate-service-ledger-gate",
       "district": "governance-district",
-      "name": "Service Ledger Gate [candidate]",
+      "name": "Service Ledger Gate",
       "type": "landmark",
-      "blurb": "Proposed location and name; not established canon. Compliance papers; contested authority.",
+      "blurb": "Compliance papers; contested authority.",
       "canonStatus": "proposed",
       "sources": [
         "https://www.worldanvil.com/w/adyta-jeeperssheefers/a/adyta-settlement",
@@ -4796,9 +4796,9 @@
     {
       "id": "governance-district--candidate-back-file-passage",
       "district": "governance-district",
-      "name": "Back File Passage [candidate]",
+      "name": "Back File Passage",
       "type": "landmark",
-      "blurb": "Proposed location and name; not established canon. Deliveries; records travel slowly.",
+      "blurb": "Deliveries; records travel slowly.",
       "canonStatus": "proposed",
       "sources": [
         "https://www.worldanvil.com/w/adyta-jeeperssheefers/a/adyta-settlement",
@@ -4814,9 +4814,9 @@
     {
       "id": "crownline-industrials--candidate-certification-gate",
       "district": "crownline-industrials",
-      "name": "Certification Gate [candidate]",
+      "name": "Certification Gate",
       "type": "landmark",
-      "blurb": "Proposed location and name; not established canon. Access begins with paperwork.",
+      "blurb": "Access begins with paperwork.",
       "canonStatus": "proposed",
       "sources": [
         "https://www.worldanvil.com/w/adyta-jeeperssheefers/a/adyta-settlement",
@@ -4832,9 +4832,9 @@
     {
       "id": "crownline-industrials--candidate-meter-house",
       "district": "crownline-industrials",
-      "name": "Meter House [candidate]",
+      "name": "Meter House",
       "type": "landmark",
-      "blurb": "Proposed location and name; not established canon. Remote service; local consequences.",
+      "blurb": "Remote service; local consequences.",
       "canonStatus": "proposed",
       "sources": [
         "https://www.worldanvil.com/w/adyta-jeeperssheefers/a/adyta-settlement",
@@ -4850,9 +4850,9 @@
     {
       "id": "crownline-industrials--candidate-switchyard-twelve",
       "district": "crownline-industrials",
-      "name": "Switchyard Twelve [candidate]",
+      "name": "Switchyard Twelve",
       "type": "landmark",
-      "blurb": "Proposed location and name; not established canon. Electrical distribution; restricted access.",
+      "blurb": "Electrical distribution; restricted access.",
       "canonStatus": "proposed",
       "sources": [
         "https://www.worldanvil.com/w/adyta-jeeperssheefers/a/adyta-settlement",
@@ -4868,9 +4868,9 @@
     {
       "id": "crownline-industrials--candidate-pump-ledger",
       "district": "crownline-industrials",
-      "name": "Pump Ledger [candidate]",
+      "name": "Pump Ledger",
       "type": "landmark",
-      "blurb": "Proposed location and name; not established canon. Water machinery; service records.",
+      "blurb": "Water machinery; service records.",
       "canonStatus": "proposed",
       "sources": [
         "https://www.worldanvil.com/w/adyta-jeeperssheefers/a/adyta-settlement",
@@ -4886,9 +4886,9 @@
     {
       "id": "crownline-industrials--candidate-the-clean-front",
       "district": "crownline-industrials",
-      "name": "The Clean Front [candidate]",
+      "name": "The Clean Front",
       "type": "landmark",
-      "blurb": "Proposed location and name; not established canon. White and gold service counters.",
+      "blurb": "White and gold service counters.",
       "canonStatus": "proposed",
       "sources": [
         "https://www.worldanvil.com/w/adyta-jeeperssheefers/a/adyta-settlement",
@@ -4904,9 +4904,9 @@
     {
       "id": "crownline-industrials--candidate-contractor-muster",
       "district": "crownline-industrials",
-      "name": "Contractor Muster [candidate]",
+      "name": "Contractor Muster",
       "type": "landmark",
-      "blurb": "Proposed location and name; not established canon. Bastion personnel; paid enforcement.",
+      "blurb": "Bastion personnel; paid enforcement.",
       "canonStatus": "proposed",
       "sources": [
         "https://www.worldanvil.com/w/adyta-jeeperssheefers/a/adyta-settlement",
@@ -4922,9 +4922,9 @@
     {
       "id": "crownline-industrials--candidate-inspection-loop",
       "district": "crownline-industrials",
-      "name": "Inspection Loop [candidate]",
+      "name": "Inspection Loop",
       "type": "landmark",
-      "blurb": "Proposed location and name; not established canon. Vans circle before work starts.",
+      "blurb": "Vans circle before work starts.",
       "canonStatus": "proposed",
       "sources": [
         "https://www.worldanvil.com/w/adyta-jeeperssheefers/a/adyta-settlement",
@@ -4940,9 +4940,9 @@
     {
       "id": "crownline-industrials--candidate-the-overtime-canteen",
       "district": "crownline-industrials",
-      "name": "The Overtime Canteen [candidate]",
+      "name": "The Overtime Canteen",
       "type": "landmark",
-      "blurb": "Proposed location and name; not established canon. Shift meals; no free minutes.",
+      "blurb": "Shift meals; no free minutes.",
       "canonStatus": "proposed",
       "sources": [
         "https://www.worldanvil.com/w/adyta-jeeperssheefers/a/adyta-settlement",
@@ -4958,9 +4958,9 @@
     {
       "id": "crownline-industrials--candidate-disputed-connection",
       "district": "crownline-industrials",
-      "name": "Disputed Connection [candidate]",
+      "name": "Disputed Connection",
       "type": "landmark",
-      "blurb": "Proposed location and name; not established canon. Older buildings await approval.",
+      "blurb": "Older buildings await approval.",
       "canonStatus": "proposed",
       "sources": [
         "https://www.worldanvil.com/w/adyta-jeeperssheefers/a/adyta-settlement",
@@ -4976,9 +4976,9 @@
     {
       "id": "crownline-industrials--candidate-maintenance-cut",
       "district": "crownline-industrials",
-      "name": "Maintenance Cut [candidate]",
+      "name": "Maintenance Cut",
       "type": "landmark",
-      "blurb": "Proposed location and name; not established canon. Service road; watch the cables.",
+      "blurb": "Service road; watch the cables.",
       "canonStatus": "proposed",
       "sources": [
         "https://www.worldanvil.com/w/adyta-jeeperssheefers/a/adyta-settlement",
@@ -4994,9 +4994,9 @@
     {
       "id": "three-spires-monastery--candidate-three-spires",
       "district": "three-spires-monastery",
-      "name": "Three Spires [candidate]",
+      "name": "Three Spires",
       "type": "landmark",
-      "blurb": "Proposed location and name; not established canon. Old stone; meanings remain disputed.",
+      "blurb": "Old stone; meanings remain disputed.",
       "canonStatus": "proposed",
       "sources": [
         "https://www.worldanvil.com/w/adyta-jeeperssheefers/a/adyta-settlement"
@@ -5011,9 +5011,9 @@
     {
       "id": "three-spires-monastery--candidate-petition-steps",
       "district": "three-spires-monastery",
-      "name": "Petition Steps [candidate]",
+      "name": "Petition Steps",
       "type": "landmark",
-      "blurb": "Proposed location and name; not established canon. Visitors bring quiet requests.",
+      "blurb": "Visitors bring quiet requests.",
       "canonStatus": "proposed",
       "sources": [
         "https://www.worldanvil.com/w/adyta-jeeperssheefers/a/adyta-settlement"
@@ -5028,9 +5028,9 @@
     {
       "id": "three-spires-monastery--candidate-the-unnamed-court",
       "district": "three-spires-monastery",
-      "name": "The Unnamed Court [candidate]",
+      "name": "The Unnamed Court",
       "type": "landmark",
-      "blurb": "Proposed location and name; not established canon. No public account of its rites.",
+      "blurb": "No public account of its rites.",
       "canonStatus": "proposed",
       "sources": [
         "https://www.worldanvil.com/w/adyta-jeeperssheefers/a/adyta-settlement"
@@ -5045,9 +5045,9 @@
     {
       "id": "three-spires-monastery--candidate-guest-lantern",
       "district": "three-spires-monastery",
-      "name": "Guest Lantern [candidate]",
+      "name": "Guest Lantern",
       "type": "landmark",
-      "blurb": "Proposed location and name; not established canon. Beds for those admitted.",
+      "blurb": "Beds for those admitted.",
       "canonStatus": "proposed",
       "sources": [
         "https://www.worldanvil.com/w/adyta-jeeperssheefers/a/adyta-settlement"
@@ -5062,9 +5062,9 @@
     {
       "id": "three-spires-monastery--candidate-cloister-walk",
       "district": "three-spires-monastery",
-      "name": "Cloister Walk [candidate]",
+      "name": "Cloister Walk",
       "type": "landmark",
-      "blurb": "Proposed location and name; not established canon. Footsteps carry around the walls.",
+      "blurb": "Footsteps carry around the walls.",
       "canonStatus": "proposed",
       "sources": [
         "https://www.worldanvil.com/w/adyta-jeeperssheefers/a/adyta-settlement"
@@ -5079,9 +5079,9 @@
     {
       "id": "three-spires-monastery--candidate-the-mended-bell",
       "district": "three-spires-monastery",
-      "name": "The Mended Bell [candidate]",
+      "name": "The Mended Bell",
       "type": "landmark",
-      "blurb": "Proposed location and name; not established canon. Repairs show through old metal.",
+      "blurb": "Repairs show through old metal.",
       "canonStatus": "proposed",
       "sources": [
         "https://www.worldanvil.com/w/adyta-jeeperssheefers/a/adyta-settlement"
@@ -5096,9 +5096,9 @@
     {
       "id": "three-spires-monastery--candidate-keeper-rooms",
       "district": "three-spires-monastery",
-      "name": "Keeper Rooms [candidate]",
+      "name": "Keeper Rooms",
       "type": "landmark",
-      "blurb": "Proposed location and name; not established canon. Daily work behind sacred frontage.",
+      "blurb": "Daily work behind sacred frontage.",
       "canonStatus": "proposed",
       "sources": [
         "https://www.worldanvil.com/w/adyta-jeeperssheefers/a/adyta-settlement"
@@ -5113,9 +5113,9 @@
     {
       "id": "three-spires-monastery--candidate-rain-cistern",
       "district": "three-spires-monastery",
-      "name": "Rain Cistern [candidate]",
+      "name": "Rain Cistern",
       "type": "landmark",
-      "blurb": "Proposed location and name; not established canon. Water below the courtyard.",
+      "blurb": "Water below the courtyard.",
       "canonStatus": "proposed",
       "sources": [
         "https://www.worldanvil.com/w/adyta-jeeperssheefers/a/adyta-settlement"
@@ -5130,9 +5130,9 @@
     {
       "id": "three-spires-monastery--candidate-the-quiet-table",
       "district": "three-spires-monastery",
-      "name": "The Quiet Table [candidate]",
+      "name": "The Quiet Table",
       "type": "landmark",
-      "blurb": "Proposed location and name; not established canon. Meals without many questions.",
+      "blurb": "Meals without many questions.",
       "canonStatus": "proposed",
       "sources": [
         "https://www.worldanvil.com/w/adyta-jeeperssheefers/a/adyta-settlement"
@@ -5147,9 +5147,9 @@
     {
       "id": "three-spires-monastery--candidate-outer-service-gate",
       "district": "three-spires-monastery",
-      "name": "Outer Service Gate [candidate]",
+      "name": "Outer Service Gate",
       "type": "landmark",
-      "blurb": "Proposed location and name; not established canon. Deliveries enter beyond the steps.",
+      "blurb": "Deliveries enter beyond the steps.",
       "canonStatus": "proposed",
       "sources": [
         "https://www.worldanvil.com/w/adyta-jeeperssheefers/a/adyta-settlement"
@@ -5164,9 +5164,9 @@
     {
       "id": "elven-enclave--candidate-pale-brick-walk",
       "district": "elven-enclave",
-      "name": "Pale Brick Walk [candidate]",
+      "name": "Pale Brick Walk",
       "type": "landmark",
-      "blurb": "Proposed location and name; not established canon. Generations of continuous repairs.",
+      "blurb": "Generations of continuous repairs.",
       "canonStatus": "proposed",
       "sources": [
         "https://www.worldanvil.com/w/adyta-jeeperssheefers/a/elves-species"
@@ -5181,9 +5181,9 @@
     {
       "id": "elven-enclave--candidate-the-kept-garden",
       "district": "elven-enclave",
-      "name": "The Kept Garden [candidate]",
+      "name": "The Kept Garden",
       "type": "landmark",
-      "blurb": "Proposed location and name; not established canon. Shade maintained by paid labor.",
+      "blurb": "Shade maintained by paid labor.",
       "canonStatus": "proposed",
       "sources": [
         "https://www.worldanvil.com/w/adyta-jeeperssheefers/a/elves-species"
@@ -5198,9 +5198,9 @@
     {
       "id": "elven-enclave--candidate-cistern-court",
       "district": "elven-enclave",
-      "name": "Cistern Court [candidate]",
+      "name": "Cistern Court",
       "type": "landmark",
-      "blurb": "Proposed location and name; not established canon. Water channels; pumps kept working.",
+      "blurb": "Water channels; pumps kept working.",
       "canonStatus": "proposed",
       "sources": [
         "https://www.worldanvil.com/w/adyta-jeeperssheefers/a/elves-species"
@@ -5215,9 +5215,9 @@
     {
       "id": "elven-enclave--candidate-old-ward-house",
       "district": "elven-enclave",
-      "name": "Old Ward House [candidate]",
+      "name": "Old Ward House",
       "type": "landmark",
-      "blurb": "Proposed location and name; not established canon. Obsolete wards; access disputed.",
+      "blurb": "Obsolete wards; access disputed.",
       "canonStatus": "proposed",
       "sources": [
         "https://www.worldanvil.com/w/adyta-jeeperssheefers/a/elves-species"
@@ -5232,9 +5232,9 @@
     {
       "id": "elven-enclave--candidate-the-narrow-archive",
       "district": "elven-enclave",
-      "name": "The Narrow Archive [candidate]",
+      "name": "The Narrow Archive",
       "type": "landmark",
-      "blurb": "Proposed location and name; not established canon. Household records behind locked doors.",
+      "blurb": "Household records behind locked doors.",
       "canonStatus": "proposed",
       "sources": [
         "https://www.worldanvil.com/w/adyta-jeeperssheefers/a/elves-species"
@@ -5249,9 +5249,9 @@
     {
       "id": "elven-enclave--candidate-canopy-steps",
       "district": "elven-enclave",
-      "name": "Canopy Steps [candidate]",
+      "name": "Canopy Steps",
       "type": "landmark",
-      "blurb": "Proposed location and name; not established canon. Quiet lanes under mature trees.",
+      "blurb": "Quiet lanes under mature trees.",
       "canonStatus": "proposed",
       "sources": [
         "https://www.worldanvil.com/w/adyta-jeeperssheefers/a/elves-species"
@@ -5266,9 +5266,9 @@
     {
       "id": "elven-enclave--candidate-shielded-service-yard",
       "district": "elven-enclave",
-      "name": "Shielded Service Yard [candidate]",
+      "name": "Shielded Service Yard",
       "type": "landmark",
-      "blurb": "Proposed location and name; not established canon. Technical utilities; isolated from wards.",
+      "blurb": "Technical utilities; isolated from wards.",
       "canonStatus": "proposed",
       "sources": [
         "https://www.worldanvil.com/w/adyta-jeeperssheefers/a/elves-species"
@@ -5283,9 +5283,9 @@
     {
       "id": "elven-enclave--candidate-the-long-lease",
       "district": "elven-enclave",
-      "name": "The Long Lease [candidate]",
+      "name": "The Long Lease",
       "type": "landmark",
-      "blurb": "Proposed location and name; not established canon. Homes altered across generations.",
+      "blurb": "Homes altered across generations.",
       "canonStatus": "proposed",
       "sources": [
         "https://www.worldanvil.com/w/adyta-jeeperssheefers/a/elves-species"
@@ -5300,9 +5300,9 @@
     {
       "id": "elven-enclave--candidate-the-gardeners-table",
       "district": "elven-enclave",
-      "name": "The Gardeners Table [candidate]",
+      "name": "The Gardeners Table",
       "type": "landmark",
-      "blurb": "Proposed location and name; not established canon. Workers eat behind the frontage.",
+      "blurb": "Workers eat behind the frontage.",
       "canonStatus": "proposed",
       "sources": [
         "https://www.worldanvil.com/w/adyta-jeeperssheefers/a/elves-species"
@@ -5317,9 +5317,9 @@
     {
       "id": "elven-enclave--candidate-west-maintenance-gate",
       "district": "elven-enclave",
-      "name": "West Maintenance Gate [candidate]",
+      "name": "West Maintenance Gate",
       "type": "landmark",
-      "blurb": "Proposed location and name; not established canon. Delivery access; heritage has plumbing.",
+      "blurb": "Delivery access; heritage has plumbing.",
       "canonStatus": "proposed",
       "sources": [
         "https://www.worldanvil.com/w/adyta-jeeperssheefers/a/elves-species"
@@ -5334,9 +5334,9 @@
     {
       "id": "central-core--candidate-transfer-square",
       "district": "central-core",
-      "name": "Transfer Square [candidate]",
+      "name": "Transfer Square",
       "type": "landmark",
-      "blurb": "Proposed location and name; not established canon. Surface tram interchange; proposed layout.",
+      "blurb": "Surface tram interchange; proposed layout.",
       "canonStatus": "proposed",
       "sources": [
         "https://www.worldanvil.com/w/adyta-jeeperssheefers/a/adyta-settlement",
@@ -5352,9 +5352,9 @@
     {
       "id": "central-core--candidate-commerce-steps",
       "district": "central-core",
-      "name": "Commerce Steps [candidate]",
+      "name": "Commerce Steps",
       "type": "landmark",
-      "blurb": "Proposed location and name; not established canon. Offices above the public crowd.",
+      "blurb": "Offices above the public crowd.",
       "canonStatus": "proposed",
       "sources": [
         "https://www.worldanvil.com/w/adyta-jeeperssheefers/a/adyta-settlement",
@@ -5370,9 +5370,9 @@
     {
       "id": "central-core--candidate-the-public-counter",
       "district": "central-core",
-      "name": "The Public Counter [candidate]",
+      "name": "The Public Counter",
       "type": "landmark",
-      "blurb": "Proposed location and name; not established canon. Civic referrals; several queues.",
+      "blurb": "Civic referrals; several queues.",
       "canonStatus": "proposed",
       "sources": [
         "https://www.worldanvil.com/w/adyta-jeeperssheefers/a/adyta-settlement",
@@ -5388,9 +5388,9 @@
     {
       "id": "central-core--candidate-ledger-arcade",
       "district": "central-core",
-      "name": "Ledger Arcade [candidate]",
+      "name": "Ledger Arcade",
       "type": "landmark",
-      "blurb": "Proposed location and name; not established canon. Contracts, accounts and small traders.",
+      "blurb": "Contracts, accounts and small traders.",
       "canonStatus": "proposed",
       "sources": [
         "https://www.worldanvil.com/w/adyta-jeeperssheefers/a/adyta-settlement",
@@ -5406,9 +5406,9 @@
     {
       "id": "central-core--candidate-shift-market",
       "district": "central-core",
-      "name": "Shift Market [candidate]",
+      "name": "Shift Market",
       "type": "landmark",
-      "blurb": "Proposed location and name; not established canon. Food between working hours.",
+      "blurb": "Food between working hours.",
       "canonStatus": "proposed",
       "sources": [
         "https://www.worldanvil.com/w/adyta-jeeperssheefers/a/adyta-settlement",
@@ -5424,9 +5424,9 @@
     {
       "id": "central-core--candidate-service-crossing",
       "district": "central-core",
-      "name": "Service Crossing [candidate]",
+      "name": "Service Crossing",
       "type": "landmark",
-      "blurb": "Proposed location and name; not established canon. Delivery carts meet public traffic.",
+      "blurb": "Delivery carts meet public traffic.",
       "canonStatus": "proposed",
       "sources": [
         "https://www.worldanvil.com/w/adyta-jeeperssheefers/a/adyta-settlement",
@@ -5442,9 +5442,9 @@
     {
       "id": "central-core--candidate-the-last-bench",
       "district": "central-core",
-      "name": "The Last Bench [candidate]",
+      "name": "The Last Bench",
       "type": "landmark",
-      "blurb": "Proposed location and name; not established canon. A place to wait unpaid.",
+      "blurb": "A place to wait unpaid.",
       "canonStatus": "proposed",
       "sources": [
         "https://www.worldanvil.com/w/adyta-jeeperssheefers/a/adyta-settlement",
@@ -5460,9 +5460,9 @@
     {
       "id": "central-core--candidate-notice-wall",
       "district": "central-core",
-      "name": "Notice Wall [candidate]",
+      "name": "Notice Wall",
       "type": "landmark",
-      "blurb": "Proposed location and name; not established canon. Official announcements; competing revisions.",
+      "blurb": "Official announcements; competing revisions.",
       "canonStatus": "proposed",
       "sources": [
         "https://www.worldanvil.com/w/adyta-jeeperssheefers/a/adyta-settlement",
@@ -5478,9 +5478,9 @@
     {
       "id": "central-core--candidate-roofline-cut",
       "district": "central-core",
-      "name": "Roofline Cut [candidate]",
+      "name": "Roofline Cut",
       "type": "landmark",
-      "blurb": "Proposed location and name; not established canon. Foot access above service alleys.",
+      "blurb": "Foot access above service alleys.",
       "canonStatus": "proposed",
       "sources": [
         "https://www.worldanvil.com/w/adyta-jeeperssheefers/a/adyta-settlement",
@@ -5496,9 +5496,9 @@
     {
       "id": "central-core--candidate-the-street-spine",
       "district": "central-core",
-      "name": "The Street Spine [candidate]",
+      "name": "The Street Spine",
       "type": "landmark",
-      "blurb": "Proposed location and name; not established canon. Main road through the center.",
+      "blurb": "Main road through the center.",
       "canonStatus": "proposed",
       "sources": [
         "https://www.worldanvil.com/w/adyta-jeeperssheefers/a/adyta-settlement",
@@ -5514,9 +5514,9 @@
     {
       "id": "the-ashrun--candidate-freight-reach",
       "district": "the-ashrun",
-      "name": "Freight Reach [candidate]",
+      "name": "Freight Reach",
       "type": "landmark",
-      "blurb": "Proposed location and name; not established canon. Barges move through working water.",
+      "blurb": "Barges move through working water.",
       "canonStatus": "proposed",
       "sources": [
         "https://www.worldanvil.com/w/adyta-jeeperssheefers/a/adyta-settlement",
@@ -5532,9 +5532,9 @@
     {
       "id": "the-ashrun--candidate-manifest-quay",
       "district": "the-ashrun",
-      "name": "Manifest Quay [candidate]",
+      "name": "Manifest Quay",
       "type": "landmark",
-      "blurb": "Proposed location and name; not established canon. Meridian freight; papers meet cargo.",
+      "blurb": "Meridian freight; papers meet cargo.",
       "canonStatus": "proposed",
       "sources": [
         "https://www.worldanvil.com/w/adyta-jeeperssheefers/a/adyta-settlement",
@@ -5550,9 +5550,9 @@
     {
       "id": "the-ashrun--candidate-the-brown-steps",
       "district": "the-ashrun",
-      "name": "The Brown Steps [candidate]",
+      "name": "The Brown Steps",
       "type": "landmark",
-      "blurb": "Proposed location and name; not established canon. Public bank; water leaves marks.",
+      "blurb": "Public bank; water leaves marks.",
       "canonStatus": "proposed",
       "sources": [
         "https://www.worldanvil.com/w/adyta-jeeperssheefers/a/adyta-settlement",
@@ -5568,9 +5568,9 @@
     {
       "id": "the-ashrun--candidate-pump-margin",
       "district": "the-ashrun",
-      "name": "Pump Margin [candidate]",
+      "name": "Pump Margin",
       "type": "landmark",
-      "blurb": "Proposed location and name; not established canon. Service access above intake machinery.",
+      "blurb": "Service access above intake machinery.",
       "canonStatus": "proposed",
       "sources": [
         "https://www.worldanvil.com/w/adyta-jeeperssheefers/a/adyta-settlement",
@@ -5586,9 +5586,9 @@
     {
       "id": "the-ashrun--candidate-runoff-mouth",
       "district": "the-ashrun",
-      "name": "Runoff Mouth [candidate]",
+      "name": "Runoff Mouth",
       "type": "landmark",
-      "blurb": "Proposed location and name; not established canon. Keep clear of discharge.",
+      "blurb": "Keep clear of discharge.",
       "canonStatus": "proposed",
       "sources": [
         "https://www.worldanvil.com/w/adyta-jeeperssheefers/a/adyta-settlement",
@@ -5604,9 +5604,9 @@
     {
       "id": "the-ashrun--candidate-towline-walk",
       "district": "the-ashrun",
-      "name": "Towline Walk [candidate]",
+      "name": "Towline Walk",
       "type": "landmark",
-      "blurb": "Proposed location and name; not established canon. Foot traffic along the bank.",
+      "blurb": "Foot traffic along the bank.",
       "canonStatus": "proposed",
       "sources": [
         "https://www.worldanvil.com/w/adyta-jeeperssheefers/a/adyta-settlement",
@@ -5622,9 +5622,9 @@
     {
       "id": "the-ashrun--candidate-the-bent-crossing",
       "district": "the-ashrun",
-      "name": "The Bent Crossing [candidate]",
+      "name": "The Bent Crossing",
       "type": "landmark",
-      "blurb": "Proposed location and name; not established canon. Bridge; narrow service approach.",
+      "blurb": "Bridge; narrow service approach.",
       "canonStatus": "proposed",
       "sources": [
         "https://www.worldanvil.com/w/adyta-jeeperssheefers/a/adyta-settlement",
@@ -5640,9 +5640,9 @@
     {
       "id": "the-ashrun--candidate-tide-ledger",
       "district": "the-ashrun",
-      "name": "Tide Ledger [candidate]",
+      "name": "Tide Ledger",
       "type": "landmark",
-      "blurb": "Proposed location and name; not established canon. Shift board for water workers.",
+      "blurb": "Shift board for water workers.",
       "canonStatus": "proposed",
       "sources": [
         "https://www.worldanvil.com/w/adyta-jeeperssheefers/a/adyta-settlement",
@@ -5658,9 +5658,9 @@
     {
       "id": "the-ashrun--candidate-debris-catch",
       "district": "the-ashrun",
-      "name": "Debris Catch [candidate]",
+      "name": "Debris Catch",
       "type": "landmark",
-      "blurb": "Proposed location and name; not established canon. What floats gathers here.",
+      "blurb": "What floats gathers here.",
       "canonStatus": "proposed",
       "sources": [
         "https://www.worldanvil.com/w/adyta-jeeperssheefers/a/adyta-settlement",
@@ -5676,9 +5676,9 @@
     {
       "id": "the-ashrun--candidate-harborward-channel",
       "district": "the-ashrun",
-      "name": "Harborward Channel [candidate]",
+      "name": "Harborward Channel",
       "type": "landmark",
-      "blurb": "Proposed location and name; not established canon. Toward the broader harbor.",
+      "blurb": "Toward the broader harbor.",
       "canonStatus": "proposed",
       "sources": [
         "https://www.worldanvil.com/w/adyta-jeeperssheefers/a/adyta-settlement",
@@ -5694,9 +5694,9 @@
     {
       "id": "far-shipyards--candidate-half-hull-dock",
       "district": "far-shipyards",
-      "name": "Half-Hull Dock [candidate]",
+      "name": "Half-Hull Dock",
       "type": "landmark",
-      "blurb": "Proposed location and name; not established canon. A ship midway through becoming.",
+      "blurb": "A ship midway through becoming.",
       "canonStatus": "proposed",
       "sources": [
         "https://www.worldanvil.com/w/adyta-jeeperssheefers/a/adyta-settlement",
@@ -5712,9 +5712,9 @@
     {
       "id": "far-shipyards--candidate-second-sale-yard",
       "district": "far-shipyards",
-      "name": "Second Sale Yard [candidate]",
+      "name": "Second Sale Yard",
       "type": "landmark",
-      "blurb": "Proposed location and name; not established canon. Recovered fittings; ask twice.",
+      "blurb": "Recovered fittings; ask twice.",
       "canonStatus": "proposed",
       "sources": [
         "https://www.worldanvil.com/w/adyta-jeeperssheefers/a/adyta-settlement",
@@ -5730,9 +5730,9 @@
     {
       "id": "far-shipyards--candidate-plate-cutters",
       "district": "far-shipyards",
-      "name": "Plate Cutters [candidate]",
+      "name": "Plate Cutters",
       "type": "landmark",
-      "blurb": "Proposed location and name; not established canon. Steel work; hearing protection advised.",
+      "blurb": "Steel work; hearing protection advised.",
       "canonStatus": "proposed",
       "sources": [
         "https://www.worldanvil.com/w/adyta-jeeperssheefers/a/adyta-settlement",
@@ -5748,9 +5748,9 @@
     {
       "id": "far-shipyards--candidate-crane-alley",
       "district": "far-shipyards",
-      "name": "Crane Alley [candidate]",
+      "name": "Crane Alley",
       "type": "landmark",
-      "blurb": "Proposed location and name; not established canon. Loads move overhead.",
+      "blurb": "Loads move overhead.",
       "canonStatus": "proposed",
       "sources": [
         "https://www.worldanvil.com/w/adyta-jeeperssheefers/a/adyta-settlement",
@@ -5766,9 +5766,9 @@
     {
       "id": "far-shipyards--candidate-the-dry-berth",
       "district": "far-shipyards",
-      "name": "The Dry Berth [candidate]",
+      "name": "The Dry Berth",
       "type": "landmark",
-      "blurb": "Proposed location and name; not established canon. Repairs below the waterline.",
+      "blurb": "Repairs below the waterline.",
       "canonStatus": "proposed",
       "sources": [
         "https://www.worldanvil.com/w/adyta-jeeperssheefers/a/adyta-settlement",
@@ -5784,9 +5784,9 @@
     {
       "id": "far-shipyards--candidate-rivet-canteen",
       "district": "far-shipyards",
-      "name": "Rivet Canteen [candidate]",
+      "name": "Rivet Canteen",
       "type": "landmark",
-      "blurb": "Proposed location and name; not established canon. Hot food between shifts.",
+      "blurb": "Hot food between shifts.",
       "canonStatus": "proposed",
       "sources": [
         "https://www.worldanvil.com/w/adyta-jeeperssheefers/a/adyta-settlement",
@@ -5802,9 +5802,9 @@
     {
       "id": "far-shipyards--candidate-launch-slip",
       "district": "far-shipyards",
-      "name": "Launch Slip [candidate]",
+      "name": "Launch Slip",
       "type": "landmark",
-      "blurb": "Proposed location and name; not established canon. Keep the slope clear.",
+      "blurb": "Keep the slope clear.",
       "canonStatus": "proposed",
       "sources": [
         "https://www.worldanvil.com/w/adyta-jeeperssheefers/a/adyta-settlement",
@@ -5820,9 +5820,9 @@
     {
       "id": "far-shipyards--candidate-manifest-shed",
       "district": "far-shipyards",
-      "name": "Manifest Shed [candidate]",
+      "name": "Manifest Shed",
       "type": "landmark",
-      "blurb": "Proposed location and name; not established canon. Freight paperwork before departure.",
+      "blurb": "Freight paperwork before departure.",
       "canonStatus": "proposed",
       "sources": [
         "https://www.worldanvil.com/w/adyta-jeeperssheefers/a/adyta-settlement",
@@ -5838,9 +5838,9 @@
     {
       "id": "far-shipyards--candidate-crew-rooms",
       "district": "far-shipyards",
-      "name": "Crew Rooms [candidate]",
+      "name": "Crew Rooms",
       "type": "landmark",
-      "blurb": "Proposed location and name; not established canon. Beds above the working waterfront.",
+      "blurb": "Beds above the working waterfront.",
       "canonStatus": "proposed",
       "sources": [
         "https://www.worldanvil.com/w/adyta-jeeperssheefers/a/adyta-settlement",
@@ -5856,9 +5856,9 @@
     {
       "id": "far-shipyards--candidate-breakers-gate",
       "district": "far-shipyards",
-      "name": "Breakers Gate [candidate]",
+      "name": "Breakers Gate",
       "type": "landmark",
-      "blurb": "Proposed location and name; not established canon. Parts leave; whole ships rarely do.",
+      "blurb": "Parts leave; whole ships rarely do.",
       "canonStatus": "proposed",
       "sources": [
         "https://www.worldanvil.com/w/adyta-jeeperssheefers/a/adyta-settlement",
@@ -5874,9 +5874,9 @@
     {
       "id": "greasewick-row--candidate-third-rattle-motors",
       "district": "greasewick-row",
-      "name": "Third Rattle Motors [candidate]",
+      "name": "Third Rattle Motors",
       "type": "landmark",
-      "blurb": "Proposed location and name; not established canon. Diagnosis before credentials.",
+      "blurb": "Diagnosis before credentials.",
       "canonStatus": "proposed",
       "sources": [
         "https://www.worldanvil.com/w/adyta-jeeperssheefers/a/greasewick-row-settlement",
@@ -5892,9 +5892,9 @@
     {
       "id": "greasewick-row--candidate-the-borrowed-spanner",
       "district": "greasewick-row",
-      "name": "The Borrowed Spanner [candidate]",
+      "name": "The Borrowed Spanner",
       "type": "landmark",
-      "blurb": "Proposed location and name; not established canon. Tools return with a story.",
+      "blurb": "Tools return with a story.",
       "canonStatus": "proposed",
       "sources": [
         "https://www.worldanvil.com/w/adyta-jeeperssheefers/a/greasewick-row-settlement",
@@ -5910,9 +5910,9 @@
     {
       "id": "greasewick-row--candidate-patch-parts",
       "district": "greasewick-row",
-      "name": "Patch Parts [candidate]",
+      "name": "Patch Parts",
       "type": "landmark",
-      "blurb": "Proposed location and name; not established canon. Salvage assessed on the counter.",
+      "blurb": "Salvage assessed on the counter.",
       "canonStatus": "proposed",
       "sources": [
         "https://www.worldanvil.com/w/adyta-jeeperssheefers/a/greasewick-row-settlement",
@@ -5928,9 +5928,9 @@
     {
       "id": "greasewick-row--candidate-aftershift-kitchen",
       "district": "greasewick-row",
-      "name": "Aftershift Kitchen [candidate]",
+      "name": "Aftershift Kitchen",
       "type": "landmark",
-      "blurb": "Proposed location and name; not established canon. Workers eat before going home.",
+      "blurb": "Workers eat before going home.",
       "canonStatus": "proposed",
       "sources": [
         "https://www.worldanvil.com/w/adyta-jeeperssheefers/a/greasewick-row-settlement",
@@ -5946,9 +5946,9 @@
     {
       "id": "greasewick-row--candidate-conduit-mouth",
       "district": "greasewick-row",
-      "name": "Conduit Mouth [candidate]",
+      "name": "Conduit Mouth",
       "type": "landmark",
-      "blurb": "Proposed location and name; not established canon. Small crews service tight spaces.",
+      "blurb": "Small crews service tight spaces.",
       "canonStatus": "proposed",
       "sources": [
         "https://www.worldanvil.com/w/adyta-jeeperssheefers/a/greasewick-row-settlement",
@@ -5964,9 +5964,9 @@
     {
       "id": "greasewick-row--candidate-the-hot-seam",
       "district": "greasewick-row",
-      "name": "The Hot Seam [candidate]",
+      "name": "The Hot Seam",
       "type": "landmark",
-      "blurb": "Proposed location and name; not established canon. Welding behind the shutters.",
+      "blurb": "Welding behind the shutters.",
       "canonStatus": "proposed",
       "sources": [
         "https://www.worldanvil.com/w/adyta-jeeperssheefers/a/greasewick-row-settlement",
@@ -5982,9 +5982,9 @@
     {
       "id": "greasewick-row--candidate-no-receipt-devices",
       "district": "greasewick-row",
-      "name": "No Receipt Devices [candidate]",
+      "name": "No Receipt Devices",
       "type": "landmark",
-      "blurb": "Proposed location and name; not established canon. Secondhand precision repairs.",
+      "blurb": "Secondhand precision repairs.",
       "canonStatus": "proposed",
       "sources": [
         "https://www.worldanvil.com/w/adyta-jeeperssheefers/a/greasewick-row-settlement",
@@ -6000,9 +6000,9 @@
     {
       "id": "greasewick-row--candidate-apprentice-yard",
       "district": "greasewick-row",
-      "name": "Apprentice Yard [candidate]",
+      "name": "Apprentice Yard",
       "type": "landmark",
-      "blurb": "Proposed location and name; not established canon. Learning with somebody watching.",
+      "blurb": "Learning with somebody watching.",
       "canonStatus": "proposed",
       "sources": [
         "https://www.worldanvil.com/w/adyta-jeeperssheefers/a/greasewick-row-settlement",
@@ -6018,9 +6018,9 @@
     {
       "id": "greasewick-row--candidate-generator-court",
       "district": "greasewick-row",
-      "name": "Generator Court [candidate]",
+      "name": "Generator Court",
       "type": "landmark",
-      "blurb": "Proposed location and name; not established canon. Shared electrical repairs; no magic.",
+      "blurb": "Shared electrical repairs; no magic.",
       "canonStatus": "proposed",
       "sources": [
         "https://www.worldanvil.com/w/adyta-jeeperssheefers/a/greasewick-row-settlement",
@@ -6036,9 +6036,9 @@
     {
       "id": "greasewick-row--candidate-south-repair-lane",
       "district": "greasewick-row",
-      "name": "South Repair Lane [candidate]",
+      "name": "South Repair Lane",
       "type": "landmark",
-      "blurb": "Proposed location and name; not established canon. Toward older infrastructure.",
+      "blurb": "Toward older infrastructure.",
       "canonStatus": "proposed",
       "sources": [
         "https://www.worldanvil.com/w/adyta-jeeperssheefers/a/greasewick-row-settlement",
@@ -6054,9 +6054,9 @@
     {
       "id": "old-city--candidate-foundation-mouth",
       "district": "old-city",
-      "name": "Foundation Mouth [candidate]",
+      "name": "Foundation Mouth",
       "type": "landmark",
-      "blurb": "Proposed location and name; not established canon. Descent beneath newer buildings.",
+      "blurb": "Descent beneath newer buildings.",
       "canonStatus": "proposed",
       "sources": [
         "https://www.worldanvil.com/w/adyta-jeeperssheefers/a/old-city-settlement"
@@ -6071,9 +6071,9 @@
     {
       "id": "old-city--candidate-the-interrupted-street",
       "district": "old-city",
-      "name": "The Interrupted Street [candidate]",
+      "name": "The Interrupted Street",
       "type": "landmark",
-      "blurb": "Proposed location and name; not established canon. Old road meets a newer wall.",
+      "blurb": "Old road meets a newer wall.",
       "canonStatus": "proposed",
       "sources": [
         "https://www.worldanvil.com/w/adyta-jeeperssheefers/a/old-city-settlement"
@@ -6088,9 +6088,9 @@
     {
       "id": "old-city--candidate-windowless-rooms",
       "district": "old-city",
-      "name": "Windowless Rooms [candidate]",
+      "name": "Windowless Rooms",
       "type": "landmark",
-      "blurb": "Proposed location and name; not established canon. Former homes inside service works.",
+      "blurb": "Former homes inside service works.",
       "canonStatus": "proposed",
       "sources": [
         "https://www.worldanvil.com/w/adyta-jeeperssheefers/a/old-city-settlement"
@@ -6105,9 +6105,9 @@
     {
       "id": "old-city--candidate-the-scavengers-rest",
       "district": "old-city",
-      "name": "The Scavengers Rest [candidate]",
+      "name": "The Scavengers Rest",
       "type": "landmark",
-      "blurb": "Proposed location and name; not established canon. Occupied pocket; ask before entering.",
+      "blurb": "Occupied pocket; ask before entering.",
       "canonStatus": "proposed",
       "sources": [
         "https://www.worldanvil.com/w/adyta-jeeperssheefers/a/old-city-settlement"
@@ -6122,9 +6122,9 @@
     {
       "id": "old-city--candidate-three-foundations",
       "district": "old-city",
-      "name": "Three Foundations [candidate]",
+      "name": "Three Foundations",
       "type": "landmark",
-      "blurb": "Proposed location and name; not established canon. Layers disagree about the floor.",
+      "blurb": "Layers disagree about the floor.",
       "canonStatus": "proposed",
       "sources": [
         "https://www.worldanvil.com/w/adyta-jeeperssheefers/a/old-city-settlement"
@@ -6139,9 +6139,9 @@
     {
       "id": "old-city--candidate-utility-crosscut",
       "district": "old-city",
-      "name": "Utility Crosscut [candidate]",
+      "name": "Utility Crosscut",
       "type": "landmark",
-      "blurb": "Proposed location and name; not established canon. Modern pipes through old rooms.",
+      "blurb": "Modern pipes through old rooms.",
       "canonStatus": "proposed",
       "sources": [
         "https://www.worldanvil.com/w/adyta-jeeperssheefers/a/old-city-settlement"
@@ -6156,9 +6156,9 @@
     {
       "id": "old-city--candidate-the-sealed-door",
       "district": "old-city",
-      "name": "The Sealed Door [candidate]",
+      "name": "The Sealed Door",
       "type": "landmark",
-      "blurb": "Proposed location and name; not established canon. No verified route beyond.",
+      "blurb": "No verified route beyond.",
       "canonStatus": "proposed",
       "sources": [
         "https://www.worldanvil.com/w/adyta-jeeperssheefers/a/old-city-settlement"
@@ -6173,9 +6173,9 @@
     {
       "id": "old-city--candidate-fallen-court",
       "district": "old-city",
-      "name": "Fallen Court [candidate]",
+      "name": "Fallen Court",
       "type": "landmark",
-      "blurb": "Proposed location and name; not established canon. Collapse; keep off loose edges.",
+      "blurb": "Collapse; keep off loose edges.",
       "canonStatus": "proposed",
       "sources": [
         "https://www.worldanvil.com/w/adyta-jeeperssheefers/a/old-city-settlement"
@@ -6190,9 +6190,9 @@
     {
       "id": "old-city--candidate-last-legible-wall",
       "district": "old-city",
-      "name": "Last Legible Wall [candidate]",
+      "name": "Last Legible Wall",
       "type": "landmark",
-      "blurb": "Proposed location and name; not established canon. Old markings; meaning uncertain.",
+      "blurb": "Old markings; meaning uncertain.",
       "canonStatus": "proposed",
       "sources": [
         "https://www.worldanvil.com/w/adyta-jeeperssheefers/a/old-city-settlement"
@@ -6207,9 +6207,9 @@
     {
       "id": "old-city--candidate-unsurveyed-continuation",
       "district": "old-city",
-      "name": "Unsurveyed Continuation [candidate]",
+      "name": "Unsurveyed Continuation",
       "type": "landmark",
-      "blurb": "Proposed location and name; not established canon. Route ends in uncertainty.",
+      "blurb": "Route ends in uncertainty.",
       "canonStatus": "proposed",
       "sources": [
         "https://www.worldanvil.com/w/adyta-jeeperssheefers/a/old-city-settlement"
@@ -6224,9 +6224,9 @@
     {
       "id": "southport-slums--candidate-borrowed-roof-court",
       "district": "southport-slums",
-      "name": "Borrowed Roof Court [candidate]",
+      "name": "Borrowed Roof Court",
       "type": "landmark",
-      "blurb": "Proposed location and name; not established canon. Shared repairs keep homes standing.",
+      "blurb": "Shared repairs keep homes standing.",
       "canonStatus": "proposed",
       "sources": [
         "https://www.worldanvil.com/w/adyta-jeeperssheefers/a/adyta-settlement"
@@ -6241,9 +6241,9 @@
     {
       "id": "southport-slums--candidate-the-late-pot",
       "district": "southport-slums",
-      "name": "The Late Pot [candidate]",
+      "name": "The Late Pot",
       "type": "landmark",
-      "blurb": "Proposed location and name; not established canon. Food after the shift ends.",
+      "blurb": "Food after the shift ends.",
       "canonStatus": "proposed",
       "sources": [
         "https://www.worldanvil.com/w/adyta-jeeperssheefers/a/adyta-settlement"
@@ -6258,9 +6258,9 @@
     {
       "id": "southport-slums--candidate-pump-queue",
       "district": "southport-slums",
-      "name": "Pump Queue [candidate]",
+      "name": "Pump Queue",
       "type": "landmark",
-      "blurb": "Proposed location and name; not established canon. Water before work.",
+      "blurb": "Water before work.",
       "canonStatus": "proposed",
       "sources": [
         "https://www.worldanvil.com/w/adyta-jeeperssheefers/a/adyta-settlement"
@@ -6275,9 +6275,9 @@
     {
       "id": "southport-slums--candidate-mended-stair",
       "district": "southport-slums",
-      "name": "Mended Stair [candidate]",
+      "name": "Mended Stair",
       "type": "landmark",
-      "blurb": "Proposed location and name; not established canon. Residents maintain the landing.",
+      "blurb": "Residents maintain the landing.",
       "canonStatus": "proposed",
       "sources": [
         "https://www.worldanvil.com/w/adyta-jeeperssheefers/a/adyta-settlement"
@@ -6292,9 +6292,9 @@
     {
       "id": "southport-slums--candidate-patchlight-rooms",
       "district": "southport-slums",
-      "name": "Patchlight Rooms [candidate]",
+      "name": "Patchlight Rooms",
       "type": "landmark",
-      "blurb": "Proposed location and name; not established canon. Homes above small shops.",
+      "blurb": "Homes above small shops.",
       "canonStatus": "proposed",
       "sources": [
         "https://www.worldanvil.com/w/adyta-jeeperssheefers/a/adyta-settlement"
@@ -6309,9 +6309,9 @@
     {
       "id": "southport-slums--candidate-the-dry-shelf",
       "district": "southport-slums",
-      "name": "The Dry Shelf [candidate]",
+      "name": "The Dry Shelf",
       "type": "landmark",
-      "blurb": "Proposed location and name; not established canon. Goods kept above runoff.",
+      "blurb": "Goods kept above runoff.",
       "canonStatus": "proposed",
       "sources": [
         "https://www.worldanvil.com/w/adyta-jeeperssheefers/a/adyta-settlement"
@@ -6326,9 +6326,9 @@
     {
       "id": "southport-slums--candidate-neighbors-gate",
       "district": "southport-slums",
-      "name": "Neighbors Gate [candidate]",
+      "name": "Neighbors Gate",
       "type": "landmark",
-      "blurb": "Proposed location and name; not established canon. Local watch; ask who knows you.",
+      "blurb": "Local watch; ask who knows you.",
       "canonStatus": "proposed",
       "sources": [
         "https://www.worldanvil.com/w/adyta-jeeperssheefers/a/adyta-settlement"
@@ -6343,9 +6343,9 @@
     {
       "id": "southport-slums--candidate-last-busk-corner",
       "district": "southport-slums",
-      "name": "Last Busk Corner [candidate]",
+      "name": "Last Busk Corner",
       "type": "landmark",
-      "blurb": "Proposed location and name; not established canon. Music for whoever stays.",
+      "blurb": "Music for whoever stays.",
       "canonStatus": "proposed",
       "sources": [
         "https://www.worldanvil.com/w/adyta-jeeperssheefers/a/adyta-settlement"
@@ -6360,9 +6360,9 @@
     {
       "id": "southport-slums--candidate-the-wash-lines",
       "district": "southport-slums",
-      "name": "The Wash Lines [candidate]",
+      "name": "The Wash Lines",
       "type": "landmark",
-      "blurb": "Proposed location and name; not established canon. Courtyard work; shared space.",
+      "blurb": "Courtyard work; shared space.",
       "canonStatus": "proposed",
       "sources": [
         "https://www.worldanvil.com/w/adyta-jeeperssheefers/a/adyta-settlement"
@@ -6377,9 +6377,9 @@
     {
       "id": "southport-slums--candidate-beltward-road",
       "district": "southport-slums",
-      "name": "Beltward Road [candidate]",
+      "name": "Beltward Road",
       "type": "landmark",
-      "blurb": "Proposed location and name; not established canon. North toward the industrial belt.",
+      "blurb": "North toward the industrial belt.",
       "canonStatus": "proposed",
       "sources": [
         "https://www.worldanvil.com/w/adyta-jeeperssheefers/a/adyta-settlement"
@@ -6394,9 +6394,9 @@
     {
       "id": "scrapfields--candidate-second-life-yard",
       "district": "scrapfields",
-      "name": "Second Life Yard [candidate]",
+      "name": "Second Life Yard",
       "type": "landmark",
-      "blurb": "Proposed location and name; not established canon. Parts sorted before disposal.",
+      "blurb": "Parts sorted before disposal.",
       "canonStatus": "proposed",
       "sources": [
         "https://www.worldanvil.com/w/adyta-jeeperssheefers/a/adyta-settlement"
@@ -6411,9 +6411,9 @@
     {
       "id": "scrapfields--candidate-the-weighing-shade",
       "district": "scrapfields",
-      "name": "The Weighing Shade [candidate]",
+      "name": "The Weighing Shade",
       "type": "landmark",
-      "blurb": "Proposed location and name; not established canon. Trade measured under patched roofing.",
+      "blurb": "Trade measured under patched roofing.",
       "canonStatus": "proposed",
       "sources": [
         "https://www.worldanvil.com/w/adyta-jeeperssheefers/a/adyta-settlement"
@@ -6428,9 +6428,9 @@
     {
       "id": "scrapfields--candidate-patchkin-work-court",
       "district": "scrapfields",
-      "name": "Patchkin Work Court [candidate]",
+      "name": "Patchkin Work Court",
       "type": "landmark",
-      "blurb": "Proposed location and name; not established canon. Salvage crews share the space.",
+      "blurb": "Salvage crews share the space.",
       "canonStatus": "proposed",
       "sources": [
         "https://www.worldanvil.com/w/adyta-jeeperssheefers/a/adyta-settlement"
@@ -6445,9 +6445,9 @@
     {
       "id": "scrapfields--candidate-copper-rain",
       "district": "scrapfields",
-      "name": "Copper Rain [candidate]",
+      "name": "Copper Rain",
       "type": "landmark",
-      "blurb": "Proposed location and name; not established canon. Wire stripped; sharp edges everywhere.",
+      "blurb": "Wire stripped; sharp edges everywhere.",
       "canonStatus": "proposed",
       "sources": [
         "https://www.worldanvil.com/w/adyta-jeeperssheefers/a/adyta-settlement"
@@ -6462,9 +6462,9 @@
     {
       "id": "scrapfields--candidate-the-running-engine",
       "district": "scrapfields",
-      "name": "The Running Engine [candidate]",
+      "name": "The Running Engine",
       "type": "landmark",
-      "blurb": "Proposed location and name; not established canon. Recovered machines tested here.",
+      "blurb": "Recovered machines tested here.",
       "canonStatus": "proposed",
       "sources": [
         "https://www.worldanvil.com/w/adyta-jeeperssheefers/a/adyta-settlement"
@@ -6479,9 +6479,9 @@
     {
       "id": "scrapfields--candidate-meal-tin",
       "district": "scrapfields",
-      "name": "Meal Tin [candidate]",
+      "name": "Meal Tin",
       "type": "landmark",
-      "blurb": "Proposed location and name; not established canon. Hot food beside the sorting lanes.",
+      "blurb": "Hot food beside the sorting lanes.",
       "canonStatus": "proposed",
       "sources": [
         "https://www.worldanvil.com/w/adyta-jeeperssheefers/a/adyta-settlement"
@@ -6496,9 +6496,9 @@
     {
       "id": "scrapfields--candidate-tag-dispute",
       "district": "scrapfields",
-      "name": "Tag Dispute [candidate]",
+      "name": "Tag Dispute",
       "type": "landmark",
-      "blurb": "Proposed location and name; not established canon. Ownership argued over chalk marks.",
+      "blurb": "Ownership argued over chalk marks.",
       "canonStatus": "proposed",
       "sources": [
         "https://www.worldanvil.com/w/adyta-jeeperssheefers/a/adyta-settlement"
@@ -6513,9 +6513,9 @@
     {
       "id": "scrapfields--candidate-crane-shadow",
       "district": "scrapfields",
-      "name": "Crane Shadow [candidate]",
+      "name": "Crane Shadow",
       "type": "landmark",
-      "blurb": "Proposed location and name; not established canon. Stay outside the swing.",
+      "blurb": "Stay outside the swing.",
       "canonStatus": "proposed",
       "sources": [
         "https://www.worldanvil.com/w/adyta-jeeperssheefers/a/adyta-settlement"
@@ -6530,9 +6530,9 @@
     {
       "id": "scrapfields--candidate-the-kept-pieces",
       "district": "scrapfields",
-      "name": "The Kept Pieces [candidate]",
+      "name": "The Kept Pieces",
       "type": "landmark",
-      "blurb": "Proposed location and name; not established canon. Small components; large possibilities.",
+      "blurb": "Small components; large possibilities.",
       "canonStatus": "proposed",
       "sources": [
         "https://www.worldanvil.com/w/adyta-jeeperssheefers/a/adyta-settlement"
@@ -6547,9 +6547,9 @@
     {
       "id": "scrapfields--candidate-repairward-track",
       "district": "scrapfields",
-      "name": "Repairward Track [candidate]",
+      "name": "Repairward Track",
       "type": "landmark",
-      "blurb": "Proposed location and name; not established canon. Loads leave for repair markets.",
+      "blurb": "Loads leave for repair markets.",
       "canonStatus": "proposed",
       "sources": [
         "https://www.worldanvil.com/w/adyta-jeeperssheefers/a/adyta-settlement"
@@ -6564,9 +6564,9 @@
     {
       "id": "outer-farms--candidate-seamfield",
       "district": "outer-farms",
-      "name": "Seamfield [candidate]",
+      "name": "Seamfield",
       "type": "landmark",
-      "blurb": "Proposed location and name; not established canon. Cultivated strips beside salvage.",
+      "blurb": "Cultivated strips beside salvage.",
       "canonStatus": "proposed",
       "sources": [
         "https://www.worldanvil.com/w/adyta-jeeperssheefers/a/adyta-settlement"
@@ -6581,9 +6581,9 @@
     {
       "id": "outer-farms--candidate-dustwalker-camp",
       "district": "outer-farms",
-      "name": "Dustwalker Camp [candidate]",
+      "name": "Dustwalker Camp",
       "type": "landmark",
-      "blurb": "Proposed location and name; not established canon. Temporary resting place; ask first.",
+      "blurb": "Temporary resting place; ask first.",
       "canonStatus": "proposed",
       "sources": [
         "https://www.worldanvil.com/w/adyta-jeeperssheefers/a/adyta-settlement"
@@ -6598,9 +6598,9 @@
     {
       "id": "outer-farms--candidate-the-mended-pump",
       "district": "outer-farms",
-      "name": "The Mended Pump [candidate]",
+      "name": "The Mended Pump",
       "type": "landmark",
-      "blurb": "Proposed location and name; not established canon. Irrigation kept alive by repairs.",
+      "blurb": "Irrigation kept alive by repairs.",
       "canonStatus": "proposed",
       "sources": [
         "https://www.worldanvil.com/w/adyta-jeeperssheefers/a/adyta-settlement"
@@ -6615,9 +6615,9 @@
     {
       "id": "outer-farms--candidate-seed-tin",
       "district": "outer-farms",
-      "name": "Seed Tin [candidate]",
+      "name": "Seed Tin",
       "type": "landmark",
-      "blurb": "Proposed location and name; not established canon. Trade small; keep some back.",
+      "blurb": "Trade small; keep some back.",
       "canonStatus": "proposed",
       "sources": [
         "https://www.worldanvil.com/w/adyta-jeeperssheefers/a/adyta-settlement"
@@ -6632,9 +6632,9 @@
     {
       "id": "outer-farms--candidate-the-pickers-line",
       "district": "outer-farms",
-      "name": "The Pickers Line [candidate]",
+      "name": "The Pickers Line",
       "type": "landmark",
-      "blurb": "Proposed location and name; not established canon. Scrap work along the city edge.",
+      "blurb": "Scrap work along the city edge.",
       "canonStatus": "proposed",
       "sources": [
         "https://www.worldanvil.com/w/adyta-jeeperssheefers/a/adyta-settlement"
@@ -6649,9 +6649,9 @@
     {
       "id": "outer-farms--candidate-last-fence",
       "district": "outer-farms",
-      "name": "Last Fence [candidate]",
+      "name": "Last Fence",
       "type": "landmark",
-      "blurb": "Proposed location and name; not established canon. Fields give way to rough country.",
+      "blurb": "Fields give way to rough country.",
       "canonStatus": "proposed",
       "sources": [
         "https://www.worldanvil.com/w/adyta-jeeperssheefers/a/adyta-settlement"
@@ -6666,9 +6666,9 @@
     {
       "id": "outer-farms--candidate-hunters-return",
       "district": "outer-farms",
-      "name": "Hunters Return [candidate]",
+      "name": "Hunters Return",
       "type": "landmark",
-      "blurb": "Proposed location and name; not established canon. Gear checked before heading out.",
+      "blurb": "Gear checked before heading out.",
       "canonStatus": "proposed",
       "sources": [
         "https://www.worldanvil.com/w/adyta-jeeperssheefers/a/adyta-settlement"
@@ -6683,9 +6683,9 @@
     {
       "id": "outer-farms--candidate-shared-store",
       "district": "outer-farms",
-      "name": "Shared Store [candidate]",
+      "name": "Shared Store",
       "type": "landmark",
-      "blurb": "Proposed location and name; not established canon. Tools and harvest under patched roofing.",
+      "blurb": "Tools and harvest under patched roofing.",
       "canonStatus": "proposed",
       "sources": [
         "https://www.worldanvil.com/w/adyta-jeeperssheefers/a/adyta-settlement"
@@ -6700,9 +6700,9 @@
     {
       "id": "outer-farms--candidate-marketward-cart-track",
       "district": "outer-farms",
-      "name": "Marketward Cart Track [candidate]",
+      "name": "Marketward Cart Track",
       "type": "landmark",
-      "blurb": "Proposed location and name; not established canon. Food and salvage toward town.",
+      "blurb": "Food and salvage toward town.",
       "canonStatus": "proposed",
       "sources": [
         "https://www.worldanvil.com/w/adyta-jeeperssheefers/a/adyta-settlement"
@@ -6717,9 +6717,9 @@
     {
       "id": "outer-farms--candidate-hinterland-path",
       "district": "outer-farms",
-      "name": "Hinterland Path [candidate]",
+      "name": "Hinterland Path",
       "type": "landmark",
-      "blurb": "Proposed location and name; not established canon. Beyond: geography remains open.",
+      "blurb": "Beyond: geography remains open.",
       "canonStatus": "proposed",
       "sources": [
         "https://www.worldanvil.com/w/adyta-jeeperssheefers/a/adyta-settlement"
@@ -6734,9 +6734,9 @@
     {
       "id": "borderlands--candidate-the-fading-line",
       "district": "borderlands",
-      "name": "The Fading Line [candidate]",
+      "name": "The Fading Line",
       "type": "landmark",
-      "blurb": "Proposed location and name; not established canon. Nobody agrees where authority ends.",
+      "blurb": "Nobody agrees where authority ends.",
       "canonStatus": "proposed",
       "sources": [
         "https://www.worldanvil.com/w/adyta-jeeperssheefers/a/adyta-settlement"
@@ -6751,9 +6751,9 @@
     {
       "id": "borderlands--candidate-roadside-rest",
       "district": "borderlands",
-      "name": "Roadside Rest [candidate]",
+      "name": "Roadside Rest",
       "type": "landmark",
-      "blurb": "Proposed location and name; not established canon. Beds when there is room.",
+      "blurb": "Beds when there is room.",
       "canonStatus": "proposed",
       "sources": [
         "https://www.worldanvil.com/w/adyta-jeeperssheefers/a/adyta-settlement"
@@ -6768,9 +6768,9 @@
     {
       "id": "borderlands--candidate-last-lit-post",
       "district": "borderlands",
-      "name": "Last Lit Post [candidate]",
+      "name": "Last Lit Post",
       "type": "landmark",
-      "blurb": "Proposed location and name; not established canon. Beyond this, bring your own light.",
+      "blurb": "Beyond this, bring your own light.",
       "canonStatus": "proposed",
       "sources": [
         "https://www.worldanvil.com/w/adyta-jeeperssheefers/a/adyta-settlement"
@@ -6785,9 +6785,9 @@
     {
       "id": "borderlands--candidate-the-spare-wheel",
       "district": "borderlands",
-      "name": "The Spare Wheel [candidate]",
+      "name": "The Spare Wheel",
       "type": "landmark",
-      "blurb": "Proposed location and name; not established canon. Cart repairs; parts by barter.",
+      "blurb": "Cart repairs; parts by barter.",
       "canonStatus": "proposed",
       "sources": [
         "https://www.worldanvil.com/w/adyta-jeeperssheefers/a/adyta-settlement"
@@ -6802,9 +6802,9 @@
     {
       "id": "borderlands--candidate-crossing-shade",
       "district": "borderlands",
-      "name": "Crossing Shade [candidate]",
+      "name": "Crossing Shade",
       "type": "landmark",
-      "blurb": "Proposed location and name; not established canon. Waiting without official shelter.",
+      "blurb": "Waiting without official shelter.",
       "canonStatus": "proposed",
       "sources": [
         "https://www.worldanvil.com/w/adyta-jeeperssheefers/a/adyta-settlement"
@@ -6819,9 +6819,9 @@
     {
       "id": "borderlands--candidate-unclaimed-yard",
       "district": "borderlands",
-      "name": "Unclaimed Yard [candidate]",
+      "name": "Unclaimed Yard",
       "type": "landmark",
-      "blurb": "Proposed location and name; not established canon. Temporary use; contested ownership.",
+      "blurb": "Temporary use; contested ownership.",
       "canonStatus": "proposed",
       "sources": [
         "https://www.worldanvil.com/w/adyta-jeeperssheefers/a/adyta-settlement"
@@ -6836,9 +6836,9 @@
     {
       "id": "borderlands--candidate-dry-gully-path",
       "district": "borderlands",
-      "name": "Dry Gully Path [candidate]",
+      "name": "Dry Gully Path",
       "type": "landmark",
-      "blurb": "Proposed location and name; not established canon. Foot route; weather changes it.",
+      "blurb": "Foot route; weather changes it.",
       "canonStatus": "proposed",
       "sources": [
         "https://www.worldanvil.com/w/adyta-jeeperssheefers/a/adyta-settlement"
@@ -6853,9 +6853,9 @@
     {
       "id": "borderlands--candidate-the-return-marker",
       "district": "borderlands",
-      "name": "The Return Marker [candidate]",
+      "name": "The Return Marker",
       "type": "landmark",
-      "blurb": "Proposed location and name; not established canon. A point locals recognize.",
+      "blurb": "A point locals recognize.",
       "canonStatus": "proposed",
       "sources": [
         "https://www.worldanvil.com/w/adyta-jeeperssheefers/a/adyta-settlement"
@@ -6870,9 +6870,9 @@
     {
       "id": "borderlands--candidate-open-country-track",
       "district": "borderlands",
-      "name": "Open Country Track [candidate]",
+      "name": "Open Country Track",
       "type": "landmark",
-      "blurb": "Proposed location and name; not established canon. No named nation beyond.",
+      "blurb": "No named nation beyond.",
       "canonStatus": "proposed",
       "sources": [
         "https://www.worldanvil.com/w/adyta-jeeperssheefers/a/adyta-settlement"
@@ -6887,9 +6887,9 @@
     {
       "id": "borderlands--candidate-cityward-bend",
       "district": "borderlands",
-      "name": "Cityward Bend [candidate]",
+      "name": "Cityward Bend",
       "type": "landmark",
-      "blurb": "Proposed location and name; not established canon. Back toward the built streets.",
+      "blurb": "Back toward the built streets.",
       "canonStatus": "proposed",
       "sources": [
         "https://www.worldanvil.com/w/adyta-jeeperssheefers/a/adyta-settlement"
@@ -6904,9 +6904,9 @@
     {
       "id": "southern-industrial-belt--candidate-shift-bell-court",
       "district": "southern-industrial-belt",
-      "name": "Shift Bell Court [candidate]",
+      "name": "Shift Bell Court",
       "type": "landmark",
-      "blurb": "Proposed location and name; not established canon. Workers change; the furnaces continue.",
+      "blurb": "Workers change; the furnaces continue.",
       "canonStatus": "proposed",
       "sources": [
         "https://www.worldanvil.com/w/adyta-jeeperssheefers/a/adyta-settlement"
@@ -6921,9 +6921,9 @@
     {
       "id": "southern-industrial-belt--candidate-ashborn-workshop",
       "district": "southern-industrial-belt",
-      "name": "Ashborn Workshop [candidate]",
+      "name": "Ashborn Workshop",
       "type": "landmark",
-      "blurb": "Proposed location and name; not established canon. Industrial repairs; crew reputation matters.",
+      "blurb": "Industrial repairs; crew reputation matters.",
       "canonStatus": "proposed",
       "sources": [
         "https://www.worldanvil.com/w/adyta-jeeperssheefers/a/adyta-settlement"
@@ -6938,9 +6938,9 @@
     {
       "id": "southern-industrial-belt--candidate-stonework-hall",
       "district": "southern-industrial-belt",
-      "name": "Stonework Hall [candidate]",
+      "name": "Stonework Hall",
       "type": "landmark",
-      "blurb": "Proposed location and name; not established canon. Dwarven workshop and stronghold frontage.",
+      "blurb": "Dwarven workshop and stronghold frontage.",
       "canonStatus": "proposed",
       "sources": [
         "https://www.worldanvil.com/w/adyta-jeeperssheefers/a/adyta-settlement"
@@ -6955,9 +6955,9 @@
     {
       "id": "southern-industrial-belt--candidate-the-long-pour",
       "district": "southern-industrial-belt",
-      "name": "The Long Pour [candidate]",
+      "name": "The Long Pour",
       "type": "landmark",
-      "blurb": "Proposed location and name; not established canon. Steel work behind guarded access.",
+      "blurb": "Steel work behind guarded access.",
       "canonStatus": "proposed",
       "sources": [
         "https://www.worldanvil.com/w/adyta-jeeperssheefers/a/adyta-settlement"
@@ -6972,9 +6972,9 @@
     {
       "id": "southern-industrial-belt--candidate-hazard-pay-steps",
       "district": "southern-industrial-belt",
-      "name": "Hazard Pay Steps [candidate]",
+      "name": "Hazard Pay Steps",
       "type": "landmark",
-      "blurb": "Proposed location and name; not established canon. Claims begin after the injury.",
+      "blurb": "Claims begin after the injury.",
       "canonStatus": "proposed",
       "sources": [
         "https://www.worldanvil.com/w/adyta-jeeperssheefers/a/adyta-settlement"
@@ -6989,9 +6989,9 @@
     {
       "id": "southern-industrial-belt--candidate-the-knuckle-corner",
       "district": "southern-industrial-belt",
-      "name": "The Knuckle Corner [candidate]",
+      "name": "The Knuckle Corner",
       "type": "landmark",
-      "blurb": "Proposed location and name; not established canon. Street pressure; affiliation unconfirmed.",
+      "blurb": "Street pressure; affiliation unconfirmed.",
       "canonStatus": "proposed",
       "sources": [
         "https://www.worldanvil.com/w/adyta-jeeperssheefers/a/adyta-settlement"
@@ -7006,9 +7006,9 @@
     {
       "id": "southern-industrial-belt--candidate-canteen-six",
       "district": "southern-industrial-belt",
-      "name": "Canteen Six [candidate]",
+      "name": "Canteen Six",
       "type": "landmark",
-      "blurb": "Proposed location and name; not established canon. Meals between furnace shifts.",
+      "blurb": "Meals between furnace shifts.",
       "canonStatus": "proposed",
       "sources": [
         "https://www.worldanvil.com/w/adyta-jeeperssheefers/a/adyta-settlement"
@@ -7023,9 +7023,9 @@
     {
       "id": "southern-industrial-belt--candidate-load-road",
       "district": "southern-industrial-belt",
-      "name": "Load Road [candidate]",
+      "name": "Load Road",
       "type": "landmark",
-      "blurb": "Proposed location and name; not established canon. Freight takes the wide turn.",
+      "blurb": "Freight takes the wide turn.",
       "canonStatus": "proposed",
       "sources": [
         "https://www.worldanvil.com/w/adyta-jeeperssheefers/a/adyta-settlement"
@@ -7040,9 +7040,9 @@
     {
       "id": "southern-industrial-belt--candidate-worker-rooms",
       "district": "southern-industrial-belt",
-      "name": "Worker Rooms [candidate]",
+      "name": "Worker Rooms",
       "type": "landmark",
-      "blurb": "Proposed location and name; not established canon. Homes within reach of the job.",
+      "blurb": "Homes within reach of the job.",
       "canonStatus": "proposed",
       "sources": [
         "https://www.worldanvil.com/w/adyta-jeeperssheefers/a/adyta-settlement"
@@ -7057,9 +7057,9 @@
     {
       "id": "southern-industrial-belt--candidate-south-exit",
       "district": "southern-industrial-belt",
-      "name": "South Exit [candidate]",
+      "name": "South Exit",
       "type": "landmark",
-      "blurb": "Proposed location and name; not established canon. Toward Southport; smoke follows.",
+      "blurb": "Toward Southport; smoke follows.",
       "canonStatus": "proposed",
       "sources": [
         "https://www.worldanvil.com/w/adyta-jeeperssheefers/a/adyta-settlement"
@@ -7074,9 +7074,9 @@
     {
       "id": "crownless-row--candidate-mending-court",
       "district": "crownless-row",
-      "name": "Mending Court [candidate]",
+      "name": "Mending Court",
       "type": "landmark",
-      "blurb": "Proposed location and name; not established canon. Shared repair; bring what you can.",
+      "blurb": "Shared repair; bring what you can.",
       "canonStatus": "proposed",
       "sources": [],
       "pin": {
@@ -7089,9 +7089,9 @@
     {
       "id": "crownless-row--candidate-no-crown-workshop",
       "district": "crownless-row",
-      "name": "No Crown Workshop [candidate]",
+      "name": "No Crown Workshop",
       "type": "landmark",
-      "blurb": "Proposed location and name; not established canon. Tools before titles.",
+      "blurb": "Tools before titles.",
       "canonStatus": "proposed",
       "sources": [],
       "pin": {
@@ -7104,9 +7104,9 @@
     {
       "id": "crownless-row--candidate-the-spare-chair",
       "district": "crownless-row",
-      "name": "The Spare Chair [candidate]",
+      "name": "The Spare Chair",
       "type": "landmark",
-      "blurb": "Proposed location and name; not established canon. Sit; nobody charges by the minute.",
+      "blurb": "Sit; nobody charges by the minute.",
       "canonStatus": "proposed",
       "sources": [],
       "pin": {
@@ -7119,9 +7119,9 @@
     {
       "id": "crownless-row--candidate-open-pot",
       "district": "crownless-row",
-      "name": "Open Pot [candidate]",
+      "name": "Open Pot",
       "type": "landmark",
-      "blurb": "Proposed location and name; not established canon. Food when there is enough.",
+      "blurb": "Food when there is enough.",
       "canonStatus": "proposed",
       "sources": [],
       "pin": {
@@ -7134,9 +7134,9 @@
     {
       "id": "crownless-row--candidate-patch-roof-row",
       "district": "crownless-row",
-      "name": "Patch Roof Row [candidate]",
+      "name": "Patch Roof Row",
       "type": "landmark",
-      "blurb": "Proposed location and name; not established canon. Homes maintained together.",
+      "blurb": "Homes maintained together.",
       "canonStatus": "proposed",
       "sources": [],
       "pin": {
@@ -7149,9 +7149,9 @@
     {
       "id": "crownless-row--candidate-the-useful-shelf",
       "district": "crownless-row",
-      "name": "The Useful Shelf [candidate]",
+      "name": "The Useful Shelf",
       "type": "landmark",
-      "blurb": "Proposed location and name; not established canon. Broken does not mean finished.",
+      "blurb": "Broken does not mean finished.",
       "canonStatus": "proposed",
       "sources": [],
       "pin": {
@@ -7164,9 +7164,9 @@
     {
       "id": "crownless-row--candidate-neighbors-steps",
       "district": "crownless-row",
-      "name": "Neighbors Steps [candidate]",
+      "name": "Neighbors Steps",
       "type": "landmark",
-      "blurb": "Proposed location and name; not established canon. Ask before moving through.",
+      "blurb": "Ask before moving through.",
       "canonStatus": "proposed",
       "sources": [],
       "pin": {
@@ -7179,9 +7179,9 @@
     {
       "id": "crownless-row--candidate-lightshare",
       "district": "crownless-row",
-      "name": "Lightshare [candidate]",
+      "name": "Lightshare",
       "type": "landmark",
-      "blurb": "Proposed location and name; not established canon. Repairs and shared electrical supply.",
+      "blurb": "Repairs and shared electrical supply.",
       "canonStatus": "proposed",
       "sources": [],
       "pin": {
@@ -7194,9 +7194,9 @@
     {
       "id": "crownless-row--candidate-the-small-stage",
       "district": "crownless-row",
-      "name": "The Small Stage [candidate]",
+      "name": "The Small Stage",
       "type": "landmark",
-      "blurb": "Proposed location and name; not established canon. A voice without a permit.",
+      "blurb": "A voice without a permit.",
       "canonStatus": "proposed",
       "sources": [],
       "pin": {
@@ -7209,9 +7209,9 @@
     {
       "id": "crownless-row--candidate-common-gate",
       "district": "crownless-row",
-      "name": "Common Gate [candidate]",
+      "name": "Common Gate",
       "type": "landmark",
-      "blurb": "Proposed location and name; not established canon. Entry by conversation, not a crown.",
+      "blurb": "Entry by conversation, not a crown.",
       "canonStatus": "proposed",
       "sources": [],
       "pin": {
@@ -7224,9 +7224,9 @@
     {
       "id": "ash-wastes--candidate-last-warning",
       "district": "ash-wastes",
-      "name": "Last Warning [candidate]",
+      "name": "Last Warning",
       "type": "landmark",
-      "blurb": "Proposed location and name; not established canon. Beyond maintained ground.",
+      "blurb": "Beyond maintained ground.",
       "canonStatus": "proposed",
       "sources": [
         "https://www.worldanvil.com/w/adyta-jeeperssheefers/a/adyta-settlement"
@@ -7241,9 +7241,9 @@
     {
       "id": "ash-wastes--candidate-dead-wind-reach",
       "district": "ash-wastes",
-      "name": "Dead Wind Reach [candidate]",
+      "name": "Dead Wind Reach",
       "type": "landmark",
-      "blurb": "Proposed location and name; not established canon. Exposure; no shelter assured.",
+      "blurb": "Exposure; no shelter assured.",
       "canonStatus": "proposed",
       "sources": [
         "https://www.worldanvil.com/w/adyta-jeeperssheefers/a/adyta-settlement"
@@ -7258,9 +7258,9 @@
     {
       "id": "ash-wastes--candidate-corroded-span",
       "district": "ash-wastes",
-      "name": "Corroded Span [candidate]",
+      "name": "Corroded Span",
       "type": "landmark",
-      "blurb": "Proposed location and name; not established canon. Bridge remnant; do not trust it.",
+      "blurb": "Bridge remnant; do not trust it.",
       "canonStatus": "proposed",
       "sources": [
         "https://www.worldanvil.com/w/adyta-jeeperssheefers/a/adyta-settlement"
@@ -7275,9 +7275,9 @@
     {
       "id": "ash-wastes--candidate-the-black-pool",
       "district": "ash-wastes",
-      "name": "The Black Pool [candidate]",
+      "name": "The Black Pool",
       "type": "landmark",
-      "blurb": "Proposed location and name; not established canon. Unknown contamination; keep clear.",
+      "blurb": "Unknown contamination; keep clear.",
       "canonStatus": "proposed",
       "sources": [
         "https://www.worldanvil.com/w/adyta-jeeperssheefers/a/adyta-settlement"
@@ -7292,9 +7292,9 @@
     {
       "id": "ash-wastes--candidate-buried-service-road",
       "district": "ash-wastes",
-      "name": "Buried Service Road [candidate]",
+      "name": "Buried Service Road",
       "type": "landmark",
-      "blurb": "Proposed location and name; not established canon. Broken alignment; no maintained access.",
+      "blurb": "Broken alignment; no maintained access.",
       "canonStatus": "proposed",
       "sources": [
         "https://www.worldanvil.com/w/adyta-jeeperssheefers/a/adyta-settlement"
@@ -7309,9 +7309,9 @@
     {
       "id": "ash-wastes--candidate-ashfall-hollow",
       "district": "ash-wastes",
-      "name": "Ashfall Hollow [candidate]",
+      "name": "Ashfall Hollow",
       "type": "landmark",
-      "blurb": "Proposed location and name; not established canon. Loose ground conceals the floor.",
+      "blurb": "Loose ground conceals the floor.",
       "canonStatus": "proposed",
       "sources": [
         "https://www.worldanvil.com/w/adyta-jeeperssheefers/a/adyta-settlement"
@@ -7326,9 +7326,9 @@
     {
       "id": "ash-wastes--candidate-silent-machinery",
       "district": "ash-wastes",
-      "name": "Silent Machinery [candidate]",
+      "name": "Silent Machinery",
       "type": "landmark",
-      "blurb": "Proposed location and name; not established canon. No working plant confirmed.",
+      "blurb": "No working plant confirmed.",
       "canonStatus": "proposed",
       "sources": [
         "https://www.worldanvil.com/w/adyta-jeeperssheefers/a/adyta-settlement"
@@ -7343,9 +7343,9 @@
     {
       "id": "ash-wastes--candidate-the-missing-markers",
       "district": "ash-wastes",
-      "name": "The Missing Markers [candidate]",
+      "name": "The Missing Markers",
       "type": "landmark",
-      "blurb": "Proposed location and name; not established canon. Survey trail breaks here.",
+      "blurb": "Survey trail breaks here.",
       "canonStatus": "proposed",
       "sources": [
         "https://www.worldanvil.com/w/adyta-jeeperssheefers/a/adyta-settlement"
@@ -7360,9 +7360,9 @@
     {
       "id": "ash-wastes--candidate-exclusion-edge",
       "district": "ash-wastes",
-      "name": "Exclusion Edge [candidate]",
+      "name": "Exclusion Edge",
       "type": "landmark",
-      "blurb": "Proposed location and name; not established canon. Return before visibility fails.",
+      "blurb": "Return before visibility fails.",
       "canonStatus": "proposed",
       "sources": [
         "https://www.worldanvil.com/w/adyta-jeeperssheefers/a/adyta-settlement"
@@ -7377,9 +7377,9 @@
     {
       "id": "ash-wastes--candidate-unmapped-east",
       "district": "ash-wastes",
-      "name": "Unmapped East [candidate]",
+      "name": "Unmapped East",
       "type": "landmark",
-      "blurb": "Proposed location and name; not established canon. No verified onward route.",
+      "blurb": "No verified onward route.",
       "canonStatus": "proposed",
       "sources": [
         "https://www.worldanvil.com/w/adyta-jeeperssheefers/a/adyta-settlement"
@@ -7394,9 +7394,9 @@
     {
       "id": "forgotten-depths--candidate-last-known-landing",
       "district": "forgotten-depths",
-      "name": "Last Known Landing [candidate]",
+      "name": "Last Known Landing",
       "type": "landmark",
-      "blurb": "Proposed location and name; not established canon. Beyond: no verified survey.",
+      "blurb": "Beyond: no verified survey.",
       "canonStatus": "proposed",
       "sources": [
         "https://www.worldanvil.com/w/adyta-jeeperssheefers/a/adyta-settlement"
@@ -7411,9 +7411,9 @@
     {
       "id": "forgotten-depths--candidate-broken-descent",
       "district": "forgotten-depths",
-      "name": "Broken Descent [candidate]",
+      "name": "Broken Descent",
       "type": "landmark",
-      "blurb": "Proposed location and name; not established canon. Stairs stop before the floor.",
+      "blurb": "Stairs stop before the floor.",
       "canonStatus": "proposed",
       "sources": [
         "https://www.worldanvil.com/w/adyta-jeeperssheefers/a/adyta-settlement"
@@ -7428,9 +7428,9 @@
     {
       "id": "forgotten-depths--candidate-chalk-return-mark",
       "district": "forgotten-depths",
-      "name": "Chalk Return Mark [candidate]",
+      "name": "Chalk Return Mark",
       "type": "landmark",
-      "blurb": "Proposed location and name; not established canon. A reminder; not a guarantee.",
+      "blurb": "A reminder; not a guarantee.",
       "canonStatus": "proposed",
       "sources": [
         "https://www.worldanvil.com/w/adyta-jeeperssheefers/a/adyta-settlement"
@@ -7445,9 +7445,9 @@
     {
       "id": "forgotten-depths--candidate-sealed-margin",
       "district": "forgotten-depths",
-      "name": "Sealed Margin [candidate]",
+      "name": "Sealed Margin",
       "type": "landmark",
-      "blurb": "Proposed location and name; not established canon. No confirmed room beyond.",
+      "blurb": "No confirmed room beyond.",
       "canonStatus": "proposed",
       "sources": [
         "https://www.worldanvil.com/w/adyta-jeeperssheefers/a/adyta-settlement"
@@ -7462,9 +7462,9 @@
     {
       "id": "forgotten-depths--candidate-pressure-door",
       "district": "forgotten-depths",
-      "name": "Pressure Door [candidate]",
+      "name": "Pressure Door",
       "type": "landmark",
-      "blurb": "Proposed location and name; not established canon. Condition unknown; do not force.",
+      "blurb": "Condition unknown; do not force.",
       "canonStatus": "proposed",
       "sources": [
         "https://www.worldanvil.com/w/adyta-jeeperssheefers/a/adyta-settlement"
@@ -7479,9 +7479,9 @@
     {
       "id": "forgotten-depths--candidate-lost-floor",
       "district": "forgotten-depths",
-      "name": "Lost Floor [candidate]",
+      "name": "Lost Floor",
       "type": "landmark",
-      "blurb": "Proposed location and name; not established canon. Depth cannot be read here.",
+      "blurb": "Depth cannot be read here.",
       "canonStatus": "proposed",
       "sources": [
         "https://www.worldanvil.com/w/adyta-jeeperssheefers/a/adyta-settlement"
@@ -7496,9 +7496,9 @@
     {
       "id": "forgotten-depths--candidate-the-interrupted-pipe",
       "district": "forgotten-depths",
-      "name": "The Interrupted Pipe [candidate]",
+      "name": "The Interrupted Pipe",
       "type": "landmark",
-      "blurb": "Proposed location and name; not established canon. Infrastructure without a clear origin.",
+      "blurb": "Infrastructure without a clear origin.",
       "canonStatus": "proposed",
       "sources": [
         "https://www.worldanvil.com/w/adyta-jeeperssheefers/a/adyta-settlement"
@@ -7513,9 +7513,9 @@
     {
       "id": "forgotten-depths--candidate-uncertain-crossing",
       "district": "forgotten-depths",
-      "name": "Uncertain Crossing [candidate]",
+      "name": "Uncertain Crossing",
       "type": "landmark",
-      "blurb": "Proposed location and name; not established canon. Dashes mark a possible passage.",
+      "blurb": "Dashes mark a possible passage.",
       "canonStatus": "proposed",
       "sources": [
         "https://www.worldanvil.com/w/adyta-jeeperssheefers/a/adyta-settlement"
@@ -7530,9 +7530,9 @@
     {
       "id": "forgotten-depths--candidate-collapse-front",
       "district": "forgotten-depths",
-      "name": "Collapse Front [candidate]",
+      "name": "Collapse Front",
       "type": "landmark",
-      "blurb": "Proposed location and name; not established canon. Route ends at fallen material.",
+      "blurb": "Route ends at fallen material.",
       "canonStatus": "proposed",
       "sources": [
         "https://www.worldanvil.com/w/adyta-jeeperssheefers/a/adyta-settlement"
@@ -7547,9 +7547,9 @@
     {
       "id": "forgotten-depths--candidate-unknown-below",
       "district": "forgotten-depths",
-      "name": "Unknown Below [candidate]",
+      "name": "Unknown Below",
       "type": "landmark",
-      "blurb": "Proposed location and name; not established canon. Leave the map unfinished.",
+      "blurb": "Leave the map unfinished.",
       "canonStatus": "proposed",
       "sources": [
         "https://www.worldanvil.com/w/adyta-jeeperssheefers/a/adyta-settlement"
@@ -7566,7 +7566,7 @@
       "district": "the-sewers",
       "name": "Broken Wing Forge",
       "type": "shop",
-      "blurb": "Vipero's smithy near the Commons edge. The name is established lore; this precise placement is proposed.",
+      "blurb": "Vipero's smithy near the Commons edge.",
       "canonStatus": "established name; proposed placement",
       "sources": [
         "https://www.worldanvil.com/w/adyta-jeeperssheefers/a/adyta-settlement"

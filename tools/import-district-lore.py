@@ -31,9 +31,8 @@ for source in sources:
         for landmark in brief['landmarks']:
             slug = re.sub(r'[^a-z0-9]+','-',landmark['name'].lower()).strip('-')
             place_id = f'{district_id}--candidate-{slug}'
-            prefix = 'Established name; proposed location and details.' if landmark['canonStatus'].startswith('established') else 'Proposed location and name; not established canon.'
-            place = dict(id=place_id,district=district_id,name=landmark['name']+' [candidate]',type='landmark',
-                         blurb=prefix+' '+landmark['note']+'.',canonStatus=landmark['canonStatus'],
+            place = dict(id=place_id,district=district_id,name=landmark['name'],type='landmark',
+                         blurb=landmark['note']+'.',canonStatus=landmark['canonStatus'],
                          sources=brief['sources'],pin=dict(map=district_id,x=landmark['x'],y=landmark['y'],approx=True))
             existing=next((p for p in catalog['places'] if p['id']==place_id),None)
             if existing:
