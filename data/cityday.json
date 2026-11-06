@@ -1,0 +1,266 @@
+{
+  "_about": "The living city: what changed in Adyta today. Every player's PDA builds the same day from the Adyta date, so the whole group sees the same moods, signs and hidden Sticker. All lines here are drafts by Eko (status: draft) and go to Nib with the next canon handoff. Logic: apps/cityday.js.",
+  "status": "draft",
+  "signsPerDistrict": 2,
+  "districts": {
+    "low-halo": {
+      "moods": [
+        "The Mercy Street fryers started early. So did the bass.",
+        "Half the block lost power at noon and nobody noticed until the music stopped.",
+        "Someone repainted the Soft Border line overnight. It moved two meters.",
+        "Quiet for Low Halo, which means only two arguments and one band.",
+        "A Crownline van parked on Mercy Street and got a ticket from a goblin.",
+        "The Saint Static Arms elevator made a noise. Residents are treating it as a rumor.",
+        "Rain on the tin awnings, and a queue outside the Grit Pit anyway.",
+        "Posters went up over the posters that went up over the posters."
+      ],
+      "wisdom": [
+        "If the streetlight flickers twice, the wiring's local. Three times, it's Crownline.",
+        "Tip the door, not the bartender. The door remembers.",
+        "Fixed it yourself? Don't tell the landlord.",
+        "The fryer queue knows the news before Velvet does.",
+        "Never stand under the third-floor balconies on laundry day.",
+        "Rent's due Monday. Excuses are due Sunday.",
+        "A borrowed amp comes back louder or not at all.",
+        "Every map of this place is wrong. Ask who drew it."
+      ]
+    },
+    "ember-court": {
+      "moods": [
+        "The incense is thick today. Somebody is hiding a smell.",
+        "Three contract lawyers were seen laughing. Nobody knows what they signed.",
+        "The courtyard lamps stayed lit past dawn again.",
+        "A stall changed hands overnight. The new owner already looks tired.",
+        "Quiet bargaining. Loud receipts.",
+        "A curse inspector is walking the arcade with a clipboard and a sense of dread.",
+        "Every fortune teller predicted rain. It's sunny. They're raising prices.",
+        "Someone's selling lucky ink. The ink disagrees."
+      ],
+      "wisdom": [
+        "Read the receipt before the receipt reads you.",
+        "If the price is a favor, ask whose.",
+        "Never thank a fae vendor out loud. Nod.",
+        "Salt in the left pocket, credits in the right.",
+        "The second signature is where they get you.",
+        "A free sample is a down payment.",
+        "Bells on the door mean the shopkeeper's listening. No bells means something else is.",
+        "Cold ink, warm hands. Never the other way round."
+      ]
+    },
+    "market-ring": {
+      "moods": [
+        "Festival bunting went up early. Somebody's cousin is getting married.",
+        "The spice lane smells like an argument about saffron.",
+        "Delivery bikes everywhere. The trucks are stuck at the docks again.",
+        "A family stall is closed for a funeral. The neighbors are running it for them.",
+        "Prices are up two credits and everyone is pretending not to notice.",
+        "Lunch rush hit early and stayed.",
+        "Kids running a lemonade stand with a better margin than Velvet Signal.",
+        "A courtyard concert, unlicensed, very well attended."
+      ],
+      "wisdom": [
+        "Buy from the grandmother, not the grandson.",
+        "The back lanes close at dusk. The back-back lanes don't.",
+        "Haggle with a smile. Haggle twice with food.",
+        "If a stall has no sign, it's for regulars.",
+        "Pay cash in the Ring. Cards remember.",
+        "Everyone here is related. Be polite.",
+        "The last stall before the tram stop has the honest scale.",
+        "A free meal at a family table means you're helping with dishes."
+      ]
+    },
+    "dockside": {
+      "moods": [
+        "Fog off the water and three ships nobody expected.",
+        "The cranes are running double shifts. The crews are running on coffee.",
+        "A container fell open overnight. Half the docks are pretending they didn't see inside.",
+        "Gulls fighting over a fish cart. The gulls are winning.",
+        "The shift bell rang twice. One of those was a joke.",
+        "The tide's high and the tempers are higher.",
+        "A crew lodging is throwing a farewell for someone shipping out.",
+        "Quiet water, loud bars."
+      ],
+      "wisdom": [
+        "Never ask what's in the crate. Ask what it weighs.",
+        "The harbor master's mood sets the price of everything.",
+        "Crews look after crews. Everyone else gets the weather.",
+        "When the fog's thick, the cameras are blind, and the wardens know it.",
+        "Tip the crane operator. You'll want a favor someday.",
+        "A sailor's map is honest about water and nothing else.",
+        "Lodging rent goes up when the contract ends. It always does.",
+        "Bring your own rope."
+      ]
+    },
+    "three-wires": {
+      "moods": [
+        "Every payphone on the block rang at once at noon. Nobody answered.",
+        "A broker set up a folding table and a line formed.",
+        "New faces on the corner. Old faces watching them.",
+        "Two crews shook hands on something. Everyone is guessing what.",
+        "Rumor says someone is hiring. Rumor always says that.",
+        "A debt got called in loudly outside the noodle bar.",
+        "Quiet, the kind that means everyone's on the phone.",
+        "Runners in and out all day. Something's moving."
+      ],
+      "wisdom": [
+        "Whoever introduces you owns a little piece of you.",
+        "A favor is a loan with no paperwork.",
+        "If the job sounds easy, ask who said no.",
+        "The payphones work because someone pays for them. Find out who.",
+        "Shake with the right hand. Count your fingers after.",
+        "Names here are for sale. Don't drop yours.",
+        "Half up front. Always.",
+        "A broker smiling at you is working."
+      ]
+    },
+    "noble-heights": {
+      "moods": [
+        "The gardeners are out in force. Someone important is visiting.",
+        "A gate stood open for an hour. Nobody walked through it.",
+        "Old money is wearing new jewelry. Someone sold something.",
+        "Moonspire House is hosting. The guest list is a secret everyone knows.",
+        "The street sweepers swept the street twice.",
+        "A carriage-house light was on all night.",
+        "Very quiet. Expensive quiet.",
+        "Private security changed shifts and changed uniforms."
+      ],
+      "wisdom": [
+        "The staff entrance is the real entrance.",
+        "Never compliment an heirloom. Ask its name.",
+        "Here the gossip is old and the grudges are older.",
+        "A closed gate is an invitation to the wrong people.",
+        "Bring a gift. Bring a better excuse.",
+        "The gardeners know everything and say nothing.",
+        "Titles here are older than the city's paperwork.",
+        "If they offer tea, the meeting is already over."
+      ]
+    },
+    "the-tangle": {
+      "moods": [
+        "A new bridge went up between two roofs. A goblin is charging a toll.",
+        "Somebody's patch grid is humming louder than usual.",
+        "A route argument is happening on three rooftops at once.",
+        "Washing lines across every gap. Laundry day.",
+        "Gremlin Works dragged something big up the stairs. It's still twitching.",
+        "A rooftop garden grew its first tomato. There's a party.",
+        "Fog in the alleys, sun on the roofs.",
+        "Patchkin crews are re-marking the routes after the rain."
+      ],
+      "wisdom": [
+        "If the stair's warm, someone's below it.",
+        "Ask before you cross a roof. Ask twice for the third one.",
+        "Bad stairs are free. Good stairs cost a favor.",
+        "A route marked twice is a route someone argued about.",
+        "Don't touch the wires with ribbons on them.",
+        "Bring snacks. Directions here are traded, not given.",
+        "Rooftops are faster. Manners are fastest.",
+        "If a goblin says it holds, it holds. If they shrug, run."
+      ]
+    },
+    "the-sewers": {
+      "moods": [
+        "Radio Sewers is playing the archive tapes again. Smokier's still out.",
+        "The water's low and the echoes are wrong.",
+        "A new stall opened in a dry junction.",
+        "The rats are calm today. Good sign.",
+        "Antitoxin crews in masks. Nobody's saying why.",
+        "Someone chalked a new arrow, and three people already disagree with it.",
+        "Warm air coming up from below. Not the usual warm.",
+        "Mercury's on air early, complaining about the surface."
+      ],
+      "wisdom": [
+        "If the rat is nervous, be nervous.",
+        "Follow the chalk, not the signs.",
+        "Keep your voice down near the old junctions.",
+        "Surface boots get noticed. Wet boots get respect.",
+        "The tunnels listen. Talk kindly about them.",
+        "Turn your light down near the sleepers.",
+        "A dry route today is a river tomorrow.",
+        "Radio's on, things are fine. Radio's off, find the exit."
+      ]
+    },
+    "deep-tunnels": {
+      "moods": [
+        "The pressure doors moved. Nobody moved them.",
+        "A maintenance light blinked a pattern all night.",
+        "The air tastes like old pennies today.",
+        "Footsteps on the map that nobody made.",
+        "Something maintained the pipes overnight. Badly.",
+        "Quiet, in a way the walls seem proud of.",
+        "A sealed door has fresh scratches. On the inside.",
+        "The clocks at the lower junctions are five minutes off. All of them, the same five minutes."
+      ],
+      "wisdom": [
+        "If the map agrees with you, check again.",
+        "Don't follow the arrows that look new.",
+        "Count the doors going in. Count them coming out.",
+        "Bring two lights. Leave neither behind.",
+        "If you hear maintenance, leave.",
+        "Nobody honest works down here. Including you.",
+        "The pipes learned. Don't teach them more.",
+        "Tell someone up top when you'll be back."
+      ]
+    }
+  },
+  "signs": {
+    "shop": [
+      ["BACK IN 10", "Since this morning."],
+      ["REPAIRS WHILE U WAIT", "Waiting not guaranteed."],
+      ["NEW STOCK", "Don't ask where from."],
+      ["CLOSED: GRID CUT", "Candles at the side door."],
+      ["WE BUY SCRAP", "We sell it back nicer."],
+      ["NO CORPORATE SCRIP", "Credits or barter."],
+      ["HALF PRICE WIRE", "Some of it works."],
+      ["OPEN LATE", "Knock twice, then once."],
+      ["EVERYTHING MUST GO", "Mostly the owner."],
+      ["FIXED IT? SHOW US", "Best fix of the week gets a discount."]
+    ],
+    "food": [
+      ["SOUP OF THE DAY", "Ask what's in it. We'll guess."],
+      ["FRESH BREAD", "Yesterday's is cheaper."],
+      ["FREE TEA", "With anything."],
+      ["NOODLES 4 CR", "Spice at your own risk."],
+      ["KITCHEN CLOSED", "The generator's sulking."],
+      ["FEED A FRIEND", "Pay for one, eat two, tell no one."],
+      ["TODAY: FRIED EVERYTHING", "Including the menu."],
+      ["WE HAVE COFFEE", "Real beans. Probably."],
+      ["CASH ONLY", "The card reader quit."],
+      ["NO TABS", "We mean you."]
+    ],
+    "venue": [
+      ["LIVE TONIGHT", "Bring earplugs or regret."],
+      ["OPEN MIC", "Sign the wall."],
+      ["CLOSED FOR REPAIRS", "Last night was a good night."],
+      ["NO FIGHTS", "This week."],
+      ["ALL AGES TILL 10", "Then all ages, differently."],
+      ["RADIO SEWERS NIGHT", "Players' tracks only."],
+      ["COVER: 5 CR", "Or a song."],
+      ["DOORS AT DUSK", "Leave by dawn."],
+      ["NEW BAND", "Same amps."],
+      ["KARAOKE", "We're sorry in advance."]
+    ],
+    "market": [
+      ["MARKET DAY", "Bring a bag. Bring two."],
+      ["FRESH FROM THE OUTER FARMS", "Mostly fresh."],
+      ["STALLS AVAILABLE", "Ask the family."],
+      ["NO HAGGLING", "Is what the sign says."],
+      ["LOST: ONE GOAT", "Answers to nothing."],
+      ["SPICE SALE", "Sneeze responsibly."],
+      ["CLOSING EARLY", "Weather's turning."],
+      ["FIXED PRICES TODAY", "Tomorrow, chaos."],
+      ["TRADE ONLY", "No credits after noon."],
+      ["FOUND: ONE GOAT", "Not yours. Prove it."]
+    ]
+  },
+  "stickers": {
+    "hints": [
+      "Fresh paste on a wall somewhere in {district}.",
+      "Someone slapped a new sticker up in {district}. Go look.",
+      "Patchkin were out in {district} last night with a bucket of paste.",
+      "A new sticker in {district}, still wet."
+    ],
+    "clue": "Fresh paste on the wall here. Someone's been sticking things.",
+    "notHere": "Go there to peel it off the wall.",
+    "found": "Peeled it off the wall. It's yours now."
+  }
+}
