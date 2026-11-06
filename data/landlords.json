@@ -218,6 +218,248 @@
       "tier": null,
       "notForRent": true,
       "hook": "Family seats. Nobody rents here; people are invited, employed, or escorted out."
+    },
+    {
+      "id": "academy-bursary",
+      "name": "The Bursar's Office",
+      "who": "A window in the Registrar's House that never closes on time.",
+      "type": "certified",
+      "temperament": "indifferent",
+      "places": [
+        "grand-academy--candidate-scholars-dells",
+        "grand-academy--candidate-student-quarters"
+      ],
+      "tier": "mixed",
+      "hook": "Enrolled students and staff pay less, if their paperwork is current. Lapse a term and the room reprices, with a form to explain why."
+    },
+    {
+      "id": "glassline-redevelopment",
+      "name": "Glassline Redevelopment",
+      "who": "Bought the court's freehold a lot at a time; the old owners still live on the ground floor.",
+      "type": "certified",
+      "temperament": "squeezing",
+      "places": [
+        "new-halo--candidate-old-lease-court"
+      ],
+      "tier": "mixed",
+      "corporateFunded": true,
+      "hook": "A buyout letter every month. Holdouts keep the old rent, until the next \"improvement\" puts it up."
+    },
+    {
+      "id": "three-spires-keepers",
+      "name": "The Keepers of Three Spires",
+      "who": "The monastery's keepers, who decide who is admitted and say very little about why.",
+      "type": "collective",
+      "temperament": "strange",
+      "places": [
+        "three-spires-monastery--candidate-guest-lantern"
+      ],
+      "tier": "commons",
+      "graceWeeks": 2,
+      "workOff": {
+        "credits": 20,
+        "for": "a kitchen or laundry shift"
+      },
+      "hook": "Beds for those admitted. Nobody explains the admission, and nobody admitted is asked to leave without a reason they're given in writing."
+    },
+    {
+      "id": "three-spires-keeper-rooms",
+      "name": "The Keepers of Three Spires",
+      "who": "Staff rooms behind the sacred frontage.",
+      "type": "collective",
+      "temperament": "strange",
+      "places": [
+        "three-spires-monastery--candidate-keeper-rooms"
+      ],
+      "tier": null,
+      "notForRent": true,
+      "hook": "Keepers live here. Visitors are walked through, never put up."
+    },
+    {
+      "id": "the-long-lease-holder",
+      "name": "The holder of the Long Lease",
+      "who": "An elven lessor whose lease is older than the street it sits on.",
+      "type": "absentee",
+      "temperament": "strange",
+      "places": [
+        "elven-enclave--candidate-the-long-lease"
+      ],
+      "tier": "mixed",
+      "hook": "The lease runs in clauses nobody under two hundred can read. Rent is fair; the renewal terms are written in a dialect that changes."
+    },
+    {
+      "id": "yard-bunk-office",
+      "name": "The Yard Bunk Office",
+      "who": "A clerk with a ledger and three keys to every room.",
+      "type": "slumlord",
+      "temperament": "squeezing",
+      "places": [
+        "far-shipyards--candidate-crew-rooms"
+      ],
+      "tier": "commons",
+      "employer": {
+        "name": "Yard",
+        "tier": "commons"
+      },
+      "hook": "Bunks rented by the shift. Double-booked more often than not; whoever gets there first keeps the blanket."
+    },
+    {
+      "id": "old-city-first-come",
+      "name": "Whoever got there first",
+      "who": "Nobody's on the registry down here. People hold what they've swept out and lit.",
+      "type": "off-registry",
+      "temperament": "indifferent",
+      "places": [
+        "old-city--candidate-windowless-rooms",
+        "old-city--candidate-settlement-row"
+      ],
+      "tier": "none",
+      "findOnly": true,
+      "hook": "Rooms are found, not let. Paid in lamp oil, repairs or keeping quiet about the way in."
+    },
+    {
+      "id": "scavengers-rest-table",
+      "name": "The Scavengers' Rest",
+      "who": "The people who live in the pocket, and decide who else does.",
+      "type": "collective",
+      "temperament": "decent",
+      "places": [
+        "old-city--candidate-the-scavengers-rest"
+      ],
+      "tier": "none",
+      "findOnly": true,
+      "hook": "Ask before entering. Stay by bringing something useful back from the dig."
+    },
+    {
+      "id": "borrowed-roof-court",
+      "name": "The Borrowed Roof Court",
+      "who": "The neighbors, who share the repairs that keep the roofs up.",
+      "type": "collective",
+      "temperament": "decent",
+      "places": [
+        "southport-slums--candidate-borrowed-roof-court"
+      ],
+      "tier": "commons",
+      "graceWeeks": 2,
+      "workOff": {
+        "credits": 20,
+        "for": "a weekly roof repair",
+        "classes": [
+          "Wrench",
+          "Runner"
+        ]
+      },
+      "hook": "Miss rent and you're asked onto the roof crew, not out the door."
+    },
+    {
+      "id": "mended-stair",
+      "name": "Auntie Pell",
+      "who": "An old orc who owns the stair, the landing and opinions about both.",
+      "type": "family",
+      "temperament": "decent",
+      "places": [
+        "southport-slums--candidate-mended-stair"
+      ],
+      "tier": "commons",
+      "graceWeeks": 2,
+      "hook": "Residents keep the landing swept and the rail mended. Do your part and she forgets the odd late week."
+    },
+    {
+      "id": "patchlight-lets",
+      "name": "Patchlight Lets",
+      "who": "A shopkeeper downstairs who rents the rooms above every shop on the block.",
+      "type": "slumlord",
+      "temperament": "squeezing",
+      "places": [
+        "southport-slums--candidate-patchlight-rooms"
+      ],
+      "tier": "commons",
+      "hook": "Rent goes up whenever the shop below has a bad week. Repairs are \"on the list\"."
+    },
+    {
+      "id": "patchkin-row-crews",
+      "name": "The Patchkin crews",
+      "who": "Goblin salvage crews who built the row out of what the fields gave up.",
+      "type": "collective",
+      "temperament": "decent",
+      "places": [
+        "scrapfields--candidate-patchkin-row"
+      ],
+      "tier": "commons",
+      "graceWeeks": 2,
+      "workOff": {
+        "credits": 20,
+        "for": "a sorting shift in the yards",
+        "classes": [
+          "Wrench",
+          "Runner"
+        ]
+      },
+      "hook": "Crew rooms first, everyone else if there's space. A good find pays rent better than credits."
+    },
+    {
+      "id": "dustwalker-camp",
+      "name": "The Dustwalkers",
+      "who": "Travelers who stop here between journeys and remember who was kind.",
+      "type": "off-registry",
+      "temperament": "decent",
+      "places": [
+        "outer-farms--candidate-dustwalker-camp"
+      ],
+      "tier": "none",
+      "findOnly": true,
+      "hook": "Ask first. A tent space is paid in news, water or a hand with the stakes."
+    },
+    {
+      "id": "roadside-rest",
+      "name": "The Roadside Rest",
+      "who": "A family that's run the last beds before open country for longer than anyone's checked.",
+      "type": "family",
+      "temperament": "decent",
+      "places": [
+        "borderlands--candidate-roadside-rest"
+      ],
+      "tier": "commons",
+      "graceWeeks": 1,
+      "hook": "Beds when there is room. Regulars get the room; everyone else gets the floor by the stove."
+    },
+    {
+      "id": "riverbend-worker-housing",
+      "name": "Riverbend Worker Housing",
+      "who": "Rooms owned by the steelworks and rented to its own crews.",
+      "type": "certified",
+      "temperament": "indifferent",
+      "places": [
+        "southern-industrial-belt--candidate-worker-rooms"
+      ],
+      "tier": "mixed",
+      "corporateFunded": true,
+      "employer": {
+        "name": "Riverbend Steelworks",
+        "tier": "commons"
+      },
+      "hook": "Homes within reach of the job, for as long as you have the job. A missed shift shows up on the rent."
+    },
+    {
+      "id": "patch-roof-row",
+      "name": "Patch Roof Row",
+      "who": "The residents, who keep each other's roofs on.",
+      "type": "collective",
+      "temperament": "decent",
+      "places": [
+        "crownless-row--candidate-patch-roof-row"
+      ],
+      "tier": "commons",
+      "graceWeeks": 2,
+      "workOff": {
+        "credits": 20,
+        "for": "a repair shift on the row",
+        "classes": [
+          "Wrench",
+          "Runner"
+        ]
+      },
+      "hook": "No crown, no landlord's office. Rent goes into the shared repair tin, and the tin is counted in public."
     }
   ],
   "floor": {

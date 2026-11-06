@@ -200,6 +200,348 @@
         "The pipes learned. Don't teach them more.",
         "Tell someone up top when you'll be back."
       ]
+    },
+    "grand-academy": {
+      "moods": [
+        "Exam week. The Index Court is full of people trading references they don't have.",
+        "The Brass Observatory left its dome open all night. Nobody admits to the star chart on the fountain.",
+        "Charter Gate's queue reaches the fountain. Credentials are being checked twice.",
+        "The Engineering Yard tripped the block's power. The Arcane Labs did not notice.",
+        "A lecture spilled out of the East Teaching Halls and kept going in the street.",
+        "The Secondhand Quill has a sale on paper and a surcharge on margins."
+      ],
+      "wisdom": [
+        "Bring two copies of everything. The Registrar keeps one.",
+        "Never ask a scholar what they're working on unless you have an hour.",
+        "The Labs and the Yard don't share power. Don't ask them to.",
+        "The Long Archive will find it. Eventually.",
+        "Annotations cost more than the book. They're worth it.",
+        "Student Quarters rent is cheaper if your paperwork is current. It isn't."
+      ]
+    },
+    "new-halo": {
+      "moods": [
+        "Another crane went up overnight. The skyline has opinions.",
+        "The Velvet Window is showing a version of the city with no Low Halo in it.",
+        "Old Lease Court got another buyout letter. Someone pinned it to the door with a fork.",
+        "Tram's on time, which in New Halo means it left early.",
+        "The Ninth Floor has a waitlist for the waitlist.",
+        "Rain on the glass towers, and the umbrellas are all the same brand."
+      ],
+      "wisdom": [
+        "Service Shift Gate opens before the residents wake. So should you.",
+        "The Last Original Cafe remembers prices. Ask what coffee used to cost.",
+        "If a door has no handle, it's not for you.",
+        "The Soft Border moves. Check where it is today.",
+        "Polished frontage, delivery doors underneath. Use the second one.",
+        "Never sign anything in Glassline Walk without reading the back."
+      ]
+    },
+    "governance-district": {
+      "moods": [
+        "The Appeals Walk queue folds around the square twice.",
+        "Registry Counter's stamp broke. Everything today is 'pending'.",
+        "Advocates Steps are packed: someone's eviction hearing is at noon.",
+        "The Duplicate ran out of toner. The clerks are copying by hand and by mood.",
+        "A wrong form went to the Evidence Annex. Nobody can get it back.",
+        "Response Court ran a drill. Half the queue thought it was real."
+      ],
+      "wisdom": [
+        "Bring every notice. Even the ones you threw away.",
+        "Duplicate everything. The originals go missing.",
+        "Advocates Steps first, Registry second. Never the other way round.",
+        "A queue that isn't moving is still a queue. Don't lose your place.",
+        "Back File Passage is faster, if you know a clerk.",
+        "If the form says 'optional', fill it in anyway."
+      ]
+    },
+    "crownline-industrials": {
+      "moods": [
+        "Inspection vans circled the loop three times before anyone got to work.",
+        "Meter House pushed an update. Half of Low Halo's lights flickered.",
+        "Contractor Muster is busy. Bastion's hiring again.",
+        "Switchyard Twelve hummed a new note all morning.",
+        "The Clean Front polished its counters. The queue did not get shorter.",
+        "Overtime Canteen ran out of the only good dish by ten."
+      ],
+      "wisdom": [
+        "Paperwork starts at the Certification Gate. So does the waiting.",
+        "Watch the cables on Maintenance Cut. They're live more often than they say.",
+        "Nobody gets free minutes at the Overtime Canteen.",
+        "A disputed connection is still a connection. For now.",
+        "Bastion bodies at the Muster aren't on your side, even when they're polite.",
+        "Read the meter yourself. Then read the bill."
+      ]
+    },
+    "three-spires-monastery": {
+      "moods": [
+        "The Mended Bell rang thirteen. The keepers say it rang twelve.",
+        "Petition Steps are crowded with quiet requests and louder families.",
+        "Laundry Yard has every line full. Someone's been admitted.",
+        "The Unnamed Court's door was open for a minute. Nobody went in.",
+        "Rain Cistern is full; the courtyard is singing.",
+        "Monastery Market has good bread and better gossip."
+      ],
+      "wisdom": [
+        "Ask the keepers nothing directly. They answer sideways.",
+        "The Quiet Table feeds you without many questions. Return the favor.",
+        "Visitors use the North Gate. Deliveries go round the back.",
+        "Don't count the spires out loud.",
+        "The Infirmary takes you in when it can. Sometimes it can't.",
+        "If the bell rings wrong, stay indoors."
+      ]
+    },
+    "elven-enclave": {
+      "moods": [
+        "Gardeners are out on the Kept Garden at dawn, paid by the hour, watched by the century.",
+        "Canopy Steps are quiet even for the Enclave.",
+        "Old Ward House hummed. Nobody remembers turning anything on.",
+        "The Shielded Service Yard had a delivery van stuck at the gate for an hour.",
+        "Someone repaired a brick on Pale Brick Walk. It's an event.",
+        "Cistern Court's pumps are running smooth; the water tastes old."
+      ],
+      "wisdom": [
+        "Speak softly in the Enclave. They've heard everything already.",
+        "The Gardeners Table feeds the workers. Ask nicely and it feeds you too.",
+        "Heritage has plumbing. It also has a waitlist for the plumber.",
+        "Never sign the Long Lease in a hurry.",
+        "The service lanes are separate for a reason. Keep wards and wires apart.",
+        "An elf's 'soon' is your 'next year'."
+      ]
+    },
+    "central-core": {
+      "moods": [
+        "Transfer Square trams bunched up again. Three at once, then none for an hour.",
+        "The Notice Wall got another revision. It contradicts this morning's.",
+        "Shift Market's smoke is thick: something good on the grill.",
+        "Commerce Steps are full of suits looking down at the crowd.",
+        "The Public Counter opened a fourth queue. It's for the other three.",
+        "Someone fell asleep on the Last Bench. Nobody moved them."
+      ],
+      "wisdom": [
+        "Read the Notice Wall twice. It changes before you're done.",
+        "Roofline Cut is faster than the street if your knees agree.",
+        "The Last Bench is free. That's why it's full.",
+        "Ledger Arcade traders deal fair, if you count after them.",
+        "Delivery carts have right of way on Service Crossing. They think so, anyway.",
+        "Eat at Shift Market between shifts, not during."
+      ]
+    },
+    "the-ashrun": {
+      "moods": [
+        "Barges backed up on Freight Reach; somebody's papers are wrong.",
+        "Runoff Mouth ran colors today. Nobody's swimming.",
+        "Tide Ledger is full of chalk: double shifts on the water.",
+        "The Brown Steps are underwater again, up to the third mark.",
+        "Debris Catch caught something worth arguing over.",
+        "Meridian's clerks at Manifest Quay are checking every crate."
+      ],
+      "wisdom": [
+        "Don't stand downstream of Runoff Mouth.",
+        "The water leaves marks on the steps. Read them before you sit.",
+        "Check the Tide Ledger before you take a shift.",
+        "What floats to the Debris Catch belongs to whoever's fastest.",
+        "The Bent Crossing takes one cart at a time. Wait.",
+        "Papers meet cargo at the quay. Make sure yours match."
+      ]
+    },
+    "far-shipyards": {
+      "moods": [
+        "Half-Hull Dock is a ship today. Tomorrow it might be a ship again.",
+        "Plate Cutters are loud enough to hear from Crane Alley.",
+        "Rivet Canteen has stew and a line out the door.",
+        "A whole hull went through Breakers Gate. Only the parts came out.",
+        "Launch Slip is clear; something big is going down it soon.",
+        "Second Sale Yard has new fittings. Ask where they came from twice."
+      ],
+      "wisdom": [
+        "Look up in Crane Alley. Loads move overhead.",
+        "Hearing protection at the Plate Cutters. Seriously.",
+        "Crew Rooms are double-booked. Get there first.",
+        "Anything at Second Sale Yard costs half of what they say and twice what it's worth.",
+        "Keep the slope clear on the Launch Slip.",
+        "Breakers Gate lets parts out. Whole ships rarely leave."
+      ]
+    },
+    "greasewick-row": {
+      "moods": [
+        "The Hot Seam is welding behind the shutters again. Sparks under the door.",
+        "Generator Court went dark for ten minutes and the whole Row swore at once.",
+        "Third Rattle Motors has a truck nobody can identify.",
+        "Aftershift Kitchen is serving the good noodles. Night crews only.",
+        "The Borrowed Spanner lent out its last torque wrench. Story pending.",
+        "No Receipt Devices is fixing a phone that shouldn't exist."
+      ],
+      "wisdom": [
+        "Third Rattle diagnoses first. Credentials later, if ever.",
+        "Return a borrowed tool with a story, or don't come back.",
+        "Generator Court is shared power. Don't be the one who trips it.",
+        "No receipt, no refund, no questions.",
+        "Apprentices learn with somebody watching. Be the somebody, sometimes.",
+        "Conduit Mouth crews fit where you don't."
+      ]
+    },
+    "old-city": {
+      "moods": [
+        "Lamps lit along Settlement Row. Someone's moved in.",
+        "A new crack ran through Fallen Court overnight.",
+        "The Scavengers Rest has a sign up: no visitors today.",
+        "Somebody tried the Sealed Door again. It's still sealed.",
+        "Utility Crosscut pipes are dripping warm.",
+        "A new mark on the Last Legible Wall. Nobody admits to it."
+      ],
+      "wisdom": [
+        "Ask before entering the Scavengers Rest.",
+        "Keep off the loose edges in Fallen Court.",
+        "The Sealed Door is sealed for a reason. Probably.",
+        "Three Foundations, three floors. Pick one and stay on it.",
+        "Read the old wall, but don't copy it out loud.",
+        "If the route ends, turn around. Don't make a new one."
+      ]
+    },
+    "southport-slums": {
+      "moods": [
+        "Pump Queue started before dawn. The water's slow today.",
+        "The Wash Lines are full; rain's due, and everyone's betting against it.",
+        "Last Busk Corner had a crowd till midnight.",
+        "The Late Pot's out of everything but soup. The soup is good.",
+        "Someone fixed another step on the Mended Stair.",
+        "Neighbors Gate is watching closely: a stranger's been asking around."
+      ],
+      "wisdom": [
+        "Water before work. Join the queue early.",
+        "Neighbors Gate asks who knows you. Have an answer.",
+        "The Late Pot feeds the late shift. Don't take the last bowl.",
+        "The Dry Shelf keeps goods above the runoff. Keep yours there too.",
+        "Busk at the Corner and someone will throw you a coin, or a shoe.",
+        "Borrowed roofs need returned favors."
+      ]
+    },
+    "scrapfields": {
+      "moods": [
+        "Scrap Ridge shifted overnight. A whole path is gone.",
+        "Copper Rain is stripping a new spool. Sharp edges everywhere.",
+        "Tag Dispute is three hours deep over a single chalk mark.",
+        "The Running Engine started something that hasn't run in years.",
+        "Meal Tin has hot food and a queue of goblins.",
+        "Crane Shadow swung wide today. Everyone stood back."
+      ],
+      "wisdom": [
+        "Stay outside the crane's swing.",
+        "Chalk your tag clear, or someone else will.",
+        "The Kept Pieces are small. The possibilities aren't.",
+        "Weighing Shade weighs fair. Mostly.",
+        "If the Patchkin say a pile's unsafe, believe them.",
+        "Second Life Yard sorts before disposal. Ask before you take."
+      ]
+    },
+    "outer-farms": {
+      "moods": [
+        "Dustwalker Camp has new tents. Someone came in from the hinterland.",
+        "The Mended Pump coughed and then kept going.",
+        "Seed Tin's trading small today; nobody's selling much.",
+        "Hunters Return is checking gear: something's moving out past Last Fence.",
+        "Shared Store got a delivery of patched tools.",
+        "Seamfield strips are green for once."
+      ],
+      "wisdom": [
+        "Ask first at Dustwalker Camp.",
+        "Trade small at Seed Tin. Keep some back.",
+        "Past the Last Fence, the country decides.",
+        "Check your gear at Hunters Return before you head out.",
+        "The pump keeps the fields alive. Don't break it.",
+        "Hinterland Path goes somewhere. Nobody agrees where."
+      ]
+    },
+    "borderlands": {
+      "moods": [
+        "Roadside Rest is full; the floor by the stove is taken too.",
+        "The Last Lit Post is out. Bring your own light.",
+        "Fringe Market prices changed twice before noon.",
+        "A cart broke a wheel at the Spare Wheel. Barter's hot.",
+        "Someone moved the Return Marker. Locals moved it back.",
+        "Crossing Shade is crowded with people waiting for nobody official."
+      ],
+      "wisdom": [
+        "Beyond the Last Lit Post, bring your own light.",
+        "Nobody agrees where authority ends. Act like it hasn't.",
+        "The Spare Wheel trades parts by barter. Credits are a last resort.",
+        "Find the Return Marker on the way out. You'll need it on the way back.",
+        "Patched Gate is loose. That's not the same as open.",
+        "Fringe Market prices change daily. Buy early."
+      ]
+    },
+    "southern-industrial-belt": {
+      "moods": [
+        "Shift Bell rang; the furnaces didn't stop.",
+        "The Long Pour is running hot. Guards doubled.",
+        "Hazard Pay Steps have a line. Someone got hurt on the night shift.",
+        "Canteen Six has stew between furnace shifts.",
+        "The Knuckle Corner is tense. Nobody's saying who's in charge.",
+        "Load Road is jammed; freight's taking the wide turn slow."
+      ],
+      "wisdom": [
+        "Claims begin after the injury. Report it before you go home.",
+        "Ashborn Workshop crews run on reputation. Earn yours.",
+        "Soot hurts. Use a mask.",
+        "Stay off the Knuckle Corner if you don't know who you answer to.",
+        "Canteen Six feeds you between shifts, not during.",
+        "The South Exit leads to Southport. Smoke follows."
+      ]
+    },
+    "crownless-row": {
+      "moods": [
+        "Mending Court has a pile of broken things and a crowd of hands.",
+        "Open Pot has food, because there's enough today.",
+        "The Small Stage had a poet and a heckler. Both were good.",
+        "Lightshare is splitting power fairly. Someone counted.",
+        "No Crown Workshop is lending tools, no titles needed.",
+        "The Spare Chair is free. So is the conversation."
+      ],
+      "wisdom": [
+        "Bring what you can to Mending Court.",
+        "Open Pot feeds you when there's enough. Bring some when there's more.",
+        "Ask before moving through Neighbors Steps.",
+        "Broken doesn't mean finished at the Useful Shelf.",
+        "Common Gate opens with a conversation, not a crown.",
+        "Lightshare power is shared. Don't hog it."
+      ]
+    },
+    "ash-wastes": {
+      "moods": [
+        "Ash fall heavy this morning. Visibility is short.",
+        "Dead Wind Reach is quiet. Too quiet.",
+        "The Black Pool's edge crept closer to the markers.",
+        "Somebody tried the Corroded Span. They came back the long way.",
+        "Silent Machinery made a sound.",
+        "The exclusion fence has a new hole."
+      ],
+      "wisdom": [
+        "Turn back at Last Warning if you're not ready.",
+        "Don't trust the Corroded Span.",
+        "Keep clear of the Black Pool.",
+        "Return before visibility fails.",
+        "The markers go missing. Count them on the way out.",
+        "Nothing out here is maintained, including your luck."
+      ]
+    },
+    "forgotten-depths": {
+      "moods": [
+        "Chalk marks are fresh at the Last Known Landing.",
+        "Someone came back from past the Pressure Door. They're not talking.",
+        "Rations & Meals is open and the stew is warm.",
+        "Uncertain Crossing's rope is swaying with nobody on it.",
+        "Supply Depot restocked. Not with what you need.",
+        "A new collapse at the front. The route's shorter now."
+      ],
+      "wisdom": [
+        "Leave a chalk mark at the landing. Someone will look for it.",
+        "Don't force the Pressure Door.",
+        "The stairs at Broken Descent stop before the floor.",
+        "Dashes mark a possible passage. Possible.",
+        "Eat at Rations & Meals before you go down, not after.",
+        "Leave the map unfinished. That's how you come back."
+      ]
     }
   },
   "signs": {
