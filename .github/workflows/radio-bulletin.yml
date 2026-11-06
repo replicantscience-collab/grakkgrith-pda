@@ -1,0 +1,24 @@
+name: Radio Sewers bulletin
+
+# Posts today's Radio Sewers bulletin to Discord once a day. It is built from the same living-city day
+# every PDA shows (district moods, a rumor, the sticker hint), voiced by whichever DJ is on shift in Adyta.
+# Setup: in Discord, Server Settings > Integrations > Webhooks > New Webhook, copy its URL, then in GitHub
+# Settings > Secrets and variables > Actions > New repository secret named DISCORD_WEBHOOK_URL.
+# Without that secret the job only prints the bulletin. "Run workflow" on the Actions tab posts one now.
+
+on:
+  schedule:
+    - cron: '41 14 * * *'   # 14:41 UTC daily (7:41 AM in Colorado in winter)
+  workflow_dispatch:
+
+jobs:
+  post:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - run: node tools/radio-bulletin.mjs
+        env:
+          DISCORD_WEBHOOK_URL: ${{ secrets.DISCORD_WEBHOOK_URL }}

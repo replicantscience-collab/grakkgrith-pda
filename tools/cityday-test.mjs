@@ -55,5 +55,16 @@ ok('a new day is new', CD.isNew(s, t));
 CD.markSeen(s, t);
 ok('once seen, it is not new', !CD.isNew(s, t) && CD.isNew(s, t2));
 
+// The Radio Sewers bulletin is built from the same day the PDA shows.
+const { bulletin } = await import('./radio-bulletin.mjs');
+const RAD = json('data/radio.json'), off = Date.parse(PL.clock.anchorAdyta + 'Z') - Date.parse(PL.clock.anchorReal);
+for (const hr of [8, 14, 22]) {
+  const real = Date.UTC(2026, 10, 9, hr) - off, b = bulletin(real), slot = RAD.slots.find(x => (x.from < x.to ? hr >= x.from && hr < x.to : hr >= x.from || hr < x.to));
+  ok(`bulletin at ${hr}:00 Adyta is ${slot.dj}'s`, b.content.includes(slot.dj));
+  ok(`bulletin at ${hr}:00 fits in a Discord message`, b.content.length < 2000);
+}
+const bt = CD.today(D, PL, ST, Date.UTC(2026, 10, 9, 14)), bb = bulletin(Date.UTC(2026, 10, 9, 14) - off).content;
+ok('the bulletin carries the same sticker hint as the PDA', bt.sticker && bb.includes(bt.sticker.hint));
+
 console.log(fails ? `${fails} failed, ${passes} passed` : `cityday: all ${passes} checks pass.`);
 process.exit(fails ? 1 : 0);
