@@ -4285,7 +4285,7 @@
       "id": "grand-academy--candidate-charter-gate",
       "district": "grand-academy",
       "name": "Charter Gate",
-      "type": "landmark",
+      "type": "civic",
       "blurb": "Visitors queue; credentials checked.",
       "canonStatus": "proposed",
       "sources": [
@@ -4293,16 +4293,15 @@
       ],
       "pin": {
         "map": "grand-academy",
-        "x": 0.23,
-        "y": 0.19,
-        "approx": true
+        "x": 0.195,
+        "y": 0.2
       }
     },
     {
       "id": "grand-academy--candidate-the-long-archive",
       "district": "grand-academy",
       "name": "The Long Archive",
-      "type": "landmark",
+      "type": "civic",
       "blurb": "Requests outlast their requesters.",
       "canonStatus": "proposed",
       "sources": [
@@ -4310,16 +4309,15 @@
       ],
       "pin": {
         "map": "grand-academy",
-        "x": 0.7,
-        "y": 0.19,
-        "approx": true
+        "x": 0.645,
+        "y": 0.186
       }
     },
     {
       "id": "grand-academy--candidate-index-court",
       "district": "grand-academy",
       "name": "Index Court",
-      "type": "landmark",
+      "type": "civic",
       "blurb": "Readers trade missing references.",
       "canonStatus": "proposed",
       "sources": [
@@ -4327,16 +4325,15 @@
       ],
       "pin": {
         "map": "grand-academy",
-        "x": 0.28,
-        "y": 0.34,
-        "approx": true
+        "x": 0.273,
+        "y": 0.347
       }
     },
     {
       "id": "grand-academy--candidate-east-teaching-halls",
       "district": "grand-academy",
       "name": "East Teaching Halls",
-      "type": "landmark",
+      "type": "civic",
       "blurb": "Lectures spill into corridors.",
       "canonStatus": "proposed",
       "sources": [
@@ -4344,16 +4341,15 @@
       ],
       "pin": {
         "map": "grand-academy",
-        "x": 0.74,
-        "y": 0.34,
-        "approx": true
+        "x": 0.687,
+        "y": 0.332
       }
     },
     {
       "id": "grand-academy--candidate-isolated-arcane-labs",
       "district": "grand-academy",
       "name": "Isolated Arcane Labs",
-      "type": "landmark",
+      "type": "industrial",
       "blurb": "Wards; separate from technical systems.",
       "canonStatus": "proposed",
       "sources": [
@@ -4361,16 +4357,15 @@
       ],
       "pin": {
         "map": "grand-academy",
-        "x": 0.2,
-        "y": 0.49,
-        "approx": true
+        "x": 0.155,
+        "y": 0.485
       }
     },
     {
       "id": "grand-academy--candidate-engineering-yard",
       "district": "grand-academy",
       "name": "Engineering Yard",
-      "type": "landmark",
+      "type": "industrial",
       "blurb": "Electrical work; no magical power.",
       "canonStatus": "proposed",
       "sources": [
@@ -4378,9 +4373,8 @@
       ],
       "pin": {
         "map": "grand-academy",
-        "x": 0.68,
-        "y": 0.49,
-        "approx": true
+        "x": 0.649,
+        "y": 0.493
       }
     },
     {
@@ -4395,9 +4389,8 @@
       ],
       "pin": {
         "map": "grand-academy",
-        "x": 0.27,
-        "y": 0.64,
-        "approx": true
+        "x": 0.286,
+        "y": 0.635
       }
     },
     {
@@ -4412,16 +4405,15 @@
       ],
       "pin": {
         "map": "grand-academy",
-        "x": 0.75,
-        "y": 0.64,
-        "approx": true
+        "x": 0.635,
+        "y": 0.676
       }
     },
     {
       "id": "grand-academy--candidate-the-secondhand-quill",
       "district": "grand-academy",
       "name": "The Secondhand Quill",
-      "type": "landmark",
+      "type": "shop",
       "blurb": "Cheap paper; expensive annotations.",
       "canonStatus": "proposed",
       "sources": [
@@ -4429,16 +4421,15 @@
       ],
       "pin": {
         "map": "grand-academy",
-        "x": 0.24,
-        "y": 0.79,
-        "approx": true
+        "x": 0.296,
+        "y": 0.859
       }
     },
     {
       "id": "grand-academy--candidate-copyists-passage",
       "district": "grand-academy",
       "name": "Copyists Passage",
-      "type": "landmark",
+      "type": "industrial",
       "blurb": "Service access behind public halls.",
       "canonStatus": "proposed",
       "sources": [
@@ -4446,16 +4437,95 @@
       ],
       "pin": {
         "map": "grand-academy",
-        "x": 0.69,
-        "y": 0.79,
-        "approx": true
+        "x": 0.643,
+        "y": 0.842
+      }
+    },
+    {
+      "id": "grand-academy--candidate-scholars-dells",
+      "district": "grand-academy",
+      "name": "Scholars' Dells",
+      "type": "housing",
+      "blurb": "Residences, rooms and common kitchens.",
+      "canonStatus": "proposed",
+      "sources": [
+        "https://www.worldanvil.com/w/adyta-jeeperssheefers/a/the-grand-academy-landmark"
+      ],
+      "pin": {
+        "map": "grand-academy",
+        "x": 0.055,
+        "y": 0.249
+      }
+    },
+    {
+      "id": "grand-academy--candidate-academy-market",
+      "district": "grand-academy",
+      "name": "Academy Market",
+      "type": "market",
+      "blurb": "Books, tools and food; all peoples welcome.",
+      "canonStatus": "proposed",
+      "sources": [
+        "https://www.worldanvil.com/w/adyta-jeeperssheefers/a/the-grand-academy-landmark"
+      ],
+      "pin": {
+        "map": "grand-academy",
+        "x": 0.902,
+        "y": 0.146
+      }
+    },
+    {
+      "id": "grand-academy--candidate-student-quarters",
+      "district": "grand-academy",
+      "name": "Student Quarters",
+      "type": "housing",
+      "blurb": "Mixed peoples, mixed disciplines.",
+      "canonStatus": "proposed",
+      "sources": [
+        "https://www.worldanvil.com/w/adyta-jeeperssheefers/a/the-grand-academy-landmark"
+      ],
+      "pin": {
+        "map": "grand-academy",
+        "x": 0.893,
+        "y": 0.75
+      }
+    },
+    {
+      "id": "grand-academy--candidate-the-archives-credentials",
+      "district": "grand-academy",
+      "name": "The Archives & Credentials",
+      "type": "civic",
+      "blurb": "Records, charters and academic credentials.",
+      "canonStatus": "proposed",
+      "sources": [
+        "https://www.worldanvil.com/w/adyta-jeeperssheefers/a/the-grand-academy-landmark"
+      ],
+      "pin": {
+        "map": "grand-academy",
+        "x": 0.472,
+        "y": 0.132
+      }
+    },
+    {
+      "id": "grand-academy--candidate-registrars-house",
+      "district": "grand-academy",
+      "name": "Registrar's House",
+      "type": "civic",
+      "blurb": "Admissions, credentials and visiting scholars.",
+      "canonStatus": "proposed",
+      "sources": [
+        "https://www.worldanvil.com/w/adyta-jeeperssheefers/a/the-grand-academy-landmark"
+      ],
+      "pin": {
+        "map": "grand-academy",
+        "x": 0.648,
+        "y": 0.093
       }
     },
     {
       "id": "new-halo--candidate-the-shining-spire",
       "district": "new-halo",
       "name": "The Shining Spire",
-      "type": "landmark",
+      "type": "corporate",
       "blurb": "Finance, media and corporate prestige.",
       "canonStatus": "established name; proposed placement",
       "sources": [
@@ -4464,16 +4534,15 @@
       ],
       "pin": {
         "map": "new-halo",
-        "x": 0.23,
-        "y": 0.19,
-        "approx": true
+        "x": 0.324,
+        "y": 0.168
       }
     },
     {
       "id": "new-halo--candidate-glassline-walk",
       "district": "new-halo",
       "name": "Glassline Walk",
-      "type": "landmark",
+      "type": "corporate",
       "blurb": "Appointments; polished frontage.",
       "canonStatus": "proposed",
       "sources": [
@@ -4482,16 +4551,15 @@
       ],
       "pin": {
         "map": "new-halo",
-        "x": 0.7,
-        "y": 0.19,
-        "approx": true
+        "x": 0.749,
+        "y": 0.213
       }
     },
     {
       "id": "new-halo--candidate-the-ninth-floor",
       "district": "new-halo",
       "name": "The Ninth Floor",
-      "type": "landmark",
+      "type": "venue",
       "blurb": "Curated music; reservation required.",
       "canonStatus": "proposed",
       "sources": [
@@ -4500,16 +4568,15 @@
       ],
       "pin": {
         "map": "new-halo",
-        "x": 0.28,
-        "y": 0.34,
-        "approx": true
+        "x": 0.296,
+        "y": 0.347
       }
     },
     {
       "id": "new-halo--candidate-old-lease-court",
       "district": "new-halo",
       "name": "Old Lease Court",
-      "type": "landmark",
+      "type": "housing",
       "blurb": "Older homes inside redevelopment.",
       "canonStatus": "proposed",
       "sources": [
@@ -4518,16 +4585,15 @@
       ],
       "pin": {
         "map": "new-halo",
-        "x": 0.74,
-        "y": 0.34,
-        "approx": true
+        "x": 0.76,
+        "y": 0.349
       }
     },
     {
       "id": "new-halo--candidate-velvet-window",
       "district": "new-halo",
       "name": "Velvet Window",
-      "type": "landmark",
+      "type": "shop",
       "blurb": "Media storefront; carefully edited city.",
       "canonStatus": "proposed",
       "sources": [
@@ -4536,16 +4602,15 @@
       ],
       "pin": {
         "map": "new-halo",
-        "x": 0.2,
-        "y": 0.49,
-        "approx": true
+        "x": 0.236,
+        "y": 0.488
       }
     },
     {
       "id": "new-halo--candidate-the-quiet-meter",
       "district": "new-halo",
       "name": "The Quiet Meter",
-      "type": "landmark",
+      "type": "corporate",
       "blurb": "Utilities work; somebody pays.",
       "canonStatus": "proposed",
       "sources": [
@@ -4554,16 +4619,15 @@
       ],
       "pin": {
         "map": "new-halo",
-        "x": 0.68,
-        "y": 0.49,
-        "approx": true
+        "x": 0.75,
+        "y": 0.488
       }
     },
     {
       "id": "new-halo--candidate-service-shift-gate",
       "district": "new-halo",
       "name": "Service Shift Gate",
-      "type": "landmark",
+      "type": "industrial",
       "blurb": "Workers enter before residents wake.",
       "canonStatus": "proposed",
       "sources": [
@@ -4572,16 +4636,15 @@
       ],
       "pin": {
         "map": "new-halo",
-        "x": 0.27,
-        "y": 0.64,
-        "approx": true
+        "x": 0.26,
+        "y": 0.633
       }
     },
     {
       "id": "new-halo--candidate-prospect-arcade",
       "district": "new-halo",
       "name": "Prospect Arcade",
-      "type": "landmark",
+      "type": "shop",
       "blurb": "Boutiques above delivery doors.",
       "canonStatus": "proposed",
       "sources": [
@@ -4590,16 +4653,15 @@
       ],
       "pin": {
         "map": "new-halo",
-        "x": 0.75,
-        "y": 0.64,
-        "approx": true
+        "x": 0.654,
+        "y": 0.627
       }
     },
     {
       "id": "new-halo--candidate-last-original-cafe",
       "district": "new-halo",
       "name": "Last Original Cafe",
-      "type": "landmark",
+      "type": "food",
       "blurb": "Regulars remember cheaper coffee.",
       "canonStatus": "proposed",
       "sources": [
@@ -4608,9 +4670,8 @@
       ],
       "pin": {
         "map": "new-halo",
-        "x": 0.24,
-        "y": 0.79,
-        "approx": true
+        "x": 0.168,
+        "y": 0.757
       }
     },
     {
@@ -4626,16 +4687,117 @@
       ],
       "pin": {
         "map": "new-halo",
-        "x": 0.69,
-        "y": 0.79,
-        "approx": true
+        "x": 0.626,
+        "y": 0.783
+      }
+    },
+    {
+      "id": "new-halo--candidate-adyta-media-house",
+      "district": "new-halo",
+      "name": "Adyta Media House",
+      "type": "corporate",
+      "blurb": "Broadcast, edit and production suites.",
+      "canonStatus": "proposed",
+      "sources": [
+        "https://www.worldanvil.com/w/adyta-jeeperssheefers/a/new-halo-settlement",
+        "https://www.worldanvil.com/w/adyta-jeeperssheefers/a/adyta-settlement"
+      ],
+      "pin": {
+        "map": "new-halo",
+        "x": 0.091,
+        "y": 0.366
+      }
+    },
+    {
+      "id": "new-halo--candidate-civic-services",
+      "district": "new-halo",
+      "name": "Civic Services",
+      "type": "civic",
+      "blurb": "Permits, utilities and redevelopment liaison.",
+      "canonStatus": "proposed",
+      "sources": [
+        "https://www.worldanvil.com/w/adyta-jeeperssheefers/a/new-halo-settlement",
+        "https://www.worldanvil.com/w/adyta-jeeperssheefers/a/adyta-settlement"
+      ],
+      "pin": {
+        "map": "new-halo",
+        "x": 0.078,
+        "y": 0.522
+      }
+    },
+    {
+      "id": "new-halo--candidate-guildhall-tower",
+      "district": "new-halo",
+      "name": "Guildhall Tower",
+      "type": "corporate",
+      "blurb": "Professional offices and client services.",
+      "canonStatus": "proposed",
+      "sources": [
+        "https://www.worldanvil.com/w/adyta-jeeperssheefers/a/new-halo-settlement",
+        "https://www.worldanvil.com/w/adyta-jeeperssheefers/a/adyta-settlement"
+      ],
+      "pin": {
+        "map": "new-halo",
+        "x": 0.563,
+        "y": 0.288
+      }
+    },
+    {
+      "id": "new-halo--candidate-adyta-square",
+      "district": "new-halo",
+      "name": "Adyta Square",
+      "type": "landmark",
+      "blurb": "Public plaza: kiosks, meetings and events.",
+      "canonStatus": "proposed",
+      "sources": [
+        "https://www.worldanvil.com/w/adyta-jeeperssheefers/a/new-halo-settlement",
+        "https://www.worldanvil.com/w/adyta-jeeperssheefers/a/adyta-settlement"
+      ],
+      "pin": {
+        "map": "new-halo",
+        "x": 0.535,
+        "y": 0.454
+      }
+    },
+    {
+      "id": "new-halo--candidate-redevelopment-site-a",
+      "district": "new-halo",
+      "name": "Redevelopment Site A",
+      "type": "industrial",
+      "blurb": "Foundations and frame; work in progress.",
+      "canonStatus": "proposed",
+      "sources": [
+        "https://www.worldanvil.com/w/adyta-jeeperssheefers/a/new-halo-settlement",
+        "https://www.worldanvil.com/w/adyta-jeeperssheefers/a/adyta-settlement"
+      ],
+      "pin": {
+        "map": "new-halo",
+        "x": 0.921,
+        "y": 0.601
+      }
+    },
+    {
+      "id": "new-halo--candidate-redevelopment-site-b",
+      "district": "new-halo",
+      "name": "Redevelopment Site B",
+      "type": "industrial",
+      "blurb": "Towers in progress; access restricted.",
+      "canonStatus": "proposed",
+      "sources": [
+        "https://www.worldanvil.com/w/adyta-jeeperssheefers/a/new-halo-settlement",
+        "https://www.worldanvil.com/w/adyta-jeeperssheefers/a/adyta-settlement"
+      ],
+      "pin": {
+        "map": "new-halo",
+        "x": 0.575,
+        "y": 0.137
       }
     },
     {
       "id": "governance-district--candidate-registry-counter",
       "district": "governance-district",
       "name": "Registry Counter",
-      "type": "landmark",
+      "type": "civic",
       "blurb": "ACR branch; identity paperwork.",
       "canonStatus": "proposed",
       "sources": [
@@ -4644,16 +4806,15 @@
       ],
       "pin": {
         "map": "governance-district",
-        "x": 0.23,
-        "y": 0.19,
-        "approx": true
+        "x": 0.22,
+        "y": 0.249
       }
     },
     {
       "id": "governance-district--candidate-advocates-steps",
       "district": "governance-district",
       "name": "Advocates Steps",
-      "type": "landmark",
+      "type": "civic",
       "blurb": "APA intake; bring every notice.",
       "canonStatus": "proposed",
       "sources": [
@@ -4662,16 +4823,15 @@
       ],
       "pin": {
         "map": "governance-district",
-        "x": 0.7,
-        "y": 0.19,
-        "approx": true
+        "x": 0.659,
+        "y": 0.234
       }
     },
     {
       "id": "governance-district--candidate-labor-claims-hall",
       "district": "governance-district",
       "name": "Labor Claims Hall",
-      "type": "landmark",
+      "type": "civic",
       "blurb": "ALB branch; wages and hazards.",
       "canonStatus": "proposed",
       "sources": [
@@ -4680,16 +4840,15 @@
       ],
       "pin": {
         "map": "governance-district",
-        "x": 0.28,
-        "y": 0.34,
-        "approx": true
+        "x": 0.296,
+        "y": 0.363
       }
     },
     {
       "id": "governance-district--candidate-wardens-rest",
       "district": "governance-district",
       "name": "Wardens Rest",
-      "type": "landmark",
+      "type": "civic",
       "blurb": "ACW liaison; civilian protection.",
       "canonStatus": "proposed",
       "sources": [
@@ -4698,16 +4857,15 @@
       ],
       "pin": {
         "map": "governance-district",
-        "x": 0.74,
-        "y": 0.34,
-        "approx": true
+        "x": 0.708,
+        "y": 0.376
       }
     },
     {
       "id": "governance-district--candidate-evidence-annex",
       "district": "governance-district",
       "name": "Evidence Annex",
-      "type": "landmark",
+      "type": "civic",
       "blurb": "ABI records; restricted access.",
       "canonStatus": "proposed",
       "sources": [
@@ -4716,16 +4874,15 @@
       ],
       "pin": {
         "map": "governance-district",
-        "x": 0.2,
-        "y": 0.49,
-        "approx": true
+        "x": 0.145,
+        "y": 0.527
       }
     },
     {
       "id": "governance-district--candidate-response-court",
       "district": "governance-district",
       "name": "Response Court",
-      "type": "landmark",
+      "type": "civic",
       "blurb": "AEM coordination; exits stay clear.",
       "canonStatus": "proposed",
       "sources": [
@@ -4734,16 +4891,15 @@
       ],
       "pin": {
         "map": "governance-district",
-        "x": 0.68,
-        "y": 0.49,
-        "approx": true
+        "x": 0.699,
+        "y": 0.539
       }
     },
     {
       "id": "governance-district--candidate-the-duplicate",
       "district": "governance-district",
       "name": "The Duplicate",
-      "type": "landmark",
+      "type": "shop",
       "blurb": "Copies, stamps and tired clerks.",
       "canonStatus": "proposed",
       "sources": [
@@ -4752,16 +4908,15 @@
       ],
       "pin": {
         "map": "governance-district",
-        "x": 0.27,
-        "y": 0.64,
-        "approx": true
+        "x": 0.253,
+        "y": 0.676
       }
     },
     {
       "id": "governance-district--candidate-appeals-walk",
       "district": "governance-district",
       "name": "Appeals Walk",
-      "type": "landmark",
+      "type": "civic",
       "blurb": "Public queue between agencies.",
       "canonStatus": "proposed",
       "sources": [
@@ -4770,16 +4925,15 @@
       ],
       "pin": {
         "map": "governance-district",
-        "x": 0.75,
-        "y": 0.64,
-        "approx": true
+        "x": 0.724,
+        "y": 0.676
       }
     },
     {
       "id": "governance-district--candidate-service-ledger-gate",
       "district": "governance-district",
       "name": "Service Ledger Gate",
-      "type": "landmark",
+      "type": "civic",
       "blurb": "Compliance papers; contested authority.",
       "canonStatus": "proposed",
       "sources": [
@@ -4788,16 +4942,15 @@
       ],
       "pin": {
         "map": "governance-district",
-        "x": 0.24,
-        "y": 0.79,
-        "approx": true
+        "x": 0.244,
+        "y": 0.832
       }
     },
     {
       "id": "governance-district--candidate-back-file-passage",
       "district": "governance-district",
       "name": "Back File Passage",
-      "type": "landmark",
+      "type": "industrial",
       "blurb": "Deliveries; records travel slowly.",
       "canonStatus": "proposed",
       "sources": [
@@ -4806,16 +4959,32 @@
       ],
       "pin": {
         "map": "governance-district",
-        "x": 0.69,
-        "y": 0.79,
-        "approx": true
+        "x": 0.6,
+        "y": 0.852
+      }
+    },
+    {
+      "id": "governance-district--candidate-civic-services-complex",
+      "district": "governance-district",
+      "name": "Civic Services Complex",
+      "type": "civic",
+      "blurb": "The big columns above the steps; most queues start here.",
+      "canonStatus": "proposed",
+      "sources": [
+        "https://www.worldanvil.com/w/adyta-jeeperssheefers/a/adyta-settlement",
+        "https://www.worldanvil.com/w/adyta-jeeperssheefers/a/civic-institutions-article"
+      ],
+      "pin": {
+        "map": "governance-district",
+        "x": 0.42,
+        "y": 0.166
       }
     },
     {
       "id": "crownline-industrials--candidate-certification-gate",
       "district": "crownline-industrials",
       "name": "Certification Gate",
-      "type": "landmark",
+      "type": "civic",
       "blurb": "Access begins with paperwork.",
       "canonStatus": "proposed",
       "sources": [
@@ -4824,16 +4993,15 @@
       ],
       "pin": {
         "map": "crownline-industrials",
-        "x": 0.23,
-        "y": 0.19,
-        "approx": true
+        "x": 0.179,
+        "y": 0.193
       }
     },
     {
       "id": "crownline-industrials--candidate-meter-house",
       "district": "crownline-industrials",
       "name": "Meter House",
-      "type": "landmark",
+      "type": "corporate",
       "blurb": "Remote service; local consequences.",
       "canonStatus": "proposed",
       "sources": [
@@ -4842,16 +5010,15 @@
       ],
       "pin": {
         "map": "crownline-industrials",
-        "x": 0.7,
-        "y": 0.19,
-        "approx": true
+        "x": 0.684,
+        "y": 0.207
       }
     },
     {
       "id": "crownline-industrials--candidate-switchyard-twelve",
       "district": "crownline-industrials",
       "name": "Switchyard Twelve",
-      "type": "landmark",
+      "type": "industrial",
       "blurb": "Electrical distribution; restricted access.",
       "canonStatus": "proposed",
       "sources": [
@@ -4860,16 +5027,15 @@
       ],
       "pin": {
         "map": "crownline-industrials",
-        "x": 0.28,
-        "y": 0.34,
-        "approx": true
+        "x": 0.249,
+        "y": 0.342
       }
     },
     {
       "id": "crownline-industrials--candidate-pump-ledger",
       "district": "crownline-industrials",
       "name": "Pump Ledger",
-      "type": "landmark",
+      "type": "industrial",
       "blurb": "Water machinery; service records.",
       "canonStatus": "proposed",
       "sources": [
@@ -4878,16 +5044,15 @@
       ],
       "pin": {
         "map": "crownline-industrials",
-        "x": 0.74,
-        "y": 0.34,
-        "approx": true
+        "x": 0.728,
+        "y": 0.347
       }
     },
     {
       "id": "crownline-industrials--candidate-the-clean-front",
       "district": "crownline-industrials",
       "name": "The Clean Front",
-      "type": "landmark",
+      "type": "corporate",
       "blurb": "White and gold service counters.",
       "canonStatus": "proposed",
       "sources": [
@@ -4896,16 +5061,15 @@
       ],
       "pin": {
         "map": "crownline-industrials",
-        "x": 0.2,
-        "y": 0.49,
-        "approx": true
+        "x": 0.236,
+        "y": 0.5
       }
     },
     {
       "id": "crownline-industrials--candidate-contractor-muster",
       "district": "crownline-industrials",
       "name": "Contractor Muster",
-      "type": "landmark",
+      "type": "corporate",
       "blurb": "Bastion personnel; paid enforcement.",
       "canonStatus": "proposed",
       "sources": [
@@ -4914,16 +5078,15 @@
       ],
       "pin": {
         "map": "crownline-industrials",
-        "x": 0.68,
-        "y": 0.49,
-        "approx": true
+        "x": 0.64,
+        "y": 0.48
       }
     },
     {
       "id": "crownline-industrials--candidate-inspection-loop",
       "district": "crownline-industrials",
       "name": "Inspection Loop",
-      "type": "landmark",
+      "type": "industrial",
       "blurb": "Vans circle before work starts.",
       "canonStatus": "proposed",
       "sources": [
@@ -4932,16 +5095,15 @@
       ],
       "pin": {
         "map": "crownline-industrials",
-        "x": 0.27,
-        "y": 0.64,
-        "approx": true
+        "x": 0.273,
+        "y": 0.63
       }
     },
     {
       "id": "crownline-industrials--candidate-the-overtime-canteen",
       "district": "crownline-industrials",
       "name": "The Overtime Canteen",
-      "type": "landmark",
+      "type": "food",
       "blurb": "Shift meals; no free minutes.",
       "canonStatus": "proposed",
       "sources": [
@@ -4950,16 +5112,15 @@
       ],
       "pin": {
         "map": "crownline-industrials",
-        "x": 0.75,
-        "y": 0.64,
-        "approx": true
+        "x": 0.804,
+        "y": 0.656
       }
     },
     {
       "id": "crownline-industrials--candidate-disputed-connection",
       "district": "crownline-industrials",
       "name": "Disputed Connection",
-      "type": "landmark",
+      "type": "industrial",
       "blurb": "Older buildings await approval.",
       "canonStatus": "proposed",
       "sources": [
@@ -4968,16 +5129,15 @@
       ],
       "pin": {
         "map": "crownline-industrials",
-        "x": 0.24,
-        "y": 0.79,
-        "approx": true
+        "x": 0.193,
+        "y": 0.776
       }
     },
     {
       "id": "crownline-industrials--candidate-maintenance-cut",
       "district": "crownline-industrials",
       "name": "Maintenance Cut",
-      "type": "landmark",
+      "type": "industrial",
       "blurb": "Service road; watch the cables.",
       "canonStatus": "proposed",
       "sources": [
@@ -4986,16 +5146,15 @@
       ],
       "pin": {
         "map": "crownline-industrials",
-        "x": 0.69,
-        "y": 0.79,
-        "approx": true
+        "x": 0.626,
+        "y": 0.825
       }
     },
     {
       "id": "three-spires-monastery--candidate-three-spires",
       "district": "three-spires-monastery",
       "name": "Three Spires",
-      "type": "landmark",
+      "type": "sacred",
       "blurb": "Old stone; meanings remain disputed.",
       "canonStatus": "proposed",
       "sources": [
@@ -5003,16 +5162,15 @@
       ],
       "pin": {
         "map": "three-spires-monastery",
-        "x": 0.23,
-        "y": 0.19,
-        "approx": true
+        "x": 0.417,
+        "y": 0.213
       }
     },
     {
       "id": "three-spires-monastery--candidate-petition-steps",
       "district": "three-spires-monastery",
       "name": "Petition Steps",
-      "type": "landmark",
+      "type": "sacred",
       "blurb": "Visitors bring quiet requests.",
       "canonStatus": "proposed",
       "sources": [
@@ -5020,16 +5178,15 @@
       ],
       "pin": {
         "map": "three-spires-monastery",
-        "x": 0.7,
-        "y": 0.19,
-        "approx": true
+        "x": 0.648,
+        "y": 0.239
       }
     },
     {
       "id": "three-spires-monastery--candidate-the-unnamed-court",
       "district": "three-spires-monastery",
       "name": "The Unnamed Court",
-      "type": "landmark",
+      "type": "sacred",
       "blurb": "No public account of its rites.",
       "canonStatus": "proposed",
       "sources": [
@@ -5037,16 +5194,15 @@
       ],
       "pin": {
         "map": "three-spires-monastery",
-        "x": 0.28,
-        "y": 0.34,
-        "approx": true
+        "x": 0.335,
+        "y": 0.402
       }
     },
     {
       "id": "three-spires-monastery--candidate-guest-lantern",
       "district": "three-spires-monastery",
       "name": "Guest Lantern",
-      "type": "landmark",
+      "type": "housing",
       "blurb": "Beds for those admitted.",
       "canonStatus": "proposed",
       "sources": [
@@ -5054,16 +5210,15 @@
       ],
       "pin": {
         "map": "three-spires-monastery",
-        "x": 0.74,
-        "y": 0.34,
-        "approx": true
+        "x": 0.747,
+        "y": 0.396
       }
     },
     {
       "id": "three-spires-monastery--candidate-cloister-walk",
       "district": "three-spires-monastery",
       "name": "Cloister Walk",
-      "type": "landmark",
+      "type": "sacred",
       "blurb": "Footsteps carry around the walls.",
       "canonStatus": "proposed",
       "sources": [
@@ -5071,16 +5226,15 @@
       ],
       "pin": {
         "map": "three-spires-monastery",
-        "x": 0.2,
-        "y": 0.49,
-        "approx": true
+        "x": 0.161,
+        "y": 0.48
       }
     },
     {
       "id": "three-spires-monastery--candidate-the-mended-bell",
       "district": "three-spires-monastery",
       "name": "The Mended Bell",
-      "type": "landmark",
+      "type": "sacred",
       "blurb": "Repairs show through old metal.",
       "canonStatus": "proposed",
       "sources": [
@@ -5088,16 +5242,15 @@
       ],
       "pin": {
         "map": "three-spires-monastery",
-        "x": 0.68,
-        "y": 0.49,
-        "approx": true
+        "x": 0.576,
+        "y": 0.451
       }
     },
     {
       "id": "three-spires-monastery--candidate-keeper-rooms",
       "district": "three-spires-monastery",
       "name": "Keeper Rooms",
-      "type": "landmark",
+      "type": "housing",
       "blurb": "Daily work behind sacred frontage.",
       "canonStatus": "proposed",
       "sources": [
@@ -5105,9 +5258,8 @@
       ],
       "pin": {
         "map": "three-spires-monastery",
-        "x": 0.27,
-        "y": 0.64,
-        "approx": true
+        "x": 0.32,
+        "y": 0.63
       }
     },
     {
@@ -5122,16 +5274,15 @@
       ],
       "pin": {
         "map": "three-spires-monastery",
-        "x": 0.75,
-        "y": 0.64,
-        "approx": true
+        "x": 0.677,
+        "y": 0.63
       }
     },
     {
       "id": "three-spires-monastery--candidate-the-quiet-table",
       "district": "three-spires-monastery",
       "name": "The Quiet Table",
-      "type": "landmark",
+      "type": "food",
       "blurb": "Meals without many questions.",
       "canonStatus": "proposed",
       "sources": [
@@ -5139,16 +5290,15 @@
       ],
       "pin": {
         "map": "three-spires-monastery",
-        "x": 0.24,
-        "y": 0.79,
-        "approx": true
+        "x": 0.358,
+        "y": 0.776
       }
     },
     {
       "id": "three-spires-monastery--candidate-outer-service-gate",
       "district": "three-spires-monastery",
       "name": "Outer Service Gate",
-      "type": "landmark",
+      "type": "industrial",
       "blurb": "Deliveries enter beyond the steps.",
       "canonStatus": "proposed",
       "sources": [
@@ -5156,16 +5306,143 @@
       ],
       "pin": {
         "map": "three-spires-monastery",
-        "x": 0.69,
-        "y": 0.79,
-        "approx": true
+        "x": 0.628,
+        "y": 0.791
+      }
+    },
+    {
+      "id": "three-spires-monastery--candidate-north-gate",
+      "district": "three-spires-monastery",
+      "name": "North Gate",
+      "type": "transit",
+      "blurb": "Public entrance for visitors, residents and small vendors.",
+      "canonStatus": "proposed",
+      "sources": [
+        "https://www.worldanvil.com/w/adyta-jeeperssheefers/a/adyta-settlement"
+      ],
+      "pin": {
+        "map": "three-spires-monastery",
+        "x": 0.335,
+        "y": 0.146
+      }
+    },
+    {
+      "id": "three-spires-monastery--candidate-scriptoria-row",
+      "district": "three-spires-monastery",
+      "name": "Scriptoria Row",
+      "type": "shop",
+      "blurb": "Copying, records, clerical work and supplies.",
+      "canonStatus": "proposed",
+      "sources": [
+        "https://www.worldanvil.com/w/adyta-jeeperssheefers/a/adyta-settlement"
+      ],
+      "pin": {
+        "map": "three-spires-monastery",
+        "x": 0.641,
+        "y": 0.156
+      }
+    },
+    {
+      "id": "three-spires-monastery--candidate-maintenance-yard",
+      "district": "three-spires-monastery",
+      "name": "Maintenance Yard",
+      "type": "industrial",
+      "blurb": "Repairs, storage, vehicle service and patchwork parts.",
+      "canonStatus": "proposed",
+      "sources": [
+        "https://www.worldanvil.com/w/adyta-jeeperssheefers/a/adyta-settlement"
+      ],
+      "pin": {
+        "map": "three-spires-monastery",
+        "x": 0.928,
+        "y": 0.161
+      }
+    },
+    {
+      "id": "three-spires-monastery--candidate-monastery-market",
+      "district": "three-spires-monastery",
+      "name": "Monastery Market",
+      "type": "market",
+      "blurb": "Food, daily goods, repairs and household supplies.",
+      "canonStatus": "proposed",
+      "sources": [
+        "https://www.worldanvil.com/w/adyta-jeeperssheefers/a/adyta-settlement"
+      ],
+      "pin": {
+        "map": "three-spires-monastery",
+        "x": 0.065,
+        "y": 0.477
+      }
+    },
+    {
+      "id": "three-spires-monastery--candidate-infirmary",
+      "district": "three-spires-monastery",
+      "name": "Infirmary",
+      "type": "civic",
+      "blurb": "Rest, basic care, and long stays when allowed.",
+      "canonStatus": "proposed",
+      "sources": [
+        "https://www.worldanvil.com/w/adyta-jeeperssheefers/a/adyta-settlement"
+      ],
+      "pin": {
+        "map": "three-spires-monastery",
+        "x": 0.951,
+        "y": 0.327
+      }
+    },
+    {
+      "id": "three-spires-monastery--candidate-laundry-yard",
+      "district": "three-spires-monastery",
+      "name": "Laundry Yard",
+      "type": "industrial",
+      "blurb": "Washing, drying and linen repair.",
+      "canonStatus": "proposed",
+      "sources": [
+        "https://www.worldanvil.com/w/adyta-jeeperssheefers/a/adyta-settlement"
+      ],
+      "pin": {
+        "map": "three-spires-monastery",
+        "x": 0.93,
+        "y": 0.542
+      }
+    },
+    {
+      "id": "three-spires-monastery--candidate-freight-staging",
+      "district": "three-spires-monastery",
+      "name": "Freight Staging",
+      "type": "industrial",
+      "blurb": "Sorting, short-term storage and dispatch.",
+      "canonStatus": "proposed",
+      "sources": [
+        "https://www.worldanvil.com/w/adyta-jeeperssheefers/a/adyta-settlement"
+      ],
+      "pin": {
+        "map": "three-spires-monastery",
+        "x": 0.931,
+        "y": 0.752
+      }
+    },
+    {
+      "id": "three-spires-monastery--candidate-south-gate",
+      "district": "three-spires-monastery",
+      "name": "South Gate",
+      "type": "transit",
+      "blurb": "Residents, staff and approved visitors.",
+      "canonStatus": "proposed",
+      "sources": [
+        "https://www.worldanvil.com/w/adyta-jeeperssheefers/a/adyta-settlement"
+      ],
+      "pin": {
+        "map": "three-spires-monastery",
+        "x": 0.398,
+        "y": 0.913
       }
     },
     {
       "id": "elven-enclave--candidate-pale-brick-walk",
       "district": "elven-enclave",
       "name": "Pale Brick Walk",
-      "type": "landmark",
+      "type": "street",
       "blurb": "Generations of continuous repairs.",
       "canonStatus": "proposed",
       "sources": [
@@ -5173,9 +5450,8 @@
       ],
       "pin": {
         "map": "elven-enclave",
-        "x": 0.23,
-        "y": 0.19,
-        "approx": true
+        "x": 0.36,
+        "y": 0.207
       }
     },
     {
@@ -5190,9 +5466,8 @@
       ],
       "pin": {
         "map": "elven-enclave",
-        "x": 0.7,
-        "y": 0.19,
-        "approx": true
+        "x": 0.658,
+        "y": 0.213
       }
     },
     {
@@ -5207,9 +5482,8 @@
       ],
       "pin": {
         "map": "elven-enclave",
-        "x": 0.28,
-        "y": 0.34,
-        "approx": true
+        "x": 0.361,
+        "y": 0.373
       }
     },
     {
@@ -5224,16 +5498,15 @@
       ],
       "pin": {
         "map": "elven-enclave",
-        "x": 0.74,
-        "y": 0.34,
-        "approx": true
+        "x": 0.732,
+        "y": 0.337
       }
     },
     {
       "id": "elven-enclave--candidate-the-narrow-archive",
       "district": "elven-enclave",
       "name": "The Narrow Archive",
-      "type": "landmark",
+      "type": "civic",
       "blurb": "Household records behind locked doors.",
       "canonStatus": "proposed",
       "sources": [
@@ -5241,16 +5514,15 @@
       ],
       "pin": {
         "map": "elven-enclave",
-        "x": 0.2,
-        "y": 0.49,
-        "approx": true
+        "x": 0.256,
+        "y": 0.474
       }
     },
     {
       "id": "elven-enclave--candidate-canopy-steps",
       "district": "elven-enclave",
       "name": "Canopy Steps",
-      "type": "landmark",
+      "type": "street",
       "blurb": "Quiet lanes under mature trees.",
       "canonStatus": "proposed",
       "sources": [
@@ -5258,16 +5530,15 @@
       ],
       "pin": {
         "map": "elven-enclave",
-        "x": 0.68,
-        "y": 0.49,
-        "approx": true
+        "x": 0.667,
+        "y": 0.49
       }
     },
     {
       "id": "elven-enclave--candidate-shielded-service-yard",
       "district": "elven-enclave",
       "name": "Shielded Service Yard",
-      "type": "landmark",
+      "type": "industrial",
       "blurb": "Technical utilities; isolated from wards.",
       "canonStatus": "proposed",
       "sources": [
@@ -5275,16 +5546,15 @@
       ],
       "pin": {
         "map": "elven-enclave",
-        "x": 0.27,
-        "y": 0.64,
-        "approx": true
+        "x": 0.283,
+        "y": 0.646
       }
     },
     {
       "id": "elven-enclave--candidate-the-long-lease",
       "district": "elven-enclave",
       "name": "The Long Lease",
-      "type": "landmark",
+      "type": "housing",
       "blurb": "Homes altered across generations.",
       "canonStatus": "proposed",
       "sources": [
@@ -5292,16 +5562,15 @@
       ],
       "pin": {
         "map": "elven-enclave",
-        "x": 0.75,
-        "y": 0.64,
-        "approx": true
+        "x": 0.739,
+        "y": 0.63
       }
     },
     {
       "id": "elven-enclave--candidate-the-gardeners-table",
       "district": "elven-enclave",
       "name": "The Gardeners Table",
-      "type": "landmark",
+      "type": "food",
       "blurb": "Workers eat behind the frontage.",
       "canonStatus": "proposed",
       "sources": [
@@ -5309,16 +5578,15 @@
       ],
       "pin": {
         "map": "elven-enclave",
-        "x": 0.24,
-        "y": 0.79,
-        "approx": true
+        "x": 0.294,
+        "y": 0.796
       }
     },
     {
       "id": "elven-enclave--candidate-west-maintenance-gate",
       "district": "elven-enclave",
       "name": "West Maintenance Gate",
-      "type": "landmark",
+      "type": "industrial",
       "blurb": "Delivery access; heritage has plumbing.",
       "canonStatus": "proposed",
       "sources": [
@@ -5326,16 +5594,15 @@
       ],
       "pin": {
         "map": "elven-enclave",
-        "x": 0.69,
-        "y": 0.79,
-        "approx": true
+        "x": 0.73,
+        "y": 0.786
       }
     },
     {
       "id": "central-core--candidate-transfer-square",
       "district": "central-core",
       "name": "Transfer Square",
-      "type": "landmark",
+      "type": "transit",
       "blurb": "Surface tram interchange; proposed layout.",
       "canonStatus": "proposed",
       "sources": [
@@ -5344,16 +5611,15 @@
       ],
       "pin": {
         "map": "central-core",
-        "x": 0.23,
-        "y": 0.19,
-        "approx": true
+        "x": 0.327,
+        "y": 0.205
       }
     },
     {
       "id": "central-core--candidate-commerce-steps",
       "district": "central-core",
       "name": "Commerce Steps",
-      "type": "landmark",
+      "type": "corporate",
       "blurb": "Offices above the public crowd.",
       "canonStatus": "proposed",
       "sources": [
@@ -5362,16 +5628,15 @@
       ],
       "pin": {
         "map": "central-core",
-        "x": 0.7,
-        "y": 0.19,
-        "approx": true
+        "x": 0.68,
+        "y": 0.207
       }
     },
     {
       "id": "central-core--candidate-the-public-counter",
       "district": "central-core",
       "name": "The Public Counter",
-      "type": "landmark",
+      "type": "civic",
       "blurb": "Civic referrals; several queues.",
       "canonStatus": "proposed",
       "sources": [
@@ -5380,16 +5645,15 @@
       ],
       "pin": {
         "map": "central-core",
-        "x": 0.28,
-        "y": 0.34,
-        "approx": true
+        "x": 0.291,
+        "y": 0.359
       }
     },
     {
       "id": "central-core--candidate-ledger-arcade",
       "district": "central-core",
       "name": "Ledger Arcade",
-      "type": "landmark",
+      "type": "shop",
       "blurb": "Contracts, accounts and small traders.",
       "canonStatus": "proposed",
       "sources": [
@@ -5398,16 +5662,15 @@
       ],
       "pin": {
         "map": "central-core",
-        "x": 0.74,
-        "y": 0.34,
-        "approx": true
+        "x": 0.754,
+        "y": 0.361
       }
     },
     {
       "id": "central-core--candidate-shift-market",
       "district": "central-core",
       "name": "Shift Market",
-      "type": "landmark",
+      "type": "market",
       "blurb": "Food between working hours.",
       "canonStatus": "proposed",
       "sources": [
@@ -5416,16 +5679,15 @@
       ],
       "pin": {
         "map": "central-core",
-        "x": 0.2,
-        "y": 0.49,
-        "approx": true
+        "x": 0.262,
+        "y": 0.508
       }
     },
     {
       "id": "central-core--candidate-service-crossing",
       "district": "central-core",
       "name": "Service Crossing",
-      "type": "landmark",
+      "type": "street",
       "blurb": "Delivery carts meet public traffic.",
       "canonStatus": "proposed",
       "sources": [
@@ -5434,9 +5696,8 @@
       ],
       "pin": {
         "map": "central-core",
-        "x": 0.68,
-        "y": 0.49,
-        "approx": true
+        "x": 0.586,
+        "y": 0.508
       }
     },
     {
@@ -5452,16 +5713,15 @@
       ],
       "pin": {
         "map": "central-core",
-        "x": 0.27,
-        "y": 0.64,
-        "approx": true
+        "x": 0.346,
+        "y": 0.64
       }
     },
     {
       "id": "central-core--candidate-notice-wall",
       "district": "central-core",
       "name": "Notice Wall",
-      "type": "landmark",
+      "type": "civic",
       "blurb": "Official announcements; competing revisions.",
       "canonStatus": "proposed",
       "sources": [
@@ -5470,16 +5730,15 @@
       ],
       "pin": {
         "map": "central-core",
-        "x": 0.75,
-        "y": 0.64,
-        "approx": true
+        "x": 0.729,
+        "y": 0.649
       }
     },
     {
       "id": "central-core--candidate-roofline-cut",
       "district": "central-core",
       "name": "Roofline Cut",
-      "type": "landmark",
+      "type": "street",
       "blurb": "Foot access above service alleys.",
       "canonStatus": "proposed",
       "sources": [
@@ -5488,16 +5747,15 @@
       ],
       "pin": {
         "map": "central-core",
-        "x": 0.24,
-        "y": 0.79,
-        "approx": true
+        "x": 0.318,
+        "y": 0.757
       }
     },
     {
       "id": "central-core--candidate-the-street-spine",
       "district": "central-core",
       "name": "The Street Spine",
-      "type": "landmark",
+      "type": "street",
       "blurb": "Main road through the center.",
       "canonStatus": "proposed",
       "sources": [
@@ -5506,16 +5764,15 @@
       ],
       "pin": {
         "map": "central-core",
-        "x": 0.69,
-        "y": 0.79,
-        "approx": true
+        "x": 0.599,
+        "y": 0.801
       }
     },
     {
       "id": "the-ashrun--candidate-freight-reach",
       "district": "the-ashrun",
       "name": "Freight Reach",
-      "type": "landmark",
+      "type": "transit",
       "blurb": "Barges move through working water.",
       "canonStatus": "proposed",
       "sources": [
@@ -5524,16 +5781,15 @@
       ],
       "pin": {
         "map": "the-ashrun",
-        "x": 0.23,
-        "y": 0.19,
-        "approx": true
+        "x": 0.316,
+        "y": 0.229
       }
     },
     {
       "id": "the-ashrun--candidate-manifest-quay",
       "district": "the-ashrun",
       "name": "Manifest Quay",
-      "type": "landmark",
+      "type": "transit",
       "blurb": "Meridian freight; papers meet cargo.",
       "canonStatus": "proposed",
       "sources": [
@@ -5542,9 +5798,8 @@
       ],
       "pin": {
         "map": "the-ashrun",
-        "x": 0.7,
-        "y": 0.19,
-        "approx": true
+        "x": 0.669,
+        "y": 0.242
       }
     },
     {
@@ -5560,16 +5815,15 @@
       ],
       "pin": {
         "map": "the-ashrun",
-        "x": 0.28,
-        "y": 0.34,
-        "approx": true
+        "x": 0.318,
+        "y": 0.405
       }
     },
     {
       "id": "the-ashrun--candidate-pump-margin",
       "district": "the-ashrun",
       "name": "Pump Margin",
-      "type": "landmark",
+      "type": "industrial",
       "blurb": "Service access above intake machinery.",
       "canonStatus": "proposed",
       "sources": [
@@ -5578,9 +5832,8 @@
       ],
       "pin": {
         "map": "the-ashrun",
-        "x": 0.74,
-        "y": 0.34,
-        "approx": true
+        "x": 0.646,
+        "y": 0.381
       }
     },
     {
@@ -5596,16 +5849,15 @@
       ],
       "pin": {
         "map": "the-ashrun",
-        "x": 0.2,
-        "y": 0.49,
-        "approx": true
+        "x": 0.19,
+        "y": 0.545
       }
     },
     {
       "id": "the-ashrun--candidate-towline-walk",
       "district": "the-ashrun",
       "name": "Towline Walk",
-      "type": "landmark",
+      "type": "street",
       "blurb": "Foot traffic along the bank.",
       "canonStatus": "proposed",
       "sources": [
@@ -5614,16 +5866,15 @@
       ],
       "pin": {
         "map": "the-ashrun",
-        "x": 0.68,
-        "y": 0.49,
-        "approx": true
+        "x": 0.641,
+        "y": 0.559
       }
     },
     {
       "id": "the-ashrun--candidate-the-bent-crossing",
       "district": "the-ashrun",
       "name": "The Bent Crossing",
-      "type": "landmark",
+      "type": "transit",
       "blurb": "Bridge; narrow service approach.",
       "canonStatus": "proposed",
       "sources": [
@@ -5632,16 +5883,15 @@
       ],
       "pin": {
         "map": "the-ashrun",
-        "x": 0.27,
-        "y": 0.64,
-        "approx": true
+        "x": 0.294,
+        "y": 0.693
       }
     },
     {
       "id": "the-ashrun--candidate-tide-ledger",
       "district": "the-ashrun",
       "name": "Tide Ledger",
-      "type": "landmark",
+      "type": "civic",
       "blurb": "Shift board for water workers.",
       "canonStatus": "proposed",
       "sources": [
@@ -5650,9 +5900,8 @@
       ],
       "pin": {
         "map": "the-ashrun",
-        "x": 0.75,
-        "y": 0.64,
-        "approx": true
+        "x": 0.779,
+        "y": 0.676
       }
     },
     {
@@ -5668,16 +5917,15 @@
       ],
       "pin": {
         "map": "the-ashrun",
-        "x": 0.24,
-        "y": 0.79,
-        "approx": true
+        "x": 0.347,
+        "y": 0.864
       }
     },
     {
       "id": "the-ashrun--candidate-harborward-channel",
       "district": "the-ashrun",
       "name": "Harborward Channel",
-      "type": "landmark",
+      "type": "transit",
       "blurb": "Toward the broader harbor.",
       "canonStatus": "proposed",
       "sources": [
@@ -5686,16 +5934,15 @@
       ],
       "pin": {
         "map": "the-ashrun",
-        "x": 0.69,
-        "y": 0.79,
-        "approx": true
+        "x": 0.625,
+        "y": 0.884
       }
     },
     {
       "id": "far-shipyards--candidate-half-hull-dock",
       "district": "far-shipyards",
       "name": "Half-Hull Dock",
-      "type": "landmark",
+      "type": "industrial",
       "blurb": "A ship midway through becoming.",
       "canonStatus": "proposed",
       "sources": [
@@ -5704,16 +5951,15 @@
       ],
       "pin": {
         "map": "far-shipyards",
-        "x": 0.23,
-        "y": 0.19,
-        "approx": true
+        "x": 0.212,
+        "y": 0.21
       }
     },
     {
       "id": "far-shipyards--candidate-second-sale-yard",
       "district": "far-shipyards",
       "name": "Second Sale Yard",
-      "type": "landmark",
+      "type": "shop",
       "blurb": "Recovered fittings; ask twice.",
       "canonStatus": "proposed",
       "sources": [
@@ -5722,16 +5968,15 @@
       ],
       "pin": {
         "map": "far-shipyards",
-        "x": 0.7,
-        "y": 0.19,
-        "approx": true
+        "x": 0.622,
+        "y": 0.203
       }
     },
     {
       "id": "far-shipyards--candidate-plate-cutters",
       "district": "far-shipyards",
       "name": "Plate Cutters",
-      "type": "landmark",
+      "type": "industrial",
       "blurb": "Steel work; hearing protection advised.",
       "canonStatus": "proposed",
       "sources": [
@@ -5740,16 +5985,15 @@
       ],
       "pin": {
         "map": "far-shipyards",
-        "x": 0.28,
-        "y": 0.34,
-        "approx": true
+        "x": 0.454,
+        "y": 0.342
       }
     },
     {
       "id": "far-shipyards--candidate-crane-alley",
       "district": "far-shipyards",
       "name": "Crane Alley",
-      "type": "landmark",
+      "type": "industrial",
       "blurb": "Loads move overhead.",
       "canonStatus": "proposed",
       "sources": [
@@ -5758,16 +6002,15 @@
       ],
       "pin": {
         "map": "far-shipyards",
-        "x": 0.74,
-        "y": 0.34,
-        "approx": true
+        "x": 0.852,
+        "y": 0.332
       }
     },
     {
       "id": "far-shipyards--candidate-the-dry-berth",
       "district": "far-shipyards",
       "name": "The Dry Berth",
-      "type": "landmark",
+      "type": "industrial",
       "blurb": "Repairs below the waterline.",
       "canonStatus": "proposed",
       "sources": [
@@ -5776,16 +6019,15 @@
       ],
       "pin": {
         "map": "far-shipyards",
-        "x": 0.2,
-        "y": 0.49,
-        "approx": true
+        "x": 0.146,
+        "y": 0.454
       }
     },
     {
       "id": "far-shipyards--candidate-rivet-canteen",
       "district": "far-shipyards",
       "name": "Rivet Canteen",
-      "type": "landmark",
+      "type": "food",
       "blurb": "Hot food between shifts.",
       "canonStatus": "proposed",
       "sources": [
@@ -5794,16 +6036,15 @@
       ],
       "pin": {
         "map": "far-shipyards",
-        "x": 0.68,
-        "y": 0.49,
-        "approx": true
+        "x": 0.625,
+        "y": 0.467
       }
     },
     {
       "id": "far-shipyards--candidate-launch-slip",
       "district": "far-shipyards",
       "name": "Launch Slip",
-      "type": "landmark",
+      "type": "industrial",
       "blurb": "Keep the slope clear.",
       "canonStatus": "proposed",
       "sources": [
@@ -5812,16 +6053,15 @@
       ],
       "pin": {
         "map": "far-shipyards",
-        "x": 0.27,
-        "y": 0.64,
-        "approx": true
+        "x": 0.283,
+        "y": 0.604
       }
     },
     {
       "id": "far-shipyards--candidate-manifest-shed",
       "district": "far-shipyards",
       "name": "Manifest Shed",
-      "type": "landmark",
+      "type": "civic",
       "blurb": "Freight paperwork before departure.",
       "canonStatus": "proposed",
       "sources": [
@@ -5830,16 +6070,15 @@
       ],
       "pin": {
         "map": "far-shipyards",
-        "x": 0.75,
-        "y": 0.64,
-        "approx": true
+        "x": 0.739,
+        "y": 0.594
       }
     },
     {
       "id": "far-shipyards--candidate-crew-rooms",
       "district": "far-shipyards",
       "name": "Crew Rooms",
-      "type": "landmark",
+      "type": "housing",
       "blurb": "Beds above the working waterfront.",
       "canonStatus": "proposed",
       "sources": [
@@ -5848,16 +6087,15 @@
       ],
       "pin": {
         "map": "far-shipyards",
-        "x": 0.24,
-        "y": 0.79,
-        "approx": true
+        "x": 0.197,
+        "y": 0.76
       }
     },
     {
       "id": "far-shipyards--candidate-breakers-gate",
       "district": "far-shipyards",
       "name": "Breakers Gate",
-      "type": "landmark",
+      "type": "industrial",
       "blurb": "Parts leave; whole ships rarely do.",
       "canonStatus": "proposed",
       "sources": [
@@ -5866,16 +6104,15 @@
       ],
       "pin": {
         "map": "far-shipyards",
-        "x": 0.69,
-        "y": 0.79,
-        "approx": true
+        "x": 0.597,
+        "y": 0.789
       }
     },
     {
       "id": "greasewick-row--candidate-third-rattle-motors",
       "district": "greasewick-row",
       "name": "Third Rattle Motors",
-      "type": "landmark",
+      "type": "shop",
       "blurb": "Diagnosis before credentials.",
       "canonStatus": "proposed",
       "sources": [
@@ -5884,16 +6121,15 @@
       ],
       "pin": {
         "map": "greasewick-row",
-        "x": 0.23,
-        "y": 0.19,
-        "approx": true
+        "x": 0.322,
+        "y": 0.223
       }
     },
     {
       "id": "greasewick-row--candidate-the-borrowed-spanner",
       "district": "greasewick-row",
       "name": "The Borrowed Spanner",
-      "type": "landmark",
+      "type": "shop",
       "blurb": "Tools return with a story.",
       "canonStatus": "proposed",
       "sources": [
@@ -5902,16 +6138,15 @@
       ],
       "pin": {
         "map": "greasewick-row",
-        "x": 0.7,
-        "y": 0.19,
-        "approx": true
+        "x": 0.63,
+        "y": 0.223
       }
     },
     {
       "id": "greasewick-row--candidate-patch-parts",
       "district": "greasewick-row",
       "name": "Patch Parts",
-      "type": "landmark",
+      "type": "shop",
       "blurb": "Salvage assessed on the counter.",
       "canonStatus": "proposed",
       "sources": [
@@ -5920,16 +6155,15 @@
       ],
       "pin": {
         "map": "greasewick-row",
-        "x": 0.28,
-        "y": 0.34,
-        "approx": true
+        "x": 0.366,
+        "y": 0.35
       }
     },
     {
       "id": "greasewick-row--candidate-aftershift-kitchen",
       "district": "greasewick-row",
       "name": "Aftershift Kitchen",
-      "type": "landmark",
+      "type": "food",
       "blurb": "Workers eat before going home.",
       "canonStatus": "proposed",
       "sources": [
@@ -5938,16 +6172,15 @@
       ],
       "pin": {
         "map": "greasewick-row",
-        "x": 0.74,
-        "y": 0.34,
-        "approx": true
+        "x": 0.738,
+        "y": 0.349
       }
     },
     {
       "id": "greasewick-row--candidate-conduit-mouth",
       "district": "greasewick-row",
       "name": "Conduit Mouth",
-      "type": "landmark",
+      "type": "industrial",
       "blurb": "Small crews service tight spaces.",
       "canonStatus": "proposed",
       "sources": [
@@ -5956,16 +6189,15 @@
       ],
       "pin": {
         "map": "greasewick-row",
-        "x": 0.2,
-        "y": 0.49,
-        "approx": true
+        "x": 0.321,
+        "y": 0.49
       }
     },
     {
       "id": "greasewick-row--candidate-the-hot-seam",
       "district": "greasewick-row",
       "name": "The Hot Seam",
-      "type": "landmark",
+      "type": "shop",
       "blurb": "Welding behind the shutters.",
       "canonStatus": "proposed",
       "sources": [
@@ -5974,16 +6206,15 @@
       ],
       "pin": {
         "map": "greasewick-row",
-        "x": 0.68,
-        "y": 0.49,
-        "approx": true
+        "x": 0.666,
+        "y": 0.496
       }
     },
     {
       "id": "greasewick-row--candidate-no-receipt-devices",
       "district": "greasewick-row",
       "name": "No Receipt Devices",
-      "type": "landmark",
+      "type": "shop",
       "blurb": "Secondhand precision repairs.",
       "canonStatus": "proposed",
       "sources": [
@@ -5992,16 +6223,15 @@
       ],
       "pin": {
         "map": "greasewick-row",
-        "x": 0.27,
-        "y": 0.64,
-        "approx": true
+        "x": 0.352,
+        "y": 0.615
       }
     },
     {
       "id": "greasewick-row--candidate-apprentice-yard",
       "district": "greasewick-row",
       "name": "Apprentice Yard",
-      "type": "landmark",
+      "type": "civic",
       "blurb": "Learning with somebody watching.",
       "canonStatus": "proposed",
       "sources": [
@@ -6010,16 +6240,15 @@
       ],
       "pin": {
         "map": "greasewick-row",
-        "x": 0.75,
-        "y": 0.64,
-        "approx": true
+        "x": 0.739,
+        "y": 0.62
       }
     },
     {
       "id": "greasewick-row--candidate-generator-court",
       "district": "greasewick-row",
       "name": "Generator Court",
-      "type": "landmark",
+      "type": "industrial",
       "blurb": "Shared electrical repairs; no magic.",
       "canonStatus": "proposed",
       "sources": [
@@ -6028,16 +6257,15 @@
       ],
       "pin": {
         "map": "greasewick-row",
-        "x": 0.24,
-        "y": 0.79,
-        "approx": true
+        "x": 0.337,
+        "y": 0.744
       }
     },
     {
       "id": "greasewick-row--candidate-south-repair-lane",
       "district": "greasewick-row",
       "name": "South Repair Lane",
-      "type": "landmark",
+      "type": "street",
       "blurb": "Toward older infrastructure.",
       "canonStatus": "proposed",
       "sources": [
@@ -6046,16 +6274,32 @@
       ],
       "pin": {
         "map": "greasewick-row",
-        "x": 0.69,
-        "y": 0.79,
-        "approx": true
+        "x": 0.667,
+        "y": 0.762
+      }
+    },
+    {
+      "id": "greasewick-row--candidate-southern-repair-entrance",
+      "district": "greasewick-row",
+      "name": "Southern Repair Entrance",
+      "type": "transit",
+      "blurb": "The gate back into Low Halo.",
+      "canonStatus": "proposed",
+      "sources": [
+        "https://www.worldanvil.com/w/adyta-jeeperssheefers/a/greasewick-row-settlement",
+        "https://www.worldanvil.com/w/adyta-jeeperssheefers/a/low-halo-settlement"
+      ],
+      "pin": {
+        "map": "greasewick-row",
+        "x": 0.928,
+        "y": 0.811
       }
     },
     {
       "id": "old-city--candidate-foundation-mouth",
       "district": "old-city",
       "name": "Foundation Mouth",
-      "type": "landmark",
+      "type": "transit",
       "blurb": "Descent beneath newer buildings.",
       "canonStatus": "proposed",
       "sources": [
@@ -6063,16 +6307,15 @@
       ],
       "pin": {
         "map": "old-city",
-        "x": 0.23,
-        "y": 0.19,
-        "approx": true
+        "x": 0.202,
+        "y": 0.212
       }
     },
     {
       "id": "old-city--candidate-the-interrupted-street",
       "district": "old-city",
       "name": "The Interrupted Street",
-      "type": "landmark",
+      "type": "street",
       "blurb": "Old road meets a newer wall.",
       "canonStatus": "proposed",
       "sources": [
@@ -6080,16 +6323,15 @@
       ],
       "pin": {
         "map": "old-city",
-        "x": 0.7,
-        "y": 0.19,
-        "approx": true
+        "x": 0.633,
+        "y": 0.229
       }
     },
     {
       "id": "old-city--candidate-windowless-rooms",
       "district": "old-city",
       "name": "Windowless Rooms",
-      "type": "landmark",
+      "type": "housing",
       "blurb": "Former homes inside service works.",
       "canonStatus": "proposed",
       "sources": [
@@ -6097,16 +6339,15 @@
       ],
       "pin": {
         "map": "old-city",
-        "x": 0.28,
-        "y": 0.34,
-        "approx": true
+        "x": 0.252,
+        "y": 0.354
       }
     },
     {
       "id": "old-city--candidate-the-scavengers-rest",
       "district": "old-city",
       "name": "The Scavengers Rest",
-      "type": "landmark",
+      "type": "housing",
       "blurb": "Occupied pocket; ask before entering.",
       "canonStatus": "proposed",
       "sources": [
@@ -6114,9 +6355,8 @@
       ],
       "pin": {
         "map": "old-city",
-        "x": 0.74,
-        "y": 0.34,
-        "approx": true
+        "x": 0.708,
+        "y": 0.332
       }
     },
     {
@@ -6131,16 +6371,15 @@
       ],
       "pin": {
         "map": "old-city",
-        "x": 0.2,
-        "y": 0.49,
-        "approx": true
+        "x": 0.138,
+        "y": 0.508
       }
     },
     {
       "id": "old-city--candidate-utility-crosscut",
       "district": "old-city",
       "name": "Utility Crosscut",
-      "type": "landmark",
+      "type": "industrial",
       "blurb": "Modern pipes through old rooms.",
       "canonStatus": "proposed",
       "sources": [
@@ -6148,9 +6387,8 @@
       ],
       "pin": {
         "map": "old-city",
-        "x": 0.68,
-        "y": 0.49,
-        "approx": true
+        "x": 0.713,
+        "y": 0.501
       }
     },
     {
@@ -6165,9 +6403,8 @@
       ],
       "pin": {
         "map": "old-city",
-        "x": 0.27,
-        "y": 0.64,
-        "approx": true
+        "x": 0.202,
+        "y": 0.625
       }
     },
     {
@@ -6182,9 +6419,8 @@
       ],
       "pin": {
         "map": "old-city",
-        "x": 0.75,
-        "y": 0.64,
-        "approx": true
+        "x": 0.699,
+        "y": 0.659
       }
     },
     {
@@ -6199,9 +6435,8 @@
       ],
       "pin": {
         "map": "old-city",
-        "x": 0.24,
-        "y": 0.79,
-        "approx": true
+        "x": 0.34,
+        "y": 0.801
       }
     },
     {
@@ -6216,16 +6451,47 @@
       ],
       "pin": {
         "map": "old-city",
-        "x": 0.69,
-        "y": 0.79,
-        "approx": true
+        "x": 0.85,
+        "y": 0.854
+      }
+    },
+    {
+      "id": "old-city--candidate-settlement-row",
+      "district": "old-city",
+      "name": "Settlement Row",
+      "type": "housing",
+      "blurb": "Where people actually live down here.",
+      "canonStatus": "proposed",
+      "sources": [
+        "https://www.worldanvil.com/w/adyta-jeeperssheefers/a/old-city-settlement"
+      ],
+      "pin": {
+        "map": "old-city",
+        "x": 0.677,
+        "y": 0.418
+      }
+    },
+    {
+      "id": "old-city--candidate-workshop-alley",
+      "district": "old-city",
+      "name": "Workshop Alley",
+      "type": "shop",
+      "blurb": "Benches and sparks under the old foundations.",
+      "canonStatus": "proposed",
+      "sources": [
+        "https://www.worldanvil.com/w/adyta-jeeperssheefers/a/old-city-settlement"
+      ],
+      "pin": {
+        "map": "old-city",
+        "x": 0.055,
+        "y": 0.51
       }
     },
     {
       "id": "southport-slums--candidate-borrowed-roof-court",
       "district": "southport-slums",
       "name": "Borrowed Roof Court",
-      "type": "landmark",
+      "type": "housing",
       "blurb": "Shared repairs keep homes standing.",
       "canonStatus": "proposed",
       "sources": [
@@ -6233,16 +6499,15 @@
       ],
       "pin": {
         "map": "southport-slums",
-        "x": 0.23,
-        "y": 0.19,
-        "approx": true
+        "x": 0.189,
+        "y": 0.225
       }
     },
     {
       "id": "southport-slums--candidate-the-late-pot",
       "district": "southport-slums",
       "name": "The Late Pot",
-      "type": "landmark",
+      "type": "food",
       "blurb": "Food after the shift ends.",
       "canonStatus": "proposed",
       "sources": [
@@ -6250,16 +6515,15 @@
       ],
       "pin": {
         "map": "southport-slums",
-        "x": 0.7,
-        "y": 0.19,
-        "approx": true
+        "x": 0.645,
+        "y": 0.234
       }
     },
     {
       "id": "southport-slums--candidate-pump-queue",
       "district": "southport-slums",
       "name": "Pump Queue",
-      "type": "landmark",
+      "type": "street",
       "blurb": "Water before work.",
       "canonStatus": "proposed",
       "sources": [
@@ -6267,16 +6531,15 @@
       ],
       "pin": {
         "map": "southport-slums",
-        "x": 0.28,
-        "y": 0.34,
-        "approx": true
+        "x": 0.374,
+        "y": 0.332
       }
     },
     {
       "id": "southport-slums--candidate-mended-stair",
       "district": "southport-slums",
       "name": "Mended Stair",
-      "type": "landmark",
+      "type": "housing",
       "blurb": "Residents maintain the landing.",
       "canonStatus": "proposed",
       "sources": [
@@ -6284,16 +6547,15 @@
       ],
       "pin": {
         "map": "southport-slums",
-        "x": 0.74,
-        "y": 0.34,
-        "approx": true
+        "x": 0.882,
+        "y": 0.344
       }
     },
     {
       "id": "southport-slums--candidate-patchlight-rooms",
       "district": "southport-slums",
       "name": "Patchlight Rooms",
-      "type": "landmark",
+      "type": "housing",
       "blurb": "Homes above small shops.",
       "canonStatus": "proposed",
       "sources": [
@@ -6301,16 +6563,15 @@
       ],
       "pin": {
         "map": "southport-slums",
-        "x": 0.2,
-        "y": 0.49,
-        "approx": true
+        "x": 0.15,
+        "y": 0.451
       }
     },
     {
       "id": "southport-slums--candidate-the-dry-shelf",
       "district": "southport-slums",
       "name": "The Dry Shelf",
-      "type": "landmark",
+      "type": "shop",
       "blurb": "Goods kept above runoff.",
       "canonStatus": "proposed",
       "sources": [
@@ -6318,16 +6579,15 @@
       ],
       "pin": {
         "map": "southport-slums",
-        "x": 0.68,
-        "y": 0.49,
-        "approx": true
+        "x": 0.785,
+        "y": 0.469
       }
     },
     {
       "id": "southport-slums--candidate-neighbors-gate",
       "district": "southport-slums",
       "name": "Neighbors Gate",
-      "type": "landmark",
+      "type": "civic",
       "blurb": "Local watch; ask who knows you.",
       "canonStatus": "proposed",
       "sources": [
@@ -6335,16 +6595,15 @@
       ],
       "pin": {
         "map": "southport-slums",
-        "x": 0.27,
-        "y": 0.64,
-        "approx": true
+        "x": 0.346,
+        "y": 0.578
       }
     },
     {
       "id": "southport-slums--candidate-last-busk-corner",
       "district": "southport-slums",
       "name": "Last Busk Corner",
-      "type": "landmark",
+      "type": "venue",
       "blurb": "Music for whoever stays.",
       "canonStatus": "proposed",
       "sources": [
@@ -6352,16 +6611,15 @@
       ],
       "pin": {
         "map": "southport-slums",
-        "x": 0.75,
-        "y": 0.64,
-        "approx": true
+        "x": 0.835,
+        "y": 0.62
       }
     },
     {
       "id": "southport-slums--candidate-the-wash-lines",
       "district": "southport-slums",
       "name": "The Wash Lines",
-      "type": "landmark",
+      "type": "street",
       "blurb": "Courtyard work; shared space.",
       "canonStatus": "proposed",
       "sources": [
@@ -6369,16 +6627,15 @@
       ],
       "pin": {
         "map": "southport-slums",
-        "x": 0.24,
-        "y": 0.79,
-        "approx": true
+        "x": 0.301,
+        "y": 0.732
       }
     },
     {
       "id": "southport-slums--candidate-beltward-road",
       "district": "southport-slums",
       "name": "Beltward Road",
-      "type": "landmark",
+      "type": "transit",
       "blurb": "North toward the industrial belt.",
       "canonStatus": "proposed",
       "sources": [
@@ -6386,16 +6643,15 @@
       ],
       "pin": {
         "map": "southport-slums",
-        "x": 0.69,
-        "y": 0.79,
-        "approx": true
+        "x": 0.611,
+        "y": 0.734
       }
     },
     {
       "id": "scrapfields--candidate-second-life-yard",
       "district": "scrapfields",
       "name": "Second Life Yard",
-      "type": "landmark",
+      "type": "market",
       "blurb": "Parts sorted before disposal.",
       "canonStatus": "proposed",
       "sources": [
@@ -6403,16 +6659,15 @@
       ],
       "pin": {
         "map": "scrapfields",
-        "x": 0.23,
-        "y": 0.19,
-        "approx": true
+        "x": 0.199,
+        "y": 0.217
       }
     },
     {
       "id": "scrapfields--candidate-the-weighing-shade",
       "district": "scrapfields",
       "name": "The Weighing Shade",
-      "type": "landmark",
+      "type": "market",
       "blurb": "Trade measured under patched roofing.",
       "canonStatus": "proposed",
       "sources": [
@@ -6420,16 +6675,15 @@
       ],
       "pin": {
         "map": "scrapfields",
-        "x": 0.7,
-        "y": 0.19,
-        "approx": true
+        "x": 0.64,
+        "y": 0.223
       }
     },
     {
       "id": "scrapfields--candidate-patchkin-work-court",
       "district": "scrapfields",
       "name": "Patchkin Work Court",
-      "type": "landmark",
+      "type": "industrial",
       "blurb": "Salvage crews share the space.",
       "canonStatus": "proposed",
       "sources": [
@@ -6437,16 +6691,15 @@
       ],
       "pin": {
         "map": "scrapfields",
-        "x": 0.28,
-        "y": 0.34,
-        "approx": true
+        "x": 0.236,
+        "y": 0.342
       }
     },
     {
       "id": "scrapfields--candidate-copper-rain",
       "district": "scrapfields",
       "name": "Copper Rain",
-      "type": "landmark",
+      "type": "industrial",
       "blurb": "Wire stripped; sharp edges everywhere.",
       "canonStatus": "proposed",
       "sources": [
@@ -6454,16 +6707,15 @@
       ],
       "pin": {
         "map": "scrapfields",
-        "x": 0.74,
-        "y": 0.34,
-        "approx": true
+        "x": 0.712,
+        "y": 0.35
       }
     },
     {
       "id": "scrapfields--candidate-the-running-engine",
       "district": "scrapfields",
       "name": "The Running Engine",
-      "type": "landmark",
+      "type": "industrial",
       "blurb": "Recovered machines tested here.",
       "canonStatus": "proposed",
       "sources": [
@@ -6471,16 +6723,15 @@
       ],
       "pin": {
         "map": "scrapfields",
-        "x": 0.2,
-        "y": 0.49,
-        "approx": true
+        "x": 0.158,
+        "y": 0.503
       }
     },
     {
       "id": "scrapfields--candidate-meal-tin",
       "district": "scrapfields",
       "name": "Meal Tin",
-      "type": "landmark",
+      "type": "food",
       "blurb": "Hot food beside the sorting lanes.",
       "canonStatus": "proposed",
       "sources": [
@@ -6488,9 +6739,8 @@
       ],
       "pin": {
         "map": "scrapfields",
-        "x": 0.68,
-        "y": 0.49,
-        "approx": true
+        "x": 0.62,
+        "y": 0.508
       }
     },
     {
@@ -6505,16 +6755,15 @@
       ],
       "pin": {
         "map": "scrapfields",
-        "x": 0.27,
-        "y": 0.64,
-        "approx": true
+        "x": 0.257,
+        "y": 0.652
       }
     },
     {
       "id": "scrapfields--candidate-crane-shadow",
       "district": "scrapfields",
       "name": "Crane Shadow",
-      "type": "landmark",
+      "type": "industrial",
       "blurb": "Stay outside the swing.",
       "canonStatus": "proposed",
       "sources": [
@@ -6522,16 +6771,15 @@
       ],
       "pin": {
         "map": "scrapfields",
-        "x": 0.75,
-        "y": 0.64,
-        "approx": true
+        "x": 0.809,
+        "y": 0.661
       }
     },
     {
       "id": "scrapfields--candidate-the-kept-pieces",
       "district": "scrapfields",
       "name": "The Kept Pieces",
-      "type": "landmark",
+      "type": "shop",
       "blurb": "Small components; large possibilities.",
       "canonStatus": "proposed",
       "sources": [
@@ -6540,15 +6788,14 @@
       "pin": {
         "map": "scrapfields",
         "x": 0.24,
-        "y": 0.79,
-        "approx": true
+        "y": 0.822
       }
     },
     {
       "id": "scrapfields--candidate-repairward-track",
       "district": "scrapfields",
       "name": "Repairward Track",
-      "type": "landmark",
+      "type": "transit",
       "blurb": "Loads leave for repair markets.",
       "canonStatus": "proposed",
       "sources": [
@@ -6556,9 +6803,40 @@
       ],
       "pin": {
         "map": "scrapfields",
-        "x": 0.69,
-        "y": 0.79,
-        "approx": true
+        "x": 0.609,
+        "y": 0.82
+      }
+    },
+    {
+      "id": "scrapfields--candidate-scrap-ridge",
+      "district": "scrapfields",
+      "name": "Scrap Ridge",
+      "type": "landmark",
+      "blurb": "Tall piles, shifting often.",
+      "canonStatus": "proposed",
+      "sources": [
+        "https://www.worldanvil.com/w/adyta-jeeperssheefers/a/adyta-settlement"
+      ],
+      "pin": {
+        "map": "scrapfields",
+        "x": 0.459,
+        "y": 0.093
+      }
+    },
+    {
+      "id": "scrapfields--candidate-patchkin-row",
+      "district": "scrapfields",
+      "name": "Patchkin Row",
+      "type": "housing",
+      "blurb": "Homes, shops and crew rooms.",
+      "canonStatus": "proposed",
+      "sources": [
+        "https://www.worldanvil.com/w/adyta-jeeperssheefers/a/adyta-settlement"
+      ],
+      "pin": {
+        "map": "scrapfields",
+        "x": 0.871,
+        "y": 0.125
       }
     },
     {
@@ -6573,16 +6851,15 @@
       ],
       "pin": {
         "map": "outer-farms",
-        "x": 0.23,
-        "y": 0.19,
-        "approx": true
+        "x": 0.317,
+        "y": 0.244
       }
     },
     {
       "id": "outer-farms--candidate-dustwalker-camp",
       "district": "outer-farms",
       "name": "Dustwalker Camp",
-      "type": "landmark",
+      "type": "housing",
       "blurb": "Temporary resting place; ask first.",
       "canonStatus": "proposed",
       "sources": [
@@ -6590,16 +6867,15 @@
       ],
       "pin": {
         "map": "outer-farms",
-        "x": 0.7,
-        "y": 0.19,
-        "approx": true
+        "x": 0.826,
+        "y": 0.244
       }
     },
     {
       "id": "outer-farms--candidate-the-mended-pump",
       "district": "outer-farms",
       "name": "The Mended Pump",
-      "type": "landmark",
+      "type": "industrial",
       "blurb": "Irrigation kept alive by repairs.",
       "canonStatus": "proposed",
       "sources": [
@@ -6607,16 +6883,15 @@
       ],
       "pin": {
         "map": "outer-farms",
-        "x": 0.28,
-        "y": 0.34,
-        "approx": true
+        "x": 0.37,
+        "y": 0.366
       }
     },
     {
       "id": "outer-farms--candidate-seed-tin",
       "district": "outer-farms",
       "name": "Seed Tin",
-      "type": "landmark",
+      "type": "shop",
       "blurb": "Trade small; keep some back.",
       "canonStatus": "proposed",
       "sources": [
@@ -6624,16 +6899,15 @@
       ],
       "pin": {
         "map": "outer-farms",
-        "x": 0.74,
-        "y": 0.34,
-        "approx": true
+        "x": 0.712,
+        "y": 0.359
       }
     },
     {
       "id": "outer-farms--candidate-the-pickers-line",
       "district": "outer-farms",
       "name": "The Pickers Line",
-      "type": "landmark",
+      "type": "industrial",
       "blurb": "Scrap work along the city edge.",
       "canonStatus": "proposed",
       "sources": [
@@ -6641,9 +6915,8 @@
       ],
       "pin": {
         "map": "outer-farms",
-        "x": 0.2,
-        "y": 0.49,
-        "approx": true
+        "x": 0.143,
+        "y": 0.493
       }
     },
     {
@@ -6658,9 +6931,8 @@
       ],
       "pin": {
         "map": "outer-farms",
-        "x": 0.68,
-        "y": 0.49,
-        "approx": true
+        "x": 0.83,
+        "y": 0.493
       }
     },
     {
@@ -6675,16 +6947,15 @@
       ],
       "pin": {
         "map": "outer-farms",
-        "x": 0.27,
-        "y": 0.64,
-        "approx": true
+        "x": 0.378,
+        "y": 0.656
       }
     },
     {
       "id": "outer-farms--candidate-shared-store",
       "district": "outer-farms",
       "name": "Shared Store",
-      "type": "landmark",
+      "type": "market",
       "blurb": "Tools and harvest under patched roofing.",
       "canonStatus": "proposed",
       "sources": [
@@ -6692,16 +6963,15 @@
       ],
       "pin": {
         "map": "outer-farms",
-        "x": 0.75,
-        "y": 0.64,
-        "approx": true
+        "x": 0.693,
+        "y": 0.664
       }
     },
     {
       "id": "outer-farms--candidate-marketward-cart-track",
       "district": "outer-farms",
       "name": "Marketward Cart Track",
-      "type": "landmark",
+      "type": "transit",
       "blurb": "Food and salvage toward town.",
       "canonStatus": "proposed",
       "sources": [
@@ -6709,16 +6979,15 @@
       ],
       "pin": {
         "map": "outer-farms",
-        "x": 0.24,
-        "y": 0.79,
-        "approx": true
+        "x": 0.189,
+        "y": 0.803
       }
     },
     {
       "id": "outer-farms--candidate-hinterland-path",
       "district": "outer-farms",
       "name": "Hinterland Path",
-      "type": "landmark",
+      "type": "street",
       "blurb": "Beyond: geography remains open.",
       "canonStatus": "proposed",
       "sources": [
@@ -6726,9 +6995,8 @@
       ],
       "pin": {
         "map": "outer-farms",
-        "x": 0.69,
-        "y": 0.79,
-        "approx": true
+        "x": 0.841,
+        "y": 0.813
       }
     },
     {
@@ -6743,16 +7011,15 @@
       ],
       "pin": {
         "map": "borderlands",
-        "x": 0.23,
-        "y": 0.19,
-        "approx": true
+        "x": 0.201,
+        "y": 0.247
       }
     },
     {
       "id": "borderlands--candidate-roadside-rest",
       "district": "borderlands",
       "name": "Roadside Rest",
-      "type": "landmark",
+      "type": "housing",
       "blurb": "Beds when there is room.",
       "canonStatus": "proposed",
       "sources": [
@@ -6760,9 +7027,8 @@
       ],
       "pin": {
         "map": "borderlands",
-        "x": 0.7,
-        "y": 0.19,
-        "approx": true
+        "x": 0.648,
+        "y": 0.239
       }
     },
     {
@@ -6777,16 +7043,15 @@
       ],
       "pin": {
         "map": "borderlands",
-        "x": 0.28,
-        "y": 0.34,
-        "approx": true
+        "x": 0.254,
+        "y": 0.371
       }
     },
     {
       "id": "borderlands--candidate-the-spare-wheel",
       "district": "borderlands",
       "name": "The Spare Wheel",
-      "type": "landmark",
+      "type": "shop",
       "blurb": "Cart repairs; parts by barter.",
       "canonStatus": "proposed",
       "sources": [
@@ -6794,9 +7059,8 @@
       ],
       "pin": {
         "map": "borderlands",
-        "x": 0.74,
-        "y": 0.34,
-        "approx": true
+        "x": 0.706,
+        "y": 0.376
       }
     },
     {
@@ -6811,9 +7075,8 @@
       ],
       "pin": {
         "map": "borderlands",
-        "x": 0.2,
-        "y": 0.49,
-        "approx": true
+        "x": 0.255,
+        "y": 0.518
       }
     },
     {
@@ -6828,16 +7091,15 @@
       ],
       "pin": {
         "map": "borderlands",
-        "x": 0.68,
-        "y": 0.49,
-        "approx": true
+        "x": 0.635,
+        "y": 0.516
       }
     },
     {
       "id": "borderlands--candidate-dry-gully-path",
       "district": "borderlands",
       "name": "Dry Gully Path",
-      "type": "landmark",
+      "type": "street",
       "blurb": "Foot route; weather changes it.",
       "canonStatus": "proposed",
       "sources": [
@@ -6845,9 +7107,8 @@
       ],
       "pin": {
         "map": "borderlands",
-        "x": 0.27,
-        "y": 0.64,
-        "approx": true
+        "x": 0.314,
+        "y": 0.669
       }
     },
     {
@@ -6862,16 +7123,15 @@
       ],
       "pin": {
         "map": "borderlands",
-        "x": 0.75,
-        "y": 0.64,
-        "approx": true
+        "x": 0.627,
+        "y": 0.652
       }
     },
     {
       "id": "borderlands--candidate-open-country-track",
       "district": "borderlands",
       "name": "Open Country Track",
-      "type": "landmark",
+      "type": "street",
       "blurb": "No named nation beyond.",
       "canonStatus": "proposed",
       "sources": [
@@ -6879,16 +7139,15 @@
       ],
       "pin": {
         "map": "borderlands",
-        "x": 0.24,
-        "y": 0.79,
-        "approx": true
+        "x": 0.312,
+        "y": 0.803
       }
     },
     {
       "id": "borderlands--candidate-cityward-bend",
       "district": "borderlands",
       "name": "Cityward Bend",
-      "type": "landmark",
+      "type": "transit",
       "blurb": "Back toward the built streets.",
       "canonStatus": "proposed",
       "sources": [
@@ -6896,16 +7155,79 @@
       ],
       "pin": {
         "map": "borderlands",
-        "x": 0.69,
-        "y": 0.79,
-        "approx": true
+        "x": 0.661,
+        "y": 0.82
+      }
+    },
+    {
+      "id": "borderlands--candidate-fringe-market",
+      "district": "borderlands",
+      "name": "Fringe Market",
+      "type": "market",
+      "blurb": "Food, tools and surplus; prices change daily.",
+      "canonStatus": "proposed",
+      "sources": [
+        "https://www.worldanvil.com/w/adyta-jeeperssheefers/a/adyta-settlement"
+      ],
+      "pin": {
+        "map": "borderlands",
+        "x": 0.371,
+        "y": 0.137
+      }
+    },
+    {
+      "id": "borderlands--candidate-patched-gate",
+      "district": "borderlands",
+      "name": "Patched Gate",
+      "type": "transit",
+      "blurb": "Loose check; often open.",
+      "canonStatus": "proposed",
+      "sources": [
+        "https://www.worldanvil.com/w/adyta-jeeperssheefers/a/adyta-settlement"
+      ],
+      "pin": {
+        "map": "borderlands",
+        "x": 0.492,
+        "y": 0.148
+      }
+    },
+    {
+      "id": "borderlands--candidate-supply-shed",
+      "district": "borderlands",
+      "name": "Supply Shed",
+      "type": "shop",
+      "blurb": "Basics, fuel and parts; stock is uncertain.",
+      "canonStatus": "proposed",
+      "sources": [
+        "https://www.worldanvil.com/w/adyta-jeeperssheefers/a/adyta-settlement"
+      ],
+      "pin": {
+        "map": "borderlands",
+        "x": 0.902,
+        "y": 0.137
+      }
+    },
+    {
+      "id": "borderlands--candidate-mechanics-row",
+      "district": "borderlands",
+      "name": "Mechanics Row",
+      "type": "shop",
+      "blurb": "Welders, tuners and small jobs.",
+      "canonStatus": "proposed",
+      "sources": [
+        "https://www.worldanvil.com/w/adyta-jeeperssheefers/a/adyta-settlement"
+      ],
+      "pin": {
+        "map": "borderlands",
+        "x": 0.936,
+        "y": 0.317
       }
     },
     {
       "id": "southern-industrial-belt--candidate-shift-bell-court",
       "district": "southern-industrial-belt",
       "name": "Shift Bell Court",
-      "type": "landmark",
+      "type": "industrial",
       "blurb": "Workers change; the furnaces continue.",
       "canonStatus": "proposed",
       "sources": [
@@ -6913,16 +7235,15 @@
       ],
       "pin": {
         "map": "southern-industrial-belt",
-        "x": 0.23,
-        "y": 0.19,
-        "approx": true
+        "x": 0.346,
+        "y": 0.227
       }
     },
     {
       "id": "southern-industrial-belt--candidate-ashborn-workshop",
       "district": "southern-industrial-belt",
       "name": "Ashborn Workshop",
-      "type": "landmark",
+      "type": "industrial",
       "blurb": "Industrial repairs; crew reputation matters.",
       "canonStatus": "proposed",
       "sources": [
@@ -6930,16 +7251,15 @@
       ],
       "pin": {
         "map": "southern-industrial-belt",
-        "x": 0.7,
-        "y": 0.19,
-        "approx": true
+        "x": 0.651,
+        "y": 0.242
       }
     },
     {
       "id": "southern-industrial-belt--candidate-stonework-hall",
       "district": "southern-industrial-belt",
       "name": "Stonework Hall",
-      "type": "landmark",
+      "type": "industrial",
       "blurb": "Dwarven workshop and stronghold frontage.",
       "canonStatus": "proposed",
       "sources": [
@@ -6947,16 +7267,15 @@
       ],
       "pin": {
         "map": "southern-industrial-belt",
-        "x": 0.28,
-        "y": 0.34,
-        "approx": true
+        "x": 0.29,
+        "y": 0.397
       }
     },
     {
       "id": "southern-industrial-belt--candidate-the-long-pour",
       "district": "southern-industrial-belt",
       "name": "The Long Pour",
-      "type": "landmark",
+      "type": "industrial",
       "blurb": "Steel work behind guarded access.",
       "canonStatus": "proposed",
       "sources": [
@@ -6964,16 +7283,15 @@
       ],
       "pin": {
         "map": "southern-industrial-belt",
-        "x": 0.74,
-        "y": 0.34,
-        "approx": true
+        "x": 0.818,
+        "y": 0.396
       }
     },
     {
       "id": "southern-industrial-belt--candidate-hazard-pay-steps",
       "district": "southern-industrial-belt",
       "name": "Hazard Pay Steps",
-      "type": "landmark",
+      "type": "civic",
       "blurb": "Claims begin after the injury.",
       "canonStatus": "proposed",
       "sources": [
@@ -6981,16 +7299,15 @@
       ],
       "pin": {
         "map": "southern-industrial-belt",
-        "x": 0.2,
-        "y": 0.49,
-        "approx": true
+        "x": 0.169,
+        "y": 0.525
       }
     },
     {
       "id": "southern-industrial-belt--candidate-the-knuckle-corner",
       "district": "southern-industrial-belt",
       "name": "The Knuckle Corner",
-      "type": "landmark",
+      "type": "venue",
       "blurb": "Street pressure; affiliation unconfirmed.",
       "canonStatus": "proposed",
       "sources": [
@@ -6998,16 +7315,15 @@
       ],
       "pin": {
         "map": "southern-industrial-belt",
-        "x": 0.68,
-        "y": 0.49,
-        "approx": true
+        "x": 0.62,
+        "y": 0.542
       }
     },
     {
       "id": "southern-industrial-belt--candidate-canteen-six",
       "district": "southern-industrial-belt",
       "name": "Canteen Six",
-      "type": "landmark",
+      "type": "food",
       "blurb": "Meals between furnace shifts.",
       "canonStatus": "proposed",
       "sources": [
@@ -7015,16 +7331,15 @@
       ],
       "pin": {
         "map": "southern-industrial-belt",
-        "x": 0.27,
-        "y": 0.64,
-        "approx": true
+        "x": 0.369,
+        "y": 0.652
       }
     },
     {
       "id": "southern-industrial-belt--candidate-load-road",
       "district": "southern-industrial-belt",
       "name": "Load Road",
-      "type": "landmark",
+      "type": "transit",
       "blurb": "Freight takes the wide turn.",
       "canonStatus": "proposed",
       "sources": [
@@ -7032,16 +7347,15 @@
       ],
       "pin": {
         "map": "southern-industrial-belt",
-        "x": 0.75,
-        "y": 0.64,
-        "approx": true
+        "x": 0.677,
+        "y": 0.672
       }
     },
     {
       "id": "southern-industrial-belt--candidate-worker-rooms",
       "district": "southern-industrial-belt",
       "name": "Worker Rooms",
-      "type": "landmark",
+      "type": "housing",
       "blurb": "Homes within reach of the job.",
       "canonStatus": "proposed",
       "sources": [
@@ -7049,16 +7363,15 @@
       ],
       "pin": {
         "map": "southern-industrial-belt",
-        "x": 0.24,
-        "y": 0.79,
-        "approx": true
+        "x": 0.295,
+        "y": 0.803
       }
     },
     {
       "id": "southern-industrial-belt--candidate-south-exit",
       "district": "southern-industrial-belt",
       "name": "South Exit",
-      "type": "landmark",
+      "type": "transit",
       "blurb": "Toward Southport; smoke follows.",
       "canonStatus": "proposed",
       "sources": [
@@ -7066,159 +7379,148 @@
       ],
       "pin": {
         "map": "southern-industrial-belt",
-        "x": 0.69,
-        "y": 0.79,
-        "approx": true
+        "x": 0.688,
+        "y": 0.869
       }
     },
     {
       "id": "crownless-row--candidate-mending-court",
       "district": "crownless-row",
       "name": "Mending Court",
-      "type": "landmark",
+      "type": "civic",
       "blurb": "Shared repair; bring what you can.",
       "canonStatus": "proposed",
       "sources": [],
       "pin": {
         "map": "crownless-row",
-        "x": 0.23,
-        "y": 0.19,
-        "approx": true
+        "x": 0.376,
+        "y": 0.217
       }
     },
     {
       "id": "crownless-row--candidate-no-crown-workshop",
       "district": "crownless-row",
       "name": "No Crown Workshop",
-      "type": "landmark",
+      "type": "shop",
       "blurb": "Tools before titles.",
       "canonStatus": "proposed",
       "sources": [],
       "pin": {
         "map": "crownless-row",
-        "x": 0.7,
-        "y": 0.19,
-        "approx": true
+        "x": 0.702,
+        "y": 0.229
       }
     },
     {
       "id": "crownless-row--candidate-the-spare-chair",
       "district": "crownless-row",
       "name": "The Spare Chair",
-      "type": "landmark",
+      "type": "venue",
       "blurb": "Sit; nobody charges by the minute.",
       "canonStatus": "proposed",
       "sources": [],
       "pin": {
         "map": "crownless-row",
-        "x": 0.28,
-        "y": 0.34,
-        "approx": true
+        "x": 0.345,
+        "y": 0.354
       }
     },
     {
       "id": "crownless-row--candidate-open-pot",
       "district": "crownless-row",
       "name": "Open Pot",
-      "type": "landmark",
+      "type": "food",
       "blurb": "Food when there is enough.",
       "canonStatus": "proposed",
       "sources": [],
       "pin": {
         "map": "crownless-row",
-        "x": 0.74,
-        "y": 0.34,
-        "approx": true
+        "x": 0.751,
+        "y": 0.368
       }
     },
     {
       "id": "crownless-row--candidate-patch-roof-row",
       "district": "crownless-row",
       "name": "Patch Roof Row",
-      "type": "landmark",
+      "type": "housing",
       "blurb": "Homes maintained together.",
       "canonStatus": "proposed",
       "sources": [],
       "pin": {
         "map": "crownless-row",
-        "x": 0.2,
-        "y": 0.49,
-        "approx": true
+        "x": 0.243,
+        "y": 0.511
       }
     },
     {
       "id": "crownless-row--candidate-the-useful-shelf",
       "district": "crownless-row",
       "name": "The Useful Shelf",
-      "type": "landmark",
+      "type": "shop",
       "blurb": "Broken does not mean finished.",
       "canonStatus": "proposed",
       "sources": [],
       "pin": {
         "map": "crownless-row",
-        "x": 0.68,
-        "y": 0.49,
-        "approx": true
+        "x": 0.729,
+        "y": 0.53
       }
     },
     {
       "id": "crownless-row--candidate-neighbors-steps",
       "district": "crownless-row",
       "name": "Neighbors Steps",
-      "type": "landmark",
+      "type": "street",
       "blurb": "Ask before moving through.",
       "canonStatus": "proposed",
       "sources": [],
       "pin": {
         "map": "crownless-row",
-        "x": 0.27,
-        "y": 0.64,
-        "approx": true
+        "x": 0.387,
+        "y": 0.669
       }
     },
     {
       "id": "crownless-row--candidate-lightshare",
       "district": "crownless-row",
       "name": "Lightshare",
-      "type": "landmark",
+      "type": "shop",
       "blurb": "Repairs and shared electrical supply.",
       "canonStatus": "proposed",
       "sources": [],
       "pin": {
         "map": "crownless-row",
-        "x": 0.75,
-        "y": 0.64,
-        "approx": true
+        "x": 0.837,
+        "y": 0.701
       }
     },
     {
       "id": "crownless-row--candidate-the-small-stage",
       "district": "crownless-row",
       "name": "The Small Stage",
-      "type": "landmark",
+      "type": "venue",
       "blurb": "A voice without a permit.",
       "canonStatus": "proposed",
       "sources": [],
       "pin": {
         "map": "crownless-row",
-        "x": 0.24,
-        "y": 0.79,
-        "approx": true
+        "x": 0.306,
+        "y": 0.811
       }
     },
     {
       "id": "crownless-row--candidate-common-gate",
       "district": "crownless-row",
       "name": "Common Gate",
-      "type": "landmark",
+      "type": "civic",
       "blurb": "Entry by conversation, not a crown.",
       "canonStatus": "proposed",
       "sources": [],
       "pin": {
         "map": "crownless-row",
-        "x": 0.69,
-        "y": 0.79,
-        "approx": true
+        "x": 0.609,
+        "y": 0.854
       }
     },
     {
@@ -7233,9 +7535,8 @@
       ],
       "pin": {
         "map": "ash-wastes",
-        "x": 0.23,
-        "y": 0.19,
-        "approx": true
+        "x": 0.164,
+        "y": 0.236
       }
     },
     {
@@ -7250,9 +7551,8 @@
       ],
       "pin": {
         "map": "ash-wastes",
-        "x": 0.7,
-        "y": 0.19,
-        "approx": true
+        "x": 0.659,
+        "y": 0.188
       }
     },
     {
@@ -7267,9 +7567,8 @@
       ],
       "pin": {
         "map": "ash-wastes",
-        "x": 0.28,
-        "y": 0.34,
-        "approx": true
+        "x": 0.426,
+        "y": 0.314
       }
     },
     {
@@ -7284,9 +7583,8 @@
       ],
       "pin": {
         "map": "ash-wastes",
-        "x": 0.74,
-        "y": 0.34,
-        "approx": true
+        "x": 0.817,
+        "y": 0.354
       }
     },
     {
@@ -7301,9 +7599,8 @@
       ],
       "pin": {
         "map": "ash-wastes",
-        "x": 0.2,
-        "y": 0.49,
-        "approx": true
+        "x": 0.15,
+        "y": 0.467
       }
     },
     {
@@ -7318,16 +7615,15 @@
       ],
       "pin": {
         "map": "ash-wastes",
-        "x": 0.68,
-        "y": 0.49,
-        "approx": true
+        "x": 0.602,
+        "y": 0.505
       }
     },
     {
       "id": "ash-wastes--candidate-silent-machinery",
       "district": "ash-wastes",
       "name": "Silent Machinery",
-      "type": "landmark",
+      "type": "industrial",
       "blurb": "No working plant confirmed.",
       "canonStatus": "proposed",
       "sources": [
@@ -7335,9 +7631,8 @@
       ],
       "pin": {
         "map": "ash-wastes",
-        "x": 0.27,
-        "y": 0.64,
-        "approx": true
+        "x": 0.381,
+        "y": 0.625
       }
     },
     {
@@ -7352,9 +7647,8 @@
       ],
       "pin": {
         "map": "ash-wastes",
-        "x": 0.75,
-        "y": 0.64,
-        "approx": true
+        "x": 0.704,
+        "y": 0.62
       }
     },
     {
@@ -7369,9 +7663,8 @@
       ],
       "pin": {
         "map": "ash-wastes",
-        "x": 0.24,
-        "y": 0.79,
-        "approx": true
+        "x": 0.254,
+        "y": 0.796
       }
     },
     {
@@ -7386,16 +7679,15 @@
       ],
       "pin": {
         "map": "ash-wastes",
-        "x": 0.69,
-        "y": 0.79,
-        "approx": true
+        "x": 0.804,
+        "y": 0.806
       }
     },
     {
       "id": "forgotten-depths--candidate-last-known-landing",
       "district": "forgotten-depths",
       "name": "Last Known Landing",
-      "type": "landmark",
+      "type": "transit",
       "blurb": "Beyond: no verified survey.",
       "canonStatus": "proposed",
       "sources": [
@@ -7403,16 +7695,15 @@
       ],
       "pin": {
         "map": "forgotten-depths",
-        "x": 0.23,
-        "y": 0.19,
-        "approx": true
+        "x": 0.24,
+        "y": 0.192
       }
     },
     {
       "id": "forgotten-depths--candidate-broken-descent",
       "district": "forgotten-depths",
       "name": "Broken Descent",
-      "type": "landmark",
+      "type": "transit",
       "blurb": "Stairs stop before the floor.",
       "canonStatus": "proposed",
       "sources": [
@@ -7420,9 +7711,8 @@
       ],
       "pin": {
         "map": "forgotten-depths",
-        "x": 0.7,
-        "y": 0.19,
-        "approx": true
+        "x": 0.637,
+        "y": 0.212
       }
     },
     {
@@ -7437,9 +7727,8 @@
       ],
       "pin": {
         "map": "forgotten-depths",
-        "x": 0.28,
-        "y": 0.34,
-        "approx": true
+        "x": 0.26,
+        "y": 0.332
       }
     },
     {
@@ -7454,9 +7743,8 @@
       ],
       "pin": {
         "map": "forgotten-depths",
-        "x": 0.74,
-        "y": 0.34,
-        "approx": true
+        "x": 0.822,
+        "y": 0.329
       }
     },
     {
@@ -7471,9 +7759,8 @@
       ],
       "pin": {
         "map": "forgotten-depths",
-        "x": 0.2,
-        "y": 0.49,
-        "approx": true
+        "x": 0.177,
+        "y": 0.483
       }
     },
     {
@@ -7488,16 +7775,15 @@
       ],
       "pin": {
         "map": "forgotten-depths",
-        "x": 0.68,
-        "y": 0.49,
-        "approx": true
+        "x": 0.625,
+        "y": 0.498
       }
     },
     {
       "id": "forgotten-depths--candidate-the-interrupted-pipe",
       "district": "forgotten-depths",
       "name": "The Interrupted Pipe",
-      "type": "landmark",
+      "type": "industrial",
       "blurb": "Infrastructure without a clear origin.",
       "canonStatus": "proposed",
       "sources": [
@@ -7505,9 +7791,8 @@
       ],
       "pin": {
         "map": "forgotten-depths",
-        "x": 0.27,
-        "y": 0.64,
-        "approx": true
+        "x": 0.342,
+        "y": 0.656
       }
     },
     {
@@ -7522,9 +7807,8 @@
       ],
       "pin": {
         "map": "forgotten-depths",
-        "x": 0.75,
-        "y": 0.64,
-        "approx": true
+        "x": 0.7,
+        "y": 0.646
       }
     },
     {
@@ -7539,9 +7823,8 @@
       ],
       "pin": {
         "map": "forgotten-depths",
-        "x": 0.24,
-        "y": 0.79,
-        "approx": true
+        "x": 0.282,
+        "y": 0.812
       }
     },
     {
@@ -7556,9 +7839,56 @@
       ],
       "pin": {
         "map": "forgotten-depths",
-        "x": 0.69,
-        "y": 0.79,
-        "approx": true
+        "x": 0.615,
+        "y": 0.842
+      }
+    },
+    {
+      "id": "forgotten-depths--candidate-supply-depot",
+      "district": "forgotten-depths",
+      "name": "Supply Depot",
+      "type": "shop",
+      "blurb": "The last stocked counter before the drop.",
+      "canonStatus": "proposed",
+      "sources": [
+        "https://www.worldanvil.com/w/adyta-jeeperssheefers/a/adyta-settlement"
+      ],
+      "pin": {
+        "map": "forgotten-depths",
+        "x": 0.127,
+        "y": 0.332
+      }
+    },
+    {
+      "id": "forgotten-depths--candidate-rations-meals",
+      "district": "forgotten-depths",
+      "name": "Rations & Meals",
+      "type": "food",
+      "blurb": "Hot food on Depths Walk.",
+      "canonStatus": "proposed",
+      "sources": [
+        "https://www.worldanvil.com/w/adyta-jeeperssheefers/a/adyta-settlement"
+      ],
+      "pin": {
+        "map": "forgotten-depths",
+        "x": 0.371,
+        "y": 0.435
+      }
+    },
+    {
+      "id": "forgotten-depths--candidate-archive-alley",
+      "district": "forgotten-depths",
+      "name": "Archive Alley",
+      "type": "street",
+      "blurb": "Named for records nobody can find.",
+      "canonStatus": "proposed",
+      "sources": [
+        "https://www.worldanvil.com/w/adyta-jeeperssheefers/a/adyta-settlement"
+      ],
+      "pin": {
+        "map": "forgotten-depths",
+        "x": 0.563,
+        "y": 0.428
       }
     },
     {
