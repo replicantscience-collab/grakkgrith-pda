@@ -286,19 +286,31 @@ try {
       const start = await g.evaluate(() => ({ area: document.querySelector('.where h2').textContent, spots: document.querySelectorAll('.stage .spot').length, list: document.querySelectorAll('.around button').length }));
       await g.locator('.around button', { hasText: 'The front door' }).click(); await page.waitForTimeout(200);
       const landing = await g.evaluate(() => document.querySelector('.where h2').textContent);
-      let tries = 0, moved = false; for (; tries < 40 && !moved; tries++) { await g.locator('.around button', { hasText: 'Left elevator' }).click(); moved = await g.evaluate(() => /roof/i.test(document.querySelector('.where h2').textContent)); if (moved) break; }
+      let tries = 0, moved = false; while (tries < 40 && !moved) { tries++; await g.locator('.around button', { hasText: 'Left elevator' }).click(); moved = await g.evaluate(() => /roof/i.test(document.querySelector('.where h2').textContent)); }  // works about 1 in 6
       return (art && start.area === 'Out front' && start.spots === 5 && start.list === 5 && landing === 'The communal landing' && moved && tries > 0) || JSON.stringify({ art, start, landing, moved, tries });
     });
-    await step('The Hive: Ma Dresk only deals with you if you are actually there', async () => {
+    await step('The Hive: talking to Ma Dresk (FF-style): only when you are there; rent a room, buy a treat, use it from the Sheet', async () => {
+      const K = 'grakkgrith_character_tool_v8_state';
       await page.evaluate(() => document.getElementById('exploreBtn').click()); await page.waitForTimeout(1500); let g = frame(page);
       await g.goto(g.url().replace(/explore\.html.*$/, 'scene.html?place=low-halo--the-hive&area=fryer')); await g.waitForFunction(() => window.GRAKK_SCENE_READY);
       await g.locator('.around button', { hasText: 'Ma Dresk' }).click(); await page.waitForTimeout(200);
-      const away = await g.evaluate(() => ({ note: /Travel here in Explore/.test(document.getElementById('out').innerText), act: document.querySelectorAll('#out [data-act]').length }));
-      await page.evaluate(K => { const s = JSON.parse(localStorage.getItem(K)); s.world = { ...(s.world || {}), presence: { location: { district: 'low-halo', place: 'low-halo--the-hive' }, transit: null, log: [] } }; localStorage.setItem(K, JSON.stringify(s)); }, 'grakkgrith_character_tool_v8_state');
+      const away = await g.evaluate(() => ({ note: /Travel here in Explore/.test(document.getElementById('out').innerText), talk: !!document.querySelector('.gTalk') }));
+      await page.evaluate(K => { const s = JSON.parse(localStorage.getItem(K)); s.world = { ...(s.world || {}), presence: { location: { district: 'low-halo', place: 'low-halo--the-hive' }, transit: null, log: [] } }; s.coins = { ...(s.coins || {}), credits: '50' }; s.stats.stress = '2'; localStorage.setItem(K, JSON.stringify(s)); }, K);
       await g.goto(g.url()); await g.waitForFunction(() => window.GRAKK_SCENE_READY);
-      await g.locator('.around button', { hasText: 'Ma Dresk' }).click(); await g.locator('[data-act="askroom"]').click(); await g.locator('[data-act="movein"]').click(); await page.waitForTimeout(200);
-      const s = await page.evaluate(() => JSON.parse(localStorage.getItem('grakkgrith_character_tool_v8_state')));
-      return (away.note && away.act === 0 && s.week.housing === 'hive') || JSON.stringify({ away, housing: s.week && s.week.housing });
+      await g.locator('.around button', { hasText: 'Ma Dresk' }).click();
+      const toChoices = async () => { for (let n = 0; n < 15 && !(await g.$('.gTalk .tChoices button')); n++) { await g.locator('.gTalk .tName').click(); await page.waitForTimeout(120); } await page.waitForTimeout(400); };  // wait out the guard against accidental picks
+      await toChoices(); const name = await g.locator('.gTalk .tName').innerText();
+      await g.locator('.gTalk .tChoices button', { hasText: 'Ask about a room' }).click(); await toChoices();
+      await g.locator('.gTalk .tChoices button', { hasText: 'Deal' }).click(); await toChoices();
+      await g.locator('.gTalk .tChoices button', { hasText: "What's cooking?" }).click(); await page.waitForTimeout(450);
+      await g.locator('.gTalk .tChoices button', { hasText: 'Fry basket' }).click(); await page.waitForTimeout(300);
+      await page.keyboard.press('Escape'); await page.waitForTimeout(150);
+      let s = await page.evaluate(K => JSON.parse(localStorage.getItem(K)), K);
+      const slot = s.inventory.findIndex(x => x && x.name === 'Fry basket');
+      await page.evaluate(() => document.getElementById('sheetBtn').click()); await page.waitForTimeout(1800); g = frame(page); await g.waitForFunction(() => window.GRAKK_SHEET_READY);
+      await g.selectOption('#nowUseSel', String(slot)); await g.locator('[data-now="use"]').click(); await g.locator('#actOk').click(); await page.waitForTimeout(300);
+      s = await page.evaluate(K => JSON.parse(localStorage.getItem(K)), K);
+      return (away.note && !away.talk && /ma dresk/i.test(name) && s.week.housing === 'hive' && slot >= 0 && s.coins.credits === '42' && s.stats.stress === '1' && !(s.inventory[slot] && s.inventory[slot].name)) || JSON.stringify({ away, name, housing: s.week && s.week.housing, slot, credits: s.coins.credits, stress: s.stats.stress });
     });
     await step('Edit sheet points to Downtime instead of a second downtime form', async () => {
       await page.evaluate(() => document.getElementById('fullSheetBtn').click()); await page.waitForTimeout(2000); const g = frame(page);

@@ -50,6 +50,8 @@ body.pda-art .spot:hover,body.pda-art .spot:focus-visible{border-color:var(--art
 <div class="toast" id="toast" role="status" aria-live="polite"></div>
 <script src="./screen.js"></script>
 <script src="./week.js"></script>
+<script src="./engine.js"></script>
+<script src="./talk.js"></script>
 <script>
 'use strict';
 const KEY = 'grakkgrith_character_tool_v8_state';
@@ -61,7 +63,7 @@ const hasChar = s => !!(s && s.character && String(s.character.name || '').trim(
 const reduced = () => !!(window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches);
 function toast(msg) { const t = $('toast'); t.textContent = msg; t.classList.add('on'); clearTimeout(toast.t); toast.t = setTimeout(() => t.classList.remove('on'), 4200); }
 const Q = new URLSearchParams(location.search), PLACE = Q.get('place') || '';
-let SC = null, P = null, W = null, AREA = '', OUT = '', CONFIRM = false;
+let SC = null, P = null, W = null, AREA = '', OUT = '';
 const now = () => WK.adytaNow(P.clock, Date.now());
 
 /* Are you standing here? (Explore keeps your in-world location in the character file.) */
@@ -74,7 +76,7 @@ function hereNote(s) {
 function render(fade) {
   const s = load(), a = SC.areas[AREA], here = isHere(s);
   $('whereNote').textContent = hereNote(s);
-  const cls = x => x.go ? 'go' : x.do ? 'do' : 'look';
+  const cls = x => x.go ? 'go' : (x.do || x.talk) ? 'do' : 'look';
   $('main').innerHTML = `<div class="where"><h2>${esc(a.title)}</h2><span class="trail">${esc(SC.title)}</span></div>
     <div class="stage" id="stage"><img src="../${esc(a.img)}" alt="${esc(a.title + ': ' + a.text)}">
       ${a.spots.map((x, i) => `<button type="button" class="spot ${cls(x)}" data-spot="${i}" style="left:${x.x * 100}%;top:${x.y * 100}%;width:${x.w * 100}%;height:${x.h * 100}%" aria-label="${esc(x.label)}"><span>${esc(x.label)}</span></button>`).join('')}</div>
@@ -84,7 +86,7 @@ function render(fade) {
     <div class="out" id="out" aria-live="polite">${OUT}</div>`;
   if (fade && !reduced()) { const st = $('stage'); st.classList.add('fading'); requestAnimationFrame(() => requestAnimationFrame(() => st.classList.remove('fading'))); }
 }
-function go(area) { AREA = area; OUT = ''; CONFIRM = false; render(true); $('stage').scrollIntoView({ block: 'nearest', behavior: reduced() ? 'auto' : 'smooth' }); }
+function go(area) { AREA = area; OUT = ''; render(true); $('stage').scrollIntoView({ block: 'nearest', behavior: reduced() ? 'auto' : 'smooth' }); }
 const card = (stamp, body) => `<article class="letter"><div class="stamp">${esc(stamp)}</div>${body}</article>`;
 function show(html) { OUT = html; $('out').innerHTML = html; $('out').scrollIntoView({ block: 'nearest', behavior: reduced() ? 'auto' : 'smooth' }); }
 
@@ -94,36 +96,51 @@ function elevator() {
   if (Math.random() < 1 / 6) { OUT = ''; AREA = 'courtyard'; render(true); show(card('Elevator', '<p>Ding. The doors open. It actually works, this time. You ride it all the way to the roof before it changes its mind.</p>')); return; }
   show(card('Elevator', `<p>${esc(ELEVATOR_FAILS[Math.floor(Math.random() * ELEVATOR_FAILS.length)])}</p><div class="bar"><button type="button" class="primary" data-goto="courtyard">Take the stairs</button><button type="button" class="ghost" data-do="elevator">Try again</button></div>`));
 }
-/* Ma Dresk: your rent with her, paid here; her favor; or a room if you're not a tenant. */
-function landlord() {
-  const s = load();
-  if (!hasChar(s)) return show(card('Ma Dresk', '<p>Make a character first. Then she\'ll talk rent.</p>'));
-  const here = isHere(s), w = WK.ensure(s), row = (W.week.housing || []).find(h => h.id === 'hive'), tenant = w.housing === 'hive';
-  const need = here ? '' : '<p class="note">You need to be at The Hive to settle anything with her. Travel here in Explore.</p>';
-  if (!tenant) {
-    return show(card('Ma Dresk', `<p>Ask about a room: ${row ? row.credits : 40} credits a week, Commons. Late, and she gives you a week's grace. After that, she'll want a favor.</p>${need}
-      ${here ? (CONFIRM ? `<p>Move in? Your housing becomes The Hive, and rent bills come weekly from Monday.</p><div class="bar"><button type="button" class="primary" data-act="movein">Move in</button><button type="button" class="ghost" data-act="nevermind">Not yet</button></div>` : '<div class="bar"><button type="button" class="primary" data-act="askroom">I\'ll take a room</button></div>') : ''}`));
-  }
-  const bills = w.mail.filter(m => m.kind === 'bill' && m.status === 'open' && m.creditor === 'Ma Dresk').sort((a, b) => a.due - b.due);
-  if (!bills.length) return show(card('Ma Dresk', '<p>You\'re square with her. She nods like it\'s the least you could do, because it is.</p>'));
-  const b = bills[0], state = b.favor ? `She's calling in a favor on this one. Do it in Downtime, or pay.` : b.graced ? `You're in your grace week.` : `Rent's due.`;
-  const credits = Number(s.coins && s.coins.credits) || 0;
-  show(card('Ma Dresk', `<p>${esc(state)} ${b.total} cr, due ${esc(WK.fmt(b.due))}.${bills.length > 1 ? ` (${bills.length} weeks open.)` : ''}</p>${need}
-    ${here ? `<div class="bar"><button type="button" class="primary" data-act="pay" data-bill="${esc(b.id)}" ${credits >= b.total ? '' : 'disabled'}>Pay ${b.total} cr${credits >= b.total ? '' : ` (you have ${credits})`}</button>${b.favor ? '<button type="button" class="ghost" data-act="favor">Do her favor (Downtime)</button>' : ''}</div>` : ''}`));
+/* Talking to someone (apps/talk.js). The NPC's lines are data; what they know and can do is decided here. */
+let CUR = null; const E = window.GRAKK_ENGINE.create(() => CUR);
+function rentBill(s) { const w = s.week || {}; return (w.mail || []).filter(m => m.kind === 'bill' && m.status === 'open' && m.creditor === 'Ma Dresk').sort((a, b) => a.due - b.due)[0] || null; }
+function talk(id) {
+  const npc = SC.npcs && SC.npcs[id]; if (!npc) return;
+  let s = load();
+  if (!hasChar(s)) return show(card(npc.name, '<p>Make a character first. Then you can talk to people here.</p>'));
+  if (!isHere(s)) return show(card(npc.name, `<p>You can see ${esc(npc.name)} through the window. Travel here in Explore to talk to her.</p>`));
+  const fresh = () => { s = load(); WK.ensure(s); CUR = s; return s; };
+  const credits = () => Number((load().coins || {}).credits) || 0;
+  let afterClose = null;
+  window.GRAKK_TALK.open(npc, {
+    base: '../',
+    credits,
+    vars: () => { const x = fresh(), b = rentBill(x), row = (W.week.housing || []).find(h => h.id === 'hive'); return { name: x.character.alias || x.character.name, total: b ? b.total : '', due: b ? WK.fmt(b.due) : '', rent: (row ? row.credits : 40) + ' credits', credits: credits() + ' cr' }; },
+    when: cond => { const x = fresh(), b = rentBill(x), tenant = x.week.housing === 'hive'; return cond === 'tenant' ? tenant : cond === 'favor' ? !!(b && b.favor) : cond === 'graced' ? !!(b && b.graced && !b.favor) : cond === 'due' ? !!(b && !b.graced) : false; },
+    act: name => {
+      const x = fresh();
+      if (name === 'pay') { const b = rentBill(x); if (!b) return 'paid'; const r = WK.pay(x, b.id, now()); if (!r.ok) return 'short'; save(x); return 'paid'; }
+      if (name === 'movein') { WK.setCosts(x, { housing: 'hive' }); save(x); return 'movedIn'; }
+      if (name === 'favor') { afterClose = 'nightBtn'; return 'favorSent'; }
+      return false;
+    },
+    buy: item => {
+      const x = fresh(), have = Number((x.coins || {}).credits) || 0;
+      if (have < item.price) return 'broke';
+      if (!Array.isArray(x.inventory)) x.inventory = [];
+      const slots = E.unlockedSlotCount(); let i = 0; while (i < slots && x.inventory[i] && String(x.inventory[i].name || '').trim()) i++;
+      if (i >= slots) return 'full';
+      const card = window.GRAKK_ENGINE.EMPTY_ITEM(); Object.assign(card, { name: item.name, class: 'CONSUMABLE', desc: item.desc, shopName: 'The Ground-Floor Fryer', actions: ['use'], noRefill: true });
+      card.adds = ['', '', '', '', '0', String(item.stress || 0), String(item.uses || 1), String(item.uses || 1)];
+      while (x.inventory.length < i) x.inventory.push(window.GRAKK_ENGINE.EMPTY_ITEM());
+      x.inventory[i] = card; x.coins.credits = String(have - item.price);
+      x.week.log = x.week.log || []; save(x); toast(`Bought ${item.name}: ${item.price} cr. It's in your inventory.`);
+      return 'bought';
+    },
+    onClose: () => { render(false); if (afterClose) { try { parent.postMessage({ type: 'grakkgrith-nav', to: afterClose }, '*'); } catch (e) {} } }
+  });
 }
 
 document.addEventListener('click', e => {
   const b = e.target.closest('button'); if (!b) return;
-  if (b.dataset.spot != null) { const x = SC.areas[AREA].spots[+b.dataset.spot]; CONFIRM = false; if (x.go) return go(x.go); if (x.look) return show(card(x.label, `<p>${esc(x.look)}</p>`)); if (x.do === 'elevator') return elevator(); if (x.do === 'landlord') return landlord(); }
+  if (b.dataset.spot != null) { const x = SC.areas[AREA].spots[+b.dataset.spot]; if (x.go) return go(x.go); if (x.look) return show(card(x.label, `<p>${esc(x.look)}</p>`)); if (x.do === 'elevator') return elevator(); if (x.talk) return talk(x.talk); }
   if (b.dataset.goto) return go(b.dataset.goto);
   if (b.dataset.do === 'elevator') return elevator();
-  const act = b.dataset.act; if (!act) return;
-  if (act === 'askroom') { CONFIRM = true; return landlord(); }
-  if (act === 'nevermind') { CONFIRM = false; return landlord(); }
-  const s = load(); if (!hasChar(s) || !isHere(s)) return toast('You need to be at The Hive.');
-  if (act === 'movein') { WK.ensure(s); WK.setCosts(s, { housing: 'hive' }); save(s); CONFIRM = false; toast('Moved in. Rent comes weekly from Monday.'); return landlord(); }
-  if (act === 'pay') { const r = WK.pay(s, b.dataset.bill, now()); save(s); toast(r.msg); return landlord(); }
-  if (act === 'favor') { try { parent.postMessage({ type: 'grakkgrith-nav', to: 'nightBtn' }, '*'); } catch (err) {} }
 });
 
 Promise.all(['scenes', 'places', 'week'].map(n => fetch(`../data/${n}.json`).then(r => r.json()))).then(([scenes, places, week]) => {
