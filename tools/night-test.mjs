@@ -91,6 +91,25 @@ check('after a session starts, one new gap opens', N.newGap(s, T).ok && s.downti
 s.downtime.actionsRemaining = 0;
 check('only one per session', !N.newGap(s, T).ok);
 
+// Ma Dresk's favor: shows up when The Hive's rent is past its grace week, settles it with work
+{
+  const W = JSON.parse(readFileSync(new URL('../data/week.json', import.meta.url))), H = 3600000, DAY = 24 * H, base = Date.parse(P.clock.anchorReal);
+  s = mk(); WK.ensure(s); WK.setCosts(s, { housing: 'hive' }); s.coins = { credits: '0' };
+  WK.settle(s, W, P.clock, base, () => 0); WK.settle(s, W, P.clock, base + 2 * DAY + H, () => 0);
+  N.startNight(s, P, 'crownline-industrials', T);
+  check('no favor card during the grace week', !N.owedFavor(s, D) && !N.scene(s, D, P, E, 'favor'));
+  WK.settle(s, W, P.clock, base + 9 * DAY + 2 * H, () => 0);
+  sc = N.scene(s, D, P, E, 'favor', dice([1]));
+  check('after grace, a favor scene with three ways to do it', sc && sc.choices.join() === 'walkin,parcel,collector' && sc.walkin.check.skill === 'repair' && sc.parcel.check.skill === 'dash' && sc.collector.check.skill === 'intimidate', sc && sc.choices);
+  check('the favor scene names Ma Dresk and The Hive', /Ma Dresk/.test(sc.text) && /Hive/.test(sc.text), sc.text);
+  N.roll(s, D, P, E, sc, 'parcel', dice([6, 6, 6, 6, 6]));
+  a = N.accept(s, D, P, E, WK, T);
+  const bill = s.week.mail.find(m => m.kind === 'bill' && m.favor);
+  check('doing the favor settles the rent with no credits', bill.status === 'paid' && bill.paidBy === 'favor' && s.coins.credits === '0' && !N.owedFavor(s, D), JSON.stringify(a.entry.effects));
+  check('a pleased Ma Dresk raises Standing in Low Halo, not where you spent the night', s.cityRelations.low_halo.standing === '4' && !(s.cityRelations.crownline_industrials && s.cityRelations.crownline_industrials.standing === '4'));
+  check('the recap says which favor', /run a parcel/.test(N.recap(s, D, P).discord), N.recap(s, D, P).discord);
+}
+
 for (const f of fails) console.log('  ✗ ' + f);
 console.log(`${passes.length} night checks passed.`);
 if (fails.length) { console.log(`${fails.length} failed.`); process.exit(1); }

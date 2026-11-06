@@ -61,6 +61,7 @@
   /* A scene for an action: the situation and both choices, with the dice each would roll. */
   function scene(s, D, P, E, actionId, rng = Math.random) {
     const n = ensure(s).night; if (!n) return null;
+    if (actionId === 'favor') return favorScene(s, D, P, E, rng);
     const A = D.actions[actionId]; if (!A) return null;
     const c = ctx(s, P, n.district, rng);
     let text = pick(A.situations, rng), job = null;
@@ -69,14 +70,24 @@
     const full = num(s.stats && s.stats.stress) >= E.stressCap(s.character && s.character.level);
     return { action: actionId, name: A.name, rule: A.rule, text: fill(text, c), safe: side('safe'), bold: { ...side('bold'), locked: full ? 'Stress is full. Only safe choices tonight.' : '' }, district: c.district, inGrith: n.inGrith };
   }
+  /* A landlord's favor (The Hive: Ma Dresk). Three ways to do it; any of them settles the late rent. */
+  function owedFavor(s, D) { const w = s.week; const m = w && (w.mail || []).find(x => x.kind === 'bill' && x.status === 'open' && x.favor && !x.favor.done && D.favors && D.favors[x.creditor]); return m || null; }
+  function favorScene(s, D, P, E, rng) {
+    const bill = owedFavor(s, D); if (!bill) return null;
+    const F = D.favors[bill.creditor], place = (P.places || []).find(p => p.id === F.place), home = place ? place.district : s.downtime.night.district;
+    const side = k => { const o = F.options[k]; return { kicker: o.kicker, label: o.label, check: { ...o.check, pool: poolFor(E, o.check), diffName: D.difficulties[String(o.check.diff)] } }; };
+    const sc = { action: 'favor', favorKey: bill.creditor, bill: bill.id, home, name: F.name, rule: F.rule, text: pick(F.situations, rng), choices: Object.keys(F.options), district: (P.districts[home] || {}).name || home, inGrith: s.downtime.night.inGrith };
+    for (const k of sc.choices) sc[k] = side(k);
+    return sc;
+  }
   function poolFor(E, chk) { const ctxName = ['muscle', 'reflex'].includes(chk.attr) ? 'physical' : chk.attr === 'savvy' ? 'social' : 'general'; return E.buildPool(chk.attr, Math.min(3, E.skillRankRaw(chk.skill)), ctxName, 0, 0, chk.skill); }
 
   /* Roll: the dice are saved straight away, so reloading the page can't reroll them. */
   function roll(s, D, P, E, sc, choice, rng = Math.random) {
     const n = ensure(s).night; if (!n || n.pending) return { ok: false, message: n && n.pending ? 'Finish the roll in front of you first.' : 'Start the night first.' };
-    if (choice === 'bold' && sc.bold.locked) return { ok: false, message: sc.bold.locked };
+    if (choice === 'bold' && sc.bold && sc.bold.locked) return { ok: false, message: sc.bold.locked };
     const side = sc[choice]; if (!side) return { ok: false, message: 'Pick safe or bold.' };
-    const pending = { action: sc.action, name: sc.name, text: sc.text, choice, label: side.label, check: side.check, pay: side.pay, dice: [], pushed: false };
+    const pending = { action: sc.action, name: sc.name, text: sc.text, choice, label: side.kicker ? side.kicker + ': ' + side.label : side.label, check: side.check, pay: side.pay, dice: [], pushed: false, favorKey: sc.favorKey, bill: sc.bill, home: sc.home };
     if (side.check) { const rnd = () => 1 + Math.floor(rng() * 6); pending.dice = Array.from({ length: side.check.pool.total }, rnd); }
     n.pending = pending;
     return { ok: true, pending: view(pending, E) };
@@ -101,13 +112,15 @@
   /* Accept: apply the outcome, spend the action, write it down. */
   function accept(s, D, P, E, WK, aMs) {
     const d = ensure(s), n = d.night, p = n && n.pending; if (!p) return { ok: false, message: 'Nothing to accept.' };
-    const A = D.actions[p.action], t = tierOf(p, E), o = p.check ? A[p.choice][t.tier] : A[p.choice];
+    const A = p.action === 'favor' ? D.favors[p.favorKey].options : D.actions[p.action], t = tierOf(p, E), o = p.check ? A[p.choice][t.tier] : A[p.choice];
     const effects = { ...(o.effects || {}) };
     if (p.action === 'sideJob') { const base = A[p.choice].pay, per = A[p.choice].perExtra; effects.credits = (effects.credits || 0) + (t.tier === 'win' ? base + per * t.over : t.tier === 'partial' ? Math.round(base / 2) : 0); }
+    if (p.action === 'favor') effects.standingIn = p.home;
     const lines = applyEffects(s, P, WK, E, effects, n, aMs);
+    if (p.action === 'favor') { const r = WK.favorDone(s, p.bill, aMs, A[p.choice].kicker); lines.push(r.ok ? `Rent settled with ${p.favorKey}.` : r.msg); }
     const entry = { at: aMs, district: n.district, action: p.action, name: p.name, choice: p.choice, label: p.label, text: p.text, outcome: o.text || A[p.choice].text || '', tier: t.tier, kind: t.kind, dice: p.dice, pushed: p.pushed, diff: p.check ? p.check.diff : null, successes: t.successes, effects: lines };
     n.scenes.push(entry); n.pending = null; d.actionsRemaining = Math.max(0, d.actionsRemaining - 1);
-    d.history.unshift({ action: p.action, label: p.name, detail: `${p.choice === 'bold' ? 'Bold' : 'Safe'}: ${p.label} ${o.text || ''} ${lines.join(' ')}`.trim(), time: aMs, location: n.district });
+    d.history.unshift({ action: p.action, label: p.name, detail: `${p.choice === 'bold' ? 'Bold: ' : p.choice === 'safe' ? 'Safe: ' : ''}${p.label} ${o.text || ''} ${lines.join(' ')}`.trim(), time: aMs, location: n.district });
     d.history = d.history.slice(0, 40);
     return { ok: true, entry };
   }
@@ -123,7 +136,7 @@
       if (i === 0) out.push('Nothing left to heal. You slept well, at least.');
       break;
     }
-    if (fx.standing) { const r = territoryOf(s, n.district), a = num(r.standing, 3), b = clamp(a + fx.standing, 0, 5); r.standing = String(b); const nm = (P.districts[n.district] || {}).name || n.district; out.push(a !== b ? `Standing in ${nm} ${a} → ${b}.` : `Standing in ${nm} is already ${a}.`); }
+    if (fx.standing) { const sd = fx.standingIn || n.district, r = territoryOf(s, sd), a = num(r.standing, 3), b = clamp(a + fx.standing, 0, 5); r.standing = String(b); const nm = (P.districts[sd] || {}).name || sd; out.push(a !== b ? `Standing in ${nm} ${a} → ${b}.` : `Standing in ${nm} is already ${a}.`); }
     if (fx.credits) {
       s.coins = s.coins || {}; const have = num(s.coins.credits);
       if (fx.credits > 0) { s.coins.credits = String(have + fx.credits); out.push(`+${fx.credits} credits.`); }
@@ -184,7 +197,7 @@
     const who = (s.character && (s.character.alias || s.character.name)) || 'Someone', dn = (P.districts[n.district] || {}).name || n.district;
     const head = `${nightName(D, n.at)} in ${dn}${n.inGrith ? ' (home)' : ''}`;
     const lines = n.scenes.map(e => {
-      const how = e.choice === 'bold' ? 'went bold' : e.choice === 'safe' ? 'played it safe' : '';
+      const how = e.choice === 'bold' ? 'went bold' : e.choice === 'safe' ? 'played it safe' : e.action === 'favor' ? String(e.label || '').split(':')[0].toLowerCase() : '';
       const dice = e.dice && e.dice.length ? ` [${e.successes} vs ${e.diff}${e.pushed ? ', pushed' : ''}]` : '';
       return { name: e.name, how, text: [e.outcome, ...(e.effects || [])].filter(Boolean).join(' '), dice };
     });
@@ -192,6 +205,6 @@
     return { head, who, lines, discord };
   }
 
-  const api = { ACTIONS, RANK_NAMES, TRAIN_LEVEL, ensure, ground, districts, startNight, nightName, scene, roll, pending, push, accept, trainOptions, train, record, canNewGap, newGap, recap, territoryToDistrict, districtToTerritory };
+  const api = { owedFavor, ACTIONS, RANK_NAMES, TRAIN_LEVEL, ensure, ground, districts, startNight, nightName, scene, roll, pending, push, accept, trainOptions, train, record, canNewGap, newGap, recap, territoryToDistrict, districtToTerritory };
   if (typeof module !== 'undefined' && module.exports) module.exports = api; else root.GRAKK_NIGHT = api;
 })(typeof window !== 'undefined' ? window : globalThis);

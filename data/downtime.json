@@ -387,5 +387,94 @@
       "name": "Craft",
       "rule": "Wrench only. Build or modify gear in the Workshop."
     }
+  },
+  "favors": {
+    "Ma Dresk": {
+      "name": "Ma Dresk's favor",
+      "place": "low-halo--the-hive",
+      "rule": "Settles your late rent at The Hive, whichever way the roll goes. The roll decides whether she's pleased.",
+      "situations": [
+        "Your rent at The Hive is past its grace week. Ma Dresk has a few things that need doing, and one of them has your name on it.",
+        "Ma Dresk catches you on the stairs at The Hive. Neither elevator is working, so there's no escaping her. Your rent's late, and she's got work."
+      ],
+      "options": {
+        "walkin": {
+          "kicker": "Fix her walk-in",
+          "label": "The Fryer's walk-in cooler is dying again.",
+          "check": {
+            "attr": "wit",
+            "skill": "repair",
+            "diff": 2
+          },
+          "win": {
+            "text": "It hums like new. Ma Dresk is pleased, which is worth something in this building.",
+            "effects": {
+              "standing": 1
+            }
+          },
+          "partial": {
+            "text": "It runs. Probably until next week.",
+            "effects": {}
+          },
+          "lose": {
+            "text": "It runs, after a whole night on your back on a greasy floor.",
+            "effects": {
+              "stress": 1
+            }
+          }
+        },
+        "parcel": {
+          "kicker": "Run a parcel",
+          "label": "A wrapped parcel needs to get across Low Halo, no questions.",
+          "check": {
+            "attr": "reflex",
+            "skill": "dash",
+            "diff": 2
+          },
+          "win": {
+            "text": "Delivered fast and clean. Ma Dresk is pleased, which is worth something in this building.",
+            "effects": {
+              "standing": 1
+            }
+          },
+          "partial": {
+            "text": "Delivered. Late, but delivered.",
+            "effects": {}
+          },
+          "lose": {
+            "text": "Delivered, but somebody noticed you carrying it.",
+            "effects": {
+              "heat": 1
+            }
+          }
+        },
+        "collector": {
+          "kicker": "Scare off a debt collector",
+          "label": "Someone's collector keeps leaning on her tenants.",
+          "check": {
+            "attr": "muscle",
+            "skill": "intimidate",
+            "diff": 2
+          },
+          "win": {
+            "text": "He won't be back. Ma Dresk is pleased, which is worth something in this building.",
+            "effects": {
+              "standing": 1
+            }
+          },
+          "partial": {
+            "text": "He left. He'll think about coming back.",
+            "effects": {}
+          },
+          "lose": {
+            "text": "He left, and he'll remember your face.",
+            "effects": {
+              "heat": 1,
+              "stress": 1
+            }
+          }
+        }
+      }
+    }
   }
 }

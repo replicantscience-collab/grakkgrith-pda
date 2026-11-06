@@ -796,12 +796,63 @@
       "district": "low-halo",
       "name": "The Hive",
       "type": "housing",
-      "blurb": "Five-story apartments. Shared walls, patched services, everyday lives.",
+      "blurb": "Five-story, U-shaped apartment block run by Ma Dresk. Run-down, lived-in, kept going by a lot of repairs nobody signed off on.",
       "pin": {
         "map": "low-halo",
         "x": 0.8625,
         "y": 0.3151
-      }
+      },
+      "art": "art/pda-v1/imports/places/the-hive-reference.webp",
+      "artAlt": "The Hive reference sheet: the five-story brick block at night, the south service alley, the U-shaped courtyard from above, Ma Dresk at The Ground-Floor Fryer, and the communal landing with its two elevators and the stairs.",
+      "details": [
+        {
+          "title": "The building",
+          "items": [
+            "Five stories, U-shaped around a central courtyard.",
+            "Roughly 30 units per floor.",
+            "Shops on the ground floor, including The Ground-Floor Fryer.",
+            "Like most of Low Halo: run-down, with plenty of unofficial, unauthorized repairs."
+          ]
+        },
+        {
+          "title": "Who runs it",
+          "items": [
+            "Ma Dresk, a mostly friendly older dwarf woman. She owns the building.",
+            "She also runs The Ground-Floor Fryer downstairs.",
+            "Family-run. Squeezing."
+          ]
+        },
+        {
+          "title": "Rent and favors",
+          "items": [
+            "Commons tier: 40 credits a week.",
+            "Late? You get one week's grace.",
+            "After that she calls in a favor: fix her walk-in, run a parcel, or scare off a debt collector."
+          ]
+        },
+        {
+          "title": "Getting around",
+          "items": [
+            "Two elevators. Neither works often enough for anyone to rely on.",
+            "Everyone plans on the stairs."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "low-halo--ground-floor-fryer",
+      "district": "low-halo",
+      "name": "The Ground-Floor Fryer",
+      "type": "food",
+      "blurb": "Ma Dresk's fryer on the ground floor of The Hive. Hot, cheap, and she'll know if you're behind on rent.",
+      "entrance": "Ground floor of The Hive, street side",
+      "pin": {
+        "map": "low-halo",
+        "x": 0.852,
+        "y": 0.333,
+        "approx": true
+      },
+      "pinNote": "On the ground floor of The Hive."
     },
     {
       "id": "low-halo--foundry-avenue",

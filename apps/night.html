@@ -76,7 +76,9 @@ body.pda-art .choice{border:2px solid #8a6a48!important;border-radius:8px!import
 body.pda-art .choice.bold{border-color:#a01f63!important}
 body.pda-art .district:hover,body.pda-art .card:hover{background:#1e2236!important;border-color:var(--art-cyan)!important}
 body.pda-art .choice:hover{background:rgba(255,248,230,.95)!important;border-color:#3a1730!important}
-@media (max-width:620px){.choices{grid-template-columns:1fr}.deck{grid-template-columns:1fr 1fr}.scene .stamp{position:static;display:inline-block;margin:0 0 8px;transform:rotate(-3deg)}}
+.choices.three{grid-template-columns:repeat(3,1fr)}
+body.pda-art .card.favor{border-color:var(--art-magenta)!important;background:linear-gradient(160deg,#3a1430,#140d19)!important}
+@media (max-width:620px){.choices,.choices.three{grid-template-columns:1fr}.deck{grid-template-columns:1fr 1fr}.scene .stamp{position:static;display:inline-block;margin:0 0 8px;transform:rotate(-3deg)}}
 </style>
 </head>
 <body class="pda-art">
@@ -122,14 +124,14 @@ function stakes(fx, inGrith) {
   return out.join(', ') || 'nothing';
 }
 function choiceHtml(sc, which) {
-  const A = D.actions[sc.action], side = sc[which], o = A[which], g = sc.inGrith, bold = which === 'bold';
-  let how = side.check ? `${label(side.check.attr)} + ${label(side.check.skill)} · ${side.check.pool.total} dice vs ${side.check.diffName} ${side.check.diff}` : 'No roll.';
+  const A = sc.action === 'favor' ? D.favors[sc.favorKey].options : D.actions[sc.action], side = sc[which], o = A[which], g = sc.inGrith, bold = which === 'bold';
+  let how = side.check ? `${label(side.check.attr)} + ${label(side.check.skill)} · ${side.check.pool.total} ${side.check.pool.total === 1 ? 'die' : 'dice'} vs ${side.check.diffName} ${side.check.diff}` : 'No roll.';
   let risk;
   if (sc.action === 'sideJob') risk = `Win: ${o.pay}+ cr${stakes(o.win.effects, g) !== 'nothing' ? ', ' + stakes(o.win.effects, g) : ''} · Short by one: ${Math.round(o.pay / 2)} cr · Miss: ${stakes(o.lose.effects, g) === 'nothing' ? 'no pay' : 'no pay, ' + stakes(o.lose.effects, g)}`;
-  else if (side.check) risk = `Win: ${stakes(o.win.effects, g)} · Short by one: ${stakes(o.partial.effects, g)} · Miss: ${stakes(o.lose.effects, g)}`;
+  else if (side.check) risk = (sc.action === 'favor' ? 'Rent settled either way. ' : '') + `Win: ${stakes(o.win.effects, g)} · Short by one: ${stakes(o.partial.effects, g)} · Miss: ${stakes(o.lose.effects, g)}`;
   else risk = `Sure thing: ${stakes(o.effects, g)}`;
   const locked = bold && sc.bold.locked;
-  return `<button type="button" class="choice ${which}" data-choose="${which}" ${locked ? 'disabled' : ''}><b>${bold ? 'Bold' : 'Safe'}</b><strong>${esc(side.label)}</strong><span>${esc(how)}</span><span>${esc(locked || risk)}</span></button>`;
+  return `<button type="button" class="choice ${which}" data-choose="${which}" ${locked ? 'disabled' : ''}><b>${esc(side.kicker || (bold ? 'Bold' : 'Safe'))}</b><strong>${esc(side.label)}</strong><span>${esc(how)}</span><span>${esc(locked || risk)}</span></button>`;
 }
 
 function render() {
@@ -164,12 +166,13 @@ function render() {
 function deckHtml(s) {
   const tip = { layLow: 'Cool off. Sure thing, or listen in for more.', workContact: 'Standing with the block.', recover: 'Wounds or a Condition.', community: 'Shed Stress with your people.', research: 'Learn something true here.', sideJob: `${s.character.class || 'Anyone'} work. Credits.` };
   const wrench = /wrench/i.test(s.character.class || '');
-  return `<h3 style="margin-top:14px">What do you do?</h3><div class="deck">${N.ACTIONS.map(a => `<button type="button" class="card" data-draw="${a}"><b>${esc(D.actions[a].name)}</b><span>${esc(tip[a])}</span></button>`).join('')}</div>
+  const fav = N.owedFavor(s, D), favCard = fav ? `<button type="button" class="card favor" data-draw="favor"><b>${esc(D.favors[fav.creditor].name)}</b><span>Rent's past its grace week. Settle it with work.</span></button>` : '';
+  return `<h3 style="margin-top:14px">What do you do?</h3><div class="deck">${favCard}${N.ACTIONS.map(a => `<button type="button" class="card" data-draw="${a}"><b>${esc(D.actions[a].name)}</b><span>${esc(tip[a])}</span></button>`).join('')}</div>
     <div class="paper"><button type="button" class="ghost" data-record="train">Train (Marks)</button><button type="button" class="ghost" data-record="putDownRoots">Put Down Roots</button><button type="button" class="ghost" data-record="settleAccount">Settle an Account</button>${wrench ? '<button type="button" class="ghost" data-record="craft">Craft in the Workshop</button>' : ''}</div>`;
 }
 function sceneHtml(sc) {
   return `<div class="scene"><article class="letter"><div class="stamp">${esc(sc.name)}</div><div class="from">${esc(sc.district)}${sc.inGrith ? ' · home' : ''}</div><p class="say">${esc(sc.text)}</p>
-    <div class="choices">${choiceHtml(sc, 'safe')}${choiceHtml(sc, 'bold')}</div>
+    <div class="choices ${sc.choices ? 'three' : ''}">${(sc.choices || ['safe', 'bold']).map(k => choiceHtml(sc, k)).join('')}</div>
     <p class="note" style="color:#5b4630;margin-top:8px">${esc(sc.rule)}</p>
     <div class="sceneBar"><button type="button" class="ghost" id="backBtn" data-autofocus>Not this one</button></div></article></div>`;
 }

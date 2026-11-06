@@ -107,6 +107,8 @@ button:focus-visible,[tabindex]:focus-visible{outline:2px solid var(--sodium);ou
 .route input{font:inherit;color:var(--chalk);background:var(--asphalt);border:1px solid var(--kerb);border-radius:8px;padding:6px 8px}
 .route .via{width:100%}
 .route .ok{color:var(--teal)}
+.placeArt{display:block;margin:4px 0 12px}
+.placeArt img{display:block;width:100%;height:auto;border:1px solid var(--kerb);border-radius:8px}
 .sign{margin:0 0 12px;padding:10px 12px;border:1px dashed var(--sodium-dim);border-radius:6px;transform:rotate(-.6deg)}
 .sign b{display:block;font:700 20px/1.1 var(--display);color:var(--sodium)}
 .sign span{display:block;margin-top:4px;font-size:13px;color:var(--ash)}
@@ -420,6 +422,7 @@ function openPlace(id) {
   const here = presence.location, isHere = !presence.transit && here.district === target.district && (p ? here.place === p.id : !here.place || true);
   let h = `<h2>${esc(p ? p.name : d.name)}</h2><div class="kind">${p ? `${esc(TYPE_LABEL[p.type] || p.type)} in ${esc(d.name)}` : esc(d.layer === 'underground' ? 'Underground district' : 'District')}</div>`;
   const brand = p?.brand && W.brands?.[p.brand];
+  if (p?.art) h += `<a class="placeArt" href="../${esc(p.art)}" target="_blank" rel="noopener" title="Open the full reference sheet"><img src="../${esc(p.art)}" alt="${esc(p.artAlt || p.name)}" loading="lazy" decoding="async" width="1536" height="1024"></a>`;
   if (p?.entrance) h += `<p class="note">${esc(p.entrance)}</p>`;
   h += `<p>${esc(p ? p.blurb : d.tagline || d.atlas?.note || '')}</p>`;
   if (!p && d.dossier) { const R = [['mood', 'Feel'], ['control', 'Who runs it'], ['heat', 'Heat'], ['hazards', 'Watch for'], ['factions', 'Factions'], ['missions', 'Work here'], ['wisdom', 'Local wisdom']]; h += `<details class="more dossier" open><summary>District read</summary><dl>${R.filter(([k]) => d.dossier[k]).map(([k, l]) => `<dt>${l}</dt><dd>${esc(d.dossier[k])}</dd>`).join('')}</dl></details>`; }
