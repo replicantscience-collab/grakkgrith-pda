@@ -1,0 +1,336 @@
+{
+  "image": "maps/candidates/sewers-town-v2.jpg",
+  "width": 1086,
+  "height": 1448,
+  "migrations": [
+    {
+      "id": "the-sewers--upper-walkways",
+      "before": {
+        "map": "sewers-town",
+        "x": 0.5076,
+        "y": 0.1124
+      },
+      "after": {
+        "map": "sewers-town",
+        "x": 0.459,
+        "y": 0.116,
+        "approx": true
+      }
+    },
+    {
+      "id": "the-sewers--old-pipe-gate",
+      "before": {
+        "map": "sewers-town",
+        "x": 0.6872,
+        "y": 0.0717
+      },
+      "after": {
+        "map": "sewers-town",
+        "x": 0.705,
+        "y": 0.105,
+        "approx": true
+      }
+    },
+    {
+      "id": "the-sewers--grub-guts",
+      "before": {
+        "map": "sewers-town",
+        "x": 0.3232,
+        "y": 0.1823
+      },
+      "after": {
+        "map": "sewers-town",
+        "x": 0.3,
+        "y": 0.195,
+        "approx": true
+      }
+    },
+    {
+      "id": "the-sewers--scrap-bone",
+      "before": {
+        "map": "sewers-town",
+        "x": 0.8232,
+        "y": 0.1592
+      },
+      "after": {
+        "map": "sewers-town",
+        "x": 0.9,
+        "y": 0.189,
+        "approx": true
+      }
+    },
+    {
+      "id": "the-sewers--tinker-house",
+      "before": {
+        "map": "sewers-town",
+        "x": 0.232,
+        "y": 0.26
+      },
+      "after": {
+        "map": "sewers-town",
+        "x": 0.27,
+        "y": 0.315,
+        "approx": true
+      }
+    },
+    {
+      "id": "the-sewers--slop-house",
+      "before": {
+        "map": "sewers-town",
+        "x": 0.7873,
+        "y": 0.2843
+      },
+      "after": {
+        "map": "sewers-town",
+        "x": 0.88,
+        "y": 0.329,
+        "approx": true
+      }
+    },
+    {
+      "id": "the-sewers--west-pipe-gate",
+      "before": {
+        "map": "sewers-town",
+        "x": 0.1215,
+        "y": 0.3111
+      },
+      "after": {
+        "map": "sewers-town",
+        "x": 0.105,
+        "y": 0.347,
+        "approx": true
+      }
+    },
+    {
+      "id": "the-sewers--main-canal",
+      "before": {
+        "map": "sewers-town",
+        "x": 0.5283,
+        "y": 0.3554
+      },
+      "after": {
+        "map": "sewers-town",
+        "x": 0.513,
+        "y": 0.41,
+        "approx": true
+      }
+    },
+    {
+      "id": "the-sewers--market-blocks",
+      "before": {
+        "map": "sewers-town",
+        "x": 0.8391,
+        "y": 0.3572
+      },
+      "after": {
+        "map": "sewers-town",
+        "x": 0.874,
+        "y": 0.415,
+        "approx": true
+      }
+    },
+    {
+      "id": "the-sewers--pit-pub",
+      "before": {
+        "map": "sewers-town",
+        "x": 0.2224,
+        "y": 0.4192
+      },
+      "after": {
+        "map": "sewers-town",
+        "x": 0.257,
+        "y": 0.414,
+        "approx": true
+      }
+    },
+    {
+      "id": "the-sewers--doll-works",
+      "before": {
+        "map": "sewers-town",
+        "x": 0.7113,
+        "y": 0.486
+      },
+      "after": {
+        "map": "sewers-town",
+        "x": 0.65,
+        "y": 0.502,
+        "approx": true
+      }
+    },
+    {
+      "id": "the-sewers--south-runoff",
+      "before": {
+        "map": "sewers-town",
+        "x": 0.9669,
+        "y": 0.48
+      },
+      "after": {
+        "map": "sewers-town",
+        "x": 0.916,
+        "y": 0.534,
+        "approx": true
+      }
+    },
+    {
+      "id": "the-sewers--deep-tunnels-entrance",
+      "before": {
+        "map": "sewers-town",
+        "x": 0.4178,
+        "y": 0.6075
+      },
+      "after": {
+        "map": "sewers-town",
+        "x": 0.44,
+        "y": 0.645,
+        "approx": true
+      }
+    },
+    {
+      "id": "deep-tunnels--gate-4",
+      "before": {
+        "map": "sewers-town",
+        "x": 0.3536,
+        "y": 0.805
+      },
+      "after": {
+        "map": "sewers-town",
+        "x": 0.39,
+        "y": 0.802,
+        "approx": true
+      }
+    },
+    {
+      "id": "deep-tunnels--third-gate",
+      "before": {
+        "map": "sewers-town",
+        "x": 0.2155,
+        "y": 0.8293
+      },
+      "after": {
+        "map": "sewers-town",
+        "x": 0.278,
+        "y": 0.835,
+        "approx": true
+      }
+    },
+    {
+      "id": "deep-tunnels--sealed-gate",
+      "before": {
+        "map": "sewers-town",
+        "x": 0.6961,
+        "y": 0.8384
+      },
+      "after": {
+        "map": "sewers-town",
+        "x": 0.922,
+        "y": 0.816,
+        "approx": true
+      }
+    },
+    {
+      "id": "the-sewers--radio-sewers",
+      "before": {
+        "map": "sewers-town",
+        "x": 0.5525,
+        "y": 0.2734,
+        "approx": true
+      },
+      "after": {
+        "map": "sewers-town",
+        "x": 0.703,
+        "y": 0.251,
+        "approx": true
+      }
+    },
+    {
+      "id": "the-sewers--the-lantern-exchange",
+      "before": {
+        "map": "sewers-town",
+        "x": 0.4834,
+        "y": 0.2005,
+        "approx": true
+      },
+      "after": {
+        "map": "sewers-town",
+        "x": 0.44,
+        "y": 0.208,
+        "approx": true
+      }
+    },
+    {
+      "id": "the-sewers--the-listening-bench",
+      "before": {
+        "map": "sewers-town",
+        "x": 0.663,
+        "y": 0.2005,
+        "approx": true
+      },
+      "after": {
+        "map": "sewers-town",
+        "x": 0.605,
+        "y": 0.205,
+        "approx": true
+      }
+    },
+    {
+      "id": "the-sewers--the-span-market",
+      "before": {
+        "map": "sewers-town",
+        "x": 0.3867,
+        "y": 0.2855,
+        "approx": true
+      },
+      "after": {
+        "map": "sewers-town",
+        "x": 0.365,
+        "y": 0.329,
+        "approx": true
+      }
+    },
+    {
+      "id": "the-sewers--the-patch-table",
+      "before": {
+        "map": "sewers-town",
+        "x": 0.7044,
+        "y": 0.3402,
+        "approx": true
+      },
+      "after": {
+        "map": "sewers-town",
+        "x": 0.663,
+        "y": 0.404,
+        "approx": true
+      }
+    },
+    {
+      "id": "the-sewers--murr-corridor",
+      "before": {
+        "map": "sewers-town",
+        "x": 0.3246,
+        "y": 0.4982,
+        "approx": true
+      },
+      "after": {
+        "map": "sewers-town",
+        "x": 0.298,
+        "y": 0.52,
+        "approx": true
+      }
+    },
+    {
+      "id": "the-sewers--pipe-37",
+      "before": {
+        "map": "sewers-town",
+        "x": 0.4834,
+        "y": 0.565,
+        "approx": true
+      },
+      "after": {
+        "map": "sewers-town",
+        "x": 0.67,
+        "y": 0.578,
+        "approx": true
+      }
+    }
+  ]
+}

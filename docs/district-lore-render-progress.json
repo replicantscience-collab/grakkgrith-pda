@@ -1,0 +1,228 @@
+[
+  {
+    "id": "grand-academy",
+    "image": "maps/candidates/grand-academy-v2.jpg",
+    "width": 1536,
+    "height": 1024,
+    "status": "rendered",
+    "annotations": 10,
+    "sources": [
+      "https://www.worldanvil.com/w/adyta-jeeperssheefers/a/the-grand-academy-landmark"
+    ]
+  },
+  {
+    "id": "new-halo",
+    "image": "maps/candidates/new-halo-v2.jpg",
+    "width": 1536,
+    "height": 1024,
+    "status": "rendered",
+    "annotations": 10,
+    "sources": [
+      "https://www.worldanvil.com/w/adyta-jeeperssheefers/a/new-halo-settlement",
+      "https://www.worldanvil.com/w/adyta-jeeperssheefers/a/adyta-settlement"
+    ]
+  },
+  {
+    "id": "governance-district",
+    "image": "maps/candidates/governance-district-v2.jpg",
+    "width": 1536,
+    "height": 1024,
+    "status": "rendered",
+    "annotations": 10,
+    "sources": [
+      "https://www.worldanvil.com/w/adyta-jeeperssheefers/a/adyta-settlement",
+      "https://www.worldanvil.com/w/adyta-jeeperssheefers/a/civic-institutions-article"
+    ]
+  },
+  {
+    "id": "crownline-industrials",
+    "image": "maps/candidates/crownline-industrials-v2.jpg",
+    "width": 1536,
+    "height": 1024,
+    "status": "rendered",
+    "annotations": 10,
+    "sources": [
+      "https://www.worldanvil.com/w/adyta-jeeperssheefers/a/adyta-settlement",
+      "https://www.worldanvil.com/w/adyta-jeeperssheefers/a/corporations-article"
+    ]
+  },
+  {
+    "id": "three-spires-monastery",
+    "image": "maps/candidates/three-spires-monastery-v2.jpg",
+    "width": 1536,
+    "height": 1024,
+    "status": "rendered",
+    "annotations": 10,
+    "sources": [
+      "https://www.worldanvil.com/w/adyta-jeeperssheefers/a/adyta-settlement"
+    ]
+  },
+  {
+    "id": "elven-enclave",
+    "image": "maps/candidates/elven-enclave-v2.jpg",
+    "width": 1536,
+    "height": 1024,
+    "status": "rendered",
+    "annotations": 10,
+    "sources": [
+      "https://www.worldanvil.com/w/adyta-jeeperssheefers/a/elves-species"
+    ]
+  },
+  {
+    "id": "central-core",
+    "image": "maps/candidates/central-core-v2.jpg",
+    "width": 1536,
+    "height": 1024,
+    "status": "rendered",
+    "annotations": 10,
+    "sources": [
+      "https://www.worldanvil.com/w/adyta-jeeperssheefers/a/adyta-settlement",
+      "https://www.worldanvil.com/w/adyta-jeeperssheefers/a/civic-institutions-article"
+    ]
+  },
+  {
+    "id": "the-ashrun",
+    "image": "maps/candidates/the-ashrun-v2.jpg",
+    "width": 1536,
+    "height": 1024,
+    "status": "rendered",
+    "annotations": 10,
+    "sources": [
+      "https://www.worldanvil.com/w/adyta-jeeperssheefers/a/adyta-settlement",
+      "https://www.worldanvil.com/w/adyta-jeeperssheefers/a/corporations-article"
+    ]
+  },
+  {
+    "id": "far-shipyards",
+    "image": "maps/candidates/far-shipyards-v2.jpg",
+    "width": 1536,
+    "height": 1024,
+    "status": "rendered",
+    "annotations": 10,
+    "sources": [
+      "https://www.worldanvil.com/w/adyta-jeeperssheefers/a/adyta-settlement",
+      "https://www.worldanvil.com/w/adyta-jeeperssheefers/a/corporations-article"
+    ]
+  },
+  {
+    "id": "greasewick-row",
+    "image": "maps/candidates/greasewick-row-v2.jpg",
+    "width": 1536,
+    "height": 1024,
+    "status": "rendered",
+    "annotations": 10,
+    "sources": [
+      "https://www.worldanvil.com/w/adyta-jeeperssheefers/a/greasewick-row-settlement",
+      "https://www.worldanvil.com/w/adyta-jeeperssheefers/a/low-halo-settlement"
+    ]
+  },
+  {
+    "id": "old-city",
+    "image": "maps/candidates/old-city-v2.jpg",
+    "width": 1536,
+    "height": 1024,
+    "status": "rendered",
+    "annotations": 10,
+    "sources": [
+      "https://www.worldanvil.com/w/adyta-jeeperssheefers/a/old-city-settlement"
+    ]
+  },
+  {
+    "id": "southport-slums",
+    "image": "maps/candidates/southport-slums-v2.jpg",
+    "width": 1536,
+    "height": 1024,
+    "status": "rendered",
+    "annotations": 10,
+    "sources": [
+      "https://www.worldanvil.com/w/adyta-jeeperssheefers/a/adyta-settlement"
+    ]
+  },
+  {
+    "id": "scrapfields",
+    "image": "maps/candidates/scrapfields-v2.jpg",
+    "width": 1536,
+    "height": 1024,
+    "status": "rendered",
+    "annotations": 10,
+    "sources": [
+      "https://www.worldanvil.com/w/adyta-jeeperssheefers/a/adyta-settlement"
+    ]
+  },
+  {
+    "id": "outer-farms",
+    "image": "maps/candidates/outer-farms-v2.jpg",
+    "width": 1536,
+    "height": 1024,
+    "status": "rendered",
+    "annotations": 10,
+    "sources": [
+      "https://www.worldanvil.com/w/adyta-jeeperssheefers/a/adyta-settlement"
+    ]
+  },
+  {
+    "id": "borderlands",
+    "image": "maps/candidates/borderlands-v2.jpg",
+    "width": 1536,
+    "height": 1024,
+    "status": "rendered",
+    "annotations": 10,
+    "sources": [
+      "https://www.worldanvil.com/w/adyta-jeeperssheefers/a/adyta-settlement"
+    ]
+  },
+  {
+    "id": "southern-industrial-belt",
+    "image": "maps/candidates/southern-industrial-belt-v2.jpg",
+    "width": 1536,
+    "height": 1024,
+    "status": "rendered",
+    "annotations": 10,
+    "sources": [
+      "https://www.worldanvil.com/w/adyta-jeeperssheefers/a/adyta-settlement"
+    ]
+  },
+  {
+    "id": "crownless-row",
+    "image": "maps/candidates/crownless-row-v2.jpg",
+    "width": 1536,
+    "height": 1024,
+    "status": "rendered",
+    "annotations": 10,
+    "sources": []
+  },
+  {
+    "id": "ash-wastes",
+    "image": "maps/candidates/ash-wastes-v2.jpg",
+    "width": 1536,
+    "height": 1024,
+    "status": "rendered",
+    "annotations": 10,
+    "sources": [
+      "https://www.worldanvil.com/w/adyta-jeeperssheefers/a/adyta-settlement"
+    ]
+  },
+  {
+    "id": "forgotten-depths",
+    "image": "maps/candidates/forgotten-depths-v2.jpg",
+    "width": 1536,
+    "height": 1024,
+    "status": "rendered",
+    "annotations": 10,
+    "sources": [
+      "https://www.worldanvil.com/w/adyta-jeeperssheefers/a/adyta-settlement"
+    ]
+  },
+  {
+    "id": "main-roads",
+    "image": "maps/candidates/main-roads-v2.jpg",
+    "width": 1536,
+    "height": 1024,
+    "status": "rendered",
+    "annotations": 10,
+    "sources": [
+      "https://www.worldanvil.com/w/adyta-jeeperssheefers/a/adyta-settlement",
+      "https://www.worldanvil.com/w/adyta-jeeperssheefers/a/civic-institutions-article"
+    ]
+  }
+]

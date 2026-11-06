@@ -69,7 +69,40 @@ try {
     let f = await open('exploreBtn', 1500);
     await step('Explore map image loads', () => f.evaluate(() => { const i = document.getElementById('mapImg'); return i.complete && i.naturalWidth > 0; }));
     await step('Explore shows the Adyta clock', async () => /\d:\d\d [AP]M/.test(await f.evaluate(() => document.getElementById('clock').textContent)));
-    await step('Explore has every district map, Sewers Town included', async () => { const tabs = await f.$$eval('#mapTabs button', b => b.map(x => x.textContent)); return (tabs.length === 8 && tabs.some(t => /Three Wires/.test(t)) && tabs.some(t => /Noble/.test(t)) && tabs.some(t => /Sewers/.test(t))) || tabs.join('|'); });
+    const catalog = JSON.parse(await readFile(join(ROOT, 'data/places.json'), 'utf8'));
+    await step('Explore has every catalog map and coverage for every district', async () => {
+      const n = await f.locator('#mapTabs button').count();
+      return (n === Object.keys(catalog.maps).length && Object.values(catalog.districts).every(d => catalog.maps[d.map])) || `${n} map tabs or missing coverage`;
+    });
+    for (const [id, m] of Object.entries(catalog.maps).filter(([, m]) => m.image.startsWith('maps/candidates/'))) {
+      await step(`Explore loads candidate ${id} at its catalog dimensions`, async () => {
+        await f.evaluate(id => window.GRAKK_EXPLORE.showMap(id), id);
+        await f.waitForFunction(({src, width, height}) => { const i = document.getElementById('mapImg'); return i.src.endsWith(src) && i.complete && i.naturalWidth === width && i.naturalHeight === height; }, {src: m.image, width: m.width, height: m.height}, {timeout: 10000});
+        return true;
+      });
+    }
+
+    await step('Sewers redraw retains town pins and deep-route uncertainty', async () => {
+      await f.evaluate(() => window.GRAKK_EXPLORE.showMap('sewers-town'));
+      const pins = await f.$$eval('#world .pin', pins => pins.map(p => p.dataset.id));
+      if (pins.length !== 24 || !pins.includes('deep-tunnels--gate-4') || !pins.includes('the-sewers--broken-wing-forge')) return `${pins.length} pins or missing landmark`;
+      await f.evaluate(() => window.GRAKK_EXPLORE.openPlace('the-sewers--radio-sewers'));
+      const relay = await f.evaluate(() => /local relay/.test(document.getElementById('sheetBody').textContent) && /not a fixed headquarters/.test(document.getElementById('sheetBody').textContent));
+      await f.evaluate(() => window.GRAKK_EXPLORE.openPlace('deep-tunnels--gate-4'));
+      return relay && await f.evaluate(() => /Maps disagree past here/.test(document.getElementById('sheetBody').textContent));
+    });
+    await step('Candidate places read clean, with canon status tucked under Sources', async () => {
+      const candidate = catalog.places.find(p => p.id.startsWith('grand-academy--candidate-'));
+      if (!candidate) return 'missing detailed candidate places';
+      await f.evaluate(id => window.GRAKK_EXPLORE.openPlace(id), candidate.id);
+      return f.evaluate(() => { const panel = document.getElementById('sheetBody'); const src = panel.querySelector('details.sources'); return !/candidate/i.test(panel.querySelector('h2').textContent) && !/not established canon/.test(panel.textContent) && !!src && !src.open && /not yet confirmed/.test(src.textContent) && !!src.querySelector('a[href^="https://www.worldanvil.com/w/adyta-jeeperssheefers/"]'); });
+    });
+    await step('Crownless Row discloses its provisional PDA origin', async () => {
+      const candidate = catalog.places.find(p => p.id.startsWith('crownless-row--candidate-'));
+      if (!candidate) return 'missing provisional candidate places';
+      await f.evaluate(id => window.GRAKK_EXPLORE.openPlace(id), candidate.id);
+      return f.evaluate(() => /Provisional expansion from PDA description/.test(document.getElementById('sheetBody').textContent));
+    });
     await step('Explore can plan a trip', async () => (await f.evaluate(() => window.GRAKK_EXPLORE.planTrip({ district: 'ember-court', place: 'ember-court--the-ninth-circle-ph' }).length)) > 0);
 
     // Sideways art pass: Start wears the kit; Sideways' commentary and the rulebook stay separate in the guide.
