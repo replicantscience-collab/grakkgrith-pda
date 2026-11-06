@@ -71,6 +71,14 @@ Every day in Adyta something changes, and everyone in the group sees the same th
 
 There is no server. `apps/cityday.js` builds the day from the Adyta date alone, so every PDA builds the same day. Lines rotate so a district never repeats a mood or a wisdom line on back-to-back days. The words are in `data/cityday.json` (drafts until they go to Nib); stickers come from the sticker sheets in `art/pda-v1/imports/manifest.json`. `node tools/cityday-test.mjs` checks both.
 
+## Landlords, Local Wisdom and businesses
+
+- `data/landlords.json`: who owns every housing place, their type and temperament, and the rent tier (the ids in `week.json`). Explore shows the landlord and the rent on each housing place. The Housing Authority is the floor for anyone who loses their home.
+- `data/notes.json`: Local Wisdom written on the city, shown as "Written here" on a place or district. Each note has an `author` and a `date` (never shown to players) so anything can be traced and taken out; `signed` is the in-world signature. Today only Eko and Nib write notes; agent NPCs will use `agent:<id>` and players `player:<name>`.
+- `data/businesses.json`: player businesses and their rules (Books, Rep, Exposure, Commons protection, the loss ladder). A business shows on everyone's map once it's listed here.
+
+All three are drafts until they go to Nib. `node tools/check-rules.mjs` checks every place, tier, author and date in them, and fails if a housing place has no landlord.
+
 ## The Explore map
 
 Explore puts your character somewhere in Adyta. Tap a place for its details, then travel there: on foot, or by tram while the trams run (the last one leaves at 12:17 AM). Travel takes Adyta time, and your character is in transit until they arrive, even if you close the app.

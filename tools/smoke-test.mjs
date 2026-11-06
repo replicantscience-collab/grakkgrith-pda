@@ -74,6 +74,8 @@ try {
     // The living city: the same day for everyone, a mood per district, signs, one hidden sticker.
     await step('Explore shows what changed today', () => f.evaluate(() => { const X = window.GRAKK_EXPLORE, T = X.cityDay(); X.openToday(); const t = document.getElementById('sheetBody').innerText; return (!!T && /Today in Adyta/.test(t) && document.querySelectorAll('#sheetBody .days li').length === Object.keys(T.districts).length && !!T.sticker) || t.slice(0, 120); }));
     await step('a district read leads with today', () => f.evaluate(() => { window.GRAKK_EXPLORE.showMap('adyta-city'); window.GRAKK_EXPLORE.openPlace('low-halo'); return !!document.querySelector('#sheetBody .today .scrawl'); }));
+    await step('a housing place names its landlord and rent', () => f.evaluate(() => { const X = window.GRAKK_EXPLORE; X.showMap('low-halo', 'low-halo--the-hive'); X.openPlace('low-halo--the-hive'); const t = document.getElementById('sheetBody').innerText; return (/Ma Dresk/.test(t) && /40 credits a week/.test(t)) || t.slice(0, 200); }));
+    await step('Local Wisdom notes show where they were written', () => f.evaluate(() => { const X = window.GRAKK_EXPLORE; X.openPlace('low-halo--saint-static-arms'); return /Written here/i.test(document.getElementById('sheetBody').innerText); }));
 
     // Sideways art pass: Start wears the kit; Sideways' commentary and the rulebook stay separate in the guide.
     f = await open('worldBtn', 1200);

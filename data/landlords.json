@@ -1,0 +1,129 @@
+{
+  "_about": "Who owns where people live. Every housing place on the map has an entry here: a landlord, an off-registry arrangement, or not for rent. Rent tiers are the ids in data/week.json (commons 40, mixed 80, corporate 150, none 0 a week). Canon anchors from the World Anvil: the Housing Authority, Public Advocacy's eviction caseload, Bastion as owners' hired enforcement, Crownline contracting with owners but never owning or evicting, Saint Static Arms' three owners. Every name and hook here is a draft by Eko (status: draft) for the next canon handoff to Nib. Roster doc: https://claude.ai/artifact/4Y8jEd8NjboEdymKjwSSxW",
+  "status": "draft",
+  "types": {
+    "absentee": { "name": "Absentee owner", "about": "A holding name nobody has met. Nothing for weeks, then a sudden rent hike or sale notice." },
+    "slumlord": { "name": "Slumlord", "about": "Present, cheap and counting. Ignored repairs, surcharges, lease threats." },
+    "family": { "name": "Family-run", "about": "Lives in the building or next door. Grace on late rent, favors asked, gossip." },
+    "housing-authority": { "name": "Housing Authority", "about": "Public housing and civic paperwork. Forms, waitlists, inspections. The floor when everything else fails." },
+    "certified": { "name": "Certified management", "about": "Corporate-adjacent, contracted with Crownline. Polite automated notices, and Bastion if you push it." },
+    "collective": { "name": "Residents' collective", "about": "The tenants run it themselves. Work shifts, house votes, shared repair costs." },
+    "off-registry": { "name": "Off-registry", "about": "No landlord the registry can find. Whoever holds the roofs decides who sleeps there." },
+    "estate": { "name": "Family seat", "about": "Old families' homes. Not for rent." }
+  },
+  "temperaments": {
+    "decent": "Gives grace, remembers favors, rarely escalates.",
+    "indifferent": "Answers nothing until it suits them.",
+    "squeezing": "Every week is a chance to charge a little more.",
+    "strange": "Something about this arrangement is not entirely ordinary."
+  },
+  "landlords": [
+    {
+      "id": "halvard-mercy-holdings",
+      "name": "Halvard Mercy Holdings",
+      "who": "The third owner since 1987: a name on a letterhead.",
+      "type": "absentee", "temperament": "indifferent",
+      "places": ["low-halo--saint-static-arms"],
+      "tier": "commons",
+      "hook": "The elevators are still under assessment. A tenant who fixes one gets a thank-you letter and a rent hike for the improved unit."
+    },
+    {
+      "id": "ma-dresk",
+      "name": "Ma Dresk",
+      "who": "A dwarf who owns the building and runs the ground-floor fryer.",
+      "type": "family", "temperament": "squeezing",
+      "places": ["low-halo--the-hive"],
+      "tier": "commons",
+      "graceWeeks": 1,
+      "hook": "Gives a week's grace on late rent, then calls in a favor: fix her walk-in, run a parcel, scare off a debt collector."
+    },
+    {
+      "id": "oduya-venn-family",
+      "name": "The Oduya-Venn family",
+      "who": "Three generations of shopkeepers.",
+      "type": "family", "temperament": "decent",
+      "places": ["market-ring--north-market-neighborhood"],
+      "tier": "mixed",
+      "graceWeeks": 2,
+      "hook": "Rent includes a shift at the family stall during festival week. Skipping it is allowed, and remembered."
+    },
+    {
+      "id": "brightlane-residential",
+      "name": "Brightlane Residential",
+      "who": "A Crownline-certified property manager with a cheerful logo.",
+      "type": "certified", "temperament": "indifferent",
+      "places": ["market-ring--homes-above-shops"],
+      "tier": "mixed",
+      "corporateFunded": true,
+      "hook": "Automated notices. Complaints route to a form that routes to another form."
+    },
+    {
+      "id": "south-market-tenants-table",
+      "name": "The South Market Tenants' Table",
+      "who": "The residents, meeting every second Thursday.",
+      "type": "collective", "temperament": "decent",
+      "places": ["market-ring--south-market-neighborhood"],
+      "tier": "mixed",
+      "graceWeeks": 2,
+      "workOff": { "credits": 20, "for": "a weekly repair shift", "classes": ["Wrench", "Runner"] },
+      "hook": "Wrenches and Runners can work off part of the rent. House votes post to the tenants' mail."
+    },
+    {
+      "id": "widow-sallow",
+      "name": "Widow Sallow",
+      "who": "Has outlived two husbands and a lawsuit.",
+      "type": "slumlord", "temperament": "strange",
+      "places": ["ember-court--the-old-lamp-court"],
+      "tier": "mixed",
+      "hook": "The courtyard lamps are never quite off. Rent receipts arrive signed in a hand that isn't hers."
+    },
+    {
+      "id": "harbor-row-lets",
+      "name": "Harbor Row Lets",
+      "who": "Manages the waterfront homes and Meridian Logistics' crew lodging.",
+      "type": "certified", "temperament": "squeezing",
+      "places": ["dockside--waterfront-homes-crew-lodging"],
+      "tier": "mixed",
+      "corporateFunded": true,
+      "employer": { "name": "Meridian Logistics", "tier": "commons" },
+      "hook": "Housing tied to the job: crew pay Commons rent, and if the contract ends the lease reprices next Monday."
+    },
+    {
+      "id": "the-tangle-roofs",
+      "name": "Whoever holds the roofs",
+      "who": "Clans and crews who decide, stack by stack, who sleeps where.",
+      "type": "off-registry", "temperament": "decent",
+      "places": ["the-tangle--the-tangle"],
+      "tier": "none",
+      "findOnly": true,
+      "hook": "No listings. Units are found by exploring or through a contact, and paid in favors, work or goods, never credits."
+    },
+    {
+      "id": "old-families-row",
+      "name": "The houses of Old Families' Row",
+      "who": "Established houses with a carriage house or a servants' wing to spare.",
+      "type": "estate", "temperament": "strange",
+      "places": ["noble-heights--old-families-row"],
+      "tier": "corporate",
+      "invitationOnly": true,
+      "hook": "A carriage house or servants' wing at a Corporate-plus price, by invitation only. Getting invited is a Standing story, not a purchase."
+    },
+    {
+      "id": "noble-heights-estates",
+      "name": "The old families",
+      "who": "The households of the great estates.",
+      "type": "estate", "temperament": "indifferent",
+      "places": ["noble-heights--northridge-estates", "noble-heights--silverhallow-estate", "noble-heights--moonspire-house", "noble-heights--arlencourt-manor"],
+      "tier": null,
+      "notForRent": true,
+      "hook": "Family seats. Nobody rents here; people are invited, employed, or escorted out."
+    }
+  ],
+  "floor": {
+    "id": "housing-authority",
+    "name": "Adyta Housing Authority",
+    "type": "housing-authority",
+    "tier": "none",
+    "about": "Emergency accommodation for anyone who loses their home: a real address, a waitlist, no rent for now, and a bad mood. Items and debts come along."
+  }
+}

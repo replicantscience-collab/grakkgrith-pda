@@ -148,6 +148,15 @@ button:focus-visible,[tabindex]:focus-visible{outline:2px solid var(--sodium);ou
 .days li button span{color:var(--ash);font-size:13px}
 .found{margin:8px 0 0;display:grid;grid-template-columns:repeat(auto-fill,minmax(64px,1fr));gap:8px}
 .found img{width:100%;aspect-ratio:1;object-fit:cover;border-radius:8px;border:1px solid var(--kerb)}
+/* Who owns where people live, and what's written on the walls */
+.lease{margin:0 0 12px;padding:10px 12px;border-radius:10px;border:1px solid var(--kerb);background:rgba(233,226,211,.04)}
+.lease b{display:block;font:600 13px/1.2 var(--display);letter-spacing:.06em;text-transform:uppercase;color:var(--ash);margin-bottom:3px}
+.lease strong{font:600 18px/1.2 var(--display)}
+.lease span{display:block;color:var(--ash);font-size:13px}
+.walls{margin:0 0 12px}
+.walls > b{display:block;font:600 13px/1.2 var(--display);letter-spacing:.06em;text-transform:uppercase;color:var(--ash);margin-bottom:2px}
+.walls .scrawl{margin:6px 0 0}
+.walls small{display:block;color:var(--ash);font-size:12px;margin:2px 0 0 4px}
 </style>
 </head>
 <body>
@@ -439,6 +448,22 @@ function activeDeliveries() { const s = load(TOOL_KEY, null); return ((s && s.ma
    travel to and peel. Found stickers are saved in the character file (state.world.stickers). */
 const CD = window.GRAKK_CITYDAY;
 let CDD = null, STK = [], dayCache = null;
+let LANDLORDS = null, NOTES = [], BIZ = [], RENT = {};   // data/landlords.json, notes.json, businesses.json; rent tiers from week.json
+function groundHtml(p, did) {
+  let h = '';
+  const notes = NOTES.filter(n => p ? n.place === p.id : n.district === did && !n.place);
+  if (notes.length) h += `<div class="walls"><b>Written here</b>${notes.map(n => `<p class="scrawl">${esc(n.text)}</p>${n.signed ? `<small>${esc(n.signed)}</small>` : ''}`).join('')}</div>`;
+  if (!p) return h;
+  const l = LANDLORDS && LANDLORDS.landlords.find(x => x.places.includes(p.id));
+  if (l) {
+    const t = LANDLORDS.types[l.type], rent = RENT[l.tier];
+    const terms = l.notForRent ? 'Not for rent.' : l.findOnly ? 'No listings. Ask around, or explore.' : l.invitationOnly ? `By invitation only.${rent ? ` ${esc(rent.name)}, ${rent.credits}+ credits a week.` : ''}` : rent ? `${esc(rent.name)}: ${rent.credits} credits a week.` : '';
+    h += `<div class="lease"><b>Landlord</b><strong>${esc(l.name)}</strong> · ${esc(t ? t.name : l.type)}<span>${esc(l.who || '')}</span>${terms ? `<span>${terms}</span>` : ''}${l.employer ? `<span>${esc(l.employer.name)} crew pay ${esc(RENT[l.employer.tier]?.credits ?? "")} credits a week.</span>` : ''}</div>`;
+  }
+  const b = BIZ.find(x => x.places.includes(p.id));
+  if (b && !p.brand) h += `<p class="note">${esc(b.name)}, run by ${esc(b.owners.join(' and '))}.</p>`;
+  return h;
+}
 function cityDay() { if (!CDD || !CD) return null; const key = CD.dayKey(adytaNow()); if (!dayCache || dayCache.day !== key) dayCache = CD.today(CDD, W, STK, adytaNow()); return dayCache; }
 const stickerImg = st => '../art/pda-v1/imports/' + esc(st.path);
 function charState() { const s = load(TOOL_KEY, null); return s && typeof s === 'object' && String(s.character?.name || '').trim() ? s : null; }
@@ -501,6 +526,7 @@ function openPlace(id) {
   if (p?.entrance) h += `<p class="note">${esc(p.entrance)}</p>`;
   h += `<p>${esc(p ? p.blurb : d.tagline || d.atlas?.note || '')}</p>`;
   h += todayHtml(p, p ? p.district : id);
+  h += groundHtml(p, p ? p.district : id);
   if (!p && d.dossier) { const R = [['mood', 'Feel'], ['control', 'Who runs it'], ['heat', 'Heat'], ['hazards', 'Watch for'], ['factions', 'Factions'], ['missions', 'Work here'], ['wisdom', 'Local wisdom']]; h += `<details class="more dossier" open><summary>District read</summary><dl>${R.filter(([k]) => d.dossier[k]).map(([k, l]) => `<dt>${l}</dt><dd>${esc(d.dossier[k])}</dd>`).join('')}</dl></details>`; }
   if (brand?.about) h += `<p class="note">${esc(brand.about)}</p>`;
   if (p) for (const job of activeDeliveries()) { if (job.from.place === p.id && job.stage === 'pickup') h += `<p class="job"><b>Pick up here:</b> ${esc(job.cargo.name)} for ${esc(job.to.name)}, due ${fmtTime(job.due)}.</p>`; if (job.to.place === p.id && job.stage === 'carrying') h += `<p class="job"><b>Drop off here:</b> ${esc(job.cargo.name)} from ${esc(job.from.name)}, due ${fmtTime(job.due)}.</p>`; }
@@ -689,6 +715,10 @@ function tick() { if (settleTransit()) { render(); if (selected) openPlace(selec
     const [cd, art] = await Promise.all(['../data/cityday.json', '../art/pda-v1/imports/manifest.json'].map(u => fetch(u).then(r => { if (!r.ok) throw new Error(r.status); return r.json(); })));
     CDD = cd; STK = CD ? CD.stickerList(art) : [];
   } catch (e) { CDD = null; }
+  try {   // landlords, notes and businesses are extra too
+    const [ll, nt, bz, wk] = await Promise.all(['../data/landlords.json', '../data/notes.json', '../data/businesses.json', '../data/week.json'].map(u => fetch(u).then(r => { if (!r.ok) throw new Error(r.status); return r.json(); })));
+    LANDLORDS = ll; NOTES = nt.notes || []; BIZ = bz.businesses || []; RENT = Object.fromEntries(wk.week.housing.map(h => [h.id, h]));
+  } catch (e) { LANDLORDS = null; }
   presence = loadPresence();
   if (!presence || !W.districts[presence.location?.district]) presence = { location: { ...W.start }, transit: null, log: [] };
   if (presence.location.place && !byId[presence.location.place]) presence.location.place = null;

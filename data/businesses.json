@@ -1,0 +1,39 @@
+{
+  "_about": "Player businesses: places on the map with a player's name on them. There is no server, so a business only shows on everyone's map once it is listed here (Eko or Nib add it). Tracks: Books (the business's own credits and debt, kept apart from the owner's), Rep (how the neighborhood treats the place), Exposure (Heat that sticks to the building). Commons protection: a Commons-clean business is left out of cops-and-robbers; corporate-funded places never have it; it breaks when an owner's Heat reaches the threshold or their Standing tips toward a corporation. Loss ladder: trouble, notice, shuttered, lost. Rules and numbers are drafts by Eko (status: draft). Roster doc: https://claude.ai/artifact/4Y8jEd8NjboEdymKjwSSxW",
+  "status": "draft",
+  "rules": {
+    "tracks": {
+      "books": "The business's own credits and debt, kept apart from the owner's personal money.",
+      "rep": "How the neighborhood treats the place: regulars, events, how the owner handles trouble.",
+      "exposure": "Heat that sticks to the building, not the owner: inspections, compliance notices, jobs run out of the back room."
+    },
+    "protection": {
+      "ownerHeatBreaks": 4,
+      "keeps": ["Patch grid repair, generator fixes, feeding people", "Crownline compliance fines for surviving wrong", "Community favors and Commons-approved work"],
+      "loses": ["Underground jobs run from the building", "Fencing stolen goods, back-room deals", "Anything that hurts the neighborhood"],
+      "restore": "Make it even: Exposure back to zero, Commons Standing repaired, and a favor that fits the harm."
+    },
+    "loss": [
+      { "step": "trouble", "name": "Trouble", "when": "Books in debt, Rep falling or Exposure rising", "what": "Mail warns the owner what is wrong and what fixes it." },
+      { "step": "notice", "name": "Notice", "when": "Three weeks of unpaid commercial rent, or Exposure at 4", "what": "A landlord letter, an inspection or a compliance fine." },
+      { "step": "shuttered", "name": "Shuttered", "when": "A notice left unresolved", "what": "Doors closed, stock frozen, pin marked closed. Reopens by clearing the debt, passing the inspection or winning a Public Advocacy appeal." },
+      { "step": "lost", "name": "Lost", "when": "A Heat 6 crisis aimed at the business, or four weeks shuttered", "what": "The place goes to an NPC or rival. Its pin keeps a history line, and buying it back is a story to chase." }
+    ],
+    "noticeWeeks": 3,
+    "lostAfterShutteredWeeks": 4,
+    "seasonClose": "Owners can close for the season when they're away: rent and trouble pause."
+  },
+  "businesses": [
+    {
+      "id": "sideways-shops",
+      "name": "Sideways Shops",
+      "kind": "shop",
+      "brand": "sideways-shops",
+      "places": ["three-wires--sideways-shops", "low-halo--sideways-shops-sewer-door", "low-halo--sideways-tourist-booth"],
+      "owners": ["Ekois", "Pulse"],
+      "funding": "independent",
+      "status": "open",
+      "history": []
+    }
+  ]
+}

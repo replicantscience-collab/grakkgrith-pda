@@ -1,8 +1,8 @@
-// GRAKKGRITH Service Worker v79
+// GRAKKGRITH Service Worker v80
 // Caches the app for offline use. Cache busts on version bump.
 // Maps are not downloaded up front: each one is saved the first time you open it (see fetch below).
 
-const CACHE_NAME = 'grakkgrith-v79';
+const CACHE_NAME = 'grakkgrith-v80';
 const ASSETS = [
   './',
   './index.html',
@@ -67,6 +67,9 @@ const ASSETS = [
   './art/sideways-shops/races/slimefolk.jpg',
   './data/places.json',
   './data/cityday.json',
+  './data/landlords.json',
+  './data/notes.json',
+  './data/businesses.json',
   './data/onboarding.json',
   './data/week.json',
   './data/make.json',
