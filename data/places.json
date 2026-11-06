@@ -837,7 +837,10 @@
             "Everyone plans on the stairs."
           ]
         }
-      ]
+      ],
+      "scene": {
+        "place": "low-halo--the-hive"
+      }
     },
     {
       "id": "low-halo--ground-floor-fryer",
@@ -852,7 +855,11 @@
         "y": 0.333,
         "approx": true
       },
-      "pinNote": "On the ground floor of The Hive."
+      "pinNote": "On the ground floor of The Hive.",
+      "scene": {
+        "place": "low-halo--the-hive",
+        "area": "fryer"
+      }
     },
     {
       "id": "low-halo--foundry-avenue",

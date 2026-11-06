@@ -277,6 +277,29 @@ try {
       await g.locator('#copyBtn').click(); const discord = await g.evaluate(() => window.GRAKK_LAST_RECAP || '');
       return (sc.text.length > 20 && !sc.placeholders && /Savvy \+ Network/.test(sc.safe) && dice >= 1 && recap.copy && recap.lines === 2 && /^\*\*.+ night in .+\*\* · /.test(discord)) || JSON.stringify({ sc, dice, recap, discord: discord.slice(0, 80) });
     });
+    await step('The Hive: Step inside opens the scene, spots move you around, and the elevator rarely works', async () => {
+      const K = 'grakkgrith_character_tool_v8_state';
+      await page.evaluate(() => document.getElementById('exploreBtn').click()); await page.waitForTimeout(1600); let g = frame(page);
+      await g.evaluate(() => openPlace('low-halo--the-hive')); await page.waitForTimeout(300);
+      const art = await g.evaluate(() => !!document.querySelector('.placeArt img'));
+      await g.locator('a.act.scene').click(); await page.waitForTimeout(1200); g = frame(page); await g.waitForFunction(() => window.GRAKK_SCENE_READY);
+      const start = await g.evaluate(() => ({ area: document.querySelector('.where h2').textContent, spots: document.querySelectorAll('.stage .spot').length, list: document.querySelectorAll('.around button').length }));
+      await g.locator('.around button', { hasText: 'The front door' }).click(); await page.waitForTimeout(200);
+      const landing = await g.evaluate(() => document.querySelector('.where h2').textContent);
+      let tries = 0, moved = false; for (; tries < 40 && !moved; tries++) { await g.locator('.around button', { hasText: 'Left elevator' }).click(); moved = await g.evaluate(() => /roof/i.test(document.querySelector('.where h2').textContent)); if (moved) break; }
+      return (art && start.area === 'Out front' && start.spots === 5 && start.list === 5 && landing === 'The communal landing' && moved && tries > 0) || JSON.stringify({ art, start, landing, moved, tries });
+    });
+    await step('The Hive: Ma Dresk only deals with you if you are actually there', async () => {
+      await page.evaluate(() => document.getElementById('exploreBtn').click()); await page.waitForTimeout(1500); let g = frame(page);
+      await g.goto(g.url().replace(/explore\.html.*$/, 'scene.html?place=low-halo--the-hive&area=fryer')); await g.waitForFunction(() => window.GRAKK_SCENE_READY);
+      await g.locator('.around button', { hasText: 'Ma Dresk' }).click(); await page.waitForTimeout(200);
+      const away = await g.evaluate(() => ({ note: /Travel here in Explore/.test(document.getElementById('out').innerText), act: document.querySelectorAll('#out [data-act]').length }));
+      await page.evaluate(K => { const s = JSON.parse(localStorage.getItem(K)); s.world = { ...(s.world || {}), presence: { location: { district: 'low-halo', place: 'low-halo--the-hive' }, transit: null, log: [] } }; localStorage.setItem(K, JSON.stringify(s)); }, 'grakkgrith_character_tool_v8_state');
+      await g.goto(g.url()); await g.waitForFunction(() => window.GRAKK_SCENE_READY);
+      await g.locator('.around button', { hasText: 'Ma Dresk' }).click(); await g.locator('[data-act="askroom"]').click(); await g.locator('[data-act="movein"]').click(); await page.waitForTimeout(200);
+      const s = await page.evaluate(() => JSON.parse(localStorage.getItem('grakkgrith_character_tool_v8_state')));
+      return (away.note && away.act === 0 && s.week.housing === 'hive') || JSON.stringify({ away, housing: s.week && s.week.housing });
+    });
     await step('Edit sheet points to Downtime instead of a second downtime form', async () => {
       await page.evaluate(() => document.getElementById('fullSheetBtn').click()); await page.waitForTimeout(2000); const g = frame(page);
       const r = await g.evaluate(() => ({ btn: !!document.getElementById('openNightBtn'), marksVisible: !document.getElementById('downtimeMarksInput').closest('[hidden]'), oldFormHidden: !!document.getElementById('downtimeApplyBtn').closest('[hidden]') }));
