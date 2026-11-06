@@ -422,6 +422,11 @@ function openPlace(id) {
   const brand = p?.brand && W.brands?.[p.brand];
   if (p?.entrance) h += `<p class="note">${esc(p.entrance)}</p>`;
   h += `<p>${esc(p ? p.blurb : d.tagline || d.atlas?.note || '')}</p>`;
+  const mapNotes = W.maps[p?.pin?.map || d.map];
+  if (mapNotes?.brief) h += `<p class="note">${esc(mapNotes.note)}</p>`;
+  const loreSources = p?.sources || mapNotes?.sources || [];
+  const publicLore = loreSources.filter(url => /^https:\/\/www\.worldanvil\.com\/w\/adyta-jeeperssheefers\//.test(url));
+  if (publicLore.length) h += `<details class="more"><summary>District lore sources</summary><p>These sources establish the district context. Candidate names and placements remain proposals.</p><ul>${publicLore.map((url, i) => `<li><a href="${esc(url)}" target="_blank" rel="noopener noreferrer">World Anvil source ${i + 1}</a></li>`).join('')}</ul></details>`;
   if (!p && d.dossier) { const R = [['mood', 'Feel'], ['control', 'Who runs it'], ['heat', 'Heat'], ['hazards', 'Watch for'], ['factions', 'Factions'], ['missions', 'Work here'], ['wisdom', 'Local wisdom']]; h += `<details class="more dossier" open><summary>District read</summary><dl>${R.filter(([k]) => d.dossier[k]).map(([k, l]) => `<dt>${l}</dt><dd>${esc(d.dossier[k])}</dd>`).join('')}</dl></details>`; }
   if (brand?.about) h += `<p class="note">${esc(brand.about)}</p>`;
   if (p) for (const job of activeDeliveries()) { if (job.from.place === p.id && job.stage === 'pickup') h += `<p class="job"><b>Pick up here:</b> ${esc(job.cargo.name)} for ${esc(job.to.name)}, due ${fmtTime(job.due)}.</p>`; if (job.to.place === p.id && job.stage === 'carrying') h += `<p class="job"><b>Drop off here:</b> ${esc(job.cargo.name)} from ${esc(job.from.name)}, due ${fmtTime(job.due)}.</p>`; }

@@ -1,6 +1,13 @@
 # District map coverage
 
-![New map overview](district-maps-preview.jpg)
+![Detailed second-pass map overview](district-maps-v2-preview.jpg)
+
+The detailed second pass is documented in [District lore review](DISTRICT_LORE_REVIEW.md).
+It adds World Anvil source links, original named location proposals, and versioned
+`-v2.jpg` illustrations. The first-pass files below remain available for comparison;
+the shared catalog selects the detailed revisions as they are imported.
+
+[First-pass overview for comparison](district-maps-preview.jpg)
 
 The November 6, 2026 map pass adds illustrated design candidates for every entry
 that lacked map coverage on `main` at commit `2238ed0`: nineteen districts and
