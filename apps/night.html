@@ -142,9 +142,9 @@ function render() {
   let h = '';
   if (!n) {
     h = `<section class="frame night"><div class="nightHead"><h2>Where are you spending it?</h2>${pips}</div>
-      <p class="mood">${left ? 'Pick a district. Home ground counts double for Lay Low and Community.' : 'This gap is spent. Start a new one after your next session.'}</p>
+      <p class="mood">${left ? 'Pick a district. Home ground counts double for Lay Low and Community.' : 'This gap is spent.'}</p>
       ${left ? `<div class="districts">${N.districts(s, P).map(x => `<button type="button" class="district ${x.grith ? 'home' : ''}" data-district="${esc(x.id)}"><b>${esc(x.name)}</b><span>${esc(x.tagline || '')}</span>${x.grith ? '<small>Home · your grith</small>' : x.rakt ? '<small>Grithrakt</small>' : ''}</button>`).join('')}</div>` : ''}
-      ${left ? '' : '<div class="sceneBar"><button class="primary" type="button" id="gapBtn">Start a new session gap</button></div>'}</section>`;
+      ${left ? '' : gapHtml(s)}</section>`;
   } else {
     const dist = P.districts[n.district] || {}, dn = dist.name || n.district;
     h = `<section class="frame night"><div class="nightHead"><h2>${esc(N.nightName(D, n.at))} · <em>${esc(dn)}</em>${n.inGrith ? ' <small class="muted">(home)</small>' : ''}</h2>${pips}</div><p class="mood">${esc((dist.dossier || {}).mood || dist.tagline || '')}</p>`;
@@ -182,11 +182,15 @@ function pendingHtml(p) {
 function resultHtml(e) {
   return `<div class="scene"><article class="letter"><div class="stamp">${esc(e.name)}</div>${e.dice && e.dice.length ? `<div class="rolled">${diceHtml(e.dice)}</div>` : ''}<p class="say">${esc(e.outcome)}</p>${e.effects && e.effects.length ? `<ul class="effects">${e.effects.map(x => `<li>${esc(x)}</li>`).join('')}</ul>` : ''}</article></div>`;
 }
+function gapHtml(s) {
+  return N.canNewGap(s) ? '<div class="sceneBar"><button class="ghost" type="button" id="gapBtn">Start a new session gap</button></div>'
+    : '<p class="note">Your next two actions open when a session starts: whoever runs it presses <b>Session starting</b> in Mail &amp; bills.</p>';
+}
 function recapHtml(s) {
   const r = N.recap(s, D, P); if (!r) return '';
   return `<div class="frame recap" style="margin-top:14px"><h2>${esc(r.head)}</h2>${r.lines.map(l => `<div class="line"><b>${esc(l.name)}</b>${l.how ? ` · ${esc(l.how)}` : ''}${esc(l.dice)}<br>${esc(l.text)}</div>`).join('')}
-    <div class="sceneBar"><button type="button" class="primary" id="copyBtn" data-autofocus>Copy for Discord</button><button type="button" class="ghost" id="gapBtn">Start a new session gap</button></div>
-    <p class="note">Leads you picked up are in Mail &amp; bills.</p></div>`;
+    <div class="sceneBar"><button type="button" class="primary" id="copyBtn" data-autofocus>Copy for Discord</button></div>
+    <p class="note">Leads you picked up are in Mail &amp; bills.</p>${gapHtml(s)}</div>`;
 }
 
 /* Paperwork actions: a small form in the scene slot. */
@@ -196,7 +200,7 @@ function recordForm(kind) {
     const opts = N.trainOptions(s, R);
     $('main').querySelector('.night').insertAdjacentHTML('beforeend', `<div class="scene" id="recordBox"><article class="letter"><div class="stamp">Train</div><p class="say">${esc(R2.rule)}</p>
       <label>Skill<select id="trainSkill">${opts.map(o => `<option value="${o.key}" ${o.open ? '' : 'disabled'}>${esc(o.label)}: ${o.from} → ${o.to}${o.open ? '' : ' (level ' + o.level + ')'}</option>`).join('')}</select></label>
-      <label>Marks spent<input id="trainCost" type="number" min="1" value="1"></label><p class="note" style="color:#5b4630">You have ${N.ensure(s).marks || 0} Marks.</p>
+      <label>Marks spent<input id="trainCost" type="number" min="1" value="1"></label><p class="note" style="color:#5b4630">You have ${N.ensure(s).marks || 0} Marks. Training is final: there's no undo.</p>
       <div class="sceneBar"><button type="button" class="primary" id="trainBtn">Train</button><button type="button" class="ghost" id="backBtn">Cancel</button></div></article></div>`);
   } else {
     $('main').querySelector('.night').insertAdjacentHTML('beforeend', `<div class="scene" id="recordBox"><article class="letter"><div class="stamp">${esc(R2.name)}</div><p class="say">${esc(R2.rule)}</p>
@@ -224,7 +228,7 @@ document.addEventListener('click', e => {
   else if (b.id === 'trainBtn') { const sel = $('trainSkill'); const r = act(s => N.train(s, sel.value, $('trainCost').value, sel.options[sel.selectedIndex].text.split(':')[0], t)); r && toast(r.message); }
   else if (b.id === 'recordBtn') { const k = b.dataset.kind, note = ($('recordNote') || {}).value || ''; const r = act(s => N.record(s, D, k, note.trim(), t, WK)); r && toast(r.message); if (r && r.ok && k === 'craft') parent.postMessage({ type: 'grakkgrith-nav', to: 'makeBtn' }, '*'); }
   else if (b.id === 'copyBtn') { const s = load(); const r = N.recap(s, D, P); const done = () => toast('Copied. Paste it in your Discord channel.'); try { navigator.clipboard.writeText(r.discord).then(done, () => { window.GRAKK_LAST_RECAP = r.discord; toast('Copy was blocked. Select the recap and copy it by hand.'); }); } catch (err) { toast('Copy was blocked. Select the recap and copy it by hand.'); } window.GRAKK_LAST_RECAP = r.discord; }
-  else if (b.id === 'gapBtn') { act(s => N.newGap(s, t)); LAST = null; SCENE = null; toast('New gap: two actions.'); }
+  else if (b.id === 'gapBtn') { const r = act(s => N.newGap(s, t)); LAST = null; SCENE = null; toast(r && r.ok ? 'New gap: two actions.' : (r ? r.message : '')); }
 });
 
 Promise.all(['downtime', 'places', 'week', 'rules'].map(n => fetch(`../data/${n}.json`).then(r => r.json()))).then(([d, p, w, r]) => {

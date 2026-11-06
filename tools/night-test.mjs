@@ -81,6 +81,16 @@ check('Train raises the rank and spends Marks and an action', N.train(s, 'networ
 check('Train refuses past your level', !N.train(s, 'network', 1, 'Network', T).ok);
 check('Put Down Roots is recorded and flagged for the GM in Mail', N.record(s, D, 'putDownRoots', 'Rented the room over the noodle bar', T, WK).ok && s.week.mail.some(m => /GM to confirm/.test(m.title)));
 
+// New gaps open once per session
+s = mk(); s.downtime = { actionsRemaining: 0 };
+check('an older character gets one gap without a session', N.canNewGap(s) && N.newGap(s, T).ok && s.downtime.actionsRemaining === 2);
+s.downtime.actionsRemaining = 0;
+check('a second gap waits for "Session starting"', !N.canNewGap(s) && !N.newGap(s, T).ok && s.downtime.actionsRemaining === 0);
+WK.sessionStart(s, T);
+check('after a session starts, one new gap opens', N.newGap(s, T).ok && s.downtime.actionsRemaining === 2);
+s.downtime.actionsRemaining = 0;
+check('only one per session', !N.newGap(s, T).ok);
+
 for (const f of fails) console.log('  ✗ ' + f);
 console.log(`${passes.length} night checks passed.`);
 if (fails.length) { console.log(`${fails.length} failed.`); process.exit(1); }

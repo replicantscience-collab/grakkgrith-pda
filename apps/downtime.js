@@ -167,7 +167,16 @@
     return { ok: true, message: text };
   }
   /* A new gap between sessions: two fresh actions. */
-  function newGap(s, aMs) { const d = ensure(s); d.actionsRemaining = 2; d.night = null; d.history.unshift({ action: 'gap', label: 'New session gap', detail: 'Two downtime actions available.', time: aMs, location: '' }); return { ok: true }; }
+  /* A gap opens once per session: only after someone presses "Session starting" in Mail & bills.
+     Older characters (no gapSession yet) get one gap so nobody is stuck. */
+  const sessions = s => num(s.week && s.week.sessionsStarted);
+  function canNewGap(s) { const d = ensure(s); return d.gapSession === undefined || sessions(s) > num(d.gapSession); }
+  function newGap(s, aMs) {
+    const d = ensure(s);
+    if (!canNewGap(s)) return { ok: false, message: 'Your next gap opens when a session starts. Press "Session starting" in Mail & bills.' };
+    d.actionsRemaining = 2; d.night = null; d.gapSession = sessions(s);
+    d.history.unshift({ action: 'gap', label: 'New session gap', detail: 'Two downtime actions available.', time: aMs, location: '' }); return { ok: true };
+  }
 
   /* ---------- the recap ---------- */
   function recap(s, D, P) {
@@ -183,6 +192,6 @@
     return { head, who, lines, discord };
   }
 
-  const api = { ACTIONS, RANK_NAMES, TRAIN_LEVEL, ensure, ground, districts, startNight, nightName, scene, roll, pending, push, accept, trainOptions, train, record, newGap, recap, territoryToDistrict, districtToTerritory };
+  const api = { ACTIONS, RANK_NAMES, TRAIN_LEVEL, ensure, ground, districts, startNight, nightName, scene, roll, pending, push, accept, trainOptions, train, record, canNewGap, newGap, recap, territoryToDistrict, districtToTerritory };
   if (typeof module !== 'undefined' && module.exports) module.exports = api; else root.GRAKK_NIGHT = api;
 })(typeof window !== 'undefined' ? window : globalThis);
