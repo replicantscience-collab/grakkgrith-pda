@@ -129,6 +129,25 @@ button:focus-visible,[tabindex]:focus-visible{outline:2px solid var(--sodium);ou
 }
 .job{margin:8px 0;padding:8px 10px;border-left:4px solid var(--sodium);background:rgba(242,169,59,.1)}
 .job b{color:var(--sodium)}
+/* The living city: what changed today */
+.toolbar button.new::after{content:'';display:inline-block;width:7px;height:7px;border-radius:50%;background:var(--sodium);margin-left:7px;vertical-align:2px}
+.today{margin:0 0 12px;padding:10px 12px;border-radius:10px;background:rgba(63,184,166,.08);border:1px solid rgba(63,184,166,.35)}
+.today b{display:block;font:600 13px/1.2 var(--display);letter-spacing:.06em;text-transform:uppercase;color:var(--teal);margin-bottom:3px}
+.today p{margin:0}
+.scrawl{margin:8px 0 0;font:400 17px/1.3 'Permanent Marker',var(--display);color:var(--chalk);transform:rotate(-.8deg)}
+.sign.today-sign{border-color:var(--teal)}
+.sign.today-sign b{color:var(--teal)}
+.sign .tag{display:block;margin:0 0 3px;font:600 11px/1 var(--display);letter-spacing:.08em;text-transform:uppercase;color:var(--ash)}
+.paste{margin:0 0 12px;padding:10px 12px;border-radius:10px;border:1px dashed var(--sodium);background:rgba(242,169,59,.06)}
+.paste p{margin:0 0 6px}
+.stk{display:flex;gap:12px;align-items:center}
+.stk img{width:84px;height:84px;object-fit:cover;border-radius:10px;border:2px solid var(--chalk);background:var(--asphalt);transform:rotate(-3deg)}
+.days{margin:6px 0 0;padding:0;list-style:none;display:grid;gap:8px}
+.days li button{display:block;width:100%;text-align:left;padding:9px 12px;border-radius:10px;border:1px solid var(--kerb)}
+.days li button b{display:block;font:600 17px/1.15 var(--display)}
+.days li button span{color:var(--ash);font-size:13px}
+.found{margin:8px 0 0;display:grid;grid-template-columns:repeat(auto-fill,minmax(64px,1fr));gap:8px}
+.found img{width:100%;aspect-ratio:1;object-fit:cover;border-radius:8px;border:1px solid var(--kerb)}
 </style>
 </head>
 <body>
@@ -142,7 +161,7 @@ button:focus-visible,[tabindex]:focus-visible{outline:2px solid var(--sodium);ou
   <nav class="maps" id="mapTabs" aria-label="Maps"></nav>
   <main class="stage" id="stage">
     <div class="world" id="world"><img id="mapImg" alt=""></div>
-    <div class="toolbar"><button id="youBtn" type="button">Find me</button><button id="editBtn" type="button" aria-pressed="false">Edit pins</button><button id="shareBtn" type="button" hidden>Share pins</button></div>
+    <div class="toolbar"><button id="todayBtn" type="button">Today</button><button id="youBtn" type="button">Find me</button><button id="editBtn" type="button" aria-pressed="false">Edit pins</button><button id="shareBtn" type="button" hidden>Share pins</button></div>
     <div class="zoom"><button id="zin" type="button" aria-label="Zoom in">+</button><button id="zout" type="button" aria-label="Zoom out">−</button><button id="zfit" type="button" aria-label="Fit map">⤢</button></div>
     <div class="hint" id="hint"></div>
   </main>
@@ -150,6 +169,7 @@ button:focus-visible,[tabindex]:focus-visible{outline:2px solid var(--sodium);ou
 <aside class="sheet" id="sheet" aria-label="Place details"><button class="close" id="sheetClose" type="button" aria-label="Close">×</button><div id="sheetBody"></div></aside>
 <div class="toast" id="toast" role="status"></div>
 
+<script src="cityday.js"></script>
 <script>
 'use strict';
 /* ---------- Storage ---------- */
@@ -401,6 +421,7 @@ $('zin').onclick = () => zoomAt(1.3, stage.clientWidth / 2, stage.clientHeight /
 $('zout').onclick = () => zoomAt(1 / 1.3, stage.clientWidth / 2, stage.clientHeight / 2);
 $('zfit').onclick = fit;
 $('youBtn').onclick = findMe;
+$('todayBtn').onclick = openToday;
 window.addEventListener('resize', () => fit());
 function findMe() {
   const loc = presence.transit ? presence.transit.to : presence.location, d = district(loc.district);
@@ -412,6 +433,63 @@ function findMe() {
 const TYPE_LABEL = { venue: 'Venue', shop: 'Shop', food: 'Food', landmark: 'Landmark', transit: 'Transit stop', housing: 'Housing', civic: 'Civic and legal', corporate: 'Corporate', industrial: 'Industrial', street: 'Street', market: 'Market', sacred: 'Sacred place', district: 'District' };
 /* Runner deliveries in progress (from the Workshop), so the map can say where to pick up and drop off. */
 function activeDeliveries() { const s = load(TOOL_KEY, null); return ((s && s.make && s.make.artifacts) || []).filter(a => a.status === 'active' && a.delivery).map(a => a.delivery); }
+/* ---------- The living city ----------
+   What changed in Adyta today (apps/cityday.js): the same for every player, built from the Adyta date.
+   District moods and a scrawled Local Wisdom line, today's shop signs, and one hidden Sticker you have to
+   travel to and peel. Found stickers are saved in the character file (state.world.stickers). */
+const CD = window.GRAKK_CITYDAY;
+let CDD = null, STK = [], dayCache = null;
+function cityDay() { if (!CDD || !CD) return null; const key = CD.dayKey(adytaNow()); if (!dayCache || dayCache.day !== key) dayCache = CD.today(CDD, W, STK, adytaNow()); return dayCache; }
+const stickerImg = st => '../art/pda-v1/imports/' + esc(st.path);
+function charState() { const s = load(TOOL_KEY, null); return s && typeof s === 'object' && String(s.character?.name || '').trim() ? s : null; }
+function todayHtml(p, did) {
+  const T = cityDay(); if (!T) return '';
+  let h = '';
+  if (!p) {
+    const t = T.districts[did];
+    if (t) h += `<div class="today"><b>Today</b><p>${esc(t.mood)}</p><p class="scrawl">${esc(t.wisdom)}</p></div>`;
+    if (T.sticker?.district === did) h += `<p class="note">${esc(T.sticker.hint)}</p>`;
+    return h;
+  }
+  const sign = T.signs[p.id];
+  if (sign) h += `<div class="sign today-sign"><span class="tag">Today</span><b>${esc(sign[0])}</b><span>${esc(sign[1])}</span></div>`;
+  if (T.sticker?.place === p.id) {
+    const s = charState(), S = CDD.stickers || {}, here = !presence.transit && presence.location.place === p.id;
+    if (s && CD.foundToday(s, T)) h += `<div class="paste"><div class="stk"><img src="${stickerImg(T.sticker)}" alt=""><p><b>${esc(T.sticker.label)}</b><br>${esc(S.found)}</p></div></div>`;
+    else h += `<div class="paste"><p>${esc(S.clue)}</p>${here ? `<button class="act go" type="button" id="peel"><b>Peel the sticker</b><span>${s ? 'Add it to your collection' : 'Make a character to keep it'}</span></button>` : `<p class="note">${esc(S.notHere)}</p>`}</div>`;
+  }
+  return h;
+}
+function peel() {
+  const T = cityDay(), s = charState();
+  if (!s) { toast('Make a character to keep what you find.'); return; }
+  s.world = { ...(s.world || {}), presence };
+  const r = CD.collect(s, T, adytaNow());
+  if (!r.ok) { toast(r.msg); return; }
+  save(TOOL_KEY, s);
+  toast(r.dupe ? `Another ${r.sticker.label}. Still counts.` : `New sticker: ${r.sticker.label}.`);
+  if (selected) openPlace(selected);
+}
+function openToday() {
+  const T = cityDay();
+  if (!T) { toast("Today's city news didn't load."); return; }
+  selected = null; renderPins();
+  const s = charState(), mine = s ? CD.found(s) : [];
+  let h = `<h2>Today in Adyta</h2><div class="kind">${esc(fmtDate(adytaNow()))}</div>`;
+  if (T.sticker) h += `<div class="paste"><p>${esc(T.sticker.hint)}</p>${s && CD.foundToday(s, T) ? '<p class="note">You found today\'s. A new one goes up tomorrow.</p>' : ''}</div>`;
+  h += `<ul class="days">${Object.entries(T.districts).map(([id, t]) => `<li><button type="button" data-district="${id}"><b>${esc(district(id).name)}</b><span>${esc(t.mood)}</span></button></li>`).join('')}</ul>`;
+  h += `<details class="more"${mine.length ? ' open' : ''}><summary>Your stickers: ${s ? CD.uniqueCount(s) : 0} of ${STK.length}</summary>`;
+  if (!s) h += '<p class="note">Make a character to start a collection.</p>';
+  else if (!mine.length) h += '<p class="note">None yet. One new sticker goes up somewhere in the city every day.</p>';
+  else h += `<div class="found">${[...new Map(mine.map(f => [f.id, f])).keys()].map(id => STK.find(x => x.id === id)).filter(Boolean).map(st => `<img src="${stickerImg(st)}" alt="${esc(st.label)}" title="${esc(st.label)}" loading="lazy">`).join('')}</div>`;
+  h += '</details>';
+  $('sheetBody').innerHTML = h; setPanel(true);
+  $('sheetBody').querySelectorAll('[data-district]').forEach(b => b.onclick = () => { showMap('adyta-city'); openPlace(b.dataset.district); });
+  if (s) { CD.markSeen(s, T); save(TOOL_KEY, s); }
+  renderTodayBtn();
+}
+function renderTodayBtn() { const T = cityDay(), s = charState(); $('todayBtn').hidden = !T; $('todayBtn').classList.toggle('new', !!(T && (!s || CD.isNew(s, T)))); }
+
 function openPlace(id) {
   selected = id; renderPins();
   const p = byId[id], d = p ? district(p.district) : district(id);
@@ -422,6 +500,7 @@ function openPlace(id) {
   const brand = p?.brand && W.brands?.[p.brand];
   if (p?.entrance) h += `<p class="note">${esc(p.entrance)}</p>`;
   h += `<p>${esc(p ? p.blurb : d.tagline || d.atlas?.note || '')}</p>`;
+  h += todayHtml(p, p ? p.district : id);
   if (!p && d.dossier) { const R = [['mood', 'Feel'], ['control', 'Who runs it'], ['heat', 'Heat'], ['hazards', 'Watch for'], ['factions', 'Factions'], ['missions', 'Work here'], ['wisdom', 'Local wisdom']]; h += `<details class="more dossier" open><summary>District read</summary><dl>${R.filter(([k]) => d.dossier[k]).map(([k, l]) => `<dt>${l}</dt><dd>${esc(d.dossier[k])}</dd>`).join('')}</dl></details>`; }
   if (brand?.about) h += `<p class="note">${esc(brand.about)}</p>`;
   if (p) for (const job of activeDeliveries()) { if (job.from.place === p.id && job.stage === 'pickup') h += `<p class="job"><b>Pick up here:</b> ${esc(job.cargo.name)} for ${esc(job.to.name)}, due ${fmtTime(job.due)}.</p>`; if (job.to.place === p.id && job.stage === 'carrying') h += `<p class="job"><b>Drop off here:</b> ${esc(job.cargo.name)} from ${esc(job.from.name)}, due ${fmtTime(job.due)}.</p>`; }
@@ -466,6 +545,7 @@ function openPlace(id) {
   $('sheetBody').querySelectorAll('[data-opt]').forEach(b => b.onclick = () => startTrip(target, opts[+b.dataset.opt]));
   $('sheetBody').querySelectorAll('[data-goto]').forEach(b => b.onclick = () => { const o = byId[b.dataset.goto]; showMap(o.pin.map, o.id); openPlace(o.id); });
   $('turnBack') && ($('turnBack').onclick = turnBack);
+  $('peel') && ($('peel').onclick = peel);
   $('openMap') && ($('openMap').onclick = () => { showMap(d.map); openPlace(id); });
   $('showOnMap') && ($('showOnMap').onclick = () => { showMap(p.pin.map, p.id); openPlace(p.id); });
   if (editing && p) wireEditForm(p);
@@ -592,8 +672,8 @@ function wireEditForm(p) {
 
 /* ---------- Misc ---------- */
 function toast(t) { const el = $('toast'); el.textContent = t; el.style.display = 'block'; clearTimeout(toast.t); toast.t = setTimeout(() => el.style.display = 'none', 2600); }
-function render() { renderBoard(); renderTabs(); renderPins(); }
-function tick() { if (settleTransit()) { render(); if (selected) openPlace(selected); } else renderBoard(); }
+function render() { renderBoard(); renderTabs(); renderPins(); renderTodayBtn(); }
+function tick() { if (settleTransit()) { render(); if (selected) openPlace(selected); } else { renderBoard(); renderTodayBtn(); } }
 
 /* ---------- Start ---------- */
 (async function start() {
@@ -605,18 +685,22 @@ function tick() { if (settleTransit()) { render(); if (selected) openPlace(selec
   for (const [id, pin] of Object.entries(edits.cityPins || {})) if (W.districts[id]) W.districts[id].cityPin = pin;
   for (const r of W.routes) { const e = (edits.routes || {})[routeKey(r)]; if (e) applyRouteEdit(r, e); }
   mergePlaces();
+  try {   // the living city is extra: Explore still works if it doesn't load
+    const [cd, art] = await Promise.all(['../data/cityday.json', '../art/pda-v1/imports/manifest.json'].map(u => fetch(u).then(r => { if (!r.ok) throw new Error(r.status); return r.json(); })));
+    CDD = cd; STK = CD ? CD.stickerList(art) : [];
+  } catch (e) { CDD = null; }
   presence = loadPresence();
   if (!presence || !W.districts[presence.location?.district]) presence = { location: { ...W.start }, transit: null, log: [] };
   if (presence.location.place && !byId[presence.location.place]) presence.location.place = null;
   settleTransit(); savePresence();
-  renderBoard();
+  renderBoard(); renderTodayBtn();
   const startD = district((presence.transit?.to || presence.location).district);
   const go = new URLSearchParams(location.search).get('go'), goPlace = go && byId[go];   // opened from a delivery: show that place
   if (goPlace) { const gm = goPlace.pin && W.maps[goPlace.pin.map] ? goPlace.pin.map : 'adyta-city'; showMap(gm, goPlace.id); openPlace(goPlace.id); }
   else showMap(startD.map && W.maps[startD.map] ? startD.map : 'adyta-city', (presence.transit?.to || presence.location).place);
   setInterval(tick, 5000);
   addEventListener('storage', e => { if (e.key === TOOL_KEY || e.key === PRESENCE_KEY) { const p = loadPresence(); if (p) { presence = p; render(); } } });
-  window.GRAKK_EXPLORE = { get presence() { return presence; }, showMap, openPlace, planTrip, startTrip, adytaNow, tramRunning, route, places: () => places };
+  window.GRAKK_EXPLORE = { get presence() { return presence; }, showMap, openPlace, cityDay, openToday, peel, planTrip, startTrip, adytaNow, tramRunning, route, places: () => places };
 })();
 </script>
 </body>

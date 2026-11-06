@@ -71,6 +71,9 @@ try {
     await step('Explore shows the Adyta clock', async () => /\d:\d\d [AP]M/.test(await f.evaluate(() => document.getElementById('clock').textContent)));
     await step('Explore has every district map, Sewers Town included', async () => { const tabs = await f.$$eval('#mapTabs button', b => b.map(x => x.textContent)); return (tabs.length === 8 && tabs.some(t => /Three Wires/.test(t)) && tabs.some(t => /Noble/.test(t)) && tabs.some(t => /Sewers/.test(t))) || tabs.join('|'); });
     await step('Explore can plan a trip', async () => (await f.evaluate(() => window.GRAKK_EXPLORE.planTrip({ district: 'ember-court', place: 'ember-court--the-ninth-circle-ph' }).length)) > 0);
+    // The living city: the same day for everyone, a mood per district, signs, one hidden sticker.
+    await step('Explore shows what changed today', () => f.evaluate(() => { const X = window.GRAKK_EXPLORE, T = X.cityDay(); X.openToday(); const t = document.getElementById('sheetBody').innerText; return (!!T && /Today in Adyta/.test(t) && document.querySelectorAll('#sheetBody .days li').length === Object.keys(T.districts).length && !!T.sticker) || t.slice(0, 120); }));
+    await step('a district read leads with today', () => f.evaluate(() => { window.GRAKK_EXPLORE.showMap('adyta-city'); window.GRAKK_EXPLORE.openPlace('low-halo'); return !!document.querySelector('#sheetBody .today .scrawl'); }));
 
     // Sideways art pass: Start wears the kit; Sideways' commentary and the rulebook stay separate in the guide.
     f = await open('worldBtn', 1200);
@@ -202,6 +205,10 @@ try {
       return (r.beats === 12 && r.first && r.focus && /Civic Registry/.test(r.label) && gone) || JSON.stringify({ ...r, gone });
     });
     await step('the sheet shows the new character', async () => { await page.evaluate(() => document.getElementById('fullSheetBtn').click()); await page.waitForTimeout(1600); return frame(page).evaluate(() => document.body.innerText.includes('Smoke Runner') && document.getElementById('raceSelect').value === 'Goblin'); });
+    await step('a character can travel to today\'s sticker and peel it', async () => { await page.evaluate(() => document.getElementById('exploreBtn').click()); await page.waitForTimeout(1500); return frame(page).evaluate(() => {
+      const X = window.GRAKK_EXPLORE, st = X.cityDay().sticker; X.presence.transit = null; X.presence.location = { district: st.district, place: st.place }; X.openPlace(st.place);
+      document.getElementById('peel').click(); const kept = JSON.parse(localStorage.getItem('grakkgrith_character_tool_v8_state')).world.stickers || [];
+      return (kept.length === 1 && kept[0].id === st.id && /Peeled it/.test(document.getElementById('sheetBody').innerText)) || JSON.stringify(kept); }); });
     await step('Explore can send them somewhere', async () => { await page.evaluate(() => document.getElementById('exploreBtn').click()); await page.waitForTimeout(1500); return frame(page).evaluate(() => { const X = window.GRAKK_EXPLORE, t = { district: 'low-halo', place: 'low-halo--rust-market' }; X.startTrip(t, X.planTrip(t)[0]); return !!JSON.parse(localStorage.getItem('grakkgrith_character_tool_v8_state')).world.presence.transit; }); });
     // The Week: rent on the Adyta clock and Heat mail, from a fresh character.
     const ST = () => page.evaluate(() => JSON.parse(localStorage.getItem('grakkgrith_character_tool_v8_state')));

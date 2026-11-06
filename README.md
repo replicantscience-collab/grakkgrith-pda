@@ -65,6 +65,12 @@ npm run smoke
 
 **Renaming something players may have saved** (a subclass, origin, or life): add the old name to an `aliases` list on the entry so existing characters keep working. See `LHL Courier` for an example.
 
+## The living city
+
+Every day in Adyta something changes, and everyone in the group sees the same thing. Explore's **Today** button lists each district's mood; a district's panel leads with today's mood and a scrawled line of Local Wisdom; a couple of shops, food spots, venues and markets per district put out a new sign; and one Sticker is pasted up somewhere in the city. The hint names the district. Find the place, travel there, and peel it: found stickers are saved in the character file (`world.stickers`), so **Backup** carries the collection.
+
+There is no server. `apps/cityday.js` builds the day from the Adyta date alone, so every PDA builds the same day. Lines rotate so a district never repeats a mood or a wisdom line on back-to-back days. The words are in `data/cityday.json` (drafts until they go to Nib); stickers come from the sticker sheets in `art/pda-v1/imports/manifest.json`. `node tools/cityday-test.mjs` checks both.
+
 ## The Explore map
 
 Explore puts your character somewhere in Adyta. Tap a place for its details, then travel there: on foot, or by tram while the trams run (the last one leaves at 12:17 AM). Travel takes Adyta time, and your character is in transit until they arrive, even if you close the app.
