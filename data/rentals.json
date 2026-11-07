@@ -1,0 +1,1457 @@
+{
+  "schema": "grakkgrith.rentals",
+  "schemaVersion": 1,
+  "status": "draft",
+  "_about": "What you can actually rent at each housing place: units (rent inside the tier's band, how many are free), quirks (perk, snag or odd) and the neighbors you'd live next to. Landlords and their terms are in data/landlords.json. Drafted by Claude for Eko; every name, unit and neighbor here is draft until Eko and Nib sign it off. A unit with staff is the crew rate for people who work there (honor system); a unit with pay is paid in something other than credits.",
+  "bands": {
+    "commons": [
+      30,
+      50
+    ],
+    "mixed": [
+      65,
+      95
+    ],
+    "corporate": [
+      150,
+      220
+    ],
+    "none": [
+      0,
+      0
+    ],
+    "authority": [
+      0,
+      0
+    ]
+  },
+  "places": {
+    "low-halo--saint-static-arms": {
+      "units": [
+        {
+          "id": "seventh",
+          "name": "Seventh-floor room",
+          "rent": 32,
+          "blurb": "The cheapest room in the building, because nobody wants to climb seven flights.",
+          "free": 4
+        },
+        {
+          "id": "flat",
+          "name": "Third-floor flat",
+          "rent": 40,
+          "blurb": "Two rooms, a window onto the street, and radiators that knock all night.",
+          "free": 2
+        },
+        {
+          "id": "over-shop",
+          "name": "Home above a shop",
+          "rent": 45,
+          "blurb": "Right over the street-level shops, so you get shop noise until ten.",
+          "free": 1
+        }
+      ],
+      "quirks": [
+        {
+          "kind": "snag",
+          "text": "The elevators have been \"under assessment\" for as long as anyone can remember, so plan on the stairs."
+        },
+        {
+          "kind": "odd",
+          "text": "Fix an elevator and Halvard Mercy sends you a thank-you letter, followed by a rent hike for the improved unit."
+        },
+        {
+          "kind": "perk",
+          "text": "There have been three owners since 1987, so three sets of keys still work and nobody checks who comes and goes."
+        }
+      ],
+      "neighbors": [
+        {
+          "name": "Dot Kessler",
+          "race": "Human",
+          "who": "Runs the second-floor laundry line and the building's group chat.",
+          "hook": "Knows who's behind on rent before the landlord does."
+        },
+        {
+          "name": "Old Faro",
+          "race": "Troll",
+          "who": "Has been \"assessing\" the east elevator himself for six years.",
+          "hook": "He's looking for a Wrench to help him finally finish it."
+        }
+      ]
+    },
+    "low-halo--the-hive": {
+      "units": [
+        {
+          "id": "upper",
+          "name": "Upper-floor room",
+          "rent": 35,
+          "blurb": "Fifth floor, on the far side of the U. Realistically, you'll be taking the stairs.",
+          "free": 6
+        },
+        {
+          "id": "courtyard",
+          "name": "Courtyard flat",
+          "rent": 40,
+          "blurb": "Looks onto the courtyard, so you hear everyone's business and they hear yours.",
+          "free": 3
+        },
+        {
+          "id": "over-fryer",
+          "name": "Corner unit over the Fryer",
+          "rent": 45,
+          "blurb": "Warm all winter. It smells like the Fryer all year round.",
+          "free": 1
+        }
+      ],
+      "quirks": [
+        {
+          "kind": "snag",
+          "text": "Two elevators, and neither works often enough to rely on."
+        },
+        {
+          "kind": "perk",
+          "text": "Ma Dresk's Fryer is downstairs, so there's always a hot meal on the walk home."
+        },
+        {
+          "kind": "odd",
+          "text": "Ma Dresk always knows who's behind on rent, and so does the whole Fryer."
+        }
+      ],
+      "neighbors": [
+        {
+          "name": "Pip Arrowsmith",
+          "race": "Halfling (Fenn)",
+          "who": "Fourth floor. Sells hand-mended coats from the landing.",
+          "hook": "Will trade a coat for a story she hasn't heard."
+        },
+        {
+          "name": "Brannoch",
+          "race": "Orc",
+          "who": "Works night shifts on the docks and sleeps all day.",
+          "hook": "Will fight anyone who runs the stairs before noon."
+        }
+      ]
+    },
+    "ember-court--the-old-lamp-court": {
+      "units": [
+        {
+          "id": "courtyard-room",
+          "name": "Courtyard room",
+          "rent": 70,
+          "blurb": "A single room off the courtyard, under one of the lamps.",
+          "free": 2
+        },
+        {
+          "id": "family-house",
+          "name": "Two-room family house",
+          "rent": 85,
+          "blurb": "A small house with its own door and a private patch of courtyard.",
+          "free": 1
+        },
+        {
+          "id": "lamp-house",
+          "name": "The house with the lamp that won't go out",
+          "rent": 65,
+          "blurb": "Cheaper than the rest. The lamp outside its door stays lit no matter what anyone does.",
+          "free": 1
+        }
+      ],
+      "quirks": [
+        {
+          "kind": "odd",
+          "text": "The courtyard lamps are never quite off."
+        },
+        {
+          "kind": "odd",
+          "text": "Rent receipts arrive signed in handwriting that isn't hers."
+        },
+        {
+          "kind": "perk",
+          "text": "Ember Court's occult trade is a two-minute walk away. Shades and Signals can get their supplies close to home."
+        }
+      ],
+      "neighbors": [
+        {
+          "name": "Mister Ashby",
+          "race": "Cinderfolk",
+          "who": "Rents the house by the gate. Nobody has ever seen him pay rent.",
+          "hook": "Claims to have \"an arrangement\" and won't say with whom."
+        },
+        {
+          "name": "Ruth Calloway",
+          "race": "Human",
+          "who": "The third tenant in Number 4 this year.",
+          "hook": "Wants to know what happened to the first two."
+        }
+      ]
+    },
+    "market-ring--north-market-neighborhood": {
+      "units": [
+        {
+          "id": "stall-room",
+          "name": "Room over the stall",
+          "rent": 70,
+          "blurb": "Small and bright. You wake up to the shutters going up.",
+          "free": 2
+        },
+        {
+          "id": "shop-flat",
+          "name": "Flat above the shop",
+          "rent": 80,
+          "blurb": "Two rooms over the family shop, with a shared courtyard behind.",
+          "free": 1
+        },
+        {
+          "id": "court-house",
+          "name": "Courtyard house",
+          "rent": 90,
+          "blurb": "A whole little house on the lane. The family keeps it for people they like.",
+          "free": 1
+        }
+      ],
+      "quirks": [
+        {
+          "kind": "perk",
+          "text": "Rent includes a shift at the family stall during festival week. You can skip it and nobody will say anything, but everyone will remember."
+        },
+        {
+          "kind": "perk",
+          "text": "The lanes are halfling-heavy, and by your second week everybody knows your name."
+        }
+      ],
+      "neighbors": [
+        {
+          "name": "Grandmother Adaeze Oduya-Venn",
+          "race": "Halfling (Fenn)",
+          "who": "Keeps the family books, and a list of who helped out in festival week.",
+          "hook": "Being on her good list opens doors all over the Market Ring."
+        },
+        {
+          "name": "Tobin Venn",
+          "race": "Halfling (Fenn)",
+          "who": "The grandson.",
+          "hook": "He'd sell the whole block to Brightlane if anyone let him."
+        }
+      ]
+    },
+    "market-ring--homes-above-shops": {
+      "units": [
+        {
+          "id": "studio",
+          "name": "Studio",
+          "rent": 75,
+          "blurb": "Clean, beige and approved. There's a smart meter by the door.",
+          "free": 3
+        },
+        {
+          "id": "one-bed",
+          "name": "One-bed above the arcade",
+          "rent": 85,
+          "blurb": "Arcade noise until late, but the hot water actually works.",
+          "free": 2
+        },
+        {
+          "id": "premium",
+          "name": "Two-bed \"premium\"",
+          "rent": 95,
+          "blurb": "The same as the one-bed, plus a second room and a logo on the door.",
+          "free": 1
+        }
+      ],
+      "quirks": [
+        {
+          "kind": "snag",
+          "text": "Complaints go to a form that sends you to another form."
+        },
+        {
+          "kind": "perk",
+          "text": "Repairs do happen eventually, carried out by a contractor who won't speak to you."
+        },
+        {
+          "kind": "snag",
+          "text": "Corporate-funded: anything you run from here is outside Commons protection."
+        }
+      ],
+      "neighbors": [
+        {
+          "name": "Linnea Sato",
+          "race": "Human",
+          "who": "A Crownline billing clerk. Very nice.",
+          "hook": "Reports everything she sees."
+        }
+      ]
+    },
+    "market-ring--south-market-neighborhood": {
+      "units": [
+        {
+          "id": "shared-kitchen",
+          "name": "Room with a shared kitchen",
+          "rent": 65,
+          "blurb": "A room of your own, a kitchen everyone shares, and a rota on the fridge.",
+          "free": 3
+        },
+        {
+          "id": "workshop-flat",
+          "name": "Workshop flat",
+          "rent": 80,
+          "blurb": "On the ground floor, with a workbench. Wrenches love it.",
+          "free": 1
+        },
+        {
+          "id": "family-flat",
+          "name": "Family flat",
+          "rent": 90,
+          "blurb": "Three rooms over the bakery.",
+          "free": 1
+        }
+      ],
+      "quirks": [
+        {
+          "kind": "perk",
+          "text": "Pay the full rent, or pay 20 less and put in a weekly repair shift."
+        },
+        {
+          "kind": "odd",
+          "text": "The results of house votes arrive in your mail every second Thursday."
+        }
+      ],
+      "neighbors": [
+        {
+          "name": "Marisol Teague",
+          "race": "Human",
+          "who": "Chairs the Tenants' Table this month, and every month nobody else wants to.",
+          "hook": "Always short of hands for the boiler room."
+        },
+        {
+          "name": "Kettle",
+          "race": "Kobold",
+          "who": "Fixes the boilers and keeps a tally of who helped.",
+          "hook": "Can tell you exactly who on the block owes the Table what."
+        }
+      ]
+    },
+    "dockside--waterfront-homes-crew-lodging": {
+      "units": [
+        {
+          "id": "crew-bunk",
+          "name": "Crew bunk",
+          "rent": 40,
+          "blurb": "A bunk in a four-berth room for Meridian crew. Lockers lock, mostly.",
+          "free": 4,
+          "staff": "Meridian Logistics"
+        },
+        {
+          "id": "water-room",
+          "name": "Waterfront room",
+          "rent": 75,
+          "blurb": "A room with a window over the water. The foghorn is included.",
+          "free": 2
+        },
+        {
+          "id": "harbor-flat",
+          "name": "Harbor-view flat",
+          "rent": 90,
+          "blurb": "Two rooms with a balcony over the cranes.",
+          "free": 1
+        }
+      ],
+      "quirks": [
+        {
+          "kind": "snag",
+          "text": "Lose your Meridian contract and the crew bunk reprices to the waterfront rate the next Monday."
+        },
+        {
+          "kind": "perk",
+          "text": "Freight work starts at your door, so dock gigs are only a walk away."
+        },
+        {
+          "kind": "snag",
+          "text": "Corporate-funded: anything you run from here is outside Commons protection."
+        }
+      ],
+      "neighbors": [
+        {
+          "name": "Sefa Morrow",
+          "race": "Human",
+          "who": "A crane operator, quietly organizing the crew.",
+          "hook": "Needs someone to carry messages that Meridian can't read."
+        }
+      ]
+    },
+    "the-tangle--the-tangle": {
+      "units": [
+        {
+          "id": "roof-corner",
+          "name": "A corner of a shared roof",
+          "rent": 0,
+          "blurb": "Under a tarp, among friends. Probably.",
+          "free": 3,
+          "pay": "favors"
+        },
+        {
+          "id": "built-room",
+          "name": "A built-on room",
+          "rent": 0,
+          "blurb": "Somebody's extension of somebody else's extension.",
+          "free": 1,
+          "pay": "work or goods"
+        }
+      ],
+      "quirks": [
+        {
+          "kind": "snag",
+          "text": "The registry doesn't recognize these addresses, so anything that needs a formal address is Hard."
+        },
+        {
+          "kind": "perk",
+          "text": "Tangle Clan routes go everywhere, if you know who to ask."
+        }
+      ],
+      "neighbors": [
+        {
+          "name": "Skrit",
+          "race": "Goblin",
+          "who": "Holds the roof stack by Lantern Steps.",
+          "hook": "Will trade a bed for a fixed relay."
+        }
+      ]
+    },
+    "noble-heights--northridge-estates": {
+      "units": [],
+      "quirks": [
+        {
+          "kind": "odd",
+          "text": "Staff positions sometimes come with a room. You ask the household for one, not the PDA."
+        }
+      ],
+      "neighbors": []
+    },
+    "noble-heights--silverhallow-estate": {
+      "units": [],
+      "quirks": [
+        {
+          "kind": "odd",
+          "text": "The terraced gardens are older than the city wall, and the gardeners live on the grounds."
+        }
+      ],
+      "neighbors": []
+    },
+    "noble-heights--moonspire-house": {
+      "units": [],
+      "quirks": [
+        {
+          "kind": "odd",
+          "text": "During court season, visiting delegations are put up here. Everyone else is shown the gate."
+        }
+      ],
+      "neighbors": []
+    },
+    "noble-heights--arlencourt-manor": {
+      "units": [],
+      "quirks": [
+        {
+          "kind": "odd",
+          "text": "The household hasn't let a room in living memory, and fae memory is long."
+        }
+      ],
+      "neighbors": []
+    },
+    "noble-heights--old-families-row": {
+      "units": [
+        {
+          "id": "servants-wing",
+          "name": "Servants' wing room",
+          "rent": 160,
+          "blurb": "Old, quiet and well kept. Meals are served whether you want them or not.",
+          "free": 1
+        },
+        {
+          "id": "carriage-house",
+          "name": "Carriage house",
+          "rent": 190,
+          "blurb": "Your own door, your own stairs, and a family across the gravel watching both.",
+          "free": 1
+        }
+      ],
+      "quirks": [
+        {
+          "kind": "odd",
+          "text": "Invitations come through Standing, not money."
+        },
+        {
+          "kind": "perk",
+          "text": "An address on the Row opens doors that credits alone don't."
+        }
+      ],
+      "neighbors": [
+        {
+          "name": "Lady Corvina Marsh",
+          "race": "Elf",
+          "who": "The head of the house with the carriage house.",
+          "hook": "Collects tenants the way other people collect stories."
+        }
+      ]
+    },
+    "grand-academy--candidate-scholars-dells": {
+      "units": [
+        {
+          "id": "scholar-room",
+          "name": "Scholar's room",
+          "rent": 65,
+          "blurb": "The rate for enrolled students and staff. Your paperwork has to be current.",
+          "free": 3
+        },
+        {
+          "id": "visiting-room",
+          "name": "Visiting room",
+          "rent": 85,
+          "blurb": "The same room at the rate for anyone not enrolled.",
+          "free": 2
+        }
+      ],
+      "quirks": [
+        {
+          "kind": "snag",
+          "text": "Let a term lapse and the room reprices, and you get a form explaining why."
+        },
+        {
+          "kind": "perk",
+          "text": "The kitchens are shared, so someone is always cooking."
+        }
+      ],
+      "neighbors": [
+        {
+          "name": "Professor Ilse Vantongeren",
+          "race": "Elf",
+          "who": "On her ninth \"temporary\" room in the Dells.",
+          "hook": "Pays well for research help. Doesn't ask where it came from."
+        }
+      ]
+    },
+    "grand-academy--candidate-student-quarters": {
+      "units": [
+        {
+          "id": "shared-room",
+          "name": "Shared room",
+          "rent": 65,
+          "blurb": "Two beds, two desks and one window that doesn't open. The enrolled rate.",
+          "free": 4
+        },
+        {
+          "id": "single",
+          "name": "Single room",
+          "rent": 80,
+          "blurb": "A door that locks, and a desk that's actually yours.",
+          "free": 2
+        }
+      ],
+      "quirks": [
+        {
+          "kind": "perk",
+          "text": "Mixed peoples and mixed disciplines mean somebody down the hall knows the thing you need."
+        },
+        {
+          "kind": "snag",
+          "text": "The walls are thin and exam season is loud."
+        }
+      ],
+      "neighbors": [
+        {
+          "name": "Quill",
+          "race": "Fairy",
+          "who": "A second-year who runs a tutoring business.",
+          "hook": "Also runs a better one, in exam answers."
+        }
+      ]
+    },
+    "new-halo--candidate-old-lease-court": {
+      "units": [
+        {
+          "id": "holdout",
+          "name": "Holdout flat",
+          "rent": 65,
+          "blurb": "The old rent. It stays this low for as long as you pay, or until the next \"improvement\".",
+          "free": 1
+        },
+        {
+          "id": "renovated",
+          "name": "Renovated unit",
+          "rent": 95,
+          "blurb": "Glass, steel, a smart lock, and a view of the holdouts.",
+          "free": 3
+        }
+      ],
+      "quirks": [
+        {
+          "kind": "snag",
+          "text": "A buyout letter arrives every month."
+        },
+        {
+          "kind": "odd",
+          "text": "The court is half old homes and half glass, and the two halves don't talk."
+        },
+        {
+          "kind": "snag",
+          "text": "Corporate-funded: anything you run from here is outside Commons protection."
+        }
+      ],
+      "neighbors": [
+        {
+          "name": "The Halloran sisters",
+          "race": "Human",
+          "who": "Have lived on the ground floor since before Glassline arrived.",
+          "hook": "They won't sell, and they could use help proving the court's old lease is still valid."
+        }
+      ]
+    },
+    "three-spires-monastery--candidate-guest-lantern": {
+      "units": [
+        {
+          "id": "bed",
+          "name": "A bed, if admitted",
+          "rent": 30,
+          "blurb": "A clean bed in a quiet hall. The lantern stays lit all night.",
+          "free": 4
+        },
+        {
+          "id": "lantern-room",
+          "name": "Lantern room",
+          "rent": 40,
+          "blurb": "A room of your own, with a window onto the spires.",
+          "free": 1
+        }
+      ],
+      "quirks": [
+        {
+          "kind": "odd",
+          "text": "Nobody explains how admission is decided."
+        },
+        {
+          "kind": "perk",
+          "text": "A kitchen or laundry shift takes 20 off the rent."
+        }
+      ],
+      "neighbors": [
+        {
+          "name": "Brother Ossel",
+          "race": "Troll",
+          "who": "A keeper who counts the beds twice a night.",
+          "hook": "Notices when anyone's missing, and goes looking for them."
+        }
+      ]
+    },
+    "three-spires-monastery--candidate-keeper-rooms": {
+      "units": [],
+      "quirks": [
+        {
+          "kind": "odd",
+          "text": "The keepers live here. Visitors are walked through, never put up."
+        }
+      ],
+      "neighbors": []
+    },
+    "elven-enclave--candidate-the-long-lease": {
+      "units": [
+        {
+          "id": "garden-room",
+          "name": "Garden room",
+          "rent": 75,
+          "blurb": "Opens onto a garden that someone's great-great-grandmother planted, and you will be reminded of it.",
+          "free": 1
+        },
+        {
+          "id": "altered-house",
+          "name": "Altered house",
+          "rent": 90,
+          "blurb": "Each generation added a room. None of them added a straight wall.",
+          "free": 1
+        }
+      ],
+      "quirks": [
+        {
+          "kind": "odd",
+          "text": "The renewal terms are written in a dialect that keeps changing."
+        },
+        {
+          "kind": "perk",
+          "text": "The rent is fair and hasn't changed in a century. Literally."
+        }
+      ],
+      "neighbors": [
+        {
+          "name": "Thessaly Moor",
+          "race": "Elf",
+          "who": "Reads the lease aloud on the first of every month to anyone who asks.",
+          "hook": "Is the only person who knows what clause nine actually says."
+        }
+      ]
+    },
+    "far-shipyards--candidate-crew-rooms": {
+      "units": [
+        {
+          "id": "shift-bunk",
+          "name": "Shift bunk",
+          "rent": 30,
+          "blurb": "Rented by the shift. Whoever gets there first keeps the blanket.",
+          "free": 6
+        },
+        {
+          "id": "crew-room",
+          "name": "Crew room",
+          "rent": 35,
+          "blurb": "A room shared with your shift.",
+          "free": 3,
+          "staff": "Far Shipyards crew"
+        },
+        {
+          "id": "lock-room",
+          "name": "Room with a lock that works",
+          "rent": 50,
+          "blurb": "Rarer than it should be.",
+          "free": 1
+        }
+      ],
+      "quirks": [
+        {
+          "kind": "snag",
+          "text": "The bunks are double-booked more often than not."
+        },
+        {
+          "kind": "perk",
+          "text": "Shipyard gigs start at your door."
+        }
+      ],
+      "neighbors": [
+        {
+          "name": "Jory Kell",
+          "race": "Dwarf",
+          "who": "A rivet foreman who has slept in Bunk 9 for eleven years.",
+          "hook": "He'll tell you about it, and about who keeps taking Bunk 9."
+        }
+      ]
+    },
+    "old-city--candidate-windowless-rooms": {
+      "units": [
+        {
+          "id": "swept-room",
+          "name": "A swept-out room",
+          "rent": 0,
+          "blurb": "Former service rooms with no windows, as quiet as a held breath.",
+          "free": 2,
+          "pay": "lamp oil or repairs"
+        }
+      ],
+      "quirks": [
+        {
+          "kind": "snag",
+          "text": "No windows, no registry entry and no mail delivery."
+        },
+        {
+          "kind": "perk",
+          "text": "Nobody official is looking for you down here."
+        }
+      ],
+      "neighbors": [
+        {
+          "name": "Nan Gutter",
+          "race": "Human",
+          "who": "Keeps the lamps lit and the way in quiet.",
+          "hook": "Wants to know who's been leaving chalk marks."
+        }
+      ]
+    },
+    "old-city--candidate-the-scavengers-rest": {
+      "units": [
+        {
+          "id": "cot",
+          "name": "A cot in the pocket",
+          "rent": 0,
+          "blurb": "Among people who dig, sort and share.",
+          "free": 2,
+          "pay": "something useful from the dig"
+        }
+      ],
+      "quirks": [
+        {
+          "kind": "odd",
+          "text": "Ask before you enter. Stay by being useful."
+        }
+      ],
+      "neighbors": [
+        {
+          "name": "Mossback",
+          "race": "Slimefolk",
+          "who": "Digs deeper than anyone should.",
+          "hook": "Has found something down there they won't describe."
+        }
+      ]
+    },
+    "old-city--candidate-settlement-row": {
+      "units": [
+        {
+          "id": "row-room",
+          "name": "A room on the row",
+          "rent": 0,
+          "blurb": "Where people actually live down here: patched, lit and claimed.",
+          "free": 2,
+          "pay": "keeping quiet about the way in"
+        }
+      ],
+      "quirks": [
+        {
+          "kind": "perk",
+          "text": "The neighbors watch out for you, because down here everyone has to."
+        }
+      ],
+      "neighbors": [
+        {
+          "name": "Garrow Fenn",
+          "race": "Halfling (Fenn)",
+          "who": "Keeps the row's water filter running.",
+          "hook": "Needs parts from the surface and can't go up for them."
+        }
+      ]
+    },
+    "southport-slums--candidate-borrowed-roof-court": {
+      "units": [
+        {
+          "id": "shared-roof-room",
+          "name": "Room under a shared roof",
+          "rent": 35,
+          "blurb": "Dry most nights, thanks to the neighbors.",
+          "free": 3
+        },
+        {
+          "id": "skylight",
+          "name": "Two rooms and a patched skylight",
+          "rent": 45,
+          "blurb": "Plenty of light, and a bucket for when it rains.",
+          "free": 1
+        }
+      ],
+      "quirks": [
+        {
+          "kind": "perk",
+          "text": "Miss rent and you're asked onto the roof crew, not shown the door."
+        },
+        {
+          "kind": "perk",
+          "text": "A weekly roof repair takes 20 off the rent."
+        }
+      ],
+      "neighbors": [
+        {
+          "name": "Ama Kwarteng",
+          "race": "Human",
+          "who": "The roof crew boss.",
+          "hook": "Can tell a leak from three floors down, and will tell you about yours."
+        }
+      ]
+    },
+    "southport-slums--candidate-mended-stair": {
+      "units": [
+        {
+          "id": "landing-room",
+          "name": "Landing room",
+          "rent": 35,
+          "blurb": "Right on the landing, next to the rail everyone mends.",
+          "free": 2
+        },
+        {
+          "id": "stair-top",
+          "name": "Stair-top flat",
+          "rent": 42,
+          "blurb": "The top of the stair, with the best view and the most steps.",
+          "free": 1
+        }
+      ],
+      "quirks": [
+        {
+          "kind": "perk",
+          "text": "Keep the landing swept and Auntie Pell forgets the odd late week."
+        },
+        {
+          "kind": "odd",
+          "text": "Auntie Pell has opinions about the stair, the landing, and you."
+        }
+      ],
+      "neighbors": [
+        {
+          "name": "Wick",
+          "race": "Kobold",
+          "who": "Sweeps the landing twice so you don't have to, for a price.",
+          "hook": "Saves up for something they won't name."
+        }
+      ]
+    },
+    "southport-slums--candidate-patchlight-rooms": {
+      "units": [
+        {
+          "id": "over-noodles",
+          "name": "Room over the noodle shop",
+          "rent": 38,
+          "blurb": "Warm and loud, and it smells great at lunch.",
+          "free": 2
+        },
+        {
+          "id": "over-repair",
+          "name": "Room over the repair stall",
+          "rent": 40,
+          "blurb": "Soldering fumes from eight until six.",
+          "free": 1
+        },
+        {
+          "id": "corner",
+          "name": "Corner room, two windows",
+          "rent": 48,
+          "blurb": "The best room on the block, priced like it.",
+          "free": 1
+        }
+      ],
+      "quirks": [
+        {
+          "kind": "snag",
+          "text": "Rent goes up whenever the shop below has a bad week."
+        },
+        {
+          "kind": "snag",
+          "text": "Repairs are \"on the list\"."
+        }
+      ],
+      "neighbors": [
+        {
+          "name": "Lio Banerjee",
+          "race": "Human",
+          "who": "Has a list of every \"on the list\" repair since 2019.",
+          "hook": "Wants help taking it to Public Advocacy."
+        }
+      ]
+    },
+    "scrapfields--candidate-patchkin-row": {
+      "units": [
+        {
+          "id": "crew-room",
+          "name": "Crew room, if there's space",
+          "rent": 32,
+          "blurb": "Patchkin crews get first pick. You get what's left.",
+          "free": 2
+        },
+        {
+          "id": "row-house",
+          "name": "Row house",
+          "rent": 42,
+          "blurb": "Built from whatever the fields gave up. It's sturdier than it looks.",
+          "free": 1
+        }
+      ],
+      "quirks": [
+        {
+          "kind": "perk",
+          "text": "A sorting shift in the yards takes 20 off the rent."
+        },
+        {
+          "kind": "perk",
+          "text": "A good find pays rent better than credits do."
+        }
+      ],
+      "neighbors": [
+        {
+          "name": "Nettle",
+          "race": "Goblin",
+          "who": "A Patchkin crew boss.",
+          "hook": "Judges everyone by what they bring back."
+        }
+      ]
+    },
+    "outer-farms--candidate-dustwalker-camp": {
+      "units": [
+        {
+          "id": "tent",
+          "name": "Tent space",
+          "rent": 0,
+          "blurb": "Ground, a windbreak, and a fire someone else lit.",
+          "free": 4,
+          "pay": "news, water or a hand with the stakes"
+        }
+      ],
+      "quirks": [
+        {
+          "kind": "odd",
+          "text": "Ask first. The Dustwalkers remember who was kind."
+        }
+      ],
+      "neighbors": [
+        {
+          "name": "Old Tamsin",
+          "race": "Human",
+          "who": "Keeps the camp's story book.",
+          "hook": "Pays in water for any story she hasn't heard."
+        }
+      ]
+    },
+    "borderlands--candidate-roadside-rest": {
+      "units": [
+        {
+          "id": "stove-floor",
+          "name": "Floor by the stove",
+          "rent": 30,
+          "blurb": "Warm, crowded and honest.",
+          "free": 4
+        },
+        {
+          "id": "regular-room",
+          "name": "A room for regulars",
+          "rent": 45,
+          "blurb": "Earned by coming back.",
+          "free": 1
+        }
+      ],
+      "quirks": [
+        {
+          "kind": "odd",
+          "text": "Regulars get the rooms. Everyone else gets the floor by the stove."
+        },
+        {
+          "kind": "perk",
+          "text": "The last beds before open country, so you're the first to hear road news."
+        }
+      ],
+      "neighbors": [
+        {
+          "name": "Corran Dask",
+          "race": "Orc",
+          "who": "A long-haul driver who's stopped here every month for twenty years.",
+          "hook": "Knows which roads Bastion watches."
+        }
+      ]
+    },
+    "southern-industrial-belt--candidate-worker-rooms": {
+      "units": [
+        {
+          "id": "crew-room",
+          "name": "Crew room",
+          "rent": 40,
+          "blurb": "Rented to Riverbend crews at the crew rate.",
+          "free": 4,
+          "staff": "Riverbend Steelworks"
+        },
+        {
+          "id": "room",
+          "name": "Room",
+          "rent": 75,
+          "blurb": "The same room at the rate for anyone not on the crew.",
+          "free": 2
+        }
+      ],
+      "quirks": [
+        {
+          "kind": "snag",
+          "text": "Miss a shift and it shows up on your rent."
+        },
+        {
+          "kind": "snag",
+          "text": "Corporate-funded: anything you run from here is outside Commons protection."
+        }
+      ],
+      "neighbors": [
+        {
+          "name": "Hedda Stonebrook",
+          "race": "Dwarf",
+          "who": "A union steward in all but name.",
+          "hook": "Wants proof of the shift-docking before the Labor Board will listen."
+        }
+      ]
+    },
+    "crownless-row--candidate-patch-roof-row": {
+      "units": [
+        {
+          "id": "row-room",
+          "name": "Room on the row",
+          "rent": 35,
+          "blurb": "Your roof gets kept on, and so does everyone else's.",
+          "free": 3
+        },
+        {
+          "id": "workshop-house",
+          "name": "House with a workshop",
+          "rent": 48,
+          "blurb": "There's a bench out back and a door wide enough for a cart.",
+          "free": 1
+        }
+      ],
+      "quirks": [
+        {
+          "kind": "odd",
+          "text": "Rent goes into the shared repair tin, and the tin gets counted in public."
+        },
+        {
+          "kind": "perk",
+          "text": "A repair shift on the row takes 20 off the rent."
+        }
+      ],
+      "neighbors": [
+        {
+          "name": "Saint Rusty",
+          "race": "Troll",
+          "who": "Keeps the tin.",
+          "hook": "Has never once miscounted it, and wants that on the record."
+        }
+      ]
+    },
+    "the-sewers--the-dry-stacks": {
+      "units": [
+        {
+          "id": "bunk",
+          "name": "Chamber bunk",
+          "rent": 30,
+          "blurb": "A bunk in a shared chamber, dry most of the year.",
+          "free": 5
+        },
+        {
+          "id": "dry-room",
+          "name": "Dry room",
+          "rent": 38,
+          "blurb": "A chamber of your own with a curtain for a door.",
+          "free": 2
+        },
+        {
+          "id": "family",
+          "name": "Family chamber",
+          "rent": 45,
+          "blurb": "Two chambers knocked through, with a vent that actually draws.",
+          "free": 1
+        }
+      ],
+      "quirks": [
+        {
+          "kind": "perk",
+          "text": "Radio Sewers is down the walkway, so warnings reach you first."
+        },
+        {
+          "kind": "snag",
+          "text": "In flood weeks the pumps fail and everyone sleeps on the upper walkways."
+        },
+        {
+          "kind": "odd",
+          "text": "If the rats are nervous, so is the whole stack."
+        },
+        {
+          "kind": "perk",
+          "text": "A pump-watch shift takes 15 off the rent."
+        }
+      ],
+      "neighbors": [
+        {
+          "name": "Mother Gutterlight",
+          "race": "Slimefolk",
+          "who": "Keeps the pump log and decides who gets a chamber.",
+          "hook": "Wants someone to find out who keeps opening the lower sluice."
+        },
+        {
+          "name": "Tally",
+          "race": "Kobold",
+          "who": "A courier who lives on the walkway and knows every pipe gate.",
+          "hook": "Will run anything anywhere, as long as it isn't through Pipe 37."
+        }
+      ]
+    },
+    "three-wires--the-callback": {
+      "units": [
+        {
+          "id": "desk-bunk",
+          "name": "Bunk by the desk",
+          "rent": 30,
+          "blurb": "First to hear when a job comes in. Last to get any sleep.",
+          "free": 4
+        },
+        {
+          "id": "lock-room",
+          "name": "Room with a lock",
+          "rent": 42,
+          "blurb": "A door, a lock and a window onto the Walk.",
+          "free": 2
+        },
+        {
+          "id": "back-room",
+          "name": "Back room, two exits",
+          "rent": 50,
+          "blurb": "For people who like having options.",
+          "free": 1
+        }
+      ],
+      "quirks": [
+        {
+          "kind": "perk",
+          "text": "Fixers check the Callback's desk first, so gigs find you here."
+        },
+        {
+          "kind": "perk",
+          "text": "Take one of Vane's jobs a week and she knocks 10 off the rent."
+        },
+        {
+          "kind": "snag",
+          "text": "Everyone at the Callback is waiting for work, and some of them want yours."
+        },
+        {
+          "kind": "odd",
+          "text": "Leave by the back exit and Vane will know which job you took."
+        }
+      ],
+      "neighbors": [
+        {
+          "name": "Hollis Crane",
+          "race": "Human",
+          "who": "Ex-Bastion. Has been waiting on a job for three months and pretending he isn't.",
+          "hook": "Knows how Bastion runs a recovery, and might tell you for a drink."
+        },
+        {
+          "name": "Fizzwick",
+          "race": "Goblin",
+          "who": "Paints names on the waiting board.",
+          "hook": "Moves names up the board for a fee."
+        }
+      ]
+    },
+    "greasewick-row--coil-lane-walk-ups": {
+      "units": [
+        {
+          "id": "parts-room",
+          "name": "Room over the parts store",
+          "rent": 34,
+          "blurb": "Cheap, and you'll know every delivery by its engine.",
+          "free": 2
+        },
+        {
+          "id": "walk-up",
+          "name": "Two-room walk-up",
+          "rent": 42,
+          "blurb": "A kitchen, a bedroom and a window onto Coil Lane.",
+          "free": 2
+        },
+        {
+          "id": "roof-flat",
+          "name": "Top flat with a roof bench",
+          "rent": 48,
+          "blurb": "There's a workbench on the roof. On a clear night, the best view on the Row.",
+          "free": 1
+        }
+      ],
+      "quirks": [
+        {
+          "kind": "perk",
+          "text": "Shops below, homes above: you'll hear the work start at six."
+        },
+        {
+          "kind": "perk",
+          "text": "A shift at Third Rattle Motors takes 20 off the rent."
+        },
+        {
+          "kind": "snag",
+          "text": "It smells like oil, and your clothes will too."
+        }
+      ],
+      "neighbors": [
+        {
+          "name": "Bolt Rattle",
+          "race": "Goblin",
+          "who": "Granny's grandson, and the best diagnostician on the Row.",
+          "hook": "Wants to open his own shop, without breaking Granny's heart."
+        },
+        {
+          "name": "Agnes Fenwick",
+          "race": "Human",
+          "who": "A retired welder.",
+          "hook": "Keeps a spare torch for anyone who asks nicely."
+        }
+      ]
+    },
+    "central-core--clocktower-residences": {
+      "units": [
+        {
+          "id": "studio",
+          "name": "Studio over the square",
+          "rent": 150,
+          "blurb": "Polished floors, a view of the trams, and a concierge who knows your name.",
+          "free": 3
+        },
+        {
+          "id": "one-bed",
+          "name": "One-bed with a tram view",
+          "rent": 175,
+          "blurb": "A bedroom away from the bells.",
+          "free": 2
+        },
+        {
+          "id": "clock-suite",
+          "name": "Clock-face suite",
+          "rent": 220,
+          "blurb": "Behind the clock itself. The light comes through the numerals.",
+          "free": 1
+        }
+      ],
+      "quirks": [
+        {
+          "kind": "perk",
+          "text": "It's two minutes to Transfer Square and every tram line."
+        },
+        {
+          "kind": "snag",
+          "text": "The concierge logs every visitor, and the log isn't private."
+        },
+        {
+          "kind": "snag",
+          "text": "Corporate-funded: anything you run from here is outside Commons protection."
+        }
+      ],
+      "neighbors": [
+        {
+          "name": "Delphine Okafor-Reyes",
+          "race": "Human",
+          "who": "A Velvet Signal producer.",
+          "hook": "Always looking for a story, and for someone to be in it."
+        },
+        {
+          "name": "Mister Quell",
+          "race": "Elf",
+          "who": "Has lived in the clock-face suite for sixty years, under four managements.",
+          "hook": "Knows which floors the managers never visit."
+        }
+      ]
+    },
+    "the-ashrun--brown-steps-moorings": {
+      "units": [
+        {
+          "id": "barge-bunk",
+          "name": "Bunk on a working barge",
+          "rent": 32,
+          "blurb": "Cargo by day and your bed by night. Mind the hatch.",
+          "free": 3
+        },
+        {
+          "id": "cabin",
+          "name": "Cabin on a houseboat",
+          "rent": 40,
+          "blurb": "A little stove, a round window and the river right outside.",
+          "free": 2
+        },
+        {
+          "id": "narrowboat",
+          "name": "A whole narrowboat",
+          "rent": 50,
+          "blurb": "Yours from bow to stern, as long as it floats.",
+          "free": 1
+        }
+      ],
+      "quirks": [
+        {
+          "kind": "odd",
+          "text": "Once a season the boats move berths, and your address moves with them."
+        },
+        {
+          "kind": "snag",
+          "text": "Flood weeks rock the boats, so don't keep anything fragile."
+        },
+        {
+          "kind": "perk",
+          "text": "A boat ride beats the roads, if you know the water routes."
+        }
+      ],
+      "neighbors": [
+        {
+          "name": "Dorrit Wennick",
+          "race": "Orc",
+          "who": "The captain's sister. Sells smoked fish off the stern.",
+          "hook": "Hears every rumor that comes down the river."
+        },
+        {
+          "name": "Silt",
+          "race": "Slimefolk",
+          "who": "Lives under the moorings.",
+          "hook": "Knows what's in the water, and who put it there."
+        }
+      ]
+    },
+    "governance-district--waitlist-house": {
+      "units": [
+        {
+          "id": "bed",
+          "name": "Emergency bed",
+          "rent": 0,
+          "blurb": "A real address, a locker and a waitlist number.",
+          "free": 20,
+          "pay": "placement only"
+        }
+      ],
+      "quirks": [
+        {
+          "kind": "snag",
+          "text": "A real address, a waitlist and a bad mood."
+        },
+        {
+          "kind": "perk",
+          "text": "The Advocates Steps are across the square, if you need help with an eviction from Public Advocacy."
+        },
+        {
+          "kind": "odd",
+          "text": "You don't rent a room here. You're placed in one when you've lost your home."
+        }
+      ],
+      "neighbors": [
+        {
+          "name": "Clerk Imogen Pask",
+          "race": "Human",
+          "who": "Assigns the beds.",
+          "hook": "Remembers who said thank you, and moves them up the list."
+        }
+      ]
+    },
+    "crownline-industrials--shift-dorms": {
+      "units": [
+        {
+          "id": "contract-bunk",
+          "name": "Contractor bunk",
+          "rent": 40,
+          "blurb": "Contract rate for anyone working a Crownline contract.",
+          "free": 6,
+          "staff": "a Crownline contractor"
+        },
+        {
+          "id": "dorm-room",
+          "name": "Dorm room",
+          "rent": 70,
+          "blurb": "The same room at the rate for anyone not on a contract.",
+          "free": 3
+        },
+        {
+          "id": "supervisor",
+          "name": "Supervisor's room",
+          "rent": 85,
+          "blurb": "A door, a desk, and a window that faces away from the stacks.",
+          "free": 1
+        }
+      ],
+      "quirks": [
+        {
+          "kind": "snag",
+          "text": "Lights out on the shift whistle, whether your shift is over or not."
+        },
+        {
+          "kind": "perk",
+          "text": "The Overtime Canteen is next door."
+        },
+        {
+          "kind": "snag",
+          "text": "Corporate-funded: anything you run from here is outside Commons protection."
+        }
+      ],
+      "neighbors": [
+        {
+          "name": "Rook Tallis",
+          "race": "Orc",
+          "who": "Says he's just a pipe fitter.",
+          "hook": "Has Bastion boots under his bunk."
+        }
+      ]
+    }
+  }
+}

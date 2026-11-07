@@ -240,6 +240,41 @@ for (const l of LL.landlords) {
 }
 for (const p of W.places) if (p.type === 'housing' && !housedBy[p.id]) bad('landlords', `${p.id} has no landlord entry`);
 if (!tierIds.has(LL.floor.tier)) bad('landlords.floor', `tier ${LL.floor.tier} is not a housing tier`);
+if (LL.floor.place && !housedBy[LL.floor.place]) bad('landlords.floor.place', `${LL.floor.place} is not a housing place`);
+// --- Rentals (data/rentals.json) and each landlord's terms ---
+const RT = load('data/rentals.json'), DT = load('data/downtime.json'), classNames = new Set(Object.keys(rules.classes));
+for (const t of tierIds) if (!RT.bands[t]) bad('rentals.bands', `no band for tier ${t}`);
+for (const [t, [lo, hi]] of Object.entries(RT.bands)) { const h = WEEK.week.housing.find(x => x.id === t); if (h && !(lo <= h.credits && h.credits <= hi)) bad(`rentals.bands.${t}`, `band ${lo}-${hi} doesn't include the rulebook's ${h.credits}`); }
+let unitCount = 0;
+for (const l of LL.landlords) {
+  for (const id of l.places) {
+    const R = RT.places[id]; if (!R) { bad(`rentals.${id}`, 'no listing'); continue; }
+    const forRent = l.tier && !l.notForRent;
+    if (forRent && !(R.units && R.units.length)) bad(`rentals.${id}`, 'rentable but no units');
+    const seen = new Set();
+    for (const u of R.units || []) {
+      unitCount++;
+      if (seen.has(u.id)) bad(`rentals.${id}.${u.id}`, 'duplicate unit id'); seen.add(u.id);
+      if (u.staff && !l.employer) bad(`rentals.${id}.${u.id}`, 'crew unit but the landlord has no employer');
+      const tier = u.staff && l.employer ? l.employer.tier : l.tier, b = RT.bands[tier];
+      if (!b) bad(`rentals.${id}.${u.id}`, `no band for ${tier}`); else if (!u.pay && !(b[0] <= u.rent && u.rent <= b[1])) bad(`rentals.${id}.${u.id}`, `rent ${u.rent} is outside the ${tier} band ${b[0]}-${b[1]}`);
+      if (u.pay && u.rent !== 0) bad(`rentals.${id}.${u.id}`, 'paid in something else, so rent should be 0');
+      if (!(Number.isInteger(u.free) && u.free >= 0)) bad(`rentals.${id}.${u.id}`, 'free must be a whole number');
+      if (!u.name || !u.blurb) bad(`rentals.${id}.${u.id}`, 'needs a name and a blurb');
+    }
+    for (const q of R.quirks || []) if (!['perk', 'snag', 'odd'].includes(q.kind) || !q.text) bad(`rentals.${id}.quirks`, `bad quirk ${JSON.stringify(q)}`);
+    for (const n of R.neighbors || []) { if (!n.name || !n.who || !n.hook) bad(`rentals.${id}.neighbors`, `${n.name || '?'} needs who and hook`); if (!rules.races[n.race]) bad(`rentals.${id}.neighbors`, `${n.name}: unknown race ${n.race}`); }
+  }
+  const T = l.terms || {};
+  if (T.grace && !(T.grace.weeks >= 1 && T.grace.text)) bad(`landlords.${l.id}.terms.grace`, 'needs weeks and text');
+  if (T.favor && !T.grace) bad(`landlords.${l.id}.terms.favor`, 'a favor follows the grace week, so it needs grace too');
+  if (T.favor && !DT.favors[l.name]) bad(`landlords.${l.id}.terms.favor`, `no Downtime favor scene for "${l.name}" in data/downtime.json`);
+  if (T.workOff) { if (!(T.workOff.credits > 0 && T.workOff.for)) bad(`landlords.${l.id}.terms.workOff`, 'needs credits and for'); for (const c of T.workOff.classes || []) if (!classNames.has(c)) bad(`landlords.${l.id}.terms.workOff`, `unknown class ${c}`); }
+  if (T.creep && !(T.creep.credits > 0 && T.creep.everyWeeks >= 1 && T.creep.title && T.creep.text)) bad(`landlords.${l.id}.terms.creep`, 'needs credits, everyWeeks, title and text');
+}
+for (const id of Object.keys(RT.places)) if (!housedBy[id]) bad(`rentals.${id}`, 'listing for a place with no landlord');
+for (const [name, F] of Object.entries(DT.favors)) { if (!LL.landlords.some(l => l.name === name && l.terms?.favor)) bad(`downtime.favors.${name}`, 'no landlord by that name offers a favor'); if (!placeById[F.place]) bad(`downtime.favors.${name}`, `${F.place} is not a place`); for (const [k, o] of Object.entries(F.options)) if (!Object.values(rules.skillKeys).includes(o.check.skill) || !rules.attributes.some(x => x.id === o.check.attr)) bad(`downtime.favors.${name}.${k}`, `bad check ${o.check.attr}/${o.check.skill}`); }
+for (const p of W.places) if (p.pin && !W.maps[p.pin.map]) bad(`places.${p.id}`, `pin is on ${p.pin.map}, which is not a map`);
 const noteIds = new Set();
 for (const n of NOTES.notes) {
   if (noteIds.has(n.id)) bad(`notes.${n.id}`, 'duplicate id'); noteIds.add(n.id);
@@ -270,5 +305,6 @@ console.log(`gigs.json is consistent: ${GIGS.gigs.length} gigs on ${GIGS.app.nam
 console.log(`radio.json is consistent: ${RADIO.slots.length} DJs cover the day; ${RADIO.support.jobs.length} station jobs.`);
 console.log(`Art pack: ${ART.items.length} pieces, all files present; ${CORPS.corporations.length} corporations.`);
 console.log(`jobs.json matches the rulebook: ${JOBS.jobs.length} jobs, complication tables d6/d8/d6.`);
+console.log(`rentals.json lists ${unitCount} units across ${Object.keys(RT.places).length} places; ${Object.keys(DT.favors).length} landlord favors in Downtime.`);
 console.log(`landlords.json covers all ${Object.keys(housedBy).length} housing places with ${LL.landlords.length} landlords; ${NOTES.notes.length} Local Wisdom notes; ${BIZ.businesses.length} business(es).`);
 console.log(`places.json is consistent: ${Object.keys(W.maps).length} maps, ${Object.keys(W.districts).length} districts, ${W.places.length} places, ${W.routes.length} routes.`);

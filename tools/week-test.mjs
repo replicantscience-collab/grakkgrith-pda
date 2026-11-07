@@ -80,7 +80,7 @@ WK.settle(s, W, clock, base + 70 * D, one);
 ok('a long absence bills at most 4 weeks', s.week.mail.filter(m => m.kind === 'bill').length === 5, s.week.mail.filter(m => m.kind === 'bill').length);
 ok('Heat never passes the level cap', (() => { const t = char(); t.stats.heat = '6'; WK.ensure(t); t.week.band = 'crisis'; const x = t.week; const nn = WK.issueNotice(W, t, 'scrutiny', 0, ''); nn.due = 0; WK.settle(t, W, clock, base, one); return Number(t.stats.heat) <= 6; })());
 
-// The Hive: Ma Dresk gives a week's grace, then calls in a favor, before rent becomes Debt
+// Old saves on the retired Hive tier: they move into The Hive, and Ma Dresk still gives a week's grace, then calls in a favor
 {
   let h = char(); WK.ensure(h); WK.setCosts(h, { housing: 'hive' }); h.coins = { credits: '0' };
   WK.settle(h, W, clock, base, one);
@@ -131,7 +131,7 @@ ok('a long absence climbs one step, not four', s.week.home && s.week.home.behind
 // Family-run landlords stop at "review".
 s = char({ coins: { credits: '0' } }); WK.settle(s, W, clock, base, one); WK.moveIn(s, W, homeFor('ma-dresk'), base);
 for (let k = 1; k <= 6; k++) WK.settle(s, W, clock, mon(k) + 3 * D, one);
-ok('Ma Dresk never calls Bastion', s.week.home && !s.week.mail.some(m => /Bastion/.test(m.from)) && s.week.mail.some(m => m.title === 'Favor time'));
+ok('Ma Dresk never calls Bastion', s.week.home && !s.week.mail.some(m => /Bastion/.test(m.from)) && s.week.mail.some(m => m.title === 'Come and see me'));
 // Paying off the landlord resets the ladder.
 const debt = s.week.debts.find(d => d.creditor === 'Ma Dresk'); s.coins.credits = String(debt.amount);
 WK.payDebt(s, debt.id, mon(7));
@@ -139,6 +139,58 @@ ok('paying the landlord back resets the ladder', s.week.home.behind === 0);
 // Choosing a different tier by hand means moving out.
 WK.setCosts(s, { housing: 'mixed' }, mon(7));
 ok('picking another housing tier moves you out', s.week.home === null && s.week.housing === 'mixed');
+
+// Landlord terms, units and listings (apps/homes.js + data/landlords.json + data/rentals.json)
+{
+  const box2 = { window: {} }; vm.runInNewContext(readFileSync(new URL('../apps/homes.js', import.meta.url), 'utf8'), box2);
+  const HM = box2.window.GRAKK_HOMES, LLd = JSON.parse(readFileSync(new URL('../data/landlords.json', import.meta.url))), RT = JSON.parse(readFileSync(new URL('../data/rentals.json', import.meta.url)));
+  const PL = JSON.parse(readFileSync(new URL('../data/places.json', import.meta.url))).places, place = id => PL.find(p => p.id === id);
+  const rent = (s, id, unit, t = base) => WK.moveIn(s, W, HM.homeFor(LLd, RT, place(id), HM.landlordOf(LLd, id), unit), t);
+  const payAll = (s, t) => { for (const m of s.week.mail) if (m.kind === 'bill' && m.status === 'open') WK.pay(s, m.id, t); };
+  const weekOf = s => s.week.mail.filter(m => m.kind === 'bill').sort((a, b) => b.week - a.week)[0];
+  // The Hive's top-floor room bills at its own price, to Ma Dresk, with her grace and favor
+  let t = char(); WK.settle(t, W, clock, base, one);
+  ok('renting a unit sets its rent', rent(t, 'low-halo--the-hive', 'upper').ok && t.week.home.rent === 35 && t.week.home.unitName === 'Upper-floor room');
+  WK.settle(t, W, clock, mon(1) + H, one); const hb = weekOf(t);
+  ok('the bill carries the unit, its price and Ma Dresk', hb.lines[0].credits === 35 && /Upper-floor room, The Hive/.test(hb.lines[0].name) && hb.creditor === 'Ma Dresk' && hb.landlord.graceDays === 7 && hb.landlord.favorDays === 7, JSON.stringify(hb.lines));
+  ok('moving to another unit in the same building is allowed', rent(t, 'low-halo--the-hive', 'over-fryer').ok && t.week.home.rent === 45 && rent(t, 'low-halo--the-hive', 'over-fryer').ok === false);
+  // A landlord with no grace: Brightlane's late rent goes straight to Debt
+  let b = char({ coins: { credits: '0' } }); WK.settle(b, W, clock, base, one); rent(b, 'market-ring--homes-above-shops', 'studio');
+  WK.settle(b, W, clock, mon(1) + H, one); WK.settle(b, W, clock, mon(1) + 3 * D, one);
+  ok('no grace from Brightlane: late rent is Debt', b.week.debts.some(d => d.creditor === 'Brightlane Residential') && !weekOf(b).graced);
+  // Two weeks of grace from the Oduya-Venns, then a favor
+  let o = char({ coins: { credits: '0' } }); WK.settle(o, W, clock, base, one); rent(o, 'market-ring--north-market-neighborhood', 'stall-room');
+  WK.settle(o, W, clock, mon(1) + H, one); const ob = weekOf(o); WK.settle(o, W, clock, mon(1) + 3 * D, one);
+  ok('the Oduya-Venns give two weeks', ob.graced && ob.due - ob.graced === 14 * D && !o.week.debts.some(d => d.creditor === 'The Oduya-Venn family'));
+  // Work-off: a standing shift takes credits off; class rules apply
+  let c = char(); WK.settle(c, W, clock, base, one); rent(c, 'market-ring--south-market-neighborhood', 'workshop-flat');
+  ok('a Runner can take the Tenants\' Table repair shift', WK.setShift(c, true, base).ok && c.week.home.shift);
+  WK.settle(c, W, clock, mon(1) + H, one); const cb = weekOf(c);
+  ok('the shift takes 20 off the rent on the bill', cb.lines[0].credits === 80 && cb.lines[1].credits === -20 && cb.total === 80 - 20 + 20 + 10, JSON.stringify(cb.lines));
+  let g = char({ character: { name: 'G', class: 'Ghost', level: '1' } }); WK.settle(g, W, clock, base, one); rent(g, 'market-ring--south-market-neighborhood', 'workshop-flat');
+  ok('a Ghost can\'t take a Wrench-or-Runner shift', WK.setShift(g, true, base).ok === false && !g.week.home.shift);
+  let any = char({ character: { name: 'A', class: 'Ghost', level: '1' } }); WK.settle(any, W, clock, base, one); rent(any, 'the-sewers--the-dry-stacks', 'bunk');
+  ok('anyone can take a pump watch at the Dry Stacks', WK.setShift(any, true, base).ok);
+  ok('no shift where the landlord takes none', (() => { const x = char(); WK.settle(x, W, clock, base, one); rent(x, 'low-halo--the-hive', 'upper'); return WK.setShift(x, true, base).ok === false; })());
+  // Creep: Patchlight puts the rent up 5 every 3 weeks, never past the Commons band (50)
+  let pch = char({ coins: { credits: '5000' } }); WK.settle(pch, W, clock, base, one); rent(pch, 'southport-slums--candidate-patchlight-rooms', 'corner');
+  for (let k = 1; k <= 12; k++) { WK.settle(pch, W, clock, mon(k) + H, one); payAll(pch, mon(k) + H); }
+  ok('rent creeps up, but stops at the top of the band', pch.week.home.rent === 50 && pch.week.mail.some(m => m.title === 'Bad week downstairs'), pch.week.home.rent);
+  let hr = char({ coins: { credits: '5000' } }); WK.settle(hr, W, clock, base, one); rent(hr, 'dockside--waterfront-homes-crew-lodging', 'water-room');
+  for (let k = 1; k <= 4; k++) { WK.settle(hr, W, clock, mon(k) + H, one); payAll(hr, mon(k) + H); }
+  ok('Harbor Row: +5 after four weeks', hr.week.home.rent === 80, hr.week.home.rent);
+  ok('a long absence creeps at most once per billed week', (() => { const x = char({ coins: { credits: '5000' } }); WK.settle(x, W, clock, base, one); rent(x, 'dockside--waterfront-homes-crew-lodging', 'water-room'); WK.settle(x, W, clock, mon(12) + H, one); return x.week.home.rent <= 80; })());
+  // Crew units bill at the employer's tier
+  const crew = HM.homeFor(LLd, RT, place('dockside--waterfront-homes-crew-lodging'), HM.landlordOf(LLd, 'dockside--waterfront-homes-crew-lodging'), 'crew-bunk');
+  ok('a Meridian crew bunk is Commons tier at 40', crew.tier === 'commons' && crew.rent === 40);
+  // Places nobody rents
+  ok('the Housing Authority, estates and keepers can\'t be rented', ['governance-district--waitlist-house', 'noble-heights--moonspire-house', 'three-spires-monastery--candidate-keeper-rooms', 'noble-heights--old-families-row'].every(id => !HM.rentable(HM.landlordOf(LLd, id))));
+  ok('describe() says who gives grace and who doesn\'t', /grace, then a favor/.test(HM.describe(HM.landlordOf(LLd, 'low-halo--the-hive')).join(' ')) && /No grace/.test(HM.describe(HM.landlordOf(LLd, 'market-ring--homes-above-shops')).join(' ')));
+  // Old saves on the Hive tier
+  let old = char(); old.week = { v: 1, housing: 'hive', gear: 'light', chrome: 'none', lastWeek: null, band: 'clean', mail: [], debts: [], log: [], sessionsStarted: 0 };
+  WK.ensure(old);
+  ok('an old Hive save moves into The Hive at Commons', old.week.housing === 'commons' && old.week.home.place === 'low-halo--the-hive' && old.week.home.rent === 40 && old.week.home.rules.graceDays === 7);
+}
 
 console.log(fails ? `${passes} passed, ${fails} failed.` : `${passes} week checks passed.`);
 process.exit(fails ? 1 : 0);

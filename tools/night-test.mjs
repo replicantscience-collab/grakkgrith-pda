@@ -2,7 +2,7 @@
 import { readFileSync } from 'node:fs';
 import vm from 'node:vm';
 // Plain browser scripts: run them the way the page does and read them off window.
-const window = {}, box = { window }; for (const f of ['engine.js', 'week.js', 'downtime.js']) vm.runInNewContext(readFileSync(new URL('../apps/' + f, import.meta.url), 'utf8'), box);
+const window = {}, box = { window }; for (const f of ['engine.js', 'week.js', 'downtime.js', 'homes.js']) vm.runInNewContext(readFileSync(new URL('../apps/' + f, import.meta.url), 'utf8'), box);
 const N = window.GRAKK_NIGHT, WK = window.GRAKK_WEEK;
 const D = JSON.parse(readFileSync(new URL('../data/downtime.json', import.meta.url)));
 const P = JSON.parse(readFileSync(new URL('../data/places.json', import.meta.url)));
@@ -108,6 +108,19 @@ check('only one per session', !N.newGap(s, T).ok);
   check('doing the favor settles the rent with no credits', bill.status === 'paid' && bill.paidBy === 'favor' && s.coins.credits === '0' && !N.owedFavor(s, D), JSON.stringify(a.entry.effects));
   check('a pleased Ma Dresk raises Standing in Low Halo, not where you spent the night', s.cityRelations.low_halo.standing === '4' && !(s.cityRelations.crownline_industrials && s.cityRelations.crownline_industrials.standing === '4'));
   check('the recap says which favor', /run a parcel/.test(N.recap(s, D, P).discord), N.recap(s, D, P).discord);
+}
+
+// Any landlord with a favor works the same way: Granny Rattle at the Coil Lane walk-ups
+{
+  const W = JSON.parse(readFileSync(new URL('../data/week.json', import.meta.url))), LLd = JSON.parse(readFileSync(new URL('../data/landlords.json', import.meta.url))), RT = JSON.parse(readFileSync(new URL('../data/rentals.json', import.meta.url)));
+  const HM = window.GRAKK_HOMES, H = 3600000, DAY = 24 * H, base = Date.parse(P.clock.anchorReal), id = 'greasewick-row--coil-lane-walk-ups';
+  s = mk(); s.coins = { credits: '0' }; WK.settle(s, W, P.clock, base, () => 0);
+  WK.moveIn(s, W, HM.homeFor(LLd, RT, P.places.find(p => p.id === id), HM.landlordOf(LLd, id), 'walk-up'), WK.adytaNow(P.clock, base));
+  const mon = WK.weekStart(WK.weekIndex(WK.adytaNow(P.clock, base)) + 1) - WK.clockOffset(P.clock);
+  WK.settle(s, W, P.clock, mon + H, () => 0); WK.settle(s, W, P.clock, mon + 3 * DAY, () => 0); WK.settle(s, W, P.clock, mon + 10 * DAY, () => 0);
+  N.startNight(s, P, 'greasewick-row', T);
+  sc = N.scene(s, D, P, E, 'favor', dice([1]));
+  check('Granny Rattle calls in a favor after her grace week', sc && sc.choices.join() === 'engine,customer,part' && /Granny Rattle/.test(sc.text), sc && sc.text);
 }
 
 for (const f of fails) console.log('  ✗ ' + f);
