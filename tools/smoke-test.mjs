@@ -72,8 +72,46 @@ try {
     let f = await open('exploreBtn', 1500);
     await step('Explore map image loads', () => f.evaluate(() => { const i = document.getElementById('mapImg'); return i.complete && i.naturalWidth > 0; }));
     await step('Explore shows the Adyta clock', async () => /\d:\d\d [AP]M/.test(await f.evaluate(() => document.getElementById('clock').textContent)));
-    await step('Explore has every district map, Sewers Town included', async () => { const tabs = await f.$$eval('#mapTabs button', b => b.map(x => x.textContent)); return (tabs.length === 8 && tabs.some(t => /Three Wires/.test(t)) && tabs.some(t => /Noble/.test(t)) && tabs.some(t => /Sewers/.test(t))) || tabs.join('|'); });
+    const catalog = JSON.parse(await readFile(join(ROOT, 'data/places.json'), 'utf8'));
+    await step('Explore has every catalog map and coverage for every district', async () => {
+      const n = await f.locator('#mapTabs button').count();
+      return (n === Object.keys(catalog.maps).length && Object.values(catalog.districts).every(d => catalog.maps[d.map])) || `${n} map tabs or missing coverage`;
+    });
+    for (const [id, m] of Object.entries(catalog.maps).filter(([, m]) => m.image.startsWith('maps/candidates/'))) {
+      await step(`Explore loads candidate ${id} at its catalog dimensions`, async () => {
+        await f.evaluate(id => window.GRAKK_EXPLORE.showMap(id), id);
+        await f.waitForFunction(({src, width, height}) => { const i = document.getElementById('mapImg'); return i.src.endsWith(src) && i.complete && i.naturalWidth === width && i.naturalHeight === height; }, {src: m.image, width: m.width, height: m.height}, {timeout: 10000});
+        return true;
+      });
+    }
+
+    await step('Sewers redraw retains town pins and deep-route uncertainty', async () => {
+      await f.evaluate(() => window.GRAKK_EXPLORE.showMap('sewers-town'));
+      const pins = await f.$$eval('#world .pin', pins => pins.map(p => p.dataset.id));
+      if (pins.length !== 24 || !pins.includes('deep-tunnels--gate-4') || !pins.includes('the-sewers--broken-wing-forge')) return `${pins.length} pins or missing landmark`;
+      await f.evaluate(() => window.GRAKK_EXPLORE.openPlace('the-sewers--radio-sewers'));
+      const relay = await f.evaluate(() => /local relay/.test(document.getElementById('sheetBody').textContent) && /not a fixed headquarters/.test(document.getElementById('sheetBody').textContent));
+      await f.evaluate(() => window.GRAKK_EXPLORE.openPlace('deep-tunnels--gate-4'));
+      return relay && await f.evaluate(() => /Maps disagree past here/.test(document.getElementById('sheetBody').textContent));
+    });
+    await step('Candidate places read clean, with canon status tucked under Sources', async () => {
+      const candidate = catalog.places.find(p => p.id.startsWith('grand-academy--candidate-'));
+      if (!candidate) return 'missing detailed candidate places';
+      await f.evaluate(id => window.GRAKK_EXPLORE.openPlace(id), candidate.id);
+      return f.evaluate(() => { const panel = document.getElementById('sheetBody'); const src = panel.querySelector('details.sources'); return !/candidate/i.test(panel.querySelector('h2').textContent) && !/not established canon/.test(panel.textContent) && !!src && !src.open && /not yet confirmed/.test(src.textContent) && !!src.querySelector('a[href^="https://www.worldanvil.com/w/adyta-jeeperssheefers/"]'); });
+    });
+    await step('Crownless Row discloses its provisional PDA origin', async () => {
+      const candidate = catalog.places.find(p => p.id.startsWith('crownless-row--candidate-'));
+      if (!candidate) return 'missing provisional candidate places';
+      await f.evaluate(id => window.GRAKK_EXPLORE.openPlace(id), candidate.id);
+      return f.evaluate(() => /Provisional expansion from PDA description/.test(document.getElementById('sheetBody').textContent));
+    });
     await step('Explore can plan a trip', async () => (await f.evaluate(() => window.GRAKK_EXPLORE.planTrip({ district: 'ember-court', place: 'ember-court--the-ninth-circle-ph' }).length)) > 0);
+    // The living city: the same day for everyone, a mood per district, signs, one hidden sticker.
+    await step('Explore shows what changed today', () => f.evaluate(() => { const X = window.GRAKK_EXPLORE, T = X.cityDay(); X.openToday(); const t = document.getElementById('sheetBody').innerText; return (!!T && /Today in Adyta/.test(t) && document.querySelectorAll('#sheetBody .days li').length === Object.keys(T.districts).length && !!T.sticker) || t.slice(0, 120); }));
+    await step('a district read leads with today', () => f.evaluate(() => { window.GRAKK_EXPLORE.showMap('adyta-city'); window.GRAKK_EXPLORE.openPlace('low-halo'); return !!document.querySelector('#sheetBody .today .scrawl'); }));
+    await step('a housing place names its landlord and rent', () => f.evaluate(() => { const X = window.GRAKK_EXPLORE; X.showMap('low-halo', 'low-halo--the-hive'); X.openPlace('low-halo--the-hive'); const t = document.getElementById('sheetBody').innerText; return (/Ma Dresk/.test(t) && /40 credits a week/.test(t)) || t.slice(0, 200); }));
+    await step('Local Wisdom notes show where they were written', () => f.evaluate(() => { const X = window.GRAKK_EXPLORE; X.openPlace('low-halo--saint-static-arms'); return /Written here/i.test(document.getElementById('sheetBody').innerText); }));
 
     // Sideways art pass: Start wears the kit; Sideways' commentary and the rulebook stay separate in the guide.
     f = await open('worldBtn', 1200);
@@ -208,6 +246,15 @@ try {
       return (r.beats === 12 && r.first && r.focus && /Civic Registry/.test(r.label) && gone) || JSON.stringify({ ...r, gone });
     });
     await step('the sheet shows the new character', async () => { await page.evaluate(() => document.getElementById('fullSheetBtn').click()); await page.waitForTimeout(1600); return frame(page).evaluate(() => document.body.innerText.includes('Smoke Runner') && document.getElementById('raceSelect').value === 'Goblin'); });
+    await step('a character can travel to today\'s sticker and peel it', async () => { await page.evaluate(() => document.getElementById('exploreBtn').click()); await page.waitForTimeout(1500); return frame(page).evaluate(() => {
+      const X = window.GRAKK_EXPLORE, st = X.cityDay().sticker; X.presence.transit = null; X.presence.location = { district: st.district, place: st.place }; X.openPlace(st.place);
+      document.getElementById('peel').click(); const kept = JSON.parse(localStorage.getItem('grakkgrith_character_tool_v8_state')).world.stickers || [];
+      return (kept.length === 1 && kept[0].id === st.id && /Peeled it/.test(document.getElementById('sheetBody').innerText)) || JSON.stringify(kept); }); });
+    await step('a character can rent a room and Mail knows the landlord', async () => { const r = await frame(page).evaluate(() => {
+      const X = window.GRAKK_EXPLORE; X.presence.transit = null; X.presence.location = { district: 'low-halo', place: 'low-halo--the-hive' }; X.showMap('low-halo', 'low-halo--the-hive'); X.openPlace('low-halo--the-hive');
+      const b = document.querySelector('#sheetBody [data-rent]'); if (!b) return 'no Rent button'; b.click();
+      const h = JSON.parse(localStorage.getItem('grakkgrith_character_tool_v8_state')).week?.home; return (h && h.landlordName === 'Ma Dresk' && /Your home/.test(document.getElementById('sheetBody').innerText)) || JSON.stringify(h); });
+      return r; });
     await step('Explore can send them somewhere', async () => { await page.evaluate(() => document.getElementById('exploreBtn').click()); await page.waitForTimeout(1500); return frame(page).evaluate(() => { const X = window.GRAKK_EXPLORE, t = { district: 'low-halo', place: 'low-halo--rust-market' }; X.startTrip(t, X.planTrip(t)[0]); return !!JSON.parse(localStorage.getItem('grakkgrith_character_tool_v8_state')).world.presence.transit; }); });
     // The Week: rent on the Adyta clock and Heat mail, from a fresh character.
     const ST = () => page.evaluate(() => JSON.parse(localStorage.getItem('grakkgrith_character_tool_v8_state')));
@@ -218,6 +265,13 @@ try {
       const w = await f.evaluate(() => document.documentElement.scrollWidth - innerWidth);
       return (bill && badge === '1' && w <= 1) || `bill ${bill}, badge "${badge}", ${w}px too wide`;
     });
+    await step('an owner sees their business card in Mail', async () => {
+      const K = 'grakkgrith_character_tool_v8_state', rename = n => page.evaluate(([k, n]) => { const s = JSON.parse(localStorage.getItem(k)); s.character.name = n; localStorage.setItem(k, JSON.stringify(s)); }, [K, n]);
+      const was = await page.evaluate(k => JSON.parse(localStorage.getItem(k)).character.name, K);
+      await rename('Ekois'); await frame(page).evaluate(() => location.reload()); await page.waitForTimeout(1800);
+      const r = await frame(page).evaluate(() => (!document.getElementById('bizSec').hidden && /Sideways Shops/.test(document.getElementById('biz').innerText) && /Commons-protected/.test(document.getElementById('biz').innerText)) || document.getElementById('biz').innerText.slice(0, 120));
+      await rename(was); await frame(page).evaluate(() => location.reload()); await page.waitForTimeout(1500);
+      return r; });
     await step('paying rent takes credits and clears the badge', async () => {
       const before = Number((await ST()).coins.credits || 0); await f.click('.letter.bill button[data-pay]'); await page.waitForTimeout(400);
       const after = Number((await ST()).coins.credits || 0), badge = await page.evaluate(() => document.getElementById('mailBadge').textContent);

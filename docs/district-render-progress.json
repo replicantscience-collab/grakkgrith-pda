@@ -1,0 +1,261 @@
+{
+  "sourceCommit": "2238ed0",
+  "created": "2026-11-06",
+  "maps": [
+    {
+      "id": "grand-academy",
+      "name": "Grand Academy",
+      "tagline": "Knowledge. Older arrogance.",
+      "note": "Knowledge and older arrogance. Institutional memory with locked doors.",
+      "kind": "district",
+      "status": "rendered",
+      "image": "maps/candidates/grand-academy.jpg",
+      "width": 1536,
+      "height": 1024
+    },
+    {
+      "id": "new-halo",
+      "name": "New Halo",
+      "tagline": "The Shining Spire. Finance. Media. Power. Where futures are traded.",
+      "note": "The Shining Spire, aspirational skyline, prestige pressure, and the polished version of Adyta sold upward.",
+      "kind": "district",
+      "status": "rendered",
+      "image": "maps/candidates/new-halo.jpg",
+      "width": 1536,
+      "height": 1024
+    },
+    {
+      "id": "governance-district",
+      "name": "Governance District",
+      "tagline": "Paper. Power. Lies. All very official.",
+      "note": "Paper, power, lies, civic channels, public authority, and procedures that decide who gets heard.",
+      "kind": "district",
+      "status": "rendered",
+      "image": "maps/candidates/governance-district.jpg",
+      "width": 1536,
+      "height": 1024
+    },
+    {
+      "id": "crownline-industrials",
+      "name": "Crownline Industrials",
+      "tagline": "They profit. You breathe it.",
+      "note": "Profit, smoke, infrastructure leverage, and the corporate version of stability.",
+      "dossier": {
+        "mood": "Service is strength, and strength sends invoices.",
+        "control": "Crownline, contractors, security, infrastructure leverage.",
+        "heat": "Corporate Heat. Evidence becomes liability before it becomes truth.",
+        "hazards": "Watch teams, access logs, clean uniforms, dirty files, managed witnesses.",
+        "factions": "Crownline Infrastructure; Bastion Dynamics; civic compromise chain.",
+        "missions": "Burn-Wire Block Check; seized power dispute; corridor shutdowns.",
+        "wisdom": "They protect you. You pay. Everybody wins, allegedly."
+      },
+      "kind": "district",
+      "status": "rendered",
+      "image": "maps/candidates/crownline-industrials.jpg",
+      "width": 1536,
+      "height": 1024
+    },
+    {
+      "id": "three-spires-monastery",
+      "name": "Three Spires Monastery",
+      "tagline": "Old pacts. Older secrets.",
+      "note": "Old gods, older secrets, and spiritual leverage that does not fit corporate reporting.",
+      "kind": "district",
+      "status": "rendered",
+      "image": "maps/candidates/three-spires-monastery.jpg",
+      "width": 1536,
+      "height": 1024
+    },
+    {
+      "id": "elven-enclave",
+      "name": "Elven Enclave",
+      "tagline": "Established. Elegant. Elven.",
+      "note": "Established, elegant, elven. An enclave of older status and polished exclusions.",
+      "kind": "district",
+      "status": "rendered",
+      "image": "maps/candidates/elven-enclave.jpg",
+      "width": 1536,
+      "height": 1024
+    },
+    {
+      "id": "central-core",
+      "name": "Central Core",
+      "tagline": "Commerce. Politics. Control. Transit for all.",
+      "note": "Commerce, politics, control, transit for all. The official city explains itself from here.",
+      "kind": "district",
+      "status": "rendered",
+      "image": "maps/candidates/central-core.jpg",
+      "width": 1536,
+      "height": 1024
+    },
+    {
+      "id": "the-ashrun",
+      "name": "The Ashrun",
+      "tagline": "Trade flows. Waste flows. Stories drown.",
+      "note": "Trade flows, waste flows, stories drown. Water routes carry more than freight.",
+      "kind": "district",
+      "status": "rendered",
+      "image": "maps/candidates/the-ashrun.jpg",
+      "width": 1536,
+      "height": 1024
+    },
+    {
+      "id": "far-shipyards",
+      "name": "Far Shipyards",
+      "tagline": "Build it. Break it. Sell it twice.",
+      "note": "Build it, break it, sell it twice. Heavy industry at the edge of the harbor map.",
+      "kind": "district",
+      "status": "rendered",
+      "image": "maps/candidates/far-shipyards.jpg",
+      "width": 1536,
+      "height": 1024
+    },
+    {
+      "id": "greasewick-row",
+      "name": "Greasewick Row",
+      "tagline": "Machines. Oil. Fixers. Goblin tech.",
+      "note": "Machines, oil, fixers, goblin tech, and repair work that smells like debt and hot metal.",
+      "kind": "district",
+      "status": "rendered",
+      "image": "maps/candidates/greasewick-row.jpg",
+      "width": 1536,
+      "height": 1024
+    },
+    {
+      "id": "old-city",
+      "name": "Old City",
+      "tagline": "Built on ruins. Built over lies. Still standing.",
+      "note": "Built on ruins, built over lies, still standing. Every wall remembers earlier arrangements.",
+      "dossier": {
+        "mood": "Built over ruins, lies, and rooms that still disagree with time.",
+        "control": "Developers, old families, municipal files, things under the floor.",
+        "heat": "Clean on paper, explosive if the buried version surfaces.",
+        "hazards": "Unstable chambers, false histories, occult resonance, missing workers.",
+        "factions": "ABI; Velvet Signal; developers; old-city stakeholders.",
+        "missions": "Below-Site Incident Review.",
+        "wisdom": "Every wall remembers earlier arrangements."
+      },
+      "kind": "district",
+      "status": "rendered",
+      "image": "maps/candidates/old-city.jpg",
+      "width": 1536,
+      "height": 1024
+    },
+    {
+      "id": "southport-slums",
+      "name": "Southport Slums",
+      "tagline": "Forgotten. Abandoned. Still surviving.",
+      "note": "Forgotten, abandoned, still surviving. The city forgets people here until it needs them moved.",
+      "kind": "district",
+      "status": "rendered",
+      "image": "maps/candidates/southport-slums.jpg",
+      "width": 1536,
+      "height": 1024
+    },
+    {
+      "id": "scrapfields",
+      "name": "Scrapfields",
+      "tagline": "Pickers. Scavengers. Patchkin goblins.",
+      "note": "Pickers, scavengers, patchkin goblins, and useful things that refused to stay dead.",
+      "dossier": {
+        "mood": "Useful things that refused to stay dead.",
+        "control": "Pickers, Patchkin, Gremlin Works, scavengers, contested tags.",
+        "heat": "Street-level until corporations remember ownership.",
+        "hazards": "Toxic salvage, armed escorts, misfiled property, unstable assemblies.",
+        "factions": "Patchkin; Gremlin Works; Bastion Dynamics; Crownline.",
+        "missions": "Hold the Line on Reclaimed Power.",
+        "wisdom": "Abandoned means nobody rich needed it yesterday."
+      },
+      "kind": "district",
+      "status": "rendered",
+      "image": "maps/candidates/scrapfields.jpg",
+      "width": 1536,
+      "height": 1024
+    },
+    {
+      "id": "outer-farms",
+      "name": "Outer Farms",
+      "tagline": "Scrap. Gangs. Hunters. Dustwalker goblins.",
+      "note": "Scrap gangs, hunters, dustwalker goblins, and the edge where city logic starts to fail.",
+      "kind": "district",
+      "status": "rendered",
+      "image": "maps/candidates/outer-farms.jpg",
+      "width": 1536,
+      "height": 1024
+    },
+    {
+      "id": "borderlands",
+      "name": "Borderlands",
+      "tagline": "Law fades. Survival sharpens. No promises.",
+      "note": "Law fades, survival sharpens, no promises. Good for crossings and deals nobody records.",
+      "kind": "district",
+      "status": "rendered",
+      "image": "maps/candidates/borderlands.jpg",
+      "width": 1536,
+      "height": 1024
+    },
+    {
+      "id": "southern-industrial-belt",
+      "name": "S. Industrial Belt",
+      "tagline": "Smoke. Steel. Sweat. Ashborn goblins. Dwarf strongholds.",
+      "note": "Smoke, steel, sweat, Ashborn goblins, dwarf strongholds, and work that changes bodies.",
+      "kind": "district",
+      "status": "rendered",
+      "image": "maps/candidates/southern-industrial-belt.jpg",
+      "width": 1536,
+      "height": 1024
+    },
+    {
+      "id": "crownless-row",
+      "name": "Crownless Row",
+      "tagline": "Broken ain't worthless. No crowns. No masters. Stronger together.",
+      "kind": "district",
+      "status": "rendered",
+      "image": "maps/candidates/crownless-row.jpg",
+      "width": 1536,
+      "height": 1024
+    },
+    {
+      "id": "ash-wastes",
+      "name": "Ash Wastes",
+      "tagline": "Dead wind. Dead things. Stay out.",
+      "note": "Dead wind, dead things, stay out. Escalation space for fallout and dangerous edges of the map.",
+      "kind": "district",
+      "status": "rendered",
+      "image": "maps/candidates/ash-wastes.jpg",
+      "width": 1536,
+      "height": 1024
+    },
+    {
+      "id": "forgotten-depths",
+      "name": "Forgotten Depths",
+      "tagline": "Where maps stop. And worse goes down.",
+      "note": "Where maps stop and worse goes down. Use for deep fallout, lost systems, and hard choices.",
+      "kind": "district",
+      "status": "rendered",
+      "image": "maps/candidates/forgotten-depths.jpg",
+      "width": 1536,
+      "height": 1024
+    },
+    {
+      "id": "main-roads",
+      "name": "Main Roads",
+      "tagline": "Official movement: freight, patrols, transit, paperwork, blame.",
+      "note": "Primary surface roads, trade spines, civic transit lanes, and visible routes that official traffic, patrols, freight, and job fallout move through first.",
+      "dossier": {
+        "mood": "Official movement: freight, patrols, transit, paperwork, blame.",
+        "control": "Civic systems, Crownline maintenance, traffic enforcement.",
+        "heat": "Visible. If it happens here, someone records it.",
+        "hazards": "Cameras, patrol timing, chokepoints, blocked transit, crowd panic.",
+        "factions": "Wardens; Crownline; Civil Registry; Emergency Management.",
+        "missions": "Any public-facing operation or getaway complication.",
+        "wisdom": "The legal road is not always the safe road."
+      },
+      "kind": "network",
+      "status": "rendered",
+      "image": "maps/candidates/main-roads.jpg",
+      "width": 1536,
+      "height": 1024
+    }
+  ]
+}

@@ -1,8 +1,6 @@
-// GRAKKGRITH Service Worker v80
-// Caches the app for offline use. Cache busts on version bump.
-// Maps are not downloaded up front: each one is saved the first time you open it (see fetch below).
-
-const CACHE_NAME = 'grakkgrith-v80';
+// GRAKKGRITH Service Worker: consolidated player actions and current main
+// Maps remain lazy-cached. Keep the combined asset list when integrating branches.
+const CACHE_NAME = 'grakkgrith-consolidation-20261107';
 const ASSETS = [
   './',
   './index.html',
@@ -10,6 +8,8 @@ const ASSETS = [
   './apps/player.html',
   './data/rules.json',
   './apps/explore.html',
+  './apps/cityday.js',
+  './apps/business.js',
   './apps/week.html',
   './apps/week.js',
   './apps/make.html',
@@ -66,6 +66,10 @@ const ASSETS = [
   './art/sideways-shops/races/cinderfolk.jpg',
   './art/sideways-shops/races/slimefolk.jpg',
   './data/places.json',
+  './data/cityday.json',
+  './data/landlords.json',
+  './data/notes.json',
+  './data/businesses.json',
   './data/onboarding.json',
   './data/week.json',
   './data/make.json',

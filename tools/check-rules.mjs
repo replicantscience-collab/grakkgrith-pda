@@ -226,6 +226,38 @@ if (JSON.stringify(JOBS.jobs.map(j => j.title)) !== JSON.stringify(ref.jobs)) ba
 for (const [tier, die] of [['known', 6], ['emerging', 8], ['twist', 6]]) if (JOBS.complications[tier].list.length !== die) bad(`jobs.complications.${tier}`, `needs ${die} entries for a d${die}`);
 for (const j of JOBS.jobs) { if (![1, 2, 3].includes(j.baseHeat)) bad(`jobs.${j.id}`, 'base Heat must be 1-3 (rulebook guidance)'); if (j.payKind === 'credits' && !(j.pay && j.pay[0] <= j.pay[1])) bad(`jobs.${j.id}`, 'pay range'); if (!j.clients || !j.clients.length) bad(`jobs.${j.id}`, 'no client'); }
 
+// --- Landlords, Local Wisdom notes, businesses (data/landlords.json, notes.json, businesses.json) ---
+const LL = load('data/landlords.json'), NOTES = load('data/notes.json'), BIZ = load('data/businesses.json');
+const placeById = Object.fromEntries(W.places.map(p => [p.id, p])), tierIds = new Set(WEEK.week.housing.map(h => h.id));
+const housedBy = {};
+for (const l of LL.landlords) {
+  if (!LL.types[l.type]) bad(`landlords.${l.id}`, `unknown type ${l.type}`);
+  if (!LL.temperaments[l.temperament]) bad(`landlords.${l.id}`, `unknown temperament ${l.temperament}`);
+  if (l.tier != null && !tierIds.has(l.tier)) bad(`landlords.${l.id}`, `tier ${l.tier} is not a week.json housing tier`);
+  if (l.tier == null && !l.notForRent) bad(`landlords.${l.id}`, 'no tier and not marked notForRent');
+  if (l.employer && !tierIds.has(l.employer.tier)) bad(`landlords.${l.id}.employer`, `tier ${l.employer.tier} is not a housing tier`);
+  for (const id of l.places) { const p = placeById[id]; if (!p) bad(`landlords.${l.id}`, `${id} is not a place`); else if (p.type !== 'housing') bad(`landlords.${l.id}`, `${id} is ${p.type}, not housing`); if (housedBy[id]) bad(`landlords.${l.id}`, `${id} already belongs to ${housedBy[id]}`); housedBy[id] = l.id; }
+}
+for (const p of W.places) if (p.type === 'housing' && !housedBy[p.id]) bad('landlords', `${p.id} has no landlord entry`);
+if (!tierIds.has(LL.floor.tier)) bad('landlords.floor', `tier ${LL.floor.tier} is not a housing tier`);
+const noteIds = new Set();
+for (const n of NOTES.notes) {
+  if (noteIds.has(n.id)) bad(`notes.${n.id}`, 'duplicate id'); noteIds.add(n.id);
+  if (!!n.place === !!n.district) bad(`notes.${n.id}`, 'needs exactly one of place or district');
+  if (n.place && !placeById[n.place]) bad(`notes.${n.id}`, `${n.place} is not a place`);
+  if (n.district && !W.districts[n.district]) bad(`notes.${n.id}`, `${n.district} is not a district`);
+  if (!n.text || !n.date || !/^\d{4}-\d\d-\d\d$/.test(n.date)) bad(`notes.${n.id}`, 'needs text and a YYYY-MM-DD date');
+  if (!(NOTES.authors[n.author] || /^(agent|player):\S+$/.test(n.author || ''))) bad(`notes.${n.id}`, `unknown author ${n.author}`);
+  if (!['draft', 'canon'].includes(n.status)) bad(`notes.${n.id}`, 'status is draft or canon');
+}
+for (const b of BIZ.businesses) {
+  for (const id of b.places) if (!placeById[id]) bad(`businesses.${b.id}`, `${id} is not a place`);
+  if (b.brand && !W.brands?.[b.brand]) bad(`businesses.${b.id}`, `no brand ${b.brand}`);
+  if (!['independent', 'corporate'].includes(b.funding)) bad(`businesses.${b.id}`, 'funding is independent or corporate');
+  if (!b.owners || !b.owners.length) bad(`businesses.${b.id}`, 'no owners');
+  if (!BIZ.rules.loss.some(s => s.step === b.status) && b.status !== 'open' && b.status !== 'season') bad(`businesses.${b.id}`, `unknown status ${b.status}`);
+}
+
 // --- Report -------------------------------------------------------------------
 if (problems.length) {
   console.error(`rules.json vs ${ref.rulebook}: ${problems.length} problem(s)\n` + problems.map(p => '  - ' + p).join('\n'));
@@ -238,4 +270,5 @@ console.log(`gigs.json is consistent: ${GIGS.gigs.length} gigs on ${GIGS.app.nam
 console.log(`radio.json is consistent: ${RADIO.slots.length} DJs cover the day; ${RADIO.support.jobs.length} station jobs.`);
 console.log(`Art pack: ${ART.items.length} pieces, all files present; ${CORPS.corporations.length} corporations.`);
 console.log(`jobs.json matches the rulebook: ${JOBS.jobs.length} jobs, complication tables d6/d8/d6.`);
+console.log(`landlords.json covers all ${Object.keys(housedBy).length} housing places with ${LL.landlords.length} landlords; ${NOTES.notes.length} Local Wisdom notes; ${BIZ.businesses.length} business(es).`);
 console.log(`places.json is consistent: ${Object.keys(W.maps).length} maps, ${Object.keys(W.districts).length} districts, ${W.places.length} places, ${W.routes.length} routes.`);

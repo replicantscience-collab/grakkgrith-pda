@@ -17,6 +17,7 @@
   <div class="cols">
     <section class="frame" aria-labelledby="mailH"><h2 id="mailH">Mail</h2><div id="mail"></div></section>
     <aside>
+      <section class="frame" aria-labelledby="bizH" id="bizSec" hidden><h2 id="bizH">Your business</h2><div id="biz"></div></section>
       <section class="frame" aria-labelledby="debtH"><h2 id="debtH">Debt</h2><div id="debts"></div></section>
       <section class="frame" aria-labelledby="costH"><h2 id="costH">Weekly costs</h2><div id="costs"></div></section>
       <section class="frame" aria-labelledby="logH"><h2 id="logH">Ledger</h2><ul class="ledger" id="log"></ul></section>
@@ -27,6 +28,7 @@
 <script src="./screen.js"></script>
 <script src="./week.js"></script>
 <script src="./make.js"></script>
+<script src="./business.js"></script>
 <script>
 'use strict';
 const KEY = 'grakkgrith_character_tool_v8_state';
@@ -35,7 +37,7 @@ const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': 
 let W = null, CLOCK = null, M = null;
 const MK = window.GRAKK_MAKE;
 /* Run both clocks: bills/mail and the Workshop's expiry and discovery. */
-function settleAll(s) { const a = WK.settle(s, W, CLOCK, Date.now()); const b = M ? MK.settle(s, M, W, now()) : []; return a.length + b.length; }
+function settleAll(s) { const a = WK.settle(s, W, CLOCK, Date.now()); const b = M ? MK.settle(s, M, W, now()) : []; const c = BIZ && window.GRAKK_BIZ ? GRAKK_BIZ.settle(s, BIZ, now()) : []; return a.length + b.length + c.length; }
 const load = () => { try { return JSON.parse(localStorage.getItem(KEY)); } catch (e) { return null; } };
 const save = s => { try { localStorage.setItem(KEY, JSON.stringify(s)); } catch (e) {} try { parent.postMessage({ type: 'grakkgrith-week-changed' }, '*'); } catch (e) {} };
 const now = () => WK.adytaNow(CLOCK, Date.now());
@@ -70,7 +72,32 @@ function letterHtml(m, open) {
   return `<article class="letter ${esc(m.kind)}" aria-label="${esc(m.title)}">${stamp}<div class="from">${esc(m.from)}</div><h3>${esc(m.title)}</h3>${dueTag}${body}${rolls}${buttons ? `<div class="actions">${buttons}</div>` : ''}</article>`;
 }
 
-let HAS_FILING = false;
+let HAS_FILING = false, BIZ = null;
+/* Your business: Books, Rep, Exposure, Commons protection, this week's back-room offer (apps/business.js). */
+function bizHtml(s) {
+  const BZ = window.GRAKK_BIZ, t = now(); if (!BIZ || !BZ) return '';
+  return BZ.owned(s, BIZ).map(b => {
+    const c = BZ.ensure(s, BIZ, b, t), prot = BZ.isProtected(s, BIZ, b), E = BIZ.rules.economy;
+    const label = { open: 'Open', season: 'Closed for the season', shuttered: 'Shuttered', lost: 'Lost' }[c.status] || c.status;
+    const stepName = ['', 'Trouble', 'Notice', 'Shuttered', 'Lost'][c.step] || '';
+    let h = `<div class="debt"><b>${esc(b.name)}</b> · ${esc(label)}${stepName && c.status === 'open' ? ` · <span style="color:#c0392b">${esc(stepName)}</span>` : ''}
+      <div class="note">${prot ? 'Commons-protected. ' : 'Not protected. '}${esc(BZ.protectionWhy(s, BIZ, b))}</div>
+      <div class="note">Books <b>${c.books} cr</b> · Rep <b>${c.rep} of ${E.repMax}</b> · Exposure <b>${c.exposure}</b> · upkeep ${E.upkeep} cr a week</div>`;
+    if (c.status === 'lost') return h + '<div class="note">It belongs to someone else now. Buying it back is a story to chase.</div></div>';
+    const o = BZ.offer(s, BIZ, b, t);
+    if (o) h += `<div class="note" style="margin-top:8px;padding:8px 10px;border-left:3px solid #6b2d5c"><b>Back-room offer: ${esc(o.title)}</b><br>${esc(o.body)}<br>Pays ${o.pay} cr into the books · Exposure +${o.exposure} · ends Commons protection</div>
+      <div class="actions"><button class="ghost" data-bizno="${esc(b.id)}">Say no</button><button data-bizyes="${esc(b.id)}">Take it</button></div>`;
+    const btn = [];
+    if (c.status === 'shuttered') btn.push(`<button class="primary" data-bizreopen="${esc(b.id)}">Reopen</button>`);
+    if (c.protection === false) btn.push(`<button class="primary" data-bizeven="${esc(b.id)}">Make it even (${E.makeEvenFavor} cr)</button>`);
+    btn.push(`<button class="ghost" data-bizin="${esc(b.id)}">Put 50 in</button>`);
+    if (c.books > 0 && c.status !== 'shuttered') btn.push(`<button class="ghost" data-bizout="${esc(b.id)}">Take ${Math.min(50, c.books)} out</button>`);
+    btn.push(c.status === 'season' ? `<button class="ghost" data-bizopen="${esc(b.id)}">Open again</button>` : c.status === 'open' ? `<button class="ghost" data-bizseason="${esc(b.id)}">Close for the season</button>` : '');
+    h += `<div class="actions">${btn.join('')}</div>`;
+    if (c.log.length) h += `<div class="note">${c.log.slice(0, 3).map(l => esc(l.text)).join('<br>')}</div>`;
+    return h + '</div>';
+  }).join('');
+}
 function render() {
   const s = load();
   HAS_FILING = !!(s && MK && MK.apaFiling(s));
@@ -87,10 +114,13 @@ function render() {
   open.sort((a, b) => (a.kind === 'crisis' ? -1 : 0) - (b.kind === 'crisis' ? -1 : 0) || (a.due ?? Infinity) - (b.due ?? Infinity));
   $('mail').innerHTML = (open.length ? open.map(m => letterHtml(m, true)).join('') : `<div class="empty">Nothing waiting. ${heat >= 2 ? 'Give it time.' : 'Keep your Heat low and it stays that way.'}</div>`)
     + (closed.length ? `<details class="filed"><summary>Filed (${closed.length})</summary>${closed.map(m => letterHtml(m, false)).join('')}</details>` : '');
+  const bz = bizHtml(s); $('bizSec').hidden = !bz; $('biz').innerHTML = bz;
   $('debts').innerHTML = w.debts.length ? w.debts.map(d => `<div class="debt"><b>${d.amount} cr</b> to ${esc(d.creditor)}<div class="note">${esc(d.why || '')}${d.standingHit ? ` · Standing -1 in ${esc(d.standingHit)}` : ''}</div><div class="actions"><button class="primary" data-debt="${d.id}">Pay it off</button>${d.amount > 50 ? `<button class="ghost" data-debt50="${d.id}">Pay 50</button>` : ''}</div></div>`).join('')
     + `<p class="note">${esc(W.week.debt)}</p>` : `<p class="muted">You don't owe anyone. Yet.</p>`;
   const opt = (list, cur) => list.map(x => `<option value="${esc(x.id)}" ${x.id === cur ? 'selected' : ''}>${esc(x.name)} · ${x.credits} cr</option>`).join('');
-  $('costs').innerHTML = `<label for="cHousing">Housing</label><select id="cHousing">${opt(W.week.housing, w.housing)}</select>
+  $('costs').innerHTML = `<div class="homeline" style="display:grid;gap:2px;margin:0 0 12px"><b style="font-size:12px;letter-spacing:.06em;text-transform:uppercase;opacity:.75">Home</b><span>${w.home ? `${esc(w.home.placeName)}, rent to ${esc(w.home.landlordName)}` : w.lastHome ? `Lost ${esc(w.lastHome.placeName)}` : 'Nowhere on the map yet'}</span></div>
+    ${w.home ? '' : '<p class="note">Rent a place in Explore: go there, open it, and tap Rent here.</p>'}
+    <label for="cHousing">Housing</label><select id="cHousing">${opt(W.week.housing, w.housing)}</select>
     <label for="cGear">Equipment maintenance</label><select id="cGear">${opt(W.week.gear, w.gear)}</select>
     <label for="cChrome">Cybernetic upkeep</label><select id="cChrome">${opt(W.week.chrome, w.chrome)}</select>
     <div class="total"><b>Food and supplies</b><span>${W.week.food.credits} cr</span></div>
@@ -109,15 +139,20 @@ document.addEventListener('click', e => {
   else if (b.dataset.flag) { act(s => WK.acknowledgeCrisis(s, b.dataset.flag, t)); toast('Flagged. Whoever runs the next session will see it.'); }
   else if (b.dataset.debt) { const r = act(s => WK.payDebt(s, b.dataset.debt, t)); r && toast(r.msg); }
   else if (b.dataset.debt50) { const r = act(s => WK.payDebt(s, b.dataset.debt50, t, 50)); r && toast(r.msg); }
+  else if (b.dataset.bizyes || b.dataset.bizno) { const id = b.dataset.bizyes || b.dataset.bizno, r = act(s => GRAKK_BIZ.answerOffer(s, BIZ, BIZ.businesses.find(x => x.id === id), t, !!b.dataset.bizyes)); r && toast(r.msg); }
+  else if (b.dataset.bizeven) { const r = act(s => GRAKK_BIZ.makeEven(s, BIZ, BIZ.businesses.find(x => x.id === b.dataset.bizeven), t)); r && toast(r.msg); }
+  else if (b.dataset.bizreopen) { const r = act(s => GRAKK_BIZ.reopen(s, BIZ, BIZ.businesses.find(x => x.id === b.dataset.bizreopen), t)); r && toast(r.msg); }
+  else if (b.dataset.bizin || b.dataset.bizout) { const id = b.dataset.bizin || b.dataset.bizout, r = act(s => { const c = s.business?.[id]; return GRAKK_BIZ.moveMoney(s, BIZ, BIZ.businesses.find(x => x.id === id), t, b.dataset.bizin ? 50 : -Math.min(50, c ? c.books : 0)); }); r && toast(r.msg); }
+  else if (b.dataset.bizseason || b.dataset.bizopen) { const id = b.dataset.bizseason || b.dataset.bizopen, r = act(s => GRAKK_BIZ.setSeason(s, BIZ, BIZ.businesses.find(x => x.id === id), t, !!b.dataset.bizseason)); r && toast(r.msg); }
   else if (b.id === 'sessionBtn') { const r = act(s => WK.sessionStart(s, t)); r && toast(r.stress ? 'Debt pressure: Stress +1.' : 'Session started. No debt pressure.'); }
 });
 document.addEventListener('change', e => {
   const map = { cHousing: 'housing', cGear: 'gear', cChrome: 'chrome' }, k = map[e.target.id]; if (!k) return;
-  act(s => WK.setCosts(s, { [k]: e.target.value })); toast('Updated. It shows on next week\'s bill.');
+  act(s => WK.setCosts(s, { [k]: e.target.value }, now())); toast('Updated. It shows on next week\'s bill.');
 });
 
-Promise.all([fetch('../data/week.json').then(r => r.json()), fetch('../data/places.json').then(r => r.json()), fetch('../data/make.json').then(r => r.json())]).then(([w, p, mk]) => {
-  W = w; CLOCK = p.clock; M = mk;
+Promise.all([fetch('../data/week.json').then(r => r.json()), fetch('../data/places.json').then(r => r.json()), fetch('../data/make.json').then(r => r.json()), fetch('../data/businesses.json').then(r => r.ok ? r.json() : null).catch(() => null)]).then(([w, p, mk, bz]) => {
+  W = w; CLOCK = p.clock; M = mk; BIZ = bz;
   const s = load(); if (hasChar(s)) { settleAll(s); save(s); }
   render();
   window.GRAKK_WEEK_READY = true;

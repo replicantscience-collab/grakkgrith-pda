@@ -1,0 +1,1843 @@
+{
+  "reviewed": "2026-11-06",
+  "sources": {
+    "city": "https://www.worldanvil.com/w/adyta-jeeperssheefers/a/adyta-settlement",
+    "academy": "https://www.worldanvil.com/w/adyta-jeeperssheefers/a/the-grand-academy-landmark",
+    "new-halo": "https://www.worldanvil.com/w/adyta-jeeperssheefers/a/new-halo-settlement",
+    "greasewick": "https://www.worldanvil.com/w/adyta-jeeperssheefers/a/greasewick-row-settlement",
+    "elves": "https://www.worldanvil.com/w/adyta-jeeperssheefers/a/elves-species",
+    "old-city": "https://www.worldanvil.com/w/adyta-jeeperssheefers/a/old-city-settlement",
+    "civic": "https://www.worldanvil.com/w/adyta-jeeperssheefers/a/civic-institutions-article",
+    "corporations": "https://www.worldanvil.com/w/adyta-jeeperssheefers/a/corporations-article",
+    "low-halo": "https://www.worldanvil.com/w/adyta-jeeperssheefers/a/low-halo-settlement"
+  },
+  "policy": "World Anvil facts constrain these original proposals. New names, layouts and placements are not canon. Existing routes and confirmed pins remain unchanged.",
+  "briefs": [
+    {
+      "id": "grand-academy",
+      "sources": [
+        "https://www.worldanvil.com/w/adyta-jeeperssheefers/a/the-grand-academy-landmark"
+      ],
+      "establishedAnchor": "Elven-founded, multi-species scholarship; archives and credentials. Magic and engineering facilities require separation.",
+      "visualDirection": "Weathered institutional stone with later brick and electrical additions. Ivory, oxidized green, dusty violet. A campus embedded in a lived city, not one cathedral. Separate magical laboratories from electrical engineering across open courts; no shared machinery or magical power grid.",
+      "landmarks": [
+        {
+          "number": 1,
+          "name": "Charter Gate",
+          "note": "Visitors queue; credentials checked",
+          "canonStatus": "proposed",
+          "x": 0.23,
+          "y": 0.19
+        },
+        {
+          "number": 2,
+          "name": "The Long Archive",
+          "note": "Requests outlast their requesters",
+          "canonStatus": "proposed",
+          "x": 0.7,
+          "y": 0.19
+        },
+        {
+          "number": 3,
+          "name": "Index Court",
+          "note": "Readers trade missing references",
+          "canonStatus": "proposed",
+          "x": 0.28,
+          "y": 0.34
+        },
+        {
+          "number": 4,
+          "name": "East Teaching Halls",
+          "note": "Lectures spill into corridors",
+          "canonStatus": "proposed",
+          "x": 0.74,
+          "y": 0.34
+        },
+        {
+          "number": 5,
+          "name": "Isolated Arcane Labs",
+          "note": "Wards; separate from technical systems",
+          "canonStatus": "proposed",
+          "x": 0.2,
+          "y": 0.49
+        },
+        {
+          "number": 6,
+          "name": "Engineering Yard",
+          "note": "Electrical work; no magical power",
+          "canonStatus": "proposed",
+          "x": 0.68,
+          "y": 0.49
+        },
+        {
+          "number": 7,
+          "name": "The Brass Observatory",
+          "note": "Night study; old instruments",
+          "canonStatus": "proposed",
+          "x": 0.27,
+          "y": 0.64
+        },
+        {
+          "number": 8,
+          "name": "Patron Steps",
+          "note": "Endowments buy easier introductions",
+          "canonStatus": "proposed",
+          "x": 0.75,
+          "y": 0.64
+        },
+        {
+          "number": 9,
+          "name": "The Secondhand Quill",
+          "note": "Cheap paper; expensive annotations",
+          "canonStatus": "proposed",
+          "x": 0.24,
+          "y": 0.79
+        },
+        {
+          "number": 10,
+          "name": "Copyists Passage",
+          "note": "Service access behind public halls",
+          "canonStatus": "proposed",
+          "x": 0.69,
+          "y": 0.79
+        }
+      ],
+      "status": "lore-grounded design candidate"
+    },
+    {
+      "id": "new-halo",
+      "sources": [
+        "https://www.worldanvil.com/w/adyta-jeeperssheefers/a/new-halo-settlement",
+        "https://www.worldanvil.com/w/adyta-jeeperssheefers/a/adyta-settlement"
+      ],
+      "establishedAnchor": "Redevelopment, affluent professionals and glass towers; the Soft Border faces Low Halo to the south.",
+      "visualDirection": "Rain-streaked glass, concrete towers and retro electronic media screens, maintained shopfronts, half-finished redevelopment, modest legacy buildings between expensive apartments. Cool cyan, white, pink advertisements. Shining Spire is a corporate glass high-rise, not a glowing magical cathedral. Surface trams only; no elevated metro.",
+      "landmarks": [
+        {
+          "number": 1,
+          "name": "The Shining Spire",
+          "note": "Finance, media and corporate prestige",
+          "canonStatus": "established name; proposed placement",
+          "x": 0.23,
+          "y": 0.19
+        },
+        {
+          "number": 2,
+          "name": "Glassline Walk",
+          "note": "Appointments; polished frontage",
+          "canonStatus": "proposed",
+          "x": 0.7,
+          "y": 0.19
+        },
+        {
+          "number": 3,
+          "name": "The Ninth Floor",
+          "note": "Curated music; reservation required",
+          "canonStatus": "proposed",
+          "x": 0.28,
+          "y": 0.34
+        },
+        {
+          "number": 4,
+          "name": "Old Lease Court",
+          "note": "Older homes inside redevelopment",
+          "canonStatus": "proposed",
+          "x": 0.74,
+          "y": 0.34
+        },
+        {
+          "number": 5,
+          "name": "Velvet Window",
+          "note": "Media storefront; carefully edited city",
+          "canonStatus": "proposed",
+          "x": 0.2,
+          "y": 0.49
+        },
+        {
+          "number": 6,
+          "name": "The Quiet Meter",
+          "note": "Utilities work; somebody pays",
+          "canonStatus": "proposed",
+          "x": 0.68,
+          "y": 0.49
+        },
+        {
+          "number": 7,
+          "name": "Service Shift Gate",
+          "note": "Workers enter before residents wake",
+          "canonStatus": "proposed",
+          "x": 0.27,
+          "y": 0.64
+        },
+        {
+          "number": 8,
+          "name": "Prospect Arcade",
+          "note": "Boutiques above delivery doors",
+          "canonStatus": "proposed",
+          "x": 0.75,
+          "y": 0.64
+        },
+        {
+          "number": 9,
+          "name": "Last Original Cafe",
+          "note": "Regulars remember cheaper coffee",
+          "canonStatus": "proposed",
+          "x": 0.24,
+          "y": 0.79
+        },
+        {
+          "number": 10,
+          "name": "The Soft Border",
+          "note": "South: Low Halo; disputed edge",
+          "canonStatus": "established name; proposed placement",
+          "x": 0.69,
+          "y": 0.79
+        }
+      ],
+      "status": "lore-grounded design candidate"
+    },
+    {
+      "id": "governance-district",
+      "sources": [
+        "https://www.worldanvil.com/w/adyta-jeeperssheefers/a/adyta-settlement",
+        "https://www.worldanvil.com/w/adyta-jeeperssheefers/a/civic-institutions-article"
+      ],
+      "establishedAnchor": "Civic administration and contested public authority.",
+      "visualDirection": "A patched twentieth-century civic complex, concrete annexes against older stone, queues, terminals and paper signage. Faded cream, oxidized teal, orange civic accents. Several independent agencies; no imperial palace or unified police command. Place offices as proposed branches, not asserted headquarters.",
+      "landmarks": [
+        {
+          "number": 1,
+          "name": "Registry Counter",
+          "note": "ACR branch; identity paperwork",
+          "canonStatus": "proposed",
+          "x": 0.23,
+          "y": 0.19
+        },
+        {
+          "number": 2,
+          "name": "Advocates Steps",
+          "note": "APA intake; bring every notice",
+          "canonStatus": "proposed",
+          "x": 0.7,
+          "y": 0.19
+        },
+        {
+          "number": 3,
+          "name": "Labor Claims Hall",
+          "note": "ALB branch; wages and hazards",
+          "canonStatus": "proposed",
+          "x": 0.28,
+          "y": 0.34
+        },
+        {
+          "number": 4,
+          "name": "Wardens Rest",
+          "note": "ACW liaison; civilian protection",
+          "canonStatus": "proposed",
+          "x": 0.74,
+          "y": 0.34
+        },
+        {
+          "number": 5,
+          "name": "Evidence Annex",
+          "note": "ABI records; restricted access",
+          "canonStatus": "proposed",
+          "x": 0.2,
+          "y": 0.49
+        },
+        {
+          "number": 6,
+          "name": "Response Court",
+          "note": "AEM coordination; exits stay clear",
+          "canonStatus": "proposed",
+          "x": 0.68,
+          "y": 0.49
+        },
+        {
+          "number": 7,
+          "name": "The Duplicate",
+          "note": "Copies, stamps and tired clerks",
+          "canonStatus": "proposed",
+          "x": 0.27,
+          "y": 0.64
+        },
+        {
+          "number": 8,
+          "name": "Appeals Walk",
+          "note": "Public queue between agencies",
+          "canonStatus": "proposed",
+          "x": 0.75,
+          "y": 0.64
+        },
+        {
+          "number": 9,
+          "name": "Service Ledger Gate",
+          "note": "Compliance papers; contested authority",
+          "canonStatus": "proposed",
+          "x": 0.24,
+          "y": 0.79
+        },
+        {
+          "number": 10,
+          "name": "Back File Passage",
+          "note": "Deliveries; records travel slowly",
+          "canonStatus": "proposed",
+          "x": 0.69,
+          "y": 0.79
+        }
+      ],
+      "status": "lore-grounded design candidate"
+    },
+    {
+      "id": "crownline-industrials",
+      "sources": [
+        "https://www.worldanvil.com/w/adyta-jeeperssheefers/a/adyta-settlement",
+        "https://www.worldanvil.com/w/adyta-jeeperssheefers/a/corporations-article"
+      ],
+      "establishedAnchor": "Northeastern industry under Crownline infrastructure leverage.",
+      "visualDirection": "Utility campus and harsh industrial blocks, white-and-gold corporate signage over soot, cables, pumps and service vans. Dirty concrete, sulfur yellow, cold white. Crownline utility and compliance functions; Bastion contractors distinct. Functional diagram of utility service roads, not magical generators.",
+      "landmarks": [
+        {
+          "number": 1,
+          "name": "Certification Gate",
+          "note": "Access begins with paperwork",
+          "canonStatus": "proposed",
+          "x": 0.23,
+          "y": 0.19
+        },
+        {
+          "number": 2,
+          "name": "Meter House",
+          "note": "Remote service; local consequences",
+          "canonStatus": "proposed",
+          "x": 0.7,
+          "y": 0.19
+        },
+        {
+          "number": 3,
+          "name": "Switchyard Twelve",
+          "note": "Electrical distribution; restricted access",
+          "canonStatus": "proposed",
+          "x": 0.28,
+          "y": 0.34
+        },
+        {
+          "number": 4,
+          "name": "Pump Ledger",
+          "note": "Water machinery; service records",
+          "canonStatus": "proposed",
+          "x": 0.74,
+          "y": 0.34
+        },
+        {
+          "number": 5,
+          "name": "The Clean Front",
+          "note": "White and gold service counters",
+          "canonStatus": "proposed",
+          "x": 0.2,
+          "y": 0.49
+        },
+        {
+          "number": 6,
+          "name": "Contractor Muster",
+          "note": "Bastion personnel; paid enforcement",
+          "canonStatus": "proposed",
+          "x": 0.68,
+          "y": 0.49
+        },
+        {
+          "number": 7,
+          "name": "Inspection Loop",
+          "note": "Vans circle before work starts",
+          "canonStatus": "proposed",
+          "x": 0.27,
+          "y": 0.64
+        },
+        {
+          "number": 8,
+          "name": "The Overtime Canteen",
+          "note": "Shift meals; no free minutes",
+          "canonStatus": "proposed",
+          "x": 0.75,
+          "y": 0.64
+        },
+        {
+          "number": 9,
+          "name": "Disputed Connection",
+          "note": "Older buildings await approval",
+          "canonStatus": "proposed",
+          "x": 0.24,
+          "y": 0.79
+        },
+        {
+          "number": 10,
+          "name": "Maintenance Cut",
+          "note": "Service road; watch the cables",
+          "canonStatus": "proposed",
+          "x": 0.69,
+          "y": 0.79
+        }
+      ],
+      "status": "lore-grounded design candidate"
+    },
+    {
+      "id": "three-spires-monastery",
+      "sources": [
+        "https://www.worldanvil.com/w/adyta-jeeperssheefers/a/adyta-settlement"
+      ],
+      "establishedAnchor": "Northwestern monastery; old religious obligations remain ambiguous.",
+      "visualDirection": "Three visually dominant old spires above layered cloisters and neighborhood walls, weathered stone and patched practical services, muted plum, old copper, candlelight. No invented deity, pantheon, holy relic or confirmed supernatural engine. Religious spaces are deliberately non-specific.",
+      "landmarks": [
+        {
+          "number": 1,
+          "name": "Three Spires",
+          "note": "Old stone; meanings remain disputed",
+          "canonStatus": "proposed",
+          "x": 0.23,
+          "y": 0.19
+        },
+        {
+          "number": 2,
+          "name": "Petition Steps",
+          "note": "Visitors bring quiet requests",
+          "canonStatus": "proposed",
+          "x": 0.7,
+          "y": 0.19
+        },
+        {
+          "number": 3,
+          "name": "The Unnamed Court",
+          "note": "No public account of its rites",
+          "canonStatus": "proposed",
+          "x": 0.28,
+          "y": 0.34
+        },
+        {
+          "number": 4,
+          "name": "Guest Lantern",
+          "note": "Beds for those admitted",
+          "canonStatus": "proposed",
+          "x": 0.74,
+          "y": 0.34
+        },
+        {
+          "number": 5,
+          "name": "Cloister Walk",
+          "note": "Footsteps carry around the walls",
+          "canonStatus": "proposed",
+          "x": 0.2,
+          "y": 0.49
+        },
+        {
+          "number": 6,
+          "name": "The Mended Bell",
+          "note": "Repairs show through old metal",
+          "canonStatus": "proposed",
+          "x": 0.68,
+          "y": 0.49
+        },
+        {
+          "number": 7,
+          "name": "Keeper Rooms",
+          "note": "Daily work behind sacred frontage",
+          "canonStatus": "proposed",
+          "x": 0.27,
+          "y": 0.64
+        },
+        {
+          "number": 8,
+          "name": "Rain Cistern",
+          "note": "Water below the courtyard",
+          "canonStatus": "proposed",
+          "x": 0.75,
+          "y": 0.64
+        },
+        {
+          "number": 9,
+          "name": "The Quiet Table",
+          "note": "Meals without many questions",
+          "canonStatus": "proposed",
+          "x": 0.24,
+          "y": 0.79
+        },
+        {
+          "number": 10,
+          "name": "Outer Service Gate",
+          "note": "Deliveries enter beyond the steps",
+          "canonStatus": "proposed",
+          "x": 0.69,
+          "y": 0.79
+        }
+      ],
+      "status": "lore-grounded design candidate"
+    },
+    {
+      "id": "elven-enclave",
+      "sources": [
+        "https://www.worldanvil.com/w/adyta-jeeperssheefers/a/elves-species"
+      ],
+      "establishedAnchor": "Western elven district; maintained gardens and separated utility systems support its comfort.",
+      "visualDirection": "Tall narrow pale-brick and stone homes, mature trees, shaded courtyards, functioning cisterns, hidden technical utilities; magical facilities physically separate. Sage green, cream, plum flowers. Maintained but aged and disputed, not a fantasy tree kingdom. Include service staff and ordinary households.",
+      "landmarks": [
+        {
+          "number": 1,
+          "name": "Pale Brick Walk",
+          "note": "Generations of continuous repairs",
+          "canonStatus": "proposed",
+          "x": 0.23,
+          "y": 0.19
+        },
+        {
+          "number": 2,
+          "name": "The Kept Garden",
+          "note": "Shade maintained by paid labor",
+          "canonStatus": "proposed",
+          "x": 0.7,
+          "y": 0.19
+        },
+        {
+          "number": 3,
+          "name": "Cistern Court",
+          "note": "Water channels; pumps kept working",
+          "canonStatus": "proposed",
+          "x": 0.28,
+          "y": 0.34
+        },
+        {
+          "number": 4,
+          "name": "Old Ward House",
+          "note": "Obsolete wards; access disputed",
+          "canonStatus": "proposed",
+          "x": 0.74,
+          "y": 0.34
+        },
+        {
+          "number": 5,
+          "name": "The Narrow Archive",
+          "note": "Household records behind locked doors",
+          "canonStatus": "proposed",
+          "x": 0.2,
+          "y": 0.49
+        },
+        {
+          "number": 6,
+          "name": "Canopy Steps",
+          "note": "Quiet lanes under mature trees",
+          "canonStatus": "proposed",
+          "x": 0.68,
+          "y": 0.49
+        },
+        {
+          "number": 7,
+          "name": "Shielded Service Yard",
+          "note": "Technical utilities; isolated from wards",
+          "canonStatus": "proposed",
+          "x": 0.27,
+          "y": 0.64
+        },
+        {
+          "number": 8,
+          "name": "The Long Lease",
+          "note": "Homes altered across generations",
+          "canonStatus": "proposed",
+          "x": 0.75,
+          "y": 0.64
+        },
+        {
+          "number": 9,
+          "name": "The Gardeners Table",
+          "note": "Workers eat behind the frontage",
+          "canonStatus": "proposed",
+          "x": 0.24,
+          "y": 0.79
+        },
+        {
+          "number": 10,
+          "name": "West Maintenance Gate",
+          "note": "Delivery access; heritage has plumbing",
+          "canonStatus": "proposed",
+          "x": 0.69,
+          "y": 0.79
+        }
+      ],
+      "status": "lore-grounded design candidate"
+    },
+    {
+      "id": "central-core",
+      "sources": [
+        "https://www.worldanvil.com/w/adyta-jeeperssheefers/a/adyta-settlement",
+        "https://www.worldanvil.com/w/adyta-jeeperssheefers/a/civic-institutions-article"
+      ],
+      "establishedAnchor": "Commerce, public authority and surface transit.",
+      "visualDirection": "Dense worn commercial center, mixed-era offices, civic counters, busy street-running tram interchange, street vendors and freight access. Slate, faded red, amber and dirty daylight. No subway, metro entrances or flawless grand planned symmetry.",
+      "landmarks": [
+        {
+          "number": 1,
+          "name": "Transfer Square",
+          "note": "Surface tram interchange; proposed layout",
+          "canonStatus": "proposed",
+          "x": 0.23,
+          "y": 0.19
+        },
+        {
+          "number": 2,
+          "name": "Commerce Steps",
+          "note": "Offices above the public crowd",
+          "canonStatus": "proposed",
+          "x": 0.7,
+          "y": 0.19
+        },
+        {
+          "number": 3,
+          "name": "The Public Counter",
+          "note": "Civic referrals; several queues",
+          "canonStatus": "proposed",
+          "x": 0.28,
+          "y": 0.34
+        },
+        {
+          "number": 4,
+          "name": "Ledger Arcade",
+          "note": "Contracts, accounts and small traders",
+          "canonStatus": "proposed",
+          "x": 0.74,
+          "y": 0.34
+        },
+        {
+          "number": 5,
+          "name": "Shift Market",
+          "note": "Food between working hours",
+          "canonStatus": "proposed",
+          "x": 0.2,
+          "y": 0.49
+        },
+        {
+          "number": 6,
+          "name": "Service Crossing",
+          "note": "Delivery carts meet public traffic",
+          "canonStatus": "proposed",
+          "x": 0.68,
+          "y": 0.49
+        },
+        {
+          "number": 7,
+          "name": "The Last Bench",
+          "note": "A place to wait unpaid",
+          "canonStatus": "proposed",
+          "x": 0.27,
+          "y": 0.64
+        },
+        {
+          "number": 8,
+          "name": "Notice Wall",
+          "note": "Official announcements; competing revisions",
+          "canonStatus": "proposed",
+          "x": 0.75,
+          "y": 0.64
+        },
+        {
+          "number": 9,
+          "name": "Roofline Cut",
+          "note": "Foot access above service alleys",
+          "canonStatus": "proposed",
+          "x": 0.24,
+          "y": 0.79
+        },
+        {
+          "number": 10,
+          "name": "The Street Spine",
+          "note": "Main road through the center",
+          "canonStatus": "proposed",
+          "x": 0.69,
+          "y": 0.79
+        }
+      ],
+      "status": "lore-grounded design candidate"
+    },
+    {
+      "id": "the-ashrun",
+      "sources": [
+        "https://www.worldanvil.com/w/adyta-jeeperssheefers/a/adyta-settlement",
+        "https://www.worldanvil.com/w/adyta-jeeperssheefers/a/corporations-article"
+      ],
+      "establishedAnchor": "Industrial waterway connecting waterfront, belt and harbor.",
+      "visualDirection": "Broad dirty canal-and-river system with working quays, pump houses, bridge piers, barges and runoff. Petrol green, rust red, polluted brown, practical amber. Show travel along water and towpaths, no pristine blue leisure canal. Meridian-marked freight handling and Crownline-adjacent water assets.",
+      "landmarks": [
+        {
+          "number": 1,
+          "name": "Freight Reach",
+          "note": "Barges move through working water",
+          "canonStatus": "proposed",
+          "x": 0.23,
+          "y": 0.19
+        },
+        {
+          "number": 2,
+          "name": "Manifest Quay",
+          "note": "Meridian freight; papers meet cargo",
+          "canonStatus": "proposed",
+          "x": 0.7,
+          "y": 0.19
+        },
+        {
+          "number": 3,
+          "name": "The Brown Steps",
+          "note": "Public bank; water leaves marks",
+          "canonStatus": "proposed",
+          "x": 0.28,
+          "y": 0.34
+        },
+        {
+          "number": 4,
+          "name": "Pump Margin",
+          "note": "Service access above intake machinery",
+          "canonStatus": "proposed",
+          "x": 0.74,
+          "y": 0.34
+        },
+        {
+          "number": 5,
+          "name": "Runoff Mouth",
+          "note": "Keep clear of discharge",
+          "canonStatus": "proposed",
+          "x": 0.2,
+          "y": 0.49
+        },
+        {
+          "number": 6,
+          "name": "Towline Walk",
+          "note": "Foot traffic along the bank",
+          "canonStatus": "proposed",
+          "x": 0.68,
+          "y": 0.49
+        },
+        {
+          "number": 7,
+          "name": "The Bent Crossing",
+          "note": "Bridge; narrow service approach",
+          "canonStatus": "proposed",
+          "x": 0.27,
+          "y": 0.64
+        },
+        {
+          "number": 8,
+          "name": "Tide Ledger",
+          "note": "Shift board for water workers",
+          "canonStatus": "proposed",
+          "x": 0.75,
+          "y": 0.64
+        },
+        {
+          "number": 9,
+          "name": "Debris Catch",
+          "note": "What floats gathers here",
+          "canonStatus": "proposed",
+          "x": 0.24,
+          "y": 0.79
+        },
+        {
+          "number": 10,
+          "name": "Harborward Channel",
+          "note": "Toward the broader harbor",
+          "canonStatus": "proposed",
+          "x": 0.69,
+          "y": 0.79
+        }
+      ],
+      "status": "lore-grounded design candidate"
+    },
+    {
+      "id": "far-shipyards",
+      "sources": [
+        "https://www.worldanvil.com/w/adyta-jeeperssheefers/a/adyta-settlement",
+        "https://www.worldanvil.com/w/adyta-jeeperssheefers/a/corporations-article"
+      ],
+      "establishedAnchor": "Eastern working waterfront; construction and dismantling coexist.",
+      "visualDirection": "Huge partially built and dismantled hulls, cranes, sheds, repair docks and worker lanes. Rust orange, ship-primer red, oily green water. Modern-industrial fantasy waterfront, not medieval sailing port; welding and mechanical equipment, no magitech.",
+      "landmarks": [
+        {
+          "number": 1,
+          "name": "Half-Hull Dock",
+          "note": "A ship midway through becoming",
+          "canonStatus": "proposed",
+          "x": 0.23,
+          "y": 0.19
+        },
+        {
+          "number": 2,
+          "name": "Second Sale Yard",
+          "note": "Recovered fittings; ask twice",
+          "canonStatus": "proposed",
+          "x": 0.7,
+          "y": 0.19
+        },
+        {
+          "number": 3,
+          "name": "Plate Cutters",
+          "note": "Steel work; hearing protection advised",
+          "canonStatus": "proposed",
+          "x": 0.28,
+          "y": 0.34
+        },
+        {
+          "number": 4,
+          "name": "Crane Alley",
+          "note": "Loads move overhead",
+          "canonStatus": "proposed",
+          "x": 0.74,
+          "y": 0.34
+        },
+        {
+          "number": 5,
+          "name": "The Dry Berth",
+          "note": "Repairs below the waterline",
+          "canonStatus": "proposed",
+          "x": 0.2,
+          "y": 0.49
+        },
+        {
+          "number": 6,
+          "name": "Rivet Canteen",
+          "note": "Hot food between shifts",
+          "canonStatus": "proposed",
+          "x": 0.68,
+          "y": 0.49
+        },
+        {
+          "number": 7,
+          "name": "Launch Slip",
+          "note": "Keep the slope clear",
+          "canonStatus": "proposed",
+          "x": 0.27,
+          "y": 0.64
+        },
+        {
+          "number": 8,
+          "name": "Manifest Shed",
+          "note": "Freight paperwork before departure",
+          "canonStatus": "proposed",
+          "x": 0.75,
+          "y": 0.64
+        },
+        {
+          "number": 9,
+          "name": "Crew Rooms",
+          "note": "Beds above the working waterfront",
+          "canonStatus": "proposed",
+          "x": 0.24,
+          "y": 0.79
+        },
+        {
+          "number": 10,
+          "name": "Breakers Gate",
+          "note": "Parts leave; whole ships rarely do",
+          "canonStatus": "proposed",
+          "x": 0.69,
+          "y": 0.79
+        }
+      ],
+      "status": "lore-grounded design candidate"
+    },
+    {
+      "id": "greasewick-row",
+      "sources": [
+        "https://www.worldanvil.com/w/adyta-jeeperssheefers/a/greasewick-row-settlement",
+        "https://www.worldanvil.com/w/adyta-jeeperssheefers/a/low-halo-settlement"
+      ],
+      "establishedAnchor": "Low Halo southern repair corridor; goblin-majority, mixed-species trade.",
+      "visualDirection": "Cramped southern Low Halo mechanic bays, salvaged brick sheds, homes above shops, electrical conduits and improvised repair crews. Oil black, hazard orange, acid green graffiti. Repair rather than monumental foundries. Narrow parts lane; no fabricated formal clan subdivisions.",
+      "landmarks": [
+        {
+          "number": 1,
+          "name": "Third Rattle Motors",
+          "note": "Diagnosis before credentials",
+          "canonStatus": "proposed",
+          "x": 0.23,
+          "y": 0.19
+        },
+        {
+          "number": 2,
+          "name": "The Borrowed Spanner",
+          "note": "Tools return with a story",
+          "canonStatus": "proposed",
+          "x": 0.7,
+          "y": 0.19
+        },
+        {
+          "number": 3,
+          "name": "Patch Parts",
+          "note": "Salvage assessed on the counter",
+          "canonStatus": "proposed",
+          "x": 0.28,
+          "y": 0.34
+        },
+        {
+          "number": 4,
+          "name": "Aftershift Kitchen",
+          "note": "Workers eat before going home",
+          "canonStatus": "proposed",
+          "x": 0.74,
+          "y": 0.34
+        },
+        {
+          "number": 5,
+          "name": "Conduit Mouth",
+          "note": "Small crews service tight spaces",
+          "canonStatus": "proposed",
+          "x": 0.2,
+          "y": 0.49
+        },
+        {
+          "number": 6,
+          "name": "The Hot Seam",
+          "note": "Welding behind the shutters",
+          "canonStatus": "proposed",
+          "x": 0.68,
+          "y": 0.49
+        },
+        {
+          "number": 7,
+          "name": "No Receipt Devices",
+          "note": "Secondhand precision repairs",
+          "canonStatus": "proposed",
+          "x": 0.27,
+          "y": 0.64
+        },
+        {
+          "number": 8,
+          "name": "Apprentice Yard",
+          "note": "Learning with somebody watching",
+          "canonStatus": "proposed",
+          "x": 0.75,
+          "y": 0.64
+        },
+        {
+          "number": 9,
+          "name": "Generator Court",
+          "note": "Shared electrical repairs; no magic",
+          "canonStatus": "proposed",
+          "x": 0.24,
+          "y": 0.79
+        },
+        {
+          "number": 10,
+          "name": "South Repair Lane",
+          "note": "Toward older infrastructure",
+          "canonStatus": "proposed",
+          "x": 0.69,
+          "y": 0.79
+        }
+      ],
+      "status": "lore-grounded design candidate"
+    },
+    {
+      "id": "old-city",
+      "sources": [
+        "https://www.worldanvil.com/w/adyta-jeeperssheefers/a/old-city-settlement"
+      ],
+      "establishedAnchor": "Buried streets and structures beneath Low Halo and Central Core.",
+      "visualDirection": "Underground cutaway of multiple buried cities: ceilings of newer foundations, old roads cut off by columns, half-collapsed houses and utility tunnels through former rooms. Ochre dust, black cavities, weak amber worklights. No open sky, surface historic quarter, subway or commuter railway; map uncertainty and collapse.",
+      "landmarks": [
+        {
+          "number": 1,
+          "name": "Foundation Mouth",
+          "note": "Descent beneath newer buildings",
+          "canonStatus": "proposed",
+          "x": 0.23,
+          "y": 0.19
+        },
+        {
+          "number": 2,
+          "name": "The Interrupted Street",
+          "note": "Old road meets a newer wall",
+          "canonStatus": "proposed",
+          "x": 0.7,
+          "y": 0.19
+        },
+        {
+          "number": 3,
+          "name": "Windowless Rooms",
+          "note": "Former homes inside service works",
+          "canonStatus": "proposed",
+          "x": 0.28,
+          "y": 0.34
+        },
+        {
+          "number": 4,
+          "name": "The Scavengers Rest",
+          "note": "Occupied pocket; ask before entering",
+          "canonStatus": "proposed",
+          "x": 0.74,
+          "y": 0.34
+        },
+        {
+          "number": 5,
+          "name": "Three Foundations",
+          "note": "Layers disagree about the floor",
+          "canonStatus": "proposed",
+          "x": 0.2,
+          "y": 0.49
+        },
+        {
+          "number": 6,
+          "name": "Utility Crosscut",
+          "note": "Modern pipes through old rooms",
+          "canonStatus": "proposed",
+          "x": 0.68,
+          "y": 0.49
+        },
+        {
+          "number": 7,
+          "name": "The Sealed Door",
+          "note": "No verified route beyond",
+          "canonStatus": "proposed",
+          "x": 0.27,
+          "y": 0.64
+        },
+        {
+          "number": 8,
+          "name": "Fallen Court",
+          "note": "Collapse; keep off loose edges",
+          "canonStatus": "proposed",
+          "x": 0.75,
+          "y": 0.64
+        },
+        {
+          "number": 9,
+          "name": "Last Legible Wall",
+          "note": "Old markings; meaning uncertain",
+          "canonStatus": "proposed",
+          "x": 0.24,
+          "y": 0.79
+        },
+        {
+          "number": 10,
+          "name": "Unsurveyed Continuation",
+          "note": "Route ends in uncertainty",
+          "canonStatus": "proposed",
+          "x": 0.69,
+          "y": 0.79
+        }
+      ],
+      "status": "lore-grounded design candidate"
+    },
+    {
+      "id": "southport-slums",
+      "sources": [
+        "https://www.worldanvil.com/w/adyta-jeeperssheefers/a/adyta-settlement"
+      ],
+      "establishedAnchor": "Neglected southern settlement beyond the industrial belt.",
+      "visualDirection": "Dense working homes below smoke-heavy city edge, patched roofs, shared courtyards, shops, practical community services and worn roads. Clay red, laundry colors, faded blue and warm windows. Show inhabited dignity, not abandoned emptiness or a caricature of poverty.",
+      "landmarks": [
+        {
+          "number": 1,
+          "name": "Borrowed Roof Court",
+          "note": "Shared repairs keep homes standing",
+          "canonStatus": "proposed",
+          "x": 0.23,
+          "y": 0.19
+        },
+        {
+          "number": 2,
+          "name": "The Late Pot",
+          "note": "Food after the shift ends",
+          "canonStatus": "proposed",
+          "x": 0.7,
+          "y": 0.19
+        },
+        {
+          "number": 3,
+          "name": "Pump Queue",
+          "note": "Water before work",
+          "canonStatus": "proposed",
+          "x": 0.28,
+          "y": 0.34
+        },
+        {
+          "number": 4,
+          "name": "Mended Stair",
+          "note": "Residents maintain the landing",
+          "canonStatus": "proposed",
+          "x": 0.74,
+          "y": 0.34
+        },
+        {
+          "number": 5,
+          "name": "Patchlight Rooms",
+          "note": "Homes above small shops",
+          "canonStatus": "proposed",
+          "x": 0.2,
+          "y": 0.49
+        },
+        {
+          "number": 6,
+          "name": "The Dry Shelf",
+          "note": "Goods kept above runoff",
+          "canonStatus": "proposed",
+          "x": 0.68,
+          "y": 0.49
+        },
+        {
+          "number": 7,
+          "name": "Neighbors Gate",
+          "note": "Local watch; ask who knows you",
+          "canonStatus": "proposed",
+          "x": 0.27,
+          "y": 0.64
+        },
+        {
+          "number": 8,
+          "name": "Last Busk Corner",
+          "note": "Music for whoever stays",
+          "canonStatus": "proposed",
+          "x": 0.75,
+          "y": 0.64
+        },
+        {
+          "number": 9,
+          "name": "The Wash Lines",
+          "note": "Courtyard work; shared space",
+          "canonStatus": "proposed",
+          "x": 0.24,
+          "y": 0.79
+        },
+        {
+          "number": 10,
+          "name": "Beltward Road",
+          "note": "North toward the industrial belt",
+          "canonStatus": "proposed",
+          "x": 0.69,
+          "y": 0.79
+        }
+      ],
+      "status": "lore-grounded design candidate"
+    },
+    {
+      "id": "scrapfields",
+      "sources": [
+        "https://www.worldanvil.com/w/adyta-jeeperssheefers/a/adyta-settlement"
+      ],
+      "establishedAnchor": "Southeastern salvage terrain; Patchkin goblin work.",
+      "visualDirection": "Scrap terrain with winding safe lanes, dismantled appliances and machinery, sorting sheds and workers homes, patched cranes. Oxidized orange, turquoise enamel, steel grey. Salvage economy, not a generic desert rubbish dump; no magical robot army.",
+      "landmarks": [
+        {
+          "number": 1,
+          "name": "Second Life Yard",
+          "note": "Parts sorted before disposal",
+          "canonStatus": "proposed",
+          "x": 0.23,
+          "y": 0.19
+        },
+        {
+          "number": 2,
+          "name": "The Weighing Shade",
+          "note": "Trade measured under patched roofing",
+          "canonStatus": "proposed",
+          "x": 0.7,
+          "y": 0.19
+        },
+        {
+          "number": 3,
+          "name": "Patchkin Work Court",
+          "note": "Salvage crews share the space",
+          "canonStatus": "proposed",
+          "x": 0.28,
+          "y": 0.34
+        },
+        {
+          "number": 4,
+          "name": "Copper Rain",
+          "note": "Wire stripped; sharp edges everywhere",
+          "canonStatus": "proposed",
+          "x": 0.74,
+          "y": 0.34
+        },
+        {
+          "number": 5,
+          "name": "The Running Engine",
+          "note": "Recovered machines tested here",
+          "canonStatus": "proposed",
+          "x": 0.2,
+          "y": 0.49
+        },
+        {
+          "number": 6,
+          "name": "Meal Tin",
+          "note": "Hot food beside the sorting lanes",
+          "canonStatus": "proposed",
+          "x": 0.68,
+          "y": 0.49
+        },
+        {
+          "number": 7,
+          "name": "Tag Dispute",
+          "note": "Ownership argued over chalk marks",
+          "canonStatus": "proposed",
+          "x": 0.27,
+          "y": 0.64
+        },
+        {
+          "number": 8,
+          "name": "Crane Shadow",
+          "note": "Stay outside the swing",
+          "canonStatus": "proposed",
+          "x": 0.75,
+          "y": 0.64
+        },
+        {
+          "number": 9,
+          "name": "The Kept Pieces",
+          "note": "Small components; large possibilities",
+          "canonStatus": "proposed",
+          "x": 0.24,
+          "y": 0.79
+        },
+        {
+          "number": 10,
+          "name": "Repairward Track",
+          "note": "Loads leave for repair markets",
+          "canonStatus": "proposed",
+          "x": 0.69,
+          "y": 0.79
+        }
+      ],
+      "status": "lore-grounded design candidate"
+    },
+    {
+      "id": "outer-farms",
+      "sources": [
+        "https://www.worldanvil.com/w/adyta-jeeperssheefers/a/adyta-settlement"
+      ],
+      "establishedAnchor": "Southwestern fringe; Dustwalkers, salvage, hunting and agriculture.",
+      "visualDirection": "City seam with real cultivated plots, sheds made of salvage, grazing margins, hunters tracks, rough carts and distant worn city roofs. Dust tan, crop green, faded blue. Practical food production mixed with scrap work, not all barren wasteland. Keep hinterland settlements unnamed.",
+      "landmarks": [
+        {
+          "number": 1,
+          "name": "Seamfield",
+          "note": "Cultivated strips beside salvage",
+          "canonStatus": "proposed",
+          "x": 0.23,
+          "y": 0.19
+        },
+        {
+          "number": 2,
+          "name": "Dustwalker Camp",
+          "note": "Temporary resting place; ask first",
+          "canonStatus": "proposed",
+          "x": 0.7,
+          "y": 0.19
+        },
+        {
+          "number": 3,
+          "name": "The Mended Pump",
+          "note": "Irrigation kept alive by repairs",
+          "canonStatus": "proposed",
+          "x": 0.28,
+          "y": 0.34
+        },
+        {
+          "number": 4,
+          "name": "Seed Tin",
+          "note": "Trade small; keep some back",
+          "canonStatus": "proposed",
+          "x": 0.74,
+          "y": 0.34
+        },
+        {
+          "number": 5,
+          "name": "The Pickers Line",
+          "note": "Scrap work along the city edge",
+          "canonStatus": "proposed",
+          "x": 0.2,
+          "y": 0.49
+        },
+        {
+          "number": 6,
+          "name": "Last Fence",
+          "note": "Fields give way to rough country",
+          "canonStatus": "proposed",
+          "x": 0.68,
+          "y": 0.49
+        },
+        {
+          "number": 7,
+          "name": "Hunters Return",
+          "note": "Gear checked before heading out",
+          "canonStatus": "proposed",
+          "x": 0.27,
+          "y": 0.64
+        },
+        {
+          "number": 8,
+          "name": "Shared Store",
+          "note": "Tools and harvest under patched roofing",
+          "canonStatus": "proposed",
+          "x": 0.75,
+          "y": 0.64
+        },
+        {
+          "number": 9,
+          "name": "Marketward Cart Track",
+          "note": "Food and salvage toward town",
+          "canonStatus": "proposed",
+          "x": 0.24,
+          "y": 0.79
+        },
+        {
+          "number": 10,
+          "name": "Hinterland Path",
+          "note": "Beyond: geography remains open",
+          "canonStatus": "proposed",
+          "x": 0.69,
+          "y": 0.79
+        }
+      ],
+      "status": "lore-grounded design candidate"
+    },
+    {
+      "id": "borderlands",
+      "sources": [
+        "https://www.worldanvil.com/w/adyta-jeeperssheefers/a/adyta-settlement"
+      ],
+      "establishedAnchor": "Southwestern edge; uncertain authority and survival.",
+      "visualDirection": "A rough city fringe meeting unsettled country, broken road verges, modest shelters, patched boundary works and several informal foot crossings. Dust ochre, rust and muted green. No invented national border, foreign kingdom, immigration regime or war front.",
+      "landmarks": [
+        {
+          "number": 1,
+          "name": "The Fading Line",
+          "note": "Nobody agrees where authority ends",
+          "canonStatus": "proposed",
+          "x": 0.23,
+          "y": 0.19
+        },
+        {
+          "number": 2,
+          "name": "Roadside Rest",
+          "note": "Beds when there is room",
+          "canonStatus": "proposed",
+          "x": 0.7,
+          "y": 0.19
+        },
+        {
+          "number": 3,
+          "name": "Last Lit Post",
+          "note": "Beyond this, bring your own light",
+          "canonStatus": "proposed",
+          "x": 0.28,
+          "y": 0.34
+        },
+        {
+          "number": 4,
+          "name": "The Spare Wheel",
+          "note": "Cart repairs; parts by barter",
+          "canonStatus": "proposed",
+          "x": 0.74,
+          "y": 0.34
+        },
+        {
+          "number": 5,
+          "name": "Crossing Shade",
+          "note": "Waiting without official shelter",
+          "canonStatus": "proposed",
+          "x": 0.2,
+          "y": 0.49
+        },
+        {
+          "number": 6,
+          "name": "Unclaimed Yard",
+          "note": "Temporary use; contested ownership",
+          "canonStatus": "proposed",
+          "x": 0.68,
+          "y": 0.49
+        },
+        {
+          "number": 7,
+          "name": "Dry Gully Path",
+          "note": "Foot route; weather changes it",
+          "canonStatus": "proposed",
+          "x": 0.27,
+          "y": 0.64
+        },
+        {
+          "number": 8,
+          "name": "The Return Marker",
+          "note": "A point locals recognize",
+          "canonStatus": "proposed",
+          "x": 0.75,
+          "y": 0.64
+        },
+        {
+          "number": 9,
+          "name": "Open Country Track",
+          "note": "No named nation beyond",
+          "canonStatus": "proposed",
+          "x": 0.24,
+          "y": 0.79
+        },
+        {
+          "number": 10,
+          "name": "Cityward Bend",
+          "note": "Back toward the built streets",
+          "canonStatus": "proposed",
+          "x": 0.69,
+          "y": 0.79
+        }
+      ],
+      "status": "lore-grounded design candidate"
+    },
+    {
+      "id": "southern-industrial-belt",
+      "sources": [
+        "https://www.worldanvil.com/w/adyta-jeeperssheefers/a/adyta-settlement"
+      ],
+      "establishedAnchor": "Ashborn goblins, dwarf strongholds, heavy work; BASHRS originates here.",
+      "visualDirection": "Immense steelworks, workshop strongholds, dense labor housing, physical freight access, soot and safety notices, shift-changing crowds. Furnace orange, coal black, oxidized blue steel. Orc street power and industrial labor; no magical electrical machinery. Do not place a confirmed BASHRS headquarters.",
+      "landmarks": [
+        {
+          "number": 1,
+          "name": "Shift Bell Court",
+          "note": "Workers change; the furnaces continue",
+          "canonStatus": "proposed",
+          "x": 0.23,
+          "y": 0.19
+        },
+        {
+          "number": 2,
+          "name": "Ashborn Workshop",
+          "note": "Industrial repairs; crew reputation matters",
+          "canonStatus": "proposed",
+          "x": 0.7,
+          "y": 0.19
+        },
+        {
+          "number": 3,
+          "name": "Stonework Hall",
+          "note": "Dwarven workshop and stronghold frontage",
+          "canonStatus": "proposed",
+          "x": 0.28,
+          "y": 0.34
+        },
+        {
+          "number": 4,
+          "name": "The Long Pour",
+          "note": "Steel work behind guarded access",
+          "canonStatus": "proposed",
+          "x": 0.74,
+          "y": 0.34
+        },
+        {
+          "number": 5,
+          "name": "Hazard Pay Steps",
+          "note": "Claims begin after the injury",
+          "canonStatus": "proposed",
+          "x": 0.2,
+          "y": 0.49
+        },
+        {
+          "number": 6,
+          "name": "The Knuckle Corner",
+          "note": "Street pressure; affiliation unconfirmed",
+          "canonStatus": "proposed",
+          "x": 0.68,
+          "y": 0.49
+        },
+        {
+          "number": 7,
+          "name": "Canteen Six",
+          "note": "Meals between furnace shifts",
+          "canonStatus": "proposed",
+          "x": 0.27,
+          "y": 0.64
+        },
+        {
+          "number": 8,
+          "name": "Load Road",
+          "note": "Freight takes the wide turn",
+          "canonStatus": "proposed",
+          "x": 0.75,
+          "y": 0.64
+        },
+        {
+          "number": 9,
+          "name": "Worker Rooms",
+          "note": "Homes within reach of the job",
+          "canonStatus": "proposed",
+          "x": 0.24,
+          "y": 0.79
+        },
+        {
+          "number": 10,
+          "name": "South Exit",
+          "note": "Toward Southport; smoke follows",
+          "canonStatus": "proposed",
+          "x": 0.69,
+          "y": 0.79
+        }
+      ],
+      "status": "lore-grounded design candidate"
+    },
+    {
+      "id": "crownless-row",
+      "sources": [],
+      "establishedAnchor": "PDA-only identity: repaired community, independence and mutual support.",
+      "visualDirection": "Explicitly PROVISIONAL, developed only from existing PDA description. Independent repaired row housing, workshops, communal courtyards, practical shared resources, no monarchy. Worn blue, brick, warm orange, handmade signs. No invented leader, faction history or external adjacency.",
+      "landmarks": [
+        {
+          "number": 1,
+          "name": "Mending Court",
+          "note": "Shared repair; bring what you can",
+          "canonStatus": "proposed",
+          "x": 0.23,
+          "y": 0.19
+        },
+        {
+          "number": 2,
+          "name": "No Crown Workshop",
+          "note": "Tools before titles",
+          "canonStatus": "proposed",
+          "x": 0.7,
+          "y": 0.19
+        },
+        {
+          "number": 3,
+          "name": "The Spare Chair",
+          "note": "Sit; nobody charges by the minute",
+          "canonStatus": "proposed",
+          "x": 0.28,
+          "y": 0.34
+        },
+        {
+          "number": 4,
+          "name": "Open Pot",
+          "note": "Food when there is enough",
+          "canonStatus": "proposed",
+          "x": 0.74,
+          "y": 0.34
+        },
+        {
+          "number": 5,
+          "name": "Patch Roof Row",
+          "note": "Homes maintained together",
+          "canonStatus": "proposed",
+          "x": 0.2,
+          "y": 0.49
+        },
+        {
+          "number": 6,
+          "name": "The Useful Shelf",
+          "note": "Broken does not mean finished",
+          "canonStatus": "proposed",
+          "x": 0.68,
+          "y": 0.49
+        },
+        {
+          "number": 7,
+          "name": "Neighbors Steps",
+          "note": "Ask before moving through",
+          "canonStatus": "proposed",
+          "x": 0.27,
+          "y": 0.64
+        },
+        {
+          "number": 8,
+          "name": "Lightshare",
+          "note": "Repairs and shared electrical supply",
+          "canonStatus": "proposed",
+          "x": 0.75,
+          "y": 0.64
+        },
+        {
+          "number": 9,
+          "name": "The Small Stage",
+          "note": "A voice without a permit",
+          "canonStatus": "proposed",
+          "x": 0.24,
+          "y": 0.79
+        },
+        {
+          "number": 10,
+          "name": "Common Gate",
+          "note": "Entry by conversation, not a crown",
+          "canonStatus": "proposed",
+          "x": 0.69,
+          "y": 0.79
+        }
+      ],
+      "status": "provisional PDA expansion"
+    },
+    {
+      "id": "ash-wastes",
+      "sources": [
+        "https://www.worldanvil.com/w/adyta-jeeperssheefers/a/adyta-settlement"
+      ],
+      "establishedAnchor": "Far eastern hazard landscape; uninhabitable.",
+      "visualDirection": "Expansive dead ash terrain, corroded industrial remnants, dangerous ground and sparse warning markers. Bleached grey, sickly yellow, rust and black. No resident settlement, cafe, camp, harvest, working transit or cheerful explorer base. Show danger and limits, not a complete safe route.",
+      "landmarks": [
+        {
+          "number": 1,
+          "name": "Last Warning",
+          "note": "Beyond maintained ground",
+          "canonStatus": "proposed",
+          "x": 0.23,
+          "y": 0.19
+        },
+        {
+          "number": 2,
+          "name": "Dead Wind Reach",
+          "note": "Exposure; no shelter assured",
+          "canonStatus": "proposed",
+          "x": 0.7,
+          "y": 0.19
+        },
+        {
+          "number": 3,
+          "name": "Corroded Span",
+          "note": "Bridge remnant; do not trust it",
+          "canonStatus": "proposed",
+          "x": 0.28,
+          "y": 0.34
+        },
+        {
+          "number": 4,
+          "name": "The Black Pool",
+          "note": "Unknown contamination; keep clear",
+          "canonStatus": "proposed",
+          "x": 0.74,
+          "y": 0.34
+        },
+        {
+          "number": 5,
+          "name": "Buried Service Road",
+          "note": "Broken alignment; no maintained access",
+          "canonStatus": "proposed",
+          "x": 0.2,
+          "y": 0.49
+        },
+        {
+          "number": 6,
+          "name": "Ashfall Hollow",
+          "note": "Loose ground conceals the floor",
+          "canonStatus": "proposed",
+          "x": 0.68,
+          "y": 0.49
+        },
+        {
+          "number": 7,
+          "name": "Silent Machinery",
+          "note": "No working plant confirmed",
+          "canonStatus": "proposed",
+          "x": 0.27,
+          "y": 0.64
+        },
+        {
+          "number": 8,
+          "name": "The Missing Markers",
+          "note": "Survey trail breaks here",
+          "canonStatus": "proposed",
+          "x": 0.75,
+          "y": 0.64
+        },
+        {
+          "number": 9,
+          "name": "Exclusion Edge",
+          "note": "Return before visibility fails",
+          "canonStatus": "proposed",
+          "x": 0.24,
+          "y": 0.79
+        },
+        {
+          "number": 10,
+          "name": "Unmapped East",
+          "note": "No verified onward route",
+          "canonStatus": "proposed",
+          "x": 0.69,
+          "y": 0.79
+        }
+      ],
+      "status": "lore-grounded design candidate"
+    },
+    {
+      "id": "forgotten-depths",
+      "sources": [
+        "https://www.worldanvil.com/w/adyta-jeeperssheefers/a/adyta-settlement"
+      ],
+      "establishedAnchor": "Deep southeastern unknown; maps cease to be reliable.",
+      "visualDirection": "Very deep underground uncertain cutaway, disconnected remnants, black unknown cavities and collapsed descents. Low ochre worklight, violet-black shadow, pale chalk. Mostly unreadable dark space, not a fully surveyed secret city. No confirmed Nexus, monster lair, civilization, power source, active railway or guaranteed safe passage.",
+      "landmarks": [
+        {
+          "number": 1,
+          "name": "Last Known Landing",
+          "note": "Beyond: no verified survey",
+          "canonStatus": "proposed",
+          "x": 0.23,
+          "y": 0.19
+        },
+        {
+          "number": 2,
+          "name": "Broken Descent",
+          "note": "Stairs stop before the floor",
+          "canonStatus": "proposed",
+          "x": 0.7,
+          "y": 0.19
+        },
+        {
+          "number": 3,
+          "name": "Chalk Return Mark",
+          "note": "A reminder; not a guarantee",
+          "canonStatus": "proposed",
+          "x": 0.28,
+          "y": 0.34
+        },
+        {
+          "number": 4,
+          "name": "Sealed Margin",
+          "note": "No confirmed room beyond",
+          "canonStatus": "proposed",
+          "x": 0.74,
+          "y": 0.34
+        },
+        {
+          "number": 5,
+          "name": "Pressure Door",
+          "note": "Condition unknown; do not force",
+          "canonStatus": "proposed",
+          "x": 0.2,
+          "y": 0.49
+        },
+        {
+          "number": 6,
+          "name": "Lost Floor",
+          "note": "Depth cannot be read here",
+          "canonStatus": "proposed",
+          "x": 0.68,
+          "y": 0.49
+        },
+        {
+          "number": 7,
+          "name": "The Interrupted Pipe",
+          "note": "Infrastructure without a clear origin",
+          "canonStatus": "proposed",
+          "x": 0.27,
+          "y": 0.64
+        },
+        {
+          "number": 8,
+          "name": "Uncertain Crossing",
+          "note": "Dashes mark a possible passage",
+          "canonStatus": "proposed",
+          "x": 0.75,
+          "y": 0.64
+        },
+        {
+          "number": 9,
+          "name": "Collapse Front",
+          "note": "Route ends at fallen material",
+          "canonStatus": "proposed",
+          "x": 0.24,
+          "y": 0.79
+        },
+        {
+          "number": 10,
+          "name": "Unknown Below",
+          "note": "Leave the map unfinished",
+          "canonStatus": "proposed",
+          "x": 0.69,
+          "y": 0.79
+        }
+      ],
+      "status": "lore-grounded design candidate"
+    },
+    {
+      "id": "main-roads",
+      "sources": [
+        "https://www.worldanvil.com/w/adyta-jeeperssheefers/a/adyta-settlement",
+        "https://www.worldanvil.com/w/adyta-jeeperssheefers/a/civic-institutions-article"
+      ],
+      "establishedAnchor": "Surface travel and competing maps; no subway.",
+      "visualDirection": "Clearly labelled SCHEMATIC ROUTE STUDY, no asserted city-scale geometry or precise adjacency. Worn city street samples linked by a graphic route spine, street-running tram, freight road, foot passage, rooftop path and service access. Muted asphalt grey, orange, cyan and red route coding; no underground rail or invented travel times.",
+      "landmarks": [
+        {
+          "number": 1,
+          "name": "Surface Tram",
+          "note": "Street-level public transport",
+          "canonStatus": "proposed",
+          "x": 0.23,
+          "y": 0.19
+        },
+        {
+          "number": 2,
+          "name": "Freight Spine",
+          "note": "Road movement; schematic connection",
+          "canonStatus": "proposed",
+          "x": 0.7,
+          "y": 0.19
+        },
+        {
+          "number": 3,
+          "name": "Public Crossing",
+          "note": "Pedestrians meet traffic",
+          "canonStatus": "proposed",
+          "x": 0.28,
+          "y": 0.34
+        },
+        {
+          "number": 4,
+          "name": "Service Access",
+          "note": "Utility work behind frontage",
+          "canonStatus": "proposed",
+          "x": 0.74,
+          "y": 0.34
+        },
+        {
+          "number": 5,
+          "name": "Roof Route",
+          "note": "Informal foot route; provisional",
+          "canonStatus": "proposed",
+          "x": 0.2,
+          "y": 0.49
+        },
+        {
+          "number": 6,
+          "name": "Drainage Access",
+          "note": "Infrastructure; never a subway",
+          "canonStatus": "proposed",
+          "x": 0.68,
+          "y": 0.49
+        },
+        {
+          "number": 7,
+          "name": "Closure Point",
+          "note": "Check current local conditions",
+          "canonStatus": "proposed",
+          "x": 0.27,
+          "y": 0.64
+        },
+        {
+          "number": 8,
+          "name": "Transfer Stop",
+          "note": "Illustrative surface interchange",
+          "canonStatus": "proposed",
+          "x": 0.75,
+          "y": 0.64
+        },
+        {
+          "number": 9,
+          "name": "Notice Board",
+          "note": "Official version; ask a local",
+          "canonStatus": "proposed",
+          "x": 0.24,
+          "y": 0.79
+        },
+        {
+          "number": 10,
+          "name": "Unconfirmed Link",
+          "note": "Dashed route; not a travel promise",
+          "canonStatus": "proposed",
+          "x": 0.69,
+          "y": 0.79
+        }
+      ],
+      "status": "lore-grounded design candidate"
+    }
+  ]
+}
