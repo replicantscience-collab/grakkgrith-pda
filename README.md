@@ -139,4 +139,5 @@ Recovered on 2026-10-29 from the published Seele AI build (service worker v38). 
 
 ## Known gaps against the First Edition v1.47 rulebook
 
-- Not built yet: the Arcane Heart / Magical Veins casting engine, Vampire Vitality, Afflictions, Mixed Heritage, Called Shots.
+- Not built yet: Vampire Vitality (half its numbers are still "after playtest"), Called Shots.
+- Casting follows First Edition v1.52 (Chapter Twelve): Arcane Heart rank, Magical Veins, Safe Spell Cost, Unsafe Casting, Vein Collapse, Suicidal Casting, Channel, Resonance dice and Vein recovery live in `apps/engine.js` and are tested by `tools/casting-test.mjs`. Until the playtest number pass, a Working costs anywhere in its scale's band (Minor 1–2, Standard 3–4, Major 5–6) and the caster picks. Downtime's Shade jobs still use the older Stress cost.

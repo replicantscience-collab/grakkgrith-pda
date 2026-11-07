@@ -162,7 +162,7 @@ function create(getState, opts) {
     return {attrVal,wound,cond,pushBonus:0,total,totalRaw,skillValue:Math.max(0,toNum(skillValue,0)),situational:toNum(situational,0),extra:toNum(extra,0),label:label||'Roll'};
   }
   function ensurePlayAutomationState(){ if(!S().playAutomation||typeof S().playAutomation!=='object') S().playAutomation={}; if(!Array.isArray(S().playAutomation.log)) S().playAutomation.log=[]; if(!Array.isArray(S().playAutomation.undo)) S().playAutomation.undo=[]; }
-  function playSnapshot(){ return {stats:deepCopy(S().stats),equipment:deepCopy(S().equipment),inventory:deepCopy(S().inventory),combatFlags:deepCopy(S().combatFlags||{})}; }
+  function playSnapshot(){ return {stats:deepCopy(S().stats),equipment:deepCopy(S().equipment),inventory:deepCopy(S().inventory),combatFlags:deepCopy(S().combatFlags||{}),magic:deepCopy(S().magic||{})}; }
   function actionChanges(before, after, path=[]) {
     if (JSON.stringify(before)===JSON.stringify(after)) return [];
     if (before && after && typeof before==='object' && typeof after==='object' && Array.isArray(before)===Array.isArray(after)) {
@@ -247,7 +247,88 @@ function create(getState, opts) {
   function canPush(){ const s=S(); return toNum(s.stats.stress,0)<stressCap(s.character.level); }
   function payPush(){ const s=S(); if(!canPush()) return {ok:false,message:'Stress is full. Resolve further pressure with the GM before pushing.'}; s.stats.stress=String(toNum(s.stats.stress,0)+1); return {ok:true,dice:rollDicePool(2)}; }
 
+  /* ---------- Casting (First Edition v1.52, Chapter Twelve: the casting engine) ----------
+     Arcane Heart rank sets max Magical Veins and the Safe Spell Cost. A Working burns its Spell Cost in Veins
+     whether or not the roll succeeds. Stress and Wounds come only from Unsafe Casting (cost over Safe),
+     Vein Collapse (the cast empties your Veins) and Suicidal Casting (casting at 0 Veins).
+     Interim reading until the playtest number pass: each Working costs anywhere in its scale's band,
+     the caster picks the number (default: the low end). */
+  const HEART=[{rank:0,name:'Atrophied',max:0,safe:0},{rank:1,name:'Awakened',max:2,safe:1},{rank:2,name:'Trained',max:5,safe:2},{rank:3,name:'Developed',max:9,safe:3},{rank:4,name:'Expanded',max:14,safe:4},{rank:5,name:'Mastered',max:20,safe:5},{rank:6,name:'Exceptional',max:27,safe:6}];
+  const COST_BAND={Minor:[1,2],Standard:[3,4],Major:[5,6]}, CAST_DIFF={Minor:1,Standard:2,Major:3};
+  const RES_DICE=[0,1,1,2];
+  function ensureMagic(){ const s=S(); s.magic=Object.assign({streetTag:'',streetTagSource:'',resonance:'0',location:'',resonanceNote:'',knownWorkings:[],heartRank:'',developed:'0',veins:''},s.magic||{}); if(!Array.isArray(s.magic.knownWorkings)) s.magic.knownWorkings=[]; return s.magic; }
+  function isShade(){ return String(S().character?.class||'')==='Shade'; }
+  /* Rank: the GM can set it; otherwise 1 + floor(Spark / 2), capped at 6. */
+  function arcaneHeart(){
+    const m=ensureMagic(), spark=Math.max(1,toNum(S().stats?.spark,1)), auto=Math.min(6,1+Math.floor(spark/2));
+    const set=String(m.heartRank??'').trim()!=='', rank=set?clampInt(m.heartRank,0,6):auto, row=HEART[rank], developed=clampInt(m.developed,0,6), max=row.max+developed;
+    const veins=String(m.veins??'').trim()===''?max:clampInt(m.veins,0,max);
+    return {rank,auto,set,name:row.name,max,safe:row.safe,developed,veins};
+  }
+  function setVeins(n){ const h=arcaneHeart(); ensureMagic().veins=String(clampInt(n,0,h.max)); return arcaneHeart(); }
+  const woundsOver=over=>over>=5?3:over>=3?2:over>=2?1:0;           // Unsafe Casting: +2 over Safe = 1 Wound, +3 = 2, +5 = 3
+  const suicidalWounds=cost=>cost<=2?1:cost<=4?2:3;
+  /* What a cast will cost before you commit. o: {cost, channel, echo, sanctuary, hexHits, tech}
+     echo = a Death Worker in a location with an active death echo; sanctuary = inside a Sanctuary you built;
+     hexHits = a Hexblade's excess successes on the attack this Hex or Brand rides; tech = technology in Close range. */
+  function castQuote(w,o){
+    o=o||{}; const sub=String(S().character?.subclass||''), h=arcaneHeart(), res=clampInt(S().magic?.resonance,0,3), notes=[];
+    const band=COST_BAND[w.scale]||[1,2]; let cost=clampInt(o.cost??band[0],band[0],band[1]), floor=1, diff=CAST_DIFF[w.scale]||1, noRoll=false;
+    const deathWork=sub==='Death Worker'&&!!o.echo;
+    if(deathWork&&(w.id==='echo-reading'||w.id==='mark-passage')){ cost=0; floor=0; noRoll=true; notes.push('Death echo: automatic success, no cost.'); }
+    else if(deathWork){ cost-=2; diff=Math.max(1,diff-1); if(w.scale==='Minor') noRoll=true; notes.push('Death echo: one band cheaper, one tier easier'+(w.scale==='Minor'?', Minor needs no roll':'')+'.'); }
+    if(o.sanctuary){ if(w.scale==='Minor'){ cost=0; floor=0; notes.push('Inside your Sanctuary: Minor Workings are free.'); } else { cost-=2; notes.push('Inside your Sanctuary: one band cheaper.'); } }
+    const hexblade=sub==='Hexblade'&&(w.id==='hex'||w.id==='brand')&&toNum(o.hexHits,0)>0;
+    if(hexblade){ const n=Math.max(0,Math.floor(toNum(o.hexHits,0))); cost-=n; if(cost<=0){ floor=0; notes.push('Clean hit: the '+w.name+' rides it for free.'); } else notes.push(n+' excess success'+(n===1?'':'es')+' on the hit: '+n+' Vein'+(n===1?'':'s')+' off.'); }
+    cost=Math.max(floor,cost);
+    const before=h.veins; let stress=0, wounds=0, after=before; const kinds=[];
+    if(cost>0&&before===0){ stress+=cost; wounds+=suicidalWounds(cost); kinds.push('Suicidal Casting: no Veins left, so you pay '+cost+' Stress and '+suicidalWounds(cost)+' Wound'+(suicidalWounds(cost)===1?'':'s')+'.'); }
+    else if(cost>0){
+      after=Math.max(0,before-cost);
+      const over=cost-h.safe; if(over>0){ stress+=1; wounds+=woundsOver(over); kinds.push('Unsafe Casting: '+over+' over your Safe Spell Cost of '+h.safe+', so +1 Stress'+(woundsOver(over)?' and '+woundsOver(over)+' Wound'+(woundsOver(over)===1?'':'s'):'')+'.'); }
+      if(after===0){ stress+=1; wounds+=1; kinds.push('Vein Collapse: this empties your Veins, so +1 Stress and +1 Wound.'); }
+    }
+    if(sub==='Ward Keeper'&&w.group==='Ward Keeper'&&wounds>0){ notes.push('Ward Keeper: protective Workings never cost Wounds ('+wounds+' waived).'); wounds=0; }
+    if(o.channel){ stress+=1; notes.push('Channel: effect doubled, +1 Stress, no extra Veins.'); }
+    const resDice=RES_DICE[res]||0, techRisk=!!o.tech&&!(o.channel&&res>=2);   // any cast near tech risks it; Resonance 2+ only spares Channel
+    if(o.tech&&!techRisk) notes.push('Resonance '+res+': Channel causes no technology malfunction here.');
+    const pool=noRoll?null:buildPool('spark',skillValue(w.skill),'general',toNum(o.mod,0),resDice,w.name);
+    return {w,cost,band,diff,noRoll,veinsBefore:before,veinsAfter:after,max:h.max,safe:h.safe,stress,wounds,kinds,notes,resDice,res,techRisk,pool,channel:!!o.channel,shade:isShade(),known:(S().magic?.knownWorkings||[]).includes(w.id)};
+  }
+  function castText(q){
+    const t=[(q.channel?'Channel ':'Cast ')+q.w.name+' · '+q.w.scale+' · Spell Cost '+q.cost+(q.band[0]!==q.band[1]?' (band '+q.band[0]+'–'+q.band[1]+')':''),
+      'Veins '+q.veinsBefore+' → '+q.veinsAfter+' of '+q.max+' · Safe Spell Cost '+q.safe,
+      q.noRoll?'No roll needed.':'Spark + '+q.w.skill[0].toUpperCase()+q.w.skill.slice(1)+': '+q.pool.total+' dice'+(q.resDice?' (incl. +'+q.resDice+' Resonance)':'')+' vs Difficulty '+q.diff];
+    q.kinds.forEach(k=>t.push(k)); q.notes.forEach(n=>t.push(n));
+    t.push(q.stress||q.wounds?'Total: +'+q.stress+' Stress'+(q.wounds?', +'+q.wounds+' Wound'+(q.wounds===1?'':'s'):'')+'.':'No Stress or Wounds.');
+    if(q.techRisk) t.push('Technology in Close range: 1 in 6 it malfunctions (rolled for you).');
+    t.push('The cost is paid even if the roll fails.');
+    return t.join('\n');
+  }
+  /* Pay the cost and roll. -> {ok, message, quote, dice, successes, outcome, tech} (dice empty when no roll). */
+  function cast(w,o,rng){
+    rng=rng||Math.random; const q=castQuote(w,o); if(!q.shade) return {ok:false,message:'Only Shades cast Workings.'}; if(!q.known) return {ok:false,message:'Mark '+w.name+' as known first.'};
+    const s=S(), cap=stressCap(s.character?.level);
+    if(q.cost>0||q.veinsBefore!==q.veinsAfter) setVeins(q.veinsAfter);
+    s.stats.stress=String(clampInt(toNum(s.stats.stress,0)+q.stress,0,cap)); s.stats.woundState=String(clampInt(toNum(s.stats.woundState,0)+q.wounds,0,3));
+    let dice=[], successes=null, outcome={kind:'Success',text:'No roll needed: it works.'};
+    if(!q.noRoll){ dice=[]; for(let i=0;i<q.pool.total;i++) dice.push(1+Math.floor(rng()*6)); successes=countSuccesses(dice); outcome=outcomeForCheck(successes,q.diff); }
+    if(outcome.kind==='Critical Success'&&toNum(s.stats.stress,0)>0){ s.stats.stress=String(toNum(s.stats.stress,0)-1); outcome={...outcome,text:outcome.text+' The working resonates: 1 Stress recovered.'}; }
+    let tech=null; if(q.techRisk){ const d=1+Math.floor(rng()*6); tech={die:d,malfunction:d===1}; }
+    const message=(q.channel?'Channeled ':'Cast ')+w.name+': '+outcome.kind+'. Veins '+q.veinsBefore+' → '+q.veinsAfter+(q.stress?', +'+q.stress+' Stress':'')+(q.wounds?', +'+q.wounds+' Wound'+(q.wounds===1?'':'s'):'')+'.'+(tech&&tech.malfunction?' Nearby tech malfunctions (roll on the Technology Malfunction table).':'');
+    return {ok:true,message,quote:q,dice,successes,outcome,tech};
+  }
+  /* Vein recovery: about 1d6 per two uninterrupted hours of rest (Resonance 2+ here: 2d6 keep the higher), or 1d4 for a short break. */
+  function recoverVeins(kind,hours,rng){
+    rng=rng||Math.random; const h=arcaneHeart(), res=clampInt(S().magic?.resonance,0,3), d=n=>1+Math.floor(rng()*n); let gained=0; const rolls=[];
+    if(kind==='break'){ const r=d(4); rolls.push(r); gained=r; }
+    else { const blocks=Math.max(1,Math.floor(toNum(hours,2)/2)); for(let i=0;i<blocks;i++){ const r=res>=2?Math.max(d(6),d(6)):d(6); rolls.push(r); gained+=r; } }
+    const after=setVeins(h.veins+gained).veins;
+    return {ok:true,rolls,gained:after-h.veins,before:h.veins,after,max:h.max,message:(kind==='break'?'Short break':'Rest')+': rolled '+rolls.join(' + ')+(res>=2&&kind!=='break'?' (2d6, keep the higher)':'')+'. Veins '+h.veins+' → '+after+' of '+h.max+'.'};
+  }
+
   return {
+    HEART, COST_BAND, CAST_DIFF, ensureMagic, isShade, arcaneHeart, setVeins, castQuote, castText, cast, recoverVeins,
     SLOT_COUNT, BASE_UNLOCKED_SLOTS, COUNT_LIMIT, EMPTY_ITEM,
     toNum, clampInt, deepCopy, itemType, isWeaponClass, isAmmoClass, isConsumableClass, isBackClass, itemNoRefill,
     defaultActionsForClass, getItemActions, itemAllows, counts, setCur, gearCategory, damageType, ammoType, sameAmmoType,

@@ -102,6 +102,8 @@ table{width:100%;border-collapse:collapse}
 .nowBar select{max-width:min(100%,260px);padding:6px 10px;border:1px solid var(--line2);border-radius:4px;background:#070b14;color:var(--art-cream);font:600 14px var(--art-body)}
 .nowUse{display:flex;gap:6px;flex:0 1 auto;min-width:0}
 .nowUse select{flex:1 1 auto;min-width:0}
+.actFields .chk{display:flex;align-items:center;gap:8px}
+.actFields .chk input{min-height:0;width:18px;height:18px}
 .nowResult{margin-top:10px;padding:10px 12px;border:1px solid var(--line2);border-radius:6px;background:#070b14}
 .nowResult b.kind{display:inline-block;margin-right:8px;padding:0 8px;border:1px solid var(--pink);border-radius:999px;color:var(--pink);font:700 12px/1.7 var(--art-ui);letter-spacing:.06em;text-transform:uppercase}
 .nowResult .bd{margin:6px 0;color:var(--art-muted);font-size:12px;overflow-wrap:anywhere}
@@ -143,6 +145,11 @@ dialog.act pre{margin:0 0 10px;white-space:pre-wrap;font:600 14px/1.5 var(--art-
     <label data-f="diff">Difficulty<select id="actDiff"><option value="1">Routine 1</option><option value="2" selected>Challenging 2</option><option value="3">Hard 3</option><option value="4">Severe 4</option><option value="5">Legendary 5</option></select></label>
     <label data-f="def">Target Defense<input id="actDef" type="number" min="1" max="10" step="1" value="1"></label>
     <label data-f="soak">Target soak<input id="actSoak" type="number" min="0" max="10" step="1" value="0"></label>
+    <label data-f="cost">Spell Cost<select id="actCost"></select></label>
+    <label data-f="tech" class="chk"><input id="actTech" type="checkbox"> Tech in Close range</label>
+    <label data-f="echo" class="chk"><input id="actEcho" type="checkbox"> Active death echo here</label>
+    <label data-f="sanct" class="chk"><input id="actSanct" type="checkbox"> Inside my Sanctuary</label>
+    <label data-f="hex">Riding a hit: excess successes<input id="actHex" type="number" min="0" max="10" step="1" value="0"></label>
     <label data-f="trait">Target<select id="actTrait"><option value="none">Normal</option><option value="resist">Resists this damage</option><option value="vulnerable">Vulnerable to it</option></select></label>
   </div>
   <div class="actBar"><button type="button" id="actCancel">Cancel</button><button type="button" class="primary" id="actOk">Roll</button></div>
@@ -254,7 +261,8 @@ function nowHtml(s, lvl) {
   const wpn = it => it && E.isWeaponClass(it), ammo = it => { const c = E.counts(it); return c.max > 0 ? ` · Ammo ${c.cur}/${c.max}` : ''; };
   const usable = (s.inventory || []).map((it, i) => ({ it, i })).filter(x => x.it && (x.it.name || '').trim() && E.canUse(x.it));
   const reloadable = E.canReload('active') || E.canReload('secondary');
-  const status = `${WOUND_NAMES[E.clampInt(st.woundState, 0, 3)]} · Stress ${num(st.stress)}/${stressCap(lvl)} · ` + (wpn(act) ? esc(act.name) + ammo(act) : 'No active weapon');
+  const shade = E.isShade(), heart = shade ? E.arcaneHeart() : null, known = shade ? (R.shadeWorkings || []).filter(w => (s.magic?.knownWorkings || []).includes(w.id)) : [];
+  const status = `${WOUND_NAMES[E.clampInt(st.woundState, 0, 3)]} · Stress ${num(st.stress)}/${stressCap(lvl)} · ` + (heart ? `Veins ${heart.veins}/${heart.max} (safe ${heart.safe}) · ` : '') + (wpn(act) ? esc(act.name) + ammo(act) : 'No active weapon');
   const res = LAST ? `<div class="nowResult" id="nowResult"><div><b class="kind">${esc(LAST.kind)}</b><strong>${esc(LAST.title)}</strong> · ${esc(LAST.summary)}</div><div class="bd">${esc(LAST.breakdown)}</div><div class="dice">${LAST.dice.map(v => `<i class="${v >= 5 ? 'hit' : ''}">${v}</i>`).join('')}</div>${LAST.notes.length ? `<div class="bd">${LAST.notes.map(esc).join('<br>')}</div>` : ''}</div>` : '';
   return `<section class="box pinkbox now" id="nowBox" aria-label="Now"><h2><span class="n">▶</span> Now <small>Tap a skill name below to roll it</small></h2>
     <p class="nowStatus" id="nowStatus">${status}</p>
@@ -263,6 +271,8 @@ function nowHtml(s, lvl) {
       ${wpn(sec) ? `<button type="button" data-now="attack" data-which="secondary">Attack · ${esc(sec.name)}</button>` : ''}
       <button type="button" data-now="reload" ${reloadable ? '' : 'disabled'}>Reload</button>
       <span class="nowUse"><select id="nowUseSel" aria-label="Item to use" ${usable.length ? '' : 'disabled'}>${usable.length ? usable.map(x => `<option value="${x.i}">${esc(x.it.name)} (${E.counts(x.it).cur})</option>`).join('') : '<option>No usable items</option>'}</select><button type="button" data-now="use" ${usable.length ? '' : 'disabled'}>Use</button></span>
+      ${shade ? `<span class="nowUse"><select id="nowCastSel" aria-label="Working to cast" ${known.length ? '' : 'disabled'}>${known.length ? known.map(w => `<option value="${esc(w.id)}">${esc(w.name)} (${w.scale})</option>`).join('') : '<option>No known Workings</option>'}</select><button type="button" data-now="cast" ${known.length ? '' : 'disabled'}>Cast</button><button type="button" data-now="channel" ${known.length ? '' : 'disabled'} title="Double the effect for +1 Stress">Channel</button></span>
+      <button type="button" data-now="rest" title="Two hours of rest: about 1d6 Veins back">Rest 2h</button>` : ''}
       <button type="button" data-now="push" class="${PENDING ? 'hot' : ''}" ${PENDING ? '' : 'disabled'} title="After a roll: +2 dice for 1 Stress">Push +2</button>
       <button type="button" data-now="undo" ${E.canUndo() ? '' : 'disabled'}>Undo</button>
     </div>${res}</section>`;
@@ -271,8 +281,8 @@ const poolText = (p, attr, skill) => `${p.total} dice = ${label(attr)} ${p.attrV
 /* Load, run, save, redraw. Every action works on a fresh copy of the save. */
 function withChar(fn) { const s = load(); if (!hasChar(s)) return; CUR = s; const out = fn(s); save(s); render(); return out; }
 function preview(title, fields, okLabel, describe, apply) {
-  const dlg = $('actDlg'), val = () => ({ mod: num($('actMod').value), diff: Math.max(1, num($('actDiff').value, 2)), def: Math.max(1, num($('actDef').value, 1)), soak: Math.max(0, num($('actSoak').value)), trait: $('actTrait').value });
-  $('actTitle').textContent = title; $('actOk').textContent = okLabel; $('actMod').value = '0';
+  const dlg = $('actDlg'), val = () => ({ mod: num($('actMod').value), diff: Math.max(1, num($('actDiff').value, 2)), def: Math.max(1, num($('actDef').value, 1)), soak: Math.max(0, num($('actSoak').value)), trait: $('actTrait').value, cost: num($('actCost').value), tech: $('actTech').checked, echo: $('actEcho').checked, sanctuary: $('actSanct').checked, hexHits: Math.max(0, num($('actHex').value)) });
+  $('actTitle').textContent = title; $('actOk').textContent = okLabel; $('actMod').value = '0'; $('actHex').value = '0'; ['actTech', 'actEcho', 'actSanct'].forEach(id => { $(id).checked = false; });
   dlg.querySelectorAll('[data-f]').forEach(l => { l.hidden = !fields.includes(l.dataset.f); });
   const update = () => { CUR = load(); const r = describe(val()); $('actDetails').textContent = r.text; $('actOk').disabled = !!r.blocked; };
   dlg.querySelectorAll('input,select').forEach(x => { x.oninput = update; });
@@ -317,6 +327,25 @@ function useItem() {
   CUR = load(); const name = (CUR.inventory[idx] || {}).name || 'item';
   preview('Use · ' + name, [], 'Use', () => E.usePreview(idx), () => withChar(() => { const m = E.act('USE ITEM', '', () => { const r = E.useSlot(idx); return r.ok ? r.message : false; }); toast(m || 'That card cannot be used right now.'); }));
 }
+/* Cast a known Working: the engine prices it (Veins, Unsafe, Collapse, Suicidal), this dialog picks the options. */
+function castNow(channel) {
+  CUR = load(); const id = $('nowCastSel') && $('nowCastSel').value, w = (R.shadeWorkings || []).find(x => x.id === id); if (!w) return;
+  const sub = String(CUR.character?.subclass || ''), band = E.COST_BAND[w.scale];
+  $('actCost').innerHTML = band.map(c => `<option value="${c}">${c} Veins</option>`).join('');
+  const fields = ['cost', 'mod', 'tech', ...(sub === 'Death Worker' ? ['echo'] : []), ...(sub === 'Ward Keeper' ? ['sanct'] : []), ...(sub === 'Hexblade' && (id === 'hex' || id === 'brand') ? ['hex'] : [])];
+  const opts = v => ({ cost: v.cost, channel, echo: v.echo, sanctuary: v.sanctuary, tech: v.tech, hexHits: v.hexHits, mod: v.mod });
+  preview((channel ? 'Channel · ' : 'Cast · ') + w.name, fields, channel ? 'Channel' : 'Cast', v => ({ text: E.castText(E.castQuote(w, opts(v))) }), v => withChar(() => {
+    let r = null; E.act((channel ? 'CHANNEL ' : 'CAST ') + w.name.toUpperCase(), '', () => { r = E.cast(w, opts(v)); return r.ok ? r.message : false; });
+    if (!r || !r.ok) return toast(r ? r.message : 'Cast refused.');
+    const q = r.quote; PENDING = null;
+    showRoll({ title: (channel ? 'Channel ' : 'Cast ') + w.name, kind: r.outcome.kind, summary: r.outcome.text, dice: r.dice,
+      notes: [...q.kinds, ...q.notes, ...(r.tech ? ['Tech die ' + r.tech.die + (r.tech.malfunction ? ': something nearby malfunctions.' : ': tech holds.')] : [])],
+      breakdown: (q.noRoll ? 'No roll needed' : 'Spark + ' + label(w.skill) + ' ' + q.pool.total + ' dice vs Difficulty ' + q.diff + ' · ' + r.successes + ' successes') + ' | Spell Cost ' + q.cost + ' · Veins ' + q.veinsBefore + ' → ' + q.veinsAfter + (q.stress ? ' · +' + q.stress + ' Stress' : '') + (q.wounds ? ' · +' + q.wounds + ' Wound' + (q.wounds === 1 ? '' : 's') : ''),
+      history: r.message });
+    toast(r.message);
+  }));
+}
+function restVeins() { withChar(() => { let msg = ''; E.act('REST', '', () => (msg = E.recoverVeins('rest', 2).message)); toast(msg); }); }
 function reload() { withChar(() => { const which = E.canReload('active') ? 'active' : 'secondary'; let fail = ''; const m = E.act('RELOAD', '', () => { const r = E.reloadEquipped(which); if (!r.ok) fail = r.message; return r.ok ? r.message : false; }); toast(m || fail); }); }
 function push() { if (!PENDING) return; withChar(() => { const fn = PENDING; let fail = ''; const m = E.act('PUSH', 'Added 2 dice and 1 Stress.', () => { const r = E.payPush(); if (!r.ok) { fail = r.message; return false; } PENDING = null; fn(r.dice); return 'Added 2 dice and 1 Stress.'; }); toast(m ? 'Pushed: +2 dice, +1 Stress.' : fail); }); }
 function undo() { withChar(() => { const r = E.undoLast(); if (r.ok) PENDING = null; toast(r.message); }); }
@@ -326,7 +355,7 @@ document.addEventListener('click', e => {
   const b = e.target.closest('button'); if (!b) return;
   if (b.id === 'editBtn') return nav('fullSheetBtn');
   if (b.dataset.roll) return rollSkill(b.dataset.roll);
-  if (b.dataset.now) { const a = b.dataset.now; return a === 'attack' ? attack(b.dataset.which) : a === 'use' ? useItem() : a === 'reload' ? reload() : a === 'push' ? push() : undo(); }
+  if (b.dataset.now) { const a = b.dataset.now; return a === 'attack' ? attack(b.dataset.which) : a === 'use' ? useItem() : a === 'reload' ? reload() : a === 'cast' ? castNow(false) : a === 'channel' ? castNow(true) : a === 'rest' ? restVeins() : a === 'push' ? push() : undo(); }
   if (b.dataset.wound) return setStat(st => { st.woundState = b.dataset.wound; });
   if (b.dataset.pip) { const kind = b.closest('[data-track]').dataset.track, n = num(b.dataset.pip);
     return setStat((st, s) => { const cur = num(st[kind]); st[kind] = String(cur === n ? n - 1 : n); }); }
