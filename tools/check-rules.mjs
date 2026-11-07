@@ -216,6 +216,9 @@ for (const f of [...MISS.missions.map(m => m.art).filter(Boolean), MISS.sideBoar
 for (const c of CORPS.corporations) if (!c.art) bad(`corporations.${c.id}`, 'no poster yet');
 const GUIDE = load('data/guides/races.json');
 for (const [name, g] of Object.entries(GUIDE.races)) if (!g.card) bad(`guides.races.${name}`, 'no card art'); else if (!existsSync(new URL('../' + g.card, import.meta.url))) bad(`guides.races.${name}`, `${g.card} is missing`);
+// Species cards work offline: each one is in the service worker's install list.
+const SW = readFileSync(new URL('../sw.js', import.meta.url), 'utf8');
+for (const [name, g] of Object.entries(GUIDE.races)) if (g.card && !SW.includes(`'./${g.card}'`)) bad(`sw.js`, `${name}'s card ${g.card} isn't cached for offline use`);
 for (const sl of RADIO_.slots || []) if (sl.portrait && !existsSync(new URL('../' + sl.portrait, import.meta.url))) bad(`radio.slots.${sl.id}`, `${sl.portrait} is missing`);
 for (const c of CORPS.corporations) { if (c.art && !artSlugs.has(c.art)) bad(`corporations.${c.id}`, `no art called ${c.art}`); for (const k of c.campaigns || []) if (k.art && !artSlugs.has(k.art)) bad(`corporations.${c.id}.campaigns`, `no art called ${k.art}`); }
 if (CORPS.corporations.length !== 5) bad('corporations', 'the World Anvil names five corporations');
