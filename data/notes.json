@@ -1,0 +1,23 @@
+{
+  "_about": "Local Wisdom notes: things written on the city, shown in Explore on the place or district they belong to. Every note carries who wrote it (author) and when (date), so anything odd can be traced back and, if needed, taken out. Today only Eko and Nib write notes. Later the agent NPCs from the Adyta sim write into this same file with author 'agent:<id>', and later still players with 'player:<name>'. 'signed' is the in-world signature players see; 'author' is never shown. status: draft until it goes to Nib, canon after.",
+  "authors": {
+    "eko": "Eko",
+    "nib": "Nib"
+  },
+  "notes": [
+    { "id": "n-001", "place": "low-halo--saint-static-arms", "text": "Elevator B works if you kick the panel and say please. In that order.", "signed": "4th floor", "author": "eko", "date": "2026-11-05", "status": "draft" },
+    { "id": "n-002", "place": "low-halo--the-hive", "text": "Ma Dresk's fryer oil is changed every Sunday. Eat Monday.", "signed": "someone who learned", "author": "eko", "date": "2026-11-05", "status": "draft" },
+    { "id": "n-003", "place": "low-halo--the-grit-pit", "text": "Read the plaque above the bar before you start anything.", "signed": "the door", "author": "eko", "date": "2026-11-05", "status": "draft" },
+    { "id": "n-004", "place": "low-halo--the-soft-border", "text": "Rent on this side: 40. Rent on that side: ask what they think you're worth.", "signed": "chalk, half washed off", "author": "eko", "date": "2026-11-05", "status": "draft" },
+    { "id": "n-005", "place": "low-halo--mural-mile", "text": "If your face is up here, somebody loved you or somebody's looking for you.", "signed": "spray paint", "author": "eko", "date": "2026-11-05", "status": "draft" },
+    { "id": "n-006", "place": "low-halo--sideways-shops-sewer-door", "text": "Knock on the pipe, not the door. The door is decorative.", "signed": "Sideways Shops", "author": "eko", "date": "2026-11-05", "status": "draft" },
+    { "id": "n-007", "place": "three-wires--sideways-shops", "text": "Returns accepted. Exchanges negotiated. Refunds are a myth from another dimension.", "signed": "Sideways Shops", "author": "eko", "date": "2026-11-05", "status": "draft" },
+    { "id": "n-008", "place": "three-wires--babas-crumbs", "text": "Baba knows. Just pay for the hand pie.", "signed": "a reformed liar", "author": "eko", "date": "2026-11-05", "status": "draft" },
+    { "id": "n-009", "place": "three-wires--the-bent-ladder", "text": "Rung seven is a liar. Skip it.", "signed": "a Runner, still limping", "author": "eko", "date": "2026-11-05", "status": "draft" },
+    { "id": "n-010", "place": "ember-court--the-old-lamp-court", "text": "If you sign a lease here, sign it in daylight.", "signed": "former tenant", "author": "eko", "date": "2026-11-05", "status": "draft" },
+    { "id": "n-011", "place": "dockside--keepers-noodles", "text": "Crews eat first. Wait your turn and the broth gets better.", "signed": "Keeper", "author": "eko", "date": "2026-11-05", "status": "draft" },
+    { "id": "n-012", "place": "the-sewers--the-lantern-exchange", "text": "Leave a lantern lit if you need a hand. Leave it dark if you need to not be found.", "signed": "the board", "author": "eko", "date": "2026-11-05", "status": "draft" },
+    { "id": "n-013", "place": "the-sewers--radio-sewers", "text": "Smokier's chair stays empty until Smokier sits in it. Don't ask.", "signed": "Mercury", "author": "eko", "date": "2026-11-05", "status": "draft" },
+    { "id": "n-014", "district": "the-tangle", "text": "Every roof has a name. Learn it before you walk on it.", "signed": "Patchkin crew mark", "author": "eko", "date": "2026-11-05", "status": "draft" }
+  ]
+}

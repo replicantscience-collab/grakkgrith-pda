@@ -108,10 +108,1964 @@
         "the-sewers",
         "deep-tunnels"
       ],
-      "status": "canon candidate",
-      "image": "maps/official/sewers-town.jpg",
-      "width": 1448,
-      "height": 1646
+      "status": "design candidate",
+      "image": "maps/candidates/sewers-town-v2.jpg",
+      "width": 1086,
+      "height": 1448,
+      "sources": [
+        "https://www.worldanvil.com/w/adyta-jeeperssheefers/a/sewers-community-settlement",
+        "https://www.worldanvil.com/w/adyta-jeeperssheefers/a/the-deep-sewers-location",
+        "https://www.worldanvil.com/w/adyta-jeeperssheefers/a/radio-sewers-organization",
+        "https://www.worldanvil.com/w/adyta-jeeperssheefers/a/adyta-settlement"
+      ],
+      "brief": "sewers-town",
+      "note": "Existing PDA names are retained in a proposed layout. Radio Sewers is shown as a local relay. Deeper routes are unconfirmed."
+    },
+    "grand-academy": {
+      "title": "Grand Academy District Map",
+      "short": "Grand Academy",
+      "kind": "district",
+      "district": "grand-academy",
+      "status": "design candidate",
+      "image": "maps/candidates/grand-academy-v2.jpg",
+      "width": 1536,
+      "height": 1024,
+      "sources": [
+        "https://www.worldanvil.com/w/adyta-jeeperssheefers/a/the-grand-academy-landmark"
+      ],
+      "brief": "grand-academy",
+      "note": "Lore-grounded illustration; local names and placements are proposals.",
+      "annotations": [
+        {
+          "name": "Charter Gate",
+          "note": "Visitors queue; credentials checked",
+          "x": 0.23,
+          "y": 0.19,
+          "approx": true,
+          "canonStatus": "proposed"
+        },
+        {
+          "name": "The Long Archive",
+          "note": "Requests outlast their requesters",
+          "x": 0.7,
+          "y": 0.19,
+          "approx": true,
+          "canonStatus": "proposed"
+        },
+        {
+          "name": "Index Court",
+          "note": "Readers trade missing references",
+          "x": 0.28,
+          "y": 0.34,
+          "approx": true,
+          "canonStatus": "proposed"
+        },
+        {
+          "name": "East Teaching Halls",
+          "note": "Lectures spill into corridors",
+          "x": 0.74,
+          "y": 0.34,
+          "approx": true,
+          "canonStatus": "proposed"
+        },
+        {
+          "name": "Isolated Arcane Labs",
+          "note": "Wards; separate from technical systems",
+          "x": 0.2,
+          "y": 0.49,
+          "approx": true,
+          "canonStatus": "proposed"
+        },
+        {
+          "name": "Engineering Yard",
+          "note": "Electrical work; no magical power",
+          "x": 0.68,
+          "y": 0.49,
+          "approx": true,
+          "canonStatus": "proposed"
+        },
+        {
+          "name": "The Brass Observatory",
+          "note": "Night study; old instruments",
+          "x": 0.27,
+          "y": 0.64,
+          "approx": true,
+          "canonStatus": "proposed"
+        },
+        {
+          "name": "Patron Steps",
+          "note": "Endowments buy easier introductions",
+          "x": 0.75,
+          "y": 0.64,
+          "approx": true,
+          "canonStatus": "proposed"
+        },
+        {
+          "name": "The Secondhand Quill",
+          "note": "Cheap paper; expensive annotations",
+          "x": 0.24,
+          "y": 0.79,
+          "approx": true,
+          "canonStatus": "proposed"
+        },
+        {
+          "name": "Copyists Passage",
+          "note": "Service access behind public halls",
+          "x": 0.69,
+          "y": 0.79,
+          "approx": true,
+          "canonStatus": "proposed"
+        }
+      ]
+    },
+    "new-halo": {
+      "title": "New Halo District Map",
+      "short": "New Halo",
+      "kind": "district",
+      "district": "new-halo",
+      "status": "design candidate",
+      "image": "maps/candidates/new-halo-v2.jpg",
+      "width": 1536,
+      "height": 1024,
+      "sources": [
+        "https://www.worldanvil.com/w/adyta-jeeperssheefers/a/new-halo-settlement",
+        "https://www.worldanvil.com/w/adyta-jeeperssheefers/a/adyta-settlement"
+      ],
+      "brief": "new-halo",
+      "note": "Lore-grounded illustration; local names and placements are proposals.",
+      "annotations": [
+        {
+          "name": "The Shining Spire",
+          "note": "Finance, media and corporate prestige",
+          "x": 0.23,
+          "y": 0.19,
+          "approx": true,
+          "canonStatus": "established name; proposed placement"
+        },
+        {
+          "name": "Glassline Walk",
+          "note": "Appointments; polished frontage",
+          "x": 0.7,
+          "y": 0.19,
+          "approx": true,
+          "canonStatus": "proposed"
+        },
+        {
+          "name": "The Ninth Floor",
+          "note": "Curated music; reservation required",
+          "x": 0.28,
+          "y": 0.34,
+          "approx": true,
+          "canonStatus": "proposed"
+        },
+        {
+          "name": "Old Lease Court",
+          "note": "Older homes inside redevelopment",
+          "x": 0.74,
+          "y": 0.34,
+          "approx": true,
+          "canonStatus": "proposed"
+        },
+        {
+          "name": "Velvet Window",
+          "note": "Media storefront; carefully edited city",
+          "x": 0.2,
+          "y": 0.49,
+          "approx": true,
+          "canonStatus": "proposed"
+        },
+        {
+          "name": "The Quiet Meter",
+          "note": "Utilities work; somebody pays",
+          "x": 0.68,
+          "y": 0.49,
+          "approx": true,
+          "canonStatus": "proposed"
+        },
+        {
+          "name": "Service Shift Gate",
+          "note": "Workers enter before residents wake",
+          "x": 0.27,
+          "y": 0.64,
+          "approx": true,
+          "canonStatus": "proposed"
+        },
+        {
+          "name": "Prospect Arcade",
+          "note": "Boutiques above delivery doors",
+          "x": 0.75,
+          "y": 0.64,
+          "approx": true,
+          "canonStatus": "proposed"
+        },
+        {
+          "name": "Last Original Cafe",
+          "note": "Regulars remember cheaper coffee",
+          "x": 0.24,
+          "y": 0.79,
+          "approx": true,
+          "canonStatus": "proposed"
+        },
+        {
+          "name": "The Soft Border",
+          "note": "South: Low Halo; disputed edge",
+          "x": 0.69,
+          "y": 0.79,
+          "approx": true,
+          "canonStatus": "established name; proposed placement"
+        }
+      ]
+    },
+    "governance-district": {
+      "title": "Governance District Map",
+      "short": "Governance District",
+      "kind": "district",
+      "district": "governance-district",
+      "status": "design candidate",
+      "image": "maps/candidates/governance-district-v2.jpg",
+      "width": 1536,
+      "height": 1024,
+      "sources": [
+        "https://www.worldanvil.com/w/adyta-jeeperssheefers/a/adyta-settlement",
+        "https://www.worldanvil.com/w/adyta-jeeperssheefers/a/civic-institutions-article"
+      ],
+      "brief": "governance-district",
+      "note": "Lore-grounded illustration; local names and placements are proposals.",
+      "annotations": [
+        {
+          "name": "Registry Counter",
+          "note": "ACR branch; identity paperwork",
+          "x": 0.23,
+          "y": 0.19,
+          "approx": true,
+          "canonStatus": "proposed"
+        },
+        {
+          "name": "Advocates Steps",
+          "note": "APA intake; bring every notice",
+          "x": 0.7,
+          "y": 0.19,
+          "approx": true,
+          "canonStatus": "proposed"
+        },
+        {
+          "name": "Labor Claims Hall",
+          "note": "ALB branch; wages and hazards",
+          "x": 0.28,
+          "y": 0.34,
+          "approx": true,
+          "canonStatus": "proposed"
+        },
+        {
+          "name": "Wardens Rest",
+          "note": "ACW liaison; civilian protection",
+          "x": 0.74,
+          "y": 0.34,
+          "approx": true,
+          "canonStatus": "proposed"
+        },
+        {
+          "name": "Evidence Annex",
+          "note": "ABI records; restricted access",
+          "x": 0.2,
+          "y": 0.49,
+          "approx": true,
+          "canonStatus": "proposed"
+        },
+        {
+          "name": "Response Court",
+          "note": "AEM coordination; exits stay clear",
+          "x": 0.68,
+          "y": 0.49,
+          "approx": true,
+          "canonStatus": "proposed"
+        },
+        {
+          "name": "The Duplicate",
+          "note": "Copies, stamps and tired clerks",
+          "x": 0.27,
+          "y": 0.64,
+          "approx": true,
+          "canonStatus": "proposed"
+        },
+        {
+          "name": "Appeals Walk",
+          "note": "Public queue between agencies",
+          "x": 0.75,
+          "y": 0.64,
+          "approx": true,
+          "canonStatus": "proposed"
+        },
+        {
+          "name": "Service Ledger Gate",
+          "note": "Compliance papers; contested authority",
+          "x": 0.24,
+          "y": 0.79,
+          "approx": true,
+          "canonStatus": "proposed"
+        },
+        {
+          "name": "Back File Passage",
+          "note": "Deliveries; records travel slowly",
+          "x": 0.69,
+          "y": 0.79,
+          "approx": true,
+          "canonStatus": "proposed"
+        }
+      ]
+    },
+    "crownline-industrials": {
+      "title": "Crownline Industrials District Map",
+      "short": "Crownline Industrials",
+      "kind": "district",
+      "district": "crownline-industrials",
+      "status": "design candidate",
+      "image": "maps/candidates/crownline-industrials-v2.jpg",
+      "width": 1536,
+      "height": 1024,
+      "sources": [
+        "https://www.worldanvil.com/w/adyta-jeeperssheefers/a/adyta-settlement",
+        "https://www.worldanvil.com/w/adyta-jeeperssheefers/a/corporations-article"
+      ],
+      "brief": "crownline-industrials",
+      "note": "Lore-grounded illustration; local names and placements are proposals.",
+      "annotations": [
+        {
+          "name": "Certification Gate",
+          "note": "Access begins with paperwork",
+          "x": 0.23,
+          "y": 0.19,
+          "approx": true,
+          "canonStatus": "proposed"
+        },
+        {
+          "name": "Meter House",
+          "note": "Remote service; local consequences",
+          "x": 0.7,
+          "y": 0.19,
+          "approx": true,
+          "canonStatus": "proposed"
+        },
+        {
+          "name": "Switchyard Twelve",
+          "note": "Electrical distribution; restricted access",
+          "x": 0.28,
+          "y": 0.34,
+          "approx": true,
+          "canonStatus": "proposed"
+        },
+        {
+          "name": "Pump Ledger",
+          "note": "Water machinery; service records",
+          "x": 0.74,
+          "y": 0.34,
+          "approx": true,
+          "canonStatus": "proposed"
+        },
+        {
+          "name": "The Clean Front",
+          "note": "White and gold service counters",
+          "x": 0.2,
+          "y": 0.49,
+          "approx": true,
+          "canonStatus": "proposed"
+        },
+        {
+          "name": "Contractor Muster",
+          "note": "Bastion personnel; paid enforcement",
+          "x": 0.68,
+          "y": 0.49,
+          "approx": true,
+          "canonStatus": "proposed"
+        },
+        {
+          "name": "Inspection Loop",
+          "note": "Vans circle before work starts",
+          "x": 0.27,
+          "y": 0.64,
+          "approx": true,
+          "canonStatus": "proposed"
+        },
+        {
+          "name": "The Overtime Canteen",
+          "note": "Shift meals; no free minutes",
+          "x": 0.75,
+          "y": 0.64,
+          "approx": true,
+          "canonStatus": "proposed"
+        },
+        {
+          "name": "Disputed Connection",
+          "note": "Older buildings await approval",
+          "x": 0.24,
+          "y": 0.79,
+          "approx": true,
+          "canonStatus": "proposed"
+        },
+        {
+          "name": "Maintenance Cut",
+          "note": "Service road; watch the cables",
+          "x": 0.69,
+          "y": 0.79,
+          "approx": true,
+          "canonStatus": "proposed"
+        }
+      ]
+    },
+    "three-spires-monastery": {
+      "title": "Three Spires Monastery District Map",
+      "short": "Three Spires Monastery",
+      "kind": "district",
+      "district": "three-spires-monastery",
+      "status": "design candidate",
+      "image": "maps/candidates/three-spires-monastery-v2.jpg",
+      "width": 1536,
+      "height": 1024,
+      "sources": [
+        "https://www.worldanvil.com/w/adyta-jeeperssheefers/a/adyta-settlement"
+      ],
+      "brief": "three-spires-monastery",
+      "note": "Lore-grounded illustration; local names and placements are proposals.",
+      "annotations": [
+        {
+          "name": "Three Spires",
+          "note": "Old stone; meanings remain disputed",
+          "x": 0.23,
+          "y": 0.19,
+          "approx": true,
+          "canonStatus": "proposed"
+        },
+        {
+          "name": "Petition Steps",
+          "note": "Visitors bring quiet requests",
+          "x": 0.7,
+          "y": 0.19,
+          "approx": true,
+          "canonStatus": "proposed"
+        },
+        {
+          "name": "The Unnamed Court",
+          "note": "No public account of its rites",
+          "x": 0.28,
+          "y": 0.34,
+          "approx": true,
+          "canonStatus": "proposed"
+        },
+        {
+          "name": "Guest Lantern",
+          "note": "Beds for those admitted",
+          "x": 0.74,
+          "y": 0.34,
+          "approx": true,
+          "canonStatus": "proposed"
+        },
+        {
+          "name": "Cloister Walk",
+          "note": "Footsteps carry around the walls",
+          "x": 0.2,
+          "y": 0.49,
+          "approx": true,
+          "canonStatus": "proposed"
+        },
+        {
+          "name": "The Mended Bell",
+          "note": "Repairs show through old metal",
+          "x": 0.68,
+          "y": 0.49,
+          "approx": true,
+          "canonStatus": "proposed"
+        },
+        {
+          "name": "Keeper Rooms",
+          "note": "Daily work behind sacred frontage",
+          "x": 0.27,
+          "y": 0.64,
+          "approx": true,
+          "canonStatus": "proposed"
+        },
+        {
+          "name": "Rain Cistern",
+          "note": "Water below the courtyard",
+          "x": 0.75,
+          "y": 0.64,
+          "approx": true,
+          "canonStatus": "proposed"
+        },
+        {
+          "name": "The Quiet Table",
+          "note": "Meals without many questions",
+          "x": 0.24,
+          "y": 0.79,
+          "approx": true,
+          "canonStatus": "proposed"
+        },
+        {
+          "name": "Outer Service Gate",
+          "note": "Deliveries enter beyond the steps",
+          "x": 0.69,
+          "y": 0.79,
+          "approx": true,
+          "canonStatus": "proposed"
+        }
+      ]
+    },
+    "elven-enclave": {
+      "title": "Elven Enclave District Map",
+      "short": "Elven Enclave",
+      "kind": "district",
+      "district": "elven-enclave",
+      "status": "design candidate",
+      "image": "maps/candidates/elven-enclave-v2.jpg",
+      "width": 1536,
+      "height": 1024,
+      "sources": [
+        "https://www.worldanvil.com/w/adyta-jeeperssheefers/a/elves-species"
+      ],
+      "brief": "elven-enclave",
+      "note": "Lore-grounded illustration; local names and placements are proposals.",
+      "annotations": [
+        {
+          "name": "Pale Brick Walk",
+          "note": "Generations of continuous repairs",
+          "x": 0.23,
+          "y": 0.19,
+          "approx": true,
+          "canonStatus": "proposed"
+        },
+        {
+          "name": "The Kept Garden",
+          "note": "Shade maintained by paid labor",
+          "x": 0.7,
+          "y": 0.19,
+          "approx": true,
+          "canonStatus": "proposed"
+        },
+        {
+          "name": "Cistern Court",
+          "note": "Water channels; pumps kept working",
+          "x": 0.28,
+          "y": 0.34,
+          "approx": true,
+          "canonStatus": "proposed"
+        },
+        {
+          "name": "Old Ward House",
+          "note": "Obsolete wards; access disputed",
+          "x": 0.74,
+          "y": 0.34,
+          "approx": true,
+          "canonStatus": "proposed"
+        },
+        {
+          "name": "The Narrow Archive",
+          "note": "Household records behind locked doors",
+          "x": 0.2,
+          "y": 0.49,
+          "approx": true,
+          "canonStatus": "proposed"
+        },
+        {
+          "name": "Canopy Steps",
+          "note": "Quiet lanes under mature trees",
+          "x": 0.68,
+          "y": 0.49,
+          "approx": true,
+          "canonStatus": "proposed"
+        },
+        {
+          "name": "Shielded Service Yard",
+          "note": "Technical utilities; isolated from wards",
+          "x": 0.27,
+          "y": 0.64,
+          "approx": true,
+          "canonStatus": "proposed"
+        },
+        {
+          "name": "The Long Lease",
+          "note": "Homes altered across generations",
+          "x": 0.75,
+          "y": 0.64,
+          "approx": true,
+          "canonStatus": "proposed"
+        },
+        {
+          "name": "The Gardeners Table",
+          "note": "Workers eat behind the frontage",
+          "x": 0.24,
+          "y": 0.79,
+          "approx": true,
+          "canonStatus": "proposed"
+        },
+        {
+          "name": "West Maintenance Gate",
+          "note": "Delivery access; heritage has plumbing",
+          "x": 0.69,
+          "y": 0.79,
+          "approx": true,
+          "canonStatus": "proposed"
+        }
+      ]
+    },
+    "central-core": {
+      "title": "Central Core District Map",
+      "short": "Central Core",
+      "kind": "district",
+      "district": "central-core",
+      "status": "design candidate",
+      "image": "maps/candidates/central-core-v2.jpg",
+      "width": 1536,
+      "height": 1024,
+      "sources": [
+        "https://www.worldanvil.com/w/adyta-jeeperssheefers/a/adyta-settlement",
+        "https://www.worldanvil.com/w/adyta-jeeperssheefers/a/civic-institutions-article"
+      ],
+      "brief": "central-core",
+      "note": "Lore-grounded illustration; local names and placements are proposals.",
+      "annotations": [
+        {
+          "name": "Transfer Square",
+          "note": "Surface tram interchange; proposed layout",
+          "x": 0.23,
+          "y": 0.19,
+          "approx": true,
+          "canonStatus": "proposed"
+        },
+        {
+          "name": "Commerce Steps",
+          "note": "Offices above the public crowd",
+          "x": 0.7,
+          "y": 0.19,
+          "approx": true,
+          "canonStatus": "proposed"
+        },
+        {
+          "name": "The Public Counter",
+          "note": "Civic referrals; several queues",
+          "x": 0.28,
+          "y": 0.34,
+          "approx": true,
+          "canonStatus": "proposed"
+        },
+        {
+          "name": "Ledger Arcade",
+          "note": "Contracts, accounts and small traders",
+          "x": 0.74,
+          "y": 0.34,
+          "approx": true,
+          "canonStatus": "proposed"
+        },
+        {
+          "name": "Shift Market",
+          "note": "Food between working hours",
+          "x": 0.2,
+          "y": 0.49,
+          "approx": true,
+          "canonStatus": "proposed"
+        },
+        {
+          "name": "Service Crossing",
+          "note": "Delivery carts meet public traffic",
+          "x": 0.68,
+          "y": 0.49,
+          "approx": true,
+          "canonStatus": "proposed"
+        },
+        {
+          "name": "The Last Bench",
+          "note": "A place to wait unpaid",
+          "x": 0.27,
+          "y": 0.64,
+          "approx": true,
+          "canonStatus": "proposed"
+        },
+        {
+          "name": "Notice Wall",
+          "note": "Official announcements; competing revisions",
+          "x": 0.75,
+          "y": 0.64,
+          "approx": true,
+          "canonStatus": "proposed"
+        },
+        {
+          "name": "Roofline Cut",
+          "note": "Foot access above service alleys",
+          "x": 0.24,
+          "y": 0.79,
+          "approx": true,
+          "canonStatus": "proposed"
+        },
+        {
+          "name": "The Street Spine",
+          "note": "Main road through the center",
+          "x": 0.69,
+          "y": 0.79,
+          "approx": true,
+          "canonStatus": "proposed"
+        }
+      ]
+    },
+    "the-ashrun": {
+      "title": "The Ashrun District Map",
+      "short": "The Ashrun",
+      "kind": "district",
+      "district": "the-ashrun",
+      "status": "design candidate",
+      "image": "maps/candidates/the-ashrun-v2.jpg",
+      "width": 1536,
+      "height": 1024,
+      "sources": [
+        "https://www.worldanvil.com/w/adyta-jeeperssheefers/a/adyta-settlement",
+        "https://www.worldanvil.com/w/adyta-jeeperssheefers/a/corporations-article"
+      ],
+      "brief": "the-ashrun",
+      "note": "Lore-grounded illustration; local names and placements are proposals.",
+      "annotations": [
+        {
+          "name": "Freight Reach",
+          "note": "Barges move through working water",
+          "x": 0.23,
+          "y": 0.19,
+          "approx": true,
+          "canonStatus": "proposed"
+        },
+        {
+          "name": "Manifest Quay",
+          "note": "Meridian freight; papers meet cargo",
+          "x": 0.7,
+          "y": 0.19,
+          "approx": true,
+          "canonStatus": "proposed"
+        },
+        {
+          "name": "The Brown Steps",
+          "note": "Public bank; water leaves marks",
+          "x": 0.28,
+          "y": 0.34,
+          "approx": true,
+          "canonStatus": "proposed"
+        },
+        {
+          "name": "Pump Margin",
+          "note": "Service access above intake machinery",
+          "x": 0.74,
+          "y": 0.34,
+          "approx": true,
+          "canonStatus": "proposed"
+        },
+        {
+          "name": "Runoff Mouth",
+          "note": "Keep clear of discharge",
+          "x": 0.2,
+          "y": 0.49,
+          "approx": true,
+          "canonStatus": "proposed"
+        },
+        {
+          "name": "Towline Walk",
+          "note": "Foot traffic along the bank",
+          "x": 0.68,
+          "y": 0.49,
+          "approx": true,
+          "canonStatus": "proposed"
+        },
+        {
+          "name": "The Bent Crossing",
+          "note": "Bridge; narrow service approach",
+          "x": 0.27,
+          "y": 0.64,
+          "approx": true,
+          "canonStatus": "proposed"
+        },
+        {
+          "name": "Tide Ledger",
+          "note": "Shift board for water workers",
+          "x": 0.75,
+          "y": 0.64,
+          "approx": true,
+          "canonStatus": "proposed"
+        },
+        {
+          "name": "Debris Catch",
+          "note": "What floats gathers here",
+          "x": 0.24,
+          "y": 0.79,
+          "approx": true,
+          "canonStatus": "proposed"
+        },
+        {
+          "name": "Harborward Channel",
+          "note": "Toward the broader harbor",
+          "x": 0.69,
+          "y": 0.79,
+          "approx": true,
+          "canonStatus": "proposed"
+        }
+      ]
+    },
+    "far-shipyards": {
+      "title": "Far Shipyards District Map",
+      "short": "Far Shipyards",
+      "kind": "district",
+      "district": "far-shipyards",
+      "status": "design candidate",
+      "image": "maps/candidates/far-shipyards-v2.jpg",
+      "width": 1536,
+      "height": 1024,
+      "sources": [
+        "https://www.worldanvil.com/w/adyta-jeeperssheefers/a/adyta-settlement",
+        "https://www.worldanvil.com/w/adyta-jeeperssheefers/a/corporations-article"
+      ],
+      "brief": "far-shipyards",
+      "note": "Lore-grounded illustration; local names and placements are proposals.",
+      "annotations": [
+        {
+          "name": "Half-Hull Dock",
+          "note": "A ship midway through becoming",
+          "x": 0.23,
+          "y": 0.19,
+          "approx": true,
+          "canonStatus": "proposed"
+        },
+        {
+          "name": "Second Sale Yard",
+          "note": "Recovered fittings; ask twice",
+          "x": 0.7,
+          "y": 0.19,
+          "approx": true,
+          "canonStatus": "proposed"
+        },
+        {
+          "name": "Plate Cutters",
+          "note": "Steel work; hearing protection advised",
+          "x": 0.28,
+          "y": 0.34,
+          "approx": true,
+          "canonStatus": "proposed"
+        },
+        {
+          "name": "Crane Alley",
+          "note": "Loads move overhead",
+          "x": 0.74,
+          "y": 0.34,
+          "approx": true,
+          "canonStatus": "proposed"
+        },
+        {
+          "name": "The Dry Berth",
+          "note": "Repairs below the waterline",
+          "x": 0.2,
+          "y": 0.49,
+          "approx": true,
+          "canonStatus": "proposed"
+        },
+        {
+          "name": "Rivet Canteen",
+          "note": "Hot food between shifts",
+          "x": 0.68,
+          "y": 0.49,
+          "approx": true,
+          "canonStatus": "proposed"
+        },
+        {
+          "name": "Launch Slip",
+          "note": "Keep the slope clear",
+          "x": 0.27,
+          "y": 0.64,
+          "approx": true,
+          "canonStatus": "proposed"
+        },
+        {
+          "name": "Manifest Shed",
+          "note": "Freight paperwork before departure",
+          "x": 0.75,
+          "y": 0.64,
+          "approx": true,
+          "canonStatus": "proposed"
+        },
+        {
+          "name": "Crew Rooms",
+          "note": "Beds above the working waterfront",
+          "x": 0.24,
+          "y": 0.79,
+          "approx": true,
+          "canonStatus": "proposed"
+        },
+        {
+          "name": "Breakers Gate",
+          "note": "Parts leave; whole ships rarely do",
+          "x": 0.69,
+          "y": 0.79,
+          "approx": true,
+          "canonStatus": "proposed"
+        }
+      ]
+    },
+    "greasewick-row": {
+      "title": "Greasewick Row District Map",
+      "short": "Greasewick Row",
+      "kind": "district",
+      "district": "greasewick-row",
+      "status": "design candidate",
+      "image": "maps/candidates/greasewick-row-v2.jpg",
+      "width": 1536,
+      "height": 1024,
+      "sources": [
+        "https://www.worldanvil.com/w/adyta-jeeperssheefers/a/greasewick-row-settlement",
+        "https://www.worldanvil.com/w/adyta-jeeperssheefers/a/low-halo-settlement"
+      ],
+      "brief": "greasewick-row",
+      "note": "Lore-grounded illustration; local names and placements are proposals.",
+      "annotations": [
+        {
+          "name": "Third Rattle Motors",
+          "note": "Diagnosis before credentials",
+          "x": 0.23,
+          "y": 0.19,
+          "approx": true,
+          "canonStatus": "proposed"
+        },
+        {
+          "name": "The Borrowed Spanner",
+          "note": "Tools return with a story",
+          "x": 0.7,
+          "y": 0.19,
+          "approx": true,
+          "canonStatus": "proposed"
+        },
+        {
+          "name": "Patch Parts",
+          "note": "Salvage assessed on the counter",
+          "x": 0.28,
+          "y": 0.34,
+          "approx": true,
+          "canonStatus": "proposed"
+        },
+        {
+          "name": "Aftershift Kitchen",
+          "note": "Workers eat before going home",
+          "x": 0.74,
+          "y": 0.34,
+          "approx": true,
+          "canonStatus": "proposed"
+        },
+        {
+          "name": "Conduit Mouth",
+          "note": "Small crews service tight spaces",
+          "x": 0.2,
+          "y": 0.49,
+          "approx": true,
+          "canonStatus": "proposed"
+        },
+        {
+          "name": "The Hot Seam",
+          "note": "Welding behind the shutters",
+          "x": 0.68,
+          "y": 0.49,
+          "approx": true,
+          "canonStatus": "proposed"
+        },
+        {
+          "name": "No Receipt Devices",
+          "note": "Secondhand precision repairs",
+          "x": 0.27,
+          "y": 0.64,
+          "approx": true,
+          "canonStatus": "proposed"
+        },
+        {
+          "name": "Apprentice Yard",
+          "note": "Learning with somebody watching",
+          "x": 0.75,
+          "y": 0.64,
+          "approx": true,
+          "canonStatus": "proposed"
+        },
+        {
+          "name": "Generator Court",
+          "note": "Shared electrical repairs; no magic",
+          "x": 0.24,
+          "y": 0.79,
+          "approx": true,
+          "canonStatus": "proposed"
+        },
+        {
+          "name": "South Repair Lane",
+          "note": "Toward older infrastructure",
+          "x": 0.69,
+          "y": 0.79,
+          "approx": true,
+          "canonStatus": "proposed"
+        }
+      ]
+    },
+    "old-city": {
+      "title": "Old City District Map",
+      "short": "Old City",
+      "kind": "district",
+      "district": "old-city",
+      "status": "design candidate",
+      "image": "maps/candidates/old-city-v2.jpg",
+      "width": 1536,
+      "height": 1024,
+      "sources": [
+        "https://www.worldanvil.com/w/adyta-jeeperssheefers/a/old-city-settlement"
+      ],
+      "brief": "old-city",
+      "note": "Lore-grounded illustration; local names and placements are proposals.",
+      "annotations": [
+        {
+          "name": "Foundation Mouth",
+          "note": "Descent beneath newer buildings",
+          "x": 0.23,
+          "y": 0.19,
+          "approx": true,
+          "canonStatus": "proposed"
+        },
+        {
+          "name": "The Interrupted Street",
+          "note": "Old road meets a newer wall",
+          "x": 0.7,
+          "y": 0.19,
+          "approx": true,
+          "canonStatus": "proposed"
+        },
+        {
+          "name": "Windowless Rooms",
+          "note": "Former homes inside service works",
+          "x": 0.28,
+          "y": 0.34,
+          "approx": true,
+          "canonStatus": "proposed"
+        },
+        {
+          "name": "The Scavengers Rest",
+          "note": "Occupied pocket; ask before entering",
+          "x": 0.74,
+          "y": 0.34,
+          "approx": true,
+          "canonStatus": "proposed"
+        },
+        {
+          "name": "Three Foundations",
+          "note": "Layers disagree about the floor",
+          "x": 0.2,
+          "y": 0.49,
+          "approx": true,
+          "canonStatus": "proposed"
+        },
+        {
+          "name": "Utility Crosscut",
+          "note": "Modern pipes through old rooms",
+          "x": 0.68,
+          "y": 0.49,
+          "approx": true,
+          "canonStatus": "proposed"
+        },
+        {
+          "name": "The Sealed Door",
+          "note": "No verified route beyond",
+          "x": 0.27,
+          "y": 0.64,
+          "approx": true,
+          "canonStatus": "proposed"
+        },
+        {
+          "name": "Fallen Court",
+          "note": "Collapse; keep off loose edges",
+          "x": 0.75,
+          "y": 0.64,
+          "approx": true,
+          "canonStatus": "proposed"
+        },
+        {
+          "name": "Last Legible Wall",
+          "note": "Old markings; meaning uncertain",
+          "x": 0.24,
+          "y": 0.79,
+          "approx": true,
+          "canonStatus": "proposed"
+        },
+        {
+          "name": "Unsurveyed Continuation",
+          "note": "Route ends in uncertainty",
+          "x": 0.69,
+          "y": 0.79,
+          "approx": true,
+          "canonStatus": "proposed"
+        }
+      ]
+    },
+    "southport-slums": {
+      "title": "Southport Slums District Map",
+      "short": "Southport Slums",
+      "kind": "district",
+      "district": "southport-slums",
+      "status": "design candidate",
+      "image": "maps/candidates/southport-slums-v2.jpg",
+      "width": 1536,
+      "height": 1024,
+      "sources": [
+        "https://www.worldanvil.com/w/adyta-jeeperssheefers/a/adyta-settlement"
+      ],
+      "brief": "southport-slums",
+      "note": "Lore-grounded illustration; local names and placements are proposals.",
+      "annotations": [
+        {
+          "name": "Borrowed Roof Court",
+          "note": "Shared repairs keep homes standing",
+          "x": 0.23,
+          "y": 0.19,
+          "approx": true,
+          "canonStatus": "proposed"
+        },
+        {
+          "name": "The Late Pot",
+          "note": "Food after the shift ends",
+          "x": 0.7,
+          "y": 0.19,
+          "approx": true,
+          "canonStatus": "proposed"
+        },
+        {
+          "name": "Pump Queue",
+          "note": "Water before work",
+          "x": 0.28,
+          "y": 0.34,
+          "approx": true,
+          "canonStatus": "proposed"
+        },
+        {
+          "name": "Mended Stair",
+          "note": "Residents maintain the landing",
+          "x": 0.74,
+          "y": 0.34,
+          "approx": true,
+          "canonStatus": "proposed"
+        },
+        {
+          "name": "Patchlight Rooms",
+          "note": "Homes above small shops",
+          "x": 0.2,
+          "y": 0.49,
+          "approx": true,
+          "canonStatus": "proposed"
+        },
+        {
+          "name": "The Dry Shelf",
+          "note": "Goods kept above runoff",
+          "x": 0.68,
+          "y": 0.49,
+          "approx": true,
+          "canonStatus": "proposed"
+        },
+        {
+          "name": "Neighbors Gate",
+          "note": "Local watch; ask who knows you",
+          "x": 0.27,
+          "y": 0.64,
+          "approx": true,
+          "canonStatus": "proposed"
+        },
+        {
+          "name": "Last Busk Corner",
+          "note": "Music for whoever stays",
+          "x": 0.75,
+          "y": 0.64,
+          "approx": true,
+          "canonStatus": "proposed"
+        },
+        {
+          "name": "The Wash Lines",
+          "note": "Courtyard work; shared space",
+          "x": 0.24,
+          "y": 0.79,
+          "approx": true,
+          "canonStatus": "proposed"
+        },
+        {
+          "name": "Beltward Road",
+          "note": "North toward the industrial belt",
+          "x": 0.69,
+          "y": 0.79,
+          "approx": true,
+          "canonStatus": "proposed"
+        }
+      ]
+    },
+    "scrapfields": {
+      "title": "Scrapfields District Map",
+      "short": "Scrapfields",
+      "kind": "district",
+      "district": "scrapfields",
+      "status": "design candidate",
+      "image": "maps/candidates/scrapfields-v2.jpg",
+      "width": 1536,
+      "height": 1024,
+      "sources": [
+        "https://www.worldanvil.com/w/adyta-jeeperssheefers/a/adyta-settlement"
+      ],
+      "brief": "scrapfields",
+      "note": "Lore-grounded illustration; local names and placements are proposals.",
+      "annotations": [
+        {
+          "name": "Second Life Yard",
+          "note": "Parts sorted before disposal",
+          "x": 0.23,
+          "y": 0.19,
+          "approx": true,
+          "canonStatus": "proposed"
+        },
+        {
+          "name": "The Weighing Shade",
+          "note": "Trade measured under patched roofing",
+          "x": 0.7,
+          "y": 0.19,
+          "approx": true,
+          "canonStatus": "proposed"
+        },
+        {
+          "name": "Patchkin Work Court",
+          "note": "Salvage crews share the space",
+          "x": 0.28,
+          "y": 0.34,
+          "approx": true,
+          "canonStatus": "proposed"
+        },
+        {
+          "name": "Copper Rain",
+          "note": "Wire stripped; sharp edges everywhere",
+          "x": 0.74,
+          "y": 0.34,
+          "approx": true,
+          "canonStatus": "proposed"
+        },
+        {
+          "name": "The Running Engine",
+          "note": "Recovered machines tested here",
+          "x": 0.2,
+          "y": 0.49,
+          "approx": true,
+          "canonStatus": "proposed"
+        },
+        {
+          "name": "Meal Tin",
+          "note": "Hot food beside the sorting lanes",
+          "x": 0.68,
+          "y": 0.49,
+          "approx": true,
+          "canonStatus": "proposed"
+        },
+        {
+          "name": "Tag Dispute",
+          "note": "Ownership argued over chalk marks",
+          "x": 0.27,
+          "y": 0.64,
+          "approx": true,
+          "canonStatus": "proposed"
+        },
+        {
+          "name": "Crane Shadow",
+          "note": "Stay outside the swing",
+          "x": 0.75,
+          "y": 0.64,
+          "approx": true,
+          "canonStatus": "proposed"
+        },
+        {
+          "name": "The Kept Pieces",
+          "note": "Small components; large possibilities",
+          "x": 0.24,
+          "y": 0.79,
+          "approx": true,
+          "canonStatus": "proposed"
+        },
+        {
+          "name": "Repairward Track",
+          "note": "Loads leave for repair markets",
+          "x": 0.69,
+          "y": 0.79,
+          "approx": true,
+          "canonStatus": "proposed"
+        }
+      ]
+    },
+    "outer-farms": {
+      "title": "Outer Farms District Map",
+      "short": "Outer Farms",
+      "kind": "district",
+      "district": "outer-farms",
+      "status": "design candidate",
+      "image": "maps/candidates/outer-farms-v2.jpg",
+      "width": 1536,
+      "height": 1024,
+      "sources": [
+        "https://www.worldanvil.com/w/adyta-jeeperssheefers/a/adyta-settlement"
+      ],
+      "brief": "outer-farms",
+      "note": "Lore-grounded illustration; local names and placements are proposals.",
+      "annotations": [
+        {
+          "name": "Seamfield",
+          "note": "Cultivated strips beside salvage",
+          "x": 0.23,
+          "y": 0.19,
+          "approx": true,
+          "canonStatus": "proposed"
+        },
+        {
+          "name": "Dustwalker Camp",
+          "note": "Temporary resting place; ask first",
+          "x": 0.7,
+          "y": 0.19,
+          "approx": true,
+          "canonStatus": "proposed"
+        },
+        {
+          "name": "The Mended Pump",
+          "note": "Irrigation kept alive by repairs",
+          "x": 0.28,
+          "y": 0.34,
+          "approx": true,
+          "canonStatus": "proposed"
+        },
+        {
+          "name": "Seed Tin",
+          "note": "Trade small; keep some back",
+          "x": 0.74,
+          "y": 0.34,
+          "approx": true,
+          "canonStatus": "proposed"
+        },
+        {
+          "name": "The Pickers Line",
+          "note": "Scrap work along the city edge",
+          "x": 0.2,
+          "y": 0.49,
+          "approx": true,
+          "canonStatus": "proposed"
+        },
+        {
+          "name": "Last Fence",
+          "note": "Fields give way to rough country",
+          "x": 0.68,
+          "y": 0.49,
+          "approx": true,
+          "canonStatus": "proposed"
+        },
+        {
+          "name": "Hunters Return",
+          "note": "Gear checked before heading out",
+          "x": 0.27,
+          "y": 0.64,
+          "approx": true,
+          "canonStatus": "proposed"
+        },
+        {
+          "name": "Shared Store",
+          "note": "Tools and harvest under patched roofing",
+          "x": 0.75,
+          "y": 0.64,
+          "approx": true,
+          "canonStatus": "proposed"
+        },
+        {
+          "name": "Marketward Cart Track",
+          "note": "Food and salvage toward town",
+          "x": 0.24,
+          "y": 0.79,
+          "approx": true,
+          "canonStatus": "proposed"
+        },
+        {
+          "name": "Hinterland Path",
+          "note": "Beyond: geography remains open",
+          "x": 0.69,
+          "y": 0.79,
+          "approx": true,
+          "canonStatus": "proposed"
+        }
+      ]
+    },
+    "borderlands": {
+      "title": "Borderlands District Map",
+      "short": "Borderlands",
+      "kind": "district",
+      "district": "borderlands",
+      "status": "design candidate",
+      "image": "maps/candidates/borderlands-v2.jpg",
+      "width": 1536,
+      "height": 1024,
+      "sources": [
+        "https://www.worldanvil.com/w/adyta-jeeperssheefers/a/adyta-settlement"
+      ],
+      "brief": "borderlands",
+      "note": "Lore-grounded illustration; local names and placements are proposals.",
+      "annotations": [
+        {
+          "name": "The Fading Line",
+          "note": "Nobody agrees where authority ends",
+          "x": 0.23,
+          "y": 0.19,
+          "approx": true,
+          "canonStatus": "proposed"
+        },
+        {
+          "name": "Roadside Rest",
+          "note": "Beds when there is room",
+          "x": 0.7,
+          "y": 0.19,
+          "approx": true,
+          "canonStatus": "proposed"
+        },
+        {
+          "name": "Last Lit Post",
+          "note": "Beyond this, bring your own light",
+          "x": 0.28,
+          "y": 0.34,
+          "approx": true,
+          "canonStatus": "proposed"
+        },
+        {
+          "name": "The Spare Wheel",
+          "note": "Cart repairs; parts by barter",
+          "x": 0.74,
+          "y": 0.34,
+          "approx": true,
+          "canonStatus": "proposed"
+        },
+        {
+          "name": "Crossing Shade",
+          "note": "Waiting without official shelter",
+          "x": 0.2,
+          "y": 0.49,
+          "approx": true,
+          "canonStatus": "proposed"
+        },
+        {
+          "name": "Unclaimed Yard",
+          "note": "Temporary use; contested ownership",
+          "x": 0.68,
+          "y": 0.49,
+          "approx": true,
+          "canonStatus": "proposed"
+        },
+        {
+          "name": "Dry Gully Path",
+          "note": "Foot route; weather changes it",
+          "x": 0.27,
+          "y": 0.64,
+          "approx": true,
+          "canonStatus": "proposed"
+        },
+        {
+          "name": "The Return Marker",
+          "note": "A point locals recognize",
+          "x": 0.75,
+          "y": 0.64,
+          "approx": true,
+          "canonStatus": "proposed"
+        },
+        {
+          "name": "Open Country Track",
+          "note": "No named nation beyond",
+          "x": 0.24,
+          "y": 0.79,
+          "approx": true,
+          "canonStatus": "proposed"
+        },
+        {
+          "name": "Cityward Bend",
+          "note": "Back toward the built streets",
+          "x": 0.69,
+          "y": 0.79,
+          "approx": true,
+          "canonStatus": "proposed"
+        }
+      ]
+    },
+    "southern-industrial-belt": {
+      "title": "S. Industrial Belt District Map",
+      "short": "S. Industrial Belt",
+      "kind": "district",
+      "district": "southern-industrial-belt",
+      "status": "design candidate",
+      "image": "maps/candidates/southern-industrial-belt-v2.jpg",
+      "width": 1536,
+      "height": 1024,
+      "sources": [
+        "https://www.worldanvil.com/w/adyta-jeeperssheefers/a/adyta-settlement"
+      ],
+      "brief": "southern-industrial-belt",
+      "note": "Lore-grounded illustration; local names and placements are proposals.",
+      "annotations": [
+        {
+          "name": "Shift Bell Court",
+          "note": "Workers change; the furnaces continue",
+          "x": 0.23,
+          "y": 0.19,
+          "approx": true,
+          "canonStatus": "proposed"
+        },
+        {
+          "name": "Ashborn Workshop",
+          "note": "Industrial repairs; crew reputation matters",
+          "x": 0.7,
+          "y": 0.19,
+          "approx": true,
+          "canonStatus": "proposed"
+        },
+        {
+          "name": "Stonework Hall",
+          "note": "Dwarven workshop and stronghold frontage",
+          "x": 0.28,
+          "y": 0.34,
+          "approx": true,
+          "canonStatus": "proposed"
+        },
+        {
+          "name": "The Long Pour",
+          "note": "Steel work behind guarded access",
+          "x": 0.74,
+          "y": 0.34,
+          "approx": true,
+          "canonStatus": "proposed"
+        },
+        {
+          "name": "Hazard Pay Steps",
+          "note": "Claims begin after the injury",
+          "x": 0.2,
+          "y": 0.49,
+          "approx": true,
+          "canonStatus": "proposed"
+        },
+        {
+          "name": "The Knuckle Corner",
+          "note": "Street pressure; affiliation unconfirmed",
+          "x": 0.68,
+          "y": 0.49,
+          "approx": true,
+          "canonStatus": "proposed"
+        },
+        {
+          "name": "Canteen Six",
+          "note": "Meals between furnace shifts",
+          "x": 0.27,
+          "y": 0.64,
+          "approx": true,
+          "canonStatus": "proposed"
+        },
+        {
+          "name": "Load Road",
+          "note": "Freight takes the wide turn",
+          "x": 0.75,
+          "y": 0.64,
+          "approx": true,
+          "canonStatus": "proposed"
+        },
+        {
+          "name": "Worker Rooms",
+          "note": "Homes within reach of the job",
+          "x": 0.24,
+          "y": 0.79,
+          "approx": true,
+          "canonStatus": "proposed"
+        },
+        {
+          "name": "South Exit",
+          "note": "Toward Southport; smoke follows",
+          "x": 0.69,
+          "y": 0.79,
+          "approx": true,
+          "canonStatus": "proposed"
+        }
+      ]
+    },
+    "crownless-row": {
+      "title": "Crownless Row District Map",
+      "short": "Crownless Row",
+      "kind": "district",
+      "district": "crownless-row",
+      "status": "design candidate",
+      "image": "maps/candidates/crownless-row-v2.jpg",
+      "width": 1536,
+      "height": 1024,
+      "sources": [],
+      "brief": "crownless-row",
+      "note": "Provisional expansion from PDA description; no public World Anvil source found.",
+      "annotations": [
+        {
+          "name": "Mending Court",
+          "note": "Shared repair; bring what you can",
+          "x": 0.23,
+          "y": 0.19,
+          "approx": true,
+          "canonStatus": "proposed"
+        },
+        {
+          "name": "No Crown Workshop",
+          "note": "Tools before titles",
+          "x": 0.7,
+          "y": 0.19,
+          "approx": true,
+          "canonStatus": "proposed"
+        },
+        {
+          "name": "The Spare Chair",
+          "note": "Sit; nobody charges by the minute",
+          "x": 0.28,
+          "y": 0.34,
+          "approx": true,
+          "canonStatus": "proposed"
+        },
+        {
+          "name": "Open Pot",
+          "note": "Food when there is enough",
+          "x": 0.74,
+          "y": 0.34,
+          "approx": true,
+          "canonStatus": "proposed"
+        },
+        {
+          "name": "Patch Roof Row",
+          "note": "Homes maintained together",
+          "x": 0.2,
+          "y": 0.49,
+          "approx": true,
+          "canonStatus": "proposed"
+        },
+        {
+          "name": "The Useful Shelf",
+          "note": "Broken does not mean finished",
+          "x": 0.68,
+          "y": 0.49,
+          "approx": true,
+          "canonStatus": "proposed"
+        },
+        {
+          "name": "Neighbors Steps",
+          "note": "Ask before moving through",
+          "x": 0.27,
+          "y": 0.64,
+          "approx": true,
+          "canonStatus": "proposed"
+        },
+        {
+          "name": "Lightshare",
+          "note": "Repairs and shared electrical supply",
+          "x": 0.75,
+          "y": 0.64,
+          "approx": true,
+          "canonStatus": "proposed"
+        },
+        {
+          "name": "The Small Stage",
+          "note": "A voice without a permit",
+          "x": 0.24,
+          "y": 0.79,
+          "approx": true,
+          "canonStatus": "proposed"
+        },
+        {
+          "name": "Common Gate",
+          "note": "Entry by conversation, not a crown",
+          "x": 0.69,
+          "y": 0.79,
+          "approx": true,
+          "canonStatus": "proposed"
+        }
+      ]
+    },
+    "ash-wastes": {
+      "title": "Ash Wastes District Map",
+      "short": "Ash Wastes",
+      "kind": "district",
+      "district": "ash-wastes",
+      "status": "design candidate",
+      "image": "maps/candidates/ash-wastes-v2.jpg",
+      "width": 1536,
+      "height": 1024,
+      "sources": [
+        "https://www.worldanvil.com/w/adyta-jeeperssheefers/a/adyta-settlement"
+      ],
+      "brief": "ash-wastes",
+      "note": "Lore-grounded illustration; local names and placements are proposals.",
+      "annotations": [
+        {
+          "name": "Last Warning",
+          "note": "Beyond maintained ground",
+          "x": 0.23,
+          "y": 0.19,
+          "approx": true,
+          "canonStatus": "proposed"
+        },
+        {
+          "name": "Dead Wind Reach",
+          "note": "Exposure; no shelter assured",
+          "x": 0.7,
+          "y": 0.19,
+          "approx": true,
+          "canonStatus": "proposed"
+        },
+        {
+          "name": "Corroded Span",
+          "note": "Bridge remnant; do not trust it",
+          "x": 0.28,
+          "y": 0.34,
+          "approx": true,
+          "canonStatus": "proposed"
+        },
+        {
+          "name": "The Black Pool",
+          "note": "Unknown contamination; keep clear",
+          "x": 0.74,
+          "y": 0.34,
+          "approx": true,
+          "canonStatus": "proposed"
+        },
+        {
+          "name": "Buried Service Road",
+          "note": "Broken alignment; no maintained access",
+          "x": 0.2,
+          "y": 0.49,
+          "approx": true,
+          "canonStatus": "proposed"
+        },
+        {
+          "name": "Ashfall Hollow",
+          "note": "Loose ground conceals the floor",
+          "x": 0.68,
+          "y": 0.49,
+          "approx": true,
+          "canonStatus": "proposed"
+        },
+        {
+          "name": "Silent Machinery",
+          "note": "No working plant confirmed",
+          "x": 0.27,
+          "y": 0.64,
+          "approx": true,
+          "canonStatus": "proposed"
+        },
+        {
+          "name": "The Missing Markers",
+          "note": "Survey trail breaks here",
+          "x": 0.75,
+          "y": 0.64,
+          "approx": true,
+          "canonStatus": "proposed"
+        },
+        {
+          "name": "Exclusion Edge",
+          "note": "Return before visibility fails",
+          "x": 0.24,
+          "y": 0.79,
+          "approx": true,
+          "canonStatus": "proposed"
+        },
+        {
+          "name": "Unmapped East",
+          "note": "No verified onward route",
+          "x": 0.69,
+          "y": 0.79,
+          "approx": true,
+          "canonStatus": "proposed"
+        }
+      ]
+    },
+    "forgotten-depths": {
+      "title": "Forgotten Depths District Map",
+      "short": "Forgotten Depths",
+      "kind": "district",
+      "district": "forgotten-depths",
+      "status": "design candidate",
+      "image": "maps/candidates/forgotten-depths-v2.jpg",
+      "width": 1536,
+      "height": 1024,
+      "sources": [
+        "https://www.worldanvil.com/w/adyta-jeeperssheefers/a/adyta-settlement"
+      ],
+      "brief": "forgotten-depths",
+      "note": "Lore-grounded illustration; local names and placements are proposals.",
+      "annotations": [
+        {
+          "name": "Last Known Landing",
+          "note": "Beyond: no verified survey",
+          "x": 0.23,
+          "y": 0.19,
+          "approx": true,
+          "canonStatus": "proposed"
+        },
+        {
+          "name": "Broken Descent",
+          "note": "Stairs stop before the floor",
+          "x": 0.7,
+          "y": 0.19,
+          "approx": true,
+          "canonStatus": "proposed"
+        },
+        {
+          "name": "Chalk Return Mark",
+          "note": "A reminder; not a guarantee",
+          "x": 0.28,
+          "y": 0.34,
+          "approx": true,
+          "canonStatus": "proposed"
+        },
+        {
+          "name": "Sealed Margin",
+          "note": "No confirmed room beyond",
+          "x": 0.74,
+          "y": 0.34,
+          "approx": true,
+          "canonStatus": "proposed"
+        },
+        {
+          "name": "Pressure Door",
+          "note": "Condition unknown; do not force",
+          "x": 0.2,
+          "y": 0.49,
+          "approx": true,
+          "canonStatus": "proposed"
+        },
+        {
+          "name": "Lost Floor",
+          "note": "Depth cannot be read here",
+          "x": 0.68,
+          "y": 0.49,
+          "approx": true,
+          "canonStatus": "proposed"
+        },
+        {
+          "name": "The Interrupted Pipe",
+          "note": "Infrastructure without a clear origin",
+          "x": 0.27,
+          "y": 0.64,
+          "approx": true,
+          "canonStatus": "proposed"
+        },
+        {
+          "name": "Uncertain Crossing",
+          "note": "Dashes mark a possible passage",
+          "x": 0.75,
+          "y": 0.64,
+          "approx": true,
+          "canonStatus": "proposed"
+        },
+        {
+          "name": "Collapse Front",
+          "note": "Route ends at fallen material",
+          "x": 0.24,
+          "y": 0.79,
+          "approx": true,
+          "canonStatus": "proposed"
+        },
+        {
+          "name": "Unknown Below",
+          "note": "Leave the map unfinished",
+          "x": 0.69,
+          "y": 0.79,
+          "approx": true,
+          "canonStatus": "proposed"
+        }
+      ]
+    },
+    "main-roads": {
+      "title": "Main Roads Network Overview",
+      "short": "Main Roads",
+      "kind": "network",
+      "district": "main-roads",
+      "status": "design candidate",
+      "image": "maps/candidates/main-roads-v2.jpg",
+      "width": 1536,
+      "height": 1024,
+      "sources": [
+        "https://www.worldanvil.com/w/adyta-jeeperssheefers/a/adyta-settlement",
+        "https://www.worldanvil.com/w/adyta-jeeperssheefers/a/civic-institutions-article"
+      ],
+      "brief": "main-roads",
+      "note": "Lore-grounded illustration; local names and placements are proposals.",
+      "annotations": [
+        {
+          "name": "Surface Tram",
+          "note": "Street-level public transport",
+          "x": 0.23,
+          "y": 0.19,
+          "approx": true,
+          "canonStatus": "proposed"
+        },
+        {
+          "name": "Freight Spine",
+          "note": "Road movement; schematic connection",
+          "x": 0.7,
+          "y": 0.19,
+          "approx": true,
+          "canonStatus": "proposed"
+        },
+        {
+          "name": "Public Crossing",
+          "note": "Pedestrians meet traffic",
+          "x": 0.28,
+          "y": 0.34,
+          "approx": true,
+          "canonStatus": "proposed"
+        },
+        {
+          "name": "Service Access",
+          "note": "Utility work behind frontage",
+          "x": 0.74,
+          "y": 0.34,
+          "approx": true,
+          "canonStatus": "proposed"
+        },
+        {
+          "name": "Roof Route",
+          "note": "Informal foot route; provisional",
+          "x": 0.2,
+          "y": 0.49,
+          "approx": true,
+          "canonStatus": "proposed"
+        },
+        {
+          "name": "Drainage Access",
+          "note": "Infrastructure; never a subway",
+          "x": 0.68,
+          "y": 0.49,
+          "approx": true,
+          "canonStatus": "proposed"
+        },
+        {
+          "name": "Closure Point",
+          "note": "Check current local conditions",
+          "x": 0.27,
+          "y": 0.64,
+          "approx": true,
+          "canonStatus": "proposed"
+        },
+        {
+          "name": "Transfer Stop",
+          "note": "Illustrative surface interchange",
+          "x": 0.75,
+          "y": 0.64,
+          "approx": true,
+          "canonStatus": "proposed"
+        },
+        {
+          "name": "Notice Board",
+          "note": "Official version; ask a local",
+          "x": 0.24,
+          "y": 0.79,
+          "approx": true,
+          "canonStatus": "proposed"
+        },
+        {
+          "name": "Unconfirmed Link",
+          "note": "Dashed route; not a travel promise",
+          "x": 0.69,
+          "y": 0.79,
+          "approx": true,
+          "canonStatus": "proposed"
+        }
+      ]
     }
   },
   "districts": {
@@ -147,8 +2101,10 @@
         "y": 11.0,
         "label": "Grand Academy",
         "note": "Knowledge and older arrogance. Institutional memory with locked doors.",
-        "kind": "area"
-      }
+        "kind": "area",
+        "districtMap": "grand-academy"
+      },
+      "map": "grand-academy"
     },
     "new-halo": {
       "name": "New Halo",
@@ -163,8 +2119,10 @@
         "y": 8.0,
         "label": "New Halo",
         "note": "The Shining Spire, aspirational skyline, prestige pressure, and the polished version of Adyta sold upward.",
-        "kind": "area"
-      }
+        "kind": "area",
+        "districtMap": "new-halo"
+      },
+      "map": "new-halo"
     },
     "governance-district": {
       "name": "Governance District",
@@ -179,8 +2137,10 @@
         "y": 14.0,
         "label": "Governance",
         "note": "Paper, power, lies, civic channels, public authority, and procedures that decide who gets heard.",
-        "kind": "area"
-      }
+        "kind": "area",
+        "districtMap": "governance-district"
+      },
+      "map": "governance-district"
     },
     "crownline-industrials": {
       "name": "Crownline Industrials",
@@ -195,7 +2155,8 @@
         "y": 18.0,
         "label": "Crownline",
         "note": "Profit, smoke, infrastructure leverage, and the corporate version of stability.",
-        "kind": null
+        "kind": null,
+        "districtMap": "crownline-industrials"
       },
       "dossier": {
         "mood": "Service is strength, and strength sends invoices.",
@@ -205,7 +2166,8 @@
         "factions": "Crownline Infrastructure; Bastion Dynamics; civic compromise chain.",
         "missions": "Burn-Wire Block Check; seized power dispute; corridor shutdowns.",
         "wisdom": "They protect you. You pay. Everybody wins, allegedly."
-      }
+      },
+      "map": "crownline-industrials"
     },
     "three-spires-monastery": {
       "name": "Three Spires Monastery",
@@ -220,8 +2182,10 @@
         "y": 26.0,
         "label": "Three Spires",
         "note": "Old gods, older secrets, and spiritual leverage that does not fit corporate reporting.",
-        "kind": "area"
-      }
+        "kind": "area",
+        "districtMap": "three-spires-monastery"
+      },
+      "map": "three-spires-monastery"
     },
     "elven-enclave": {
       "name": "Elven Enclave",
@@ -236,8 +2200,10 @@
         "y": 28.0,
         "label": "Elven Enclave",
         "note": "Established, elegant, elven. An enclave of older status and polished exclusions.",
-        "kind": "area"
-      }
+        "kind": "area",
+        "districtMap": "elven-enclave"
+      },
+      "map": "elven-enclave"
     },
     "central-core": {
       "name": "Central Core",
@@ -252,8 +2218,10 @@
         "y": 32.0,
         "label": "Central Core",
         "note": "Commerce, politics, control, transit for all. The official city explains itself from here.",
-        "kind": null
-      }
+        "kind": null,
+        "districtMap": "central-core"
+      },
+      "map": "central-core"
     },
     "the-ashrun": {
       "name": "The Ashrun",
@@ -268,8 +2236,10 @@
         "y": 31.0,
         "label": "The Ashrun",
         "note": "Trade flows, waste flows, stories drown. Water routes carry more than freight.",
-        "kind": "area"
-      }
+        "kind": "area",
+        "districtMap": "the-ashrun"
+      },
+      "map": "the-ashrun"
     },
     "far-shipyards": {
       "name": "Far Shipyards",
@@ -284,8 +2254,10 @@
         "y": 31.0,
         "label": "Far Shipyards",
         "note": "Build it, break it, sell it twice. Heavy industry at the edge of the harbor map.",
-        "kind": "area"
-      }
+        "kind": "area",
+        "districtMap": "far-shipyards"
+      },
+      "map": "far-shipyards"
     },
     "the-tangle": {
       "name": "The Tangle",
@@ -444,13 +2416,15 @@
         "y": 51.0,
         "label": "Greasewick",
         "note": "Machines, oil, fixers, goblin tech, and repair work that smells like debt and hot metal.",
-        "kind": "area"
-      }
+        "kind": "area",
+        "districtMap": "greasewick-row"
+      },
+      "map": "greasewick-row"
     },
     "old-city": {
       "name": "Old City",
       "tagline": "Built on ruins. Built over lies. Still standing.",
-      "layer": "surface",
+      "layer": "underground",
       "cityPin": {
         "x": 0.3789,
         "y": 0.4212
@@ -460,7 +2434,8 @@
         "y": 56.0,
         "label": "Old City",
         "note": "Built on ruins, built over lies, still standing. Every wall remembers earlier arrangements.",
-        "kind": "area"
+        "kind": "area",
+        "districtMap": "old-city"
       },
       "dossier": {
         "mood": "Built over ruins, lies, and rooms that still disagree with time.",
@@ -470,7 +2445,8 @@
         "factions": "ABI; Velvet Signal; developers; old-city stakeholders.",
         "missions": "Below-Site Incident Review.",
         "wisdom": "Every wall remembers earlier arrangements."
-      }
+      },
+      "map": "old-city"
     },
     "southport-slums": {
       "name": "Southport Slums",
@@ -485,8 +2461,10 @@
         "y": 56.0,
         "label": "Southport",
         "note": "Forgotten, abandoned, still surviving. The city forgets people here until it needs them moved.",
-        "kind": "area"
-      }
+        "kind": "area",
+        "districtMap": "southport-slums"
+      },
+      "map": "southport-slums"
     },
     "scrapfields": {
       "name": "Scrapfields",
@@ -501,7 +2479,8 @@
         "y": 55.0,
         "label": "Scrapfields",
         "note": "Pickers, scavengers, patchkin goblins, and useful things that refused to stay dead.",
-        "kind": "mission area"
+        "kind": "mission area",
+        "districtMap": "scrapfields"
       },
       "dossier": {
         "mood": "Useful things that refused to stay dead.",
@@ -511,7 +2490,8 @@
         "factions": "Patchkin; Gremlin Works; Bastion Dynamics; Crownline.",
         "missions": "Hold the Line on Reclaimed Power.",
         "wisdom": "Abandoned means nobody rich needed it yesterday."
-      }
+      },
+      "map": "scrapfields"
     },
     "outer-farms": {
       "name": "Outer Farms",
@@ -526,8 +2506,10 @@
         "y": 64.0,
         "label": "Outer Farms",
         "note": "Scrap gangs, hunters, dustwalker goblins, and the edge where city logic starts to fail.",
-        "kind": "area"
-      }
+        "kind": "area",
+        "districtMap": "outer-farms"
+      },
+      "map": "outer-farms"
     },
     "borderlands": {
       "name": "Borderlands",
@@ -542,8 +2524,10 @@
         "y": 65.0,
         "label": "Borderlands",
         "note": "Law fades, survival sharpens, no promises. Good for crossings and deals nobody records.",
-        "kind": "area"
-      }
+        "kind": "area",
+        "districtMap": "borderlands"
+      },
+      "map": "borderlands"
     },
     "southern-industrial-belt": {
       "name": "S. Industrial Belt",
@@ -559,8 +2543,10 @@
         "label": "S-Industrial",
         "note": "Smoke, steel, sweat, Ashborn goblins, dwarf strongholds, and work that changes bodies.",
         "kind": "area",
-        "key": "S-INDUSTRIAL BELT"
-      }
+        "key": "S-INDUSTRIAL BELT",
+        "districtMap": "southern-industrial-belt"
+      },
+      "map": "southern-industrial-belt"
     },
     "crownless-row": {
       "name": "Crownless Row",
@@ -570,7 +2556,8 @@
         "x": 0.652,
         "y": 0.528,
         "approx": true
-      }
+      },
+      "map": "crownless-row"
     },
     "ash-wastes": {
       "name": "Ash Wastes",
@@ -586,8 +2573,10 @@
         "y": 64.0,
         "label": "Ash Wastes",
         "note": "Dead wind, dead things, stay out. Escalation space for fallout and dangerous edges of the map.",
-        "kind": null
-      }
+        "kind": null,
+        "districtMap": "ash-wastes"
+      },
+      "map": "ash-wastes"
     },
     "the-sewers": {
       "name": "The Sewers",
@@ -602,7 +2591,8 @@
         "y": 86.0,
         "label": "Sewers",
         "note": "Underground community, hidden movement, warnings, labor, and shelter. Route truth lives here before it becomes a file.",
-        "kind": "mission"
+        "kind": "mission",
+        "districtMap": "sewers-town"
       },
       "dossier": {
         "mood": "Lived underground space: route truth before file truth.",
@@ -628,7 +2618,8 @@
         "y": 95.0,
         "label": "Deep Tunnels",
         "note": "Forgotten infrastructure, still somewhere, below the readable city and above worse places.",
-        "kind": "area"
+        "kind": "area",
+        "districtMap": "sewers-town"
       },
       "dossier": {
         "mood": "Wrong infrastructure below the readable city.",
@@ -654,8 +2645,10 @@
         "y": 95.0,
         "label": "Forgotten Depths",
         "note": "Where maps stop and worse goes down. Use for deep fallout, lost systems, and hard choices.",
-        "kind": "area"
-      }
+        "kind": "area",
+        "districtMap": "forgotten-depths"
+      },
+      "map": "forgotten-depths"
     },
     "main-roads": {
       "name": "Main Roads",
@@ -666,7 +2659,8 @@
         "y": 51.0,
         "label": "Main Roads",
         "note": "Primary surface roads, trade spines, civic transit lanes, and visible routes that official traffic, patrols, freight, and job fallout move through first.",
-        "kind": "roadPin"
+        "kind": "roadPin",
+        "districtMap": "main-roads"
       },
       "dossier": {
         "mood": "Official movement: freight, patrols, transit, paperwork, blame.",
@@ -676,7 +2670,8 @@
         "factions": "Wardens; Crownline; Civil Registry; Emergency Management.",
         "missions": "Any public-facing operation or getaway complication.",
         "wisdom": "The legal road is not always the safe road."
-      }
+      },
+      "map": "main-roads"
     }
   },
   "places": [
@@ -2050,8 +4045,9 @@
       "blurb": "Walkway routes over the canal. Bridges are crowded at peak hours.",
       "pin": {
         "map": "sewers-town",
-        "x": 0.5076,
-        "y": 0.1124
+        "x": 0.459,
+        "y": 0.116,
+        "approx": true
       }
     },
     {
@@ -2062,8 +4058,9 @@
       "blurb": "Gate to the Maintenance Tunnels.",
       "pin": {
         "map": "sewers-town",
-        "x": 0.6872,
-        "y": 0.0717
+        "x": 0.705,
+        "y": 0.105,
+        "approx": true
       }
     },
     {
@@ -2074,8 +4071,9 @@
       "blurb": "Food, on the upper level.",
       "pin": {
         "map": "sewers-town",
-        "x": 0.3232,
-        "y": 0.1823
+        "x": 0.3,
+        "y": 0.195,
+        "approx": true
       }
     },
     {
@@ -2086,8 +4084,9 @@
       "blurb": "Workshop and service.",
       "pin": {
         "map": "sewers-town",
-        "x": 0.8232,
-        "y": 0.1592
+        "x": 0.9,
+        "y": 0.189,
+        "approx": true
       }
     },
     {
@@ -2098,8 +4097,9 @@
       "blurb": "Workshop and service.",
       "pin": {
         "map": "sewers-town",
-        "x": 0.232,
-        "y": 0.26
+        "x": 0.27,
+        "y": 0.315,
+        "approx": true
       }
     },
     {
@@ -2110,8 +4110,9 @@
       "blurb": "Food and a place to sit.",
       "pin": {
         "map": "sewers-town",
-        "x": 0.7873,
-        "y": 0.2843
+        "x": 0.88,
+        "y": 0.329,
+        "approx": true
       }
     },
     {
@@ -2122,8 +4123,9 @@
       "blurb": "Gate to the Outer Sewers.",
       "pin": {
         "map": "sewers-town",
-        "x": 0.1215,
-        "y": 0.3111
+        "x": 0.105,
+        "y": 0.347,
+        "approx": true
       }
     },
     {
@@ -2134,8 +4136,9 @@
       "blurb": "The water route through town. Watch the currents.",
       "pin": {
         "map": "sewers-town",
-        "x": 0.5283,
-        "y": 0.3554
+        "x": 0.513,
+        "y": 0.41,
+        "approx": true
       }
     },
     {
@@ -2146,8 +4149,9 @@
       "blurb": "Goods, food, parts and services.",
       "pin": {
         "map": "sewers-town",
-        "x": 0.8391,
-        "y": 0.3572
+        "x": 0.874,
+        "y": 0.415,
+        "approx": true
       }
     },
     {
@@ -2158,8 +4162,9 @@
       "blurb": "Pub and entertainment.",
       "pin": {
         "map": "sewers-town",
-        "x": 0.2224,
-        "y": 0.4192
+        "x": 0.257,
+        "y": 0.414,
+        "approx": true
       }
     },
     {
@@ -2170,8 +4175,9 @@
       "blurb": "Warhammer and Pixie's Doll Works.",
       "pin": {
         "map": "sewers-town",
-        "x": 0.7113,
-        "y": 0.486
+        "x": 0.65,
+        "y": 0.502,
+        "approx": true
       }
     },
     {
@@ -2182,8 +4188,9 @@
       "blurb": "Runoff exit to the Filtration Fields.",
       "pin": {
         "map": "sewers-town",
-        "x": 0.9669,
-        "y": 0.48
+        "x": 0.916,
+        "y": 0.534,
+        "approx": true
       }
     },
     {
@@ -2194,8 +4201,9 @@
       "blurb": "Down to the Deep Tunnels. Unknown depths. Deep tunnels are unstable.",
       "pin": {
         "map": "sewers-town",
-        "x": 0.4178,
-        "y": 0.6075
+        "x": 0.44,
+        "y": 0.645,
+        "approx": true
       }
     },
     {
@@ -2206,8 +4214,9 @@
       "blurb": "Controlled access and a survey point. Maps disagree past here.",
       "pin": {
         "map": "sewers-town",
-        "x": 0.3536,
-        "y": 0.805
+        "x": 0.39,
+        "y": 0.802,
+        "approx": true
       }
     },
     {
@@ -2218,8 +4227,9 @@
       "blurb": "Ask the Sewers Community before using this path.",
       "pin": {
         "map": "sewers-town",
-        "x": 0.2155,
-        "y": 0.8293
+        "x": 0.278,
+        "y": 0.835,
+        "approx": true
       }
     },
     {
@@ -2230,8 +4240,9 @@
       "blurb": "Maintenance lock dead.",
       "pin": {
         "map": "sewers-town",
-        "x": 0.6961,
-        "y": 0.8384
+        "x": 0.922,
+        "y": 0.816,
+        "approx": true
       }
     },
     {
@@ -2239,13 +4250,16 @@
       "district": "the-sewers",
       "name": "Radio Sewers",
       "type": "venue",
-      "blurb": "The people's signal. News, support, coordination.",
+      "blurb": "A local relay of the distributed Radio Sewers network, carrying warnings, local news and sewer weather. This is not a fixed headquarters.",
       "pin": {
         "map": "sewers-town",
-        "x": 0.5525,
-        "y": 0.2734,
+        "x": 0.703,
+        "y": 0.251,
         "approx": true
-      }
+      },
+      "sources": [
+        "https://www.worldanvil.com/w/adyta-jeeperssheefers/a/radio-sewers-organization"
+      ]
     },
     {
       "id": "the-sewers--the-lantern-exchange",
@@ -2255,8 +4269,8 @@
       "blurb": "Trade, contracts, and the city's unofficial community board.",
       "pin": {
         "map": "sewers-town",
-        "x": 0.4834,
-        "y": 0.2005,
+        "x": 0.44,
+        "y": 0.208,
         "approx": true
       }
     },
@@ -2268,8 +4282,8 @@
       "blurb": "Stories, signals, and the rumors that actually matter.",
       "pin": {
         "map": "sewers-town",
-        "x": 0.663,
-        "y": 0.2005,
+        "x": 0.605,
+        "y": 0.205,
         "approx": true
       }
     },
@@ -2281,8 +4295,8 @@
       "blurb": "Salvage, supplies, rare finds, and questionable deals.",
       "pin": {
         "map": "sewers-town",
-        "x": 0.3867,
-        "y": 0.2855,
+        "x": 0.365,
+        "y": 0.329,
         "approx": true
       }
     },
@@ -2294,8 +4308,8 @@
       "blurb": "Repairs, mods, upgrades, and keeping people running.",
       "pin": {
         "map": "sewers-town",
-        "x": 0.7044,
-        "y": 0.3402,
+        "x": 0.663,
+        "y": 0.404,
         "approx": true
       }
     },
@@ -2307,8 +4321,8 @@
       "blurb": "A busy connector with friendly faces, sharp eyes, and shifting control.",
       "pin": {
         "map": "sewers-town",
-        "x": 0.3246,
-        "y": 0.4982,
+        "x": 0.298,
+        "y": 0.52,
         "approx": true
       }
     },
@@ -2320,8 +4334,3635 @@
       "blurb": "Infrastructure hub, maintenance runs, and more questions than answers.",
       "pin": {
         "map": "sewers-town",
-        "x": 0.4834,
-        "y": 0.565,
+        "x": 0.67,
+        "y": 0.578,
+        "approx": true
+      }
+    },
+    {
+      "id": "grand-academy--candidate-charter-gate",
+      "district": "grand-academy",
+      "name": "Charter Gate",
+      "type": "civic",
+      "blurb": "Visitors queue; credentials checked.",
+      "canonStatus": "proposed",
+      "sources": [
+        "https://www.worldanvil.com/w/adyta-jeeperssheefers/a/the-grand-academy-landmark"
+      ],
+      "pin": {
+        "map": "grand-academy",
+        "x": 0.195,
+        "y": 0.2
+      }
+    },
+    {
+      "id": "grand-academy--candidate-the-long-archive",
+      "district": "grand-academy",
+      "name": "The Long Archive",
+      "type": "civic",
+      "blurb": "Requests outlast their requesters.",
+      "canonStatus": "proposed",
+      "sources": [
+        "https://www.worldanvil.com/w/adyta-jeeperssheefers/a/the-grand-academy-landmark"
+      ],
+      "pin": {
+        "map": "grand-academy",
+        "x": 0.645,
+        "y": 0.186
+      }
+    },
+    {
+      "id": "grand-academy--candidate-index-court",
+      "district": "grand-academy",
+      "name": "Index Court",
+      "type": "civic",
+      "blurb": "Readers trade missing references.",
+      "canonStatus": "proposed",
+      "sources": [
+        "https://www.worldanvil.com/w/adyta-jeeperssheefers/a/the-grand-academy-landmark"
+      ],
+      "pin": {
+        "map": "grand-academy",
+        "x": 0.273,
+        "y": 0.347
+      }
+    },
+    {
+      "id": "grand-academy--candidate-east-teaching-halls",
+      "district": "grand-academy",
+      "name": "East Teaching Halls",
+      "type": "civic",
+      "blurb": "Lectures spill into corridors.",
+      "canonStatus": "proposed",
+      "sources": [
+        "https://www.worldanvil.com/w/adyta-jeeperssheefers/a/the-grand-academy-landmark"
+      ],
+      "pin": {
+        "map": "grand-academy",
+        "x": 0.687,
+        "y": 0.332
+      }
+    },
+    {
+      "id": "grand-academy--candidate-isolated-arcane-labs",
+      "district": "grand-academy",
+      "name": "Isolated Arcane Labs",
+      "type": "industrial",
+      "blurb": "Wards; separate from technical systems.",
+      "canonStatus": "proposed",
+      "sources": [
+        "https://www.worldanvil.com/w/adyta-jeeperssheefers/a/the-grand-academy-landmark"
+      ],
+      "pin": {
+        "map": "grand-academy",
+        "x": 0.155,
+        "y": 0.485
+      }
+    },
+    {
+      "id": "grand-academy--candidate-engineering-yard",
+      "district": "grand-academy",
+      "name": "Engineering Yard",
+      "type": "industrial",
+      "blurb": "Electrical work; no magical power.",
+      "canonStatus": "proposed",
+      "sources": [
+        "https://www.worldanvil.com/w/adyta-jeeperssheefers/a/the-grand-academy-landmark"
+      ],
+      "pin": {
+        "map": "grand-academy",
+        "x": 0.649,
+        "y": 0.493
+      }
+    },
+    {
+      "id": "grand-academy--candidate-the-brass-observatory",
+      "district": "grand-academy",
+      "name": "The Brass Observatory",
+      "type": "landmark",
+      "blurb": "Night study; old instruments.",
+      "canonStatus": "proposed",
+      "sources": [
+        "https://www.worldanvil.com/w/adyta-jeeperssheefers/a/the-grand-academy-landmark"
+      ],
+      "pin": {
+        "map": "grand-academy",
+        "x": 0.286,
+        "y": 0.635
+      }
+    },
+    {
+      "id": "grand-academy--candidate-patron-steps",
+      "district": "grand-academy",
+      "name": "Patron Steps",
+      "type": "landmark",
+      "blurb": "Endowments buy easier introductions.",
+      "canonStatus": "proposed",
+      "sources": [
+        "https://www.worldanvil.com/w/adyta-jeeperssheefers/a/the-grand-academy-landmark"
+      ],
+      "pin": {
+        "map": "grand-academy",
+        "x": 0.635,
+        "y": 0.676
+      }
+    },
+    {
+      "id": "grand-academy--candidate-the-secondhand-quill",
+      "district": "grand-academy",
+      "name": "The Secondhand Quill",
+      "type": "shop",
+      "blurb": "Cheap paper; expensive annotations.",
+      "canonStatus": "proposed",
+      "sources": [
+        "https://www.worldanvil.com/w/adyta-jeeperssheefers/a/the-grand-academy-landmark"
+      ],
+      "pin": {
+        "map": "grand-academy",
+        "x": 0.296,
+        "y": 0.859
+      }
+    },
+    {
+      "id": "grand-academy--candidate-copyists-passage",
+      "district": "grand-academy",
+      "name": "Copyists Passage",
+      "type": "industrial",
+      "blurb": "Service access behind public halls.",
+      "canonStatus": "proposed",
+      "sources": [
+        "https://www.worldanvil.com/w/adyta-jeeperssheefers/a/the-grand-academy-landmark"
+      ],
+      "pin": {
+        "map": "grand-academy",
+        "x": 0.643,
+        "y": 0.842
+      }
+    },
+    {
+      "id": "grand-academy--candidate-scholars-dells",
+      "district": "grand-academy",
+      "name": "Scholars' Dells",
+      "type": "housing",
+      "blurb": "Residences, rooms and common kitchens.",
+      "canonStatus": "proposed",
+      "sources": [
+        "https://www.worldanvil.com/w/adyta-jeeperssheefers/a/the-grand-academy-landmark"
+      ],
+      "pin": {
+        "map": "grand-academy",
+        "x": 0.055,
+        "y": 0.249
+      }
+    },
+    {
+      "id": "grand-academy--candidate-academy-market",
+      "district": "grand-academy",
+      "name": "Academy Market",
+      "type": "market",
+      "blurb": "Books, tools and food; all peoples welcome.",
+      "canonStatus": "proposed",
+      "sources": [
+        "https://www.worldanvil.com/w/adyta-jeeperssheefers/a/the-grand-academy-landmark"
+      ],
+      "pin": {
+        "map": "grand-academy",
+        "x": 0.902,
+        "y": 0.146
+      }
+    },
+    {
+      "id": "grand-academy--candidate-student-quarters",
+      "district": "grand-academy",
+      "name": "Student Quarters",
+      "type": "housing",
+      "blurb": "Mixed peoples, mixed disciplines.",
+      "canonStatus": "proposed",
+      "sources": [
+        "https://www.worldanvil.com/w/adyta-jeeperssheefers/a/the-grand-academy-landmark"
+      ],
+      "pin": {
+        "map": "grand-academy",
+        "x": 0.893,
+        "y": 0.75
+      }
+    },
+    {
+      "id": "grand-academy--candidate-the-archives-credentials",
+      "district": "grand-academy",
+      "name": "The Archives & Credentials",
+      "type": "civic",
+      "blurb": "Records, charters and academic credentials.",
+      "canonStatus": "proposed",
+      "sources": [
+        "https://www.worldanvil.com/w/adyta-jeeperssheefers/a/the-grand-academy-landmark"
+      ],
+      "pin": {
+        "map": "grand-academy",
+        "x": 0.472,
+        "y": 0.132
+      }
+    },
+    {
+      "id": "grand-academy--candidate-registrars-house",
+      "district": "grand-academy",
+      "name": "Registrar's House",
+      "type": "civic",
+      "blurb": "Admissions, credentials and visiting scholars.",
+      "canonStatus": "proposed",
+      "sources": [
+        "https://www.worldanvil.com/w/adyta-jeeperssheefers/a/the-grand-academy-landmark"
+      ],
+      "pin": {
+        "map": "grand-academy",
+        "x": 0.648,
+        "y": 0.093
+      }
+    },
+    {
+      "id": "new-halo--candidate-the-shining-spire",
+      "district": "new-halo",
+      "name": "The Shining Spire",
+      "type": "corporate",
+      "blurb": "Finance, media and corporate prestige.",
+      "canonStatus": "established name; proposed placement",
+      "sources": [
+        "https://www.worldanvil.com/w/adyta-jeeperssheefers/a/new-halo-settlement",
+        "https://www.worldanvil.com/w/adyta-jeeperssheefers/a/adyta-settlement"
+      ],
+      "pin": {
+        "map": "new-halo",
+        "x": 0.324,
+        "y": 0.168
+      }
+    },
+    {
+      "id": "new-halo--candidate-glassline-walk",
+      "district": "new-halo",
+      "name": "Glassline Walk",
+      "type": "corporate",
+      "blurb": "Appointments; polished frontage.",
+      "canonStatus": "proposed",
+      "sources": [
+        "https://www.worldanvil.com/w/adyta-jeeperssheefers/a/new-halo-settlement",
+        "https://www.worldanvil.com/w/adyta-jeeperssheefers/a/adyta-settlement"
+      ],
+      "pin": {
+        "map": "new-halo",
+        "x": 0.749,
+        "y": 0.213
+      }
+    },
+    {
+      "id": "new-halo--candidate-the-ninth-floor",
+      "district": "new-halo",
+      "name": "The Ninth Floor",
+      "type": "venue",
+      "blurb": "Curated music; reservation required.",
+      "canonStatus": "proposed",
+      "sources": [
+        "https://www.worldanvil.com/w/adyta-jeeperssheefers/a/new-halo-settlement",
+        "https://www.worldanvil.com/w/adyta-jeeperssheefers/a/adyta-settlement"
+      ],
+      "pin": {
+        "map": "new-halo",
+        "x": 0.296,
+        "y": 0.347
+      }
+    },
+    {
+      "id": "new-halo--candidate-old-lease-court",
+      "district": "new-halo",
+      "name": "Old Lease Court",
+      "type": "housing",
+      "blurb": "Older homes inside redevelopment.",
+      "canonStatus": "proposed",
+      "sources": [
+        "https://www.worldanvil.com/w/adyta-jeeperssheefers/a/new-halo-settlement",
+        "https://www.worldanvil.com/w/adyta-jeeperssheefers/a/adyta-settlement"
+      ],
+      "pin": {
+        "map": "new-halo",
+        "x": 0.76,
+        "y": 0.349
+      }
+    },
+    {
+      "id": "new-halo--candidate-velvet-window",
+      "district": "new-halo",
+      "name": "Velvet Window",
+      "type": "shop",
+      "blurb": "Media storefront; carefully edited city.",
+      "canonStatus": "proposed",
+      "sources": [
+        "https://www.worldanvil.com/w/adyta-jeeperssheefers/a/new-halo-settlement",
+        "https://www.worldanvil.com/w/adyta-jeeperssheefers/a/adyta-settlement"
+      ],
+      "pin": {
+        "map": "new-halo",
+        "x": 0.236,
+        "y": 0.488
+      }
+    },
+    {
+      "id": "new-halo--candidate-the-quiet-meter",
+      "district": "new-halo",
+      "name": "The Quiet Meter",
+      "type": "corporate",
+      "blurb": "Utilities work; somebody pays.",
+      "canonStatus": "proposed",
+      "sources": [
+        "https://www.worldanvil.com/w/adyta-jeeperssheefers/a/new-halo-settlement",
+        "https://www.worldanvil.com/w/adyta-jeeperssheefers/a/adyta-settlement"
+      ],
+      "pin": {
+        "map": "new-halo",
+        "x": 0.75,
+        "y": 0.488
+      }
+    },
+    {
+      "id": "new-halo--candidate-service-shift-gate",
+      "district": "new-halo",
+      "name": "Service Shift Gate",
+      "type": "industrial",
+      "blurb": "Workers enter before residents wake.",
+      "canonStatus": "proposed",
+      "sources": [
+        "https://www.worldanvil.com/w/adyta-jeeperssheefers/a/new-halo-settlement",
+        "https://www.worldanvil.com/w/adyta-jeeperssheefers/a/adyta-settlement"
+      ],
+      "pin": {
+        "map": "new-halo",
+        "x": 0.26,
+        "y": 0.633
+      }
+    },
+    {
+      "id": "new-halo--candidate-prospect-arcade",
+      "district": "new-halo",
+      "name": "Prospect Arcade",
+      "type": "shop",
+      "blurb": "Boutiques above delivery doors.",
+      "canonStatus": "proposed",
+      "sources": [
+        "https://www.worldanvil.com/w/adyta-jeeperssheefers/a/new-halo-settlement",
+        "https://www.worldanvil.com/w/adyta-jeeperssheefers/a/adyta-settlement"
+      ],
+      "pin": {
+        "map": "new-halo",
+        "x": 0.654,
+        "y": 0.627
+      }
+    },
+    {
+      "id": "new-halo--candidate-last-original-cafe",
+      "district": "new-halo",
+      "name": "Last Original Cafe",
+      "type": "food",
+      "blurb": "Regulars remember cheaper coffee.",
+      "canonStatus": "proposed",
+      "sources": [
+        "https://www.worldanvil.com/w/adyta-jeeperssheefers/a/new-halo-settlement",
+        "https://www.worldanvil.com/w/adyta-jeeperssheefers/a/adyta-settlement"
+      ],
+      "pin": {
+        "map": "new-halo",
+        "x": 0.168,
+        "y": 0.757
+      }
+    },
+    {
+      "id": "new-halo--candidate-the-soft-border",
+      "district": "new-halo",
+      "name": "The Soft Border",
+      "type": "landmark",
+      "blurb": "South: Low Halo; disputed edge.",
+      "canonStatus": "established name; proposed placement",
+      "sources": [
+        "https://www.worldanvil.com/w/adyta-jeeperssheefers/a/new-halo-settlement",
+        "https://www.worldanvil.com/w/adyta-jeeperssheefers/a/adyta-settlement"
+      ],
+      "pin": {
+        "map": "new-halo",
+        "x": 0.626,
+        "y": 0.783
+      }
+    },
+    {
+      "id": "new-halo--candidate-adyta-media-house",
+      "district": "new-halo",
+      "name": "Adyta Media House",
+      "type": "corporate",
+      "blurb": "Broadcast, edit and production suites.",
+      "canonStatus": "proposed",
+      "sources": [
+        "https://www.worldanvil.com/w/adyta-jeeperssheefers/a/new-halo-settlement",
+        "https://www.worldanvil.com/w/adyta-jeeperssheefers/a/adyta-settlement"
+      ],
+      "pin": {
+        "map": "new-halo",
+        "x": 0.091,
+        "y": 0.366
+      }
+    },
+    {
+      "id": "new-halo--candidate-civic-services",
+      "district": "new-halo",
+      "name": "Civic Services",
+      "type": "civic",
+      "blurb": "Permits, utilities and redevelopment liaison.",
+      "canonStatus": "proposed",
+      "sources": [
+        "https://www.worldanvil.com/w/adyta-jeeperssheefers/a/new-halo-settlement",
+        "https://www.worldanvil.com/w/adyta-jeeperssheefers/a/adyta-settlement"
+      ],
+      "pin": {
+        "map": "new-halo",
+        "x": 0.078,
+        "y": 0.522
+      }
+    },
+    {
+      "id": "new-halo--candidate-guildhall-tower",
+      "district": "new-halo",
+      "name": "Guildhall Tower",
+      "type": "corporate",
+      "blurb": "Professional offices and client services.",
+      "canonStatus": "proposed",
+      "sources": [
+        "https://www.worldanvil.com/w/adyta-jeeperssheefers/a/new-halo-settlement",
+        "https://www.worldanvil.com/w/adyta-jeeperssheefers/a/adyta-settlement"
+      ],
+      "pin": {
+        "map": "new-halo",
+        "x": 0.563,
+        "y": 0.288
+      }
+    },
+    {
+      "id": "new-halo--candidate-adyta-square",
+      "district": "new-halo",
+      "name": "Adyta Square",
+      "type": "landmark",
+      "blurb": "Public plaza: kiosks, meetings and events.",
+      "canonStatus": "proposed",
+      "sources": [
+        "https://www.worldanvil.com/w/adyta-jeeperssheefers/a/new-halo-settlement",
+        "https://www.worldanvil.com/w/adyta-jeeperssheefers/a/adyta-settlement"
+      ],
+      "pin": {
+        "map": "new-halo",
+        "x": 0.535,
+        "y": 0.454
+      }
+    },
+    {
+      "id": "new-halo--candidate-redevelopment-site-a",
+      "district": "new-halo",
+      "name": "Redevelopment Site A",
+      "type": "industrial",
+      "blurb": "Foundations and frame; work in progress.",
+      "canonStatus": "proposed",
+      "sources": [
+        "https://www.worldanvil.com/w/adyta-jeeperssheefers/a/new-halo-settlement",
+        "https://www.worldanvil.com/w/adyta-jeeperssheefers/a/adyta-settlement"
+      ],
+      "pin": {
+        "map": "new-halo",
+        "x": 0.921,
+        "y": 0.601
+      }
+    },
+    {
+      "id": "new-halo--candidate-redevelopment-site-b",
+      "district": "new-halo",
+      "name": "Redevelopment Site B",
+      "type": "industrial",
+      "blurb": "Towers in progress; access restricted.",
+      "canonStatus": "proposed",
+      "sources": [
+        "https://www.worldanvil.com/w/adyta-jeeperssheefers/a/new-halo-settlement",
+        "https://www.worldanvil.com/w/adyta-jeeperssheefers/a/adyta-settlement"
+      ],
+      "pin": {
+        "map": "new-halo",
+        "x": 0.575,
+        "y": 0.137
+      }
+    },
+    {
+      "id": "governance-district--candidate-registry-counter",
+      "district": "governance-district",
+      "name": "Registry Counter",
+      "type": "civic",
+      "blurb": "ACR branch; identity paperwork.",
+      "canonStatus": "proposed",
+      "sources": [
+        "https://www.worldanvil.com/w/adyta-jeeperssheefers/a/adyta-settlement",
+        "https://www.worldanvil.com/w/adyta-jeeperssheefers/a/civic-institutions-article"
+      ],
+      "pin": {
+        "map": "governance-district",
+        "x": 0.22,
+        "y": 0.249
+      }
+    },
+    {
+      "id": "governance-district--candidate-advocates-steps",
+      "district": "governance-district",
+      "name": "Advocates Steps",
+      "type": "civic",
+      "blurb": "APA intake; bring every notice.",
+      "canonStatus": "proposed",
+      "sources": [
+        "https://www.worldanvil.com/w/adyta-jeeperssheefers/a/adyta-settlement",
+        "https://www.worldanvil.com/w/adyta-jeeperssheefers/a/civic-institutions-article"
+      ],
+      "pin": {
+        "map": "governance-district",
+        "x": 0.659,
+        "y": 0.234
+      }
+    },
+    {
+      "id": "governance-district--candidate-labor-claims-hall",
+      "district": "governance-district",
+      "name": "Labor Claims Hall",
+      "type": "civic",
+      "blurb": "ALB branch; wages and hazards.",
+      "canonStatus": "proposed",
+      "sources": [
+        "https://www.worldanvil.com/w/adyta-jeeperssheefers/a/adyta-settlement",
+        "https://www.worldanvil.com/w/adyta-jeeperssheefers/a/civic-institutions-article"
+      ],
+      "pin": {
+        "map": "governance-district",
+        "x": 0.296,
+        "y": 0.363
+      }
+    },
+    {
+      "id": "governance-district--candidate-wardens-rest",
+      "district": "governance-district",
+      "name": "Wardens Rest",
+      "type": "civic",
+      "blurb": "ACW liaison; civilian protection.",
+      "canonStatus": "proposed",
+      "sources": [
+        "https://www.worldanvil.com/w/adyta-jeeperssheefers/a/adyta-settlement",
+        "https://www.worldanvil.com/w/adyta-jeeperssheefers/a/civic-institutions-article"
+      ],
+      "pin": {
+        "map": "governance-district",
+        "x": 0.708,
+        "y": 0.376
+      }
+    },
+    {
+      "id": "governance-district--candidate-evidence-annex",
+      "district": "governance-district",
+      "name": "Evidence Annex",
+      "type": "civic",
+      "blurb": "ABI records; restricted access.",
+      "canonStatus": "proposed",
+      "sources": [
+        "https://www.worldanvil.com/w/adyta-jeeperssheefers/a/adyta-settlement",
+        "https://www.worldanvil.com/w/adyta-jeeperssheefers/a/civic-institutions-article"
+      ],
+      "pin": {
+        "map": "governance-district",
+        "x": 0.145,
+        "y": 0.527
+      }
+    },
+    {
+      "id": "governance-district--candidate-response-court",
+      "district": "governance-district",
+      "name": "Response Court",
+      "type": "civic",
+      "blurb": "AEM coordination; exits stay clear.",
+      "canonStatus": "proposed",
+      "sources": [
+        "https://www.worldanvil.com/w/adyta-jeeperssheefers/a/adyta-settlement",
+        "https://www.worldanvil.com/w/adyta-jeeperssheefers/a/civic-institutions-article"
+      ],
+      "pin": {
+        "map": "governance-district",
+        "x": 0.699,
+        "y": 0.539
+      }
+    },
+    {
+      "id": "governance-district--candidate-the-duplicate",
+      "district": "governance-district",
+      "name": "The Duplicate",
+      "type": "shop",
+      "blurb": "Copies, stamps and tired clerks.",
+      "canonStatus": "proposed",
+      "sources": [
+        "https://www.worldanvil.com/w/adyta-jeeperssheefers/a/adyta-settlement",
+        "https://www.worldanvil.com/w/adyta-jeeperssheefers/a/civic-institutions-article"
+      ],
+      "pin": {
+        "map": "governance-district",
+        "x": 0.253,
+        "y": 0.676
+      }
+    },
+    {
+      "id": "governance-district--candidate-appeals-walk",
+      "district": "governance-district",
+      "name": "Appeals Walk",
+      "type": "civic",
+      "blurb": "Public queue between agencies.",
+      "canonStatus": "proposed",
+      "sources": [
+        "https://www.worldanvil.com/w/adyta-jeeperssheefers/a/adyta-settlement",
+        "https://www.worldanvil.com/w/adyta-jeeperssheefers/a/civic-institutions-article"
+      ],
+      "pin": {
+        "map": "governance-district",
+        "x": 0.724,
+        "y": 0.676
+      }
+    },
+    {
+      "id": "governance-district--candidate-service-ledger-gate",
+      "district": "governance-district",
+      "name": "Service Ledger Gate",
+      "type": "civic",
+      "blurb": "Compliance papers; contested authority.",
+      "canonStatus": "proposed",
+      "sources": [
+        "https://www.worldanvil.com/w/adyta-jeeperssheefers/a/adyta-settlement",
+        "https://www.worldanvil.com/w/adyta-jeeperssheefers/a/civic-institutions-article"
+      ],
+      "pin": {
+        "map": "governance-district",
+        "x": 0.244,
+        "y": 0.832
+      }
+    },
+    {
+      "id": "governance-district--candidate-back-file-passage",
+      "district": "governance-district",
+      "name": "Back File Passage",
+      "type": "industrial",
+      "blurb": "Deliveries; records travel slowly.",
+      "canonStatus": "proposed",
+      "sources": [
+        "https://www.worldanvil.com/w/adyta-jeeperssheefers/a/adyta-settlement",
+        "https://www.worldanvil.com/w/adyta-jeeperssheefers/a/civic-institutions-article"
+      ],
+      "pin": {
+        "map": "governance-district",
+        "x": 0.6,
+        "y": 0.852
+      }
+    },
+    {
+      "id": "governance-district--candidate-civic-services-complex",
+      "district": "governance-district",
+      "name": "Civic Services Complex",
+      "type": "civic",
+      "blurb": "The big columns above the steps; most queues start here.",
+      "canonStatus": "proposed",
+      "sources": [
+        "https://www.worldanvil.com/w/adyta-jeeperssheefers/a/adyta-settlement",
+        "https://www.worldanvil.com/w/adyta-jeeperssheefers/a/civic-institutions-article"
+      ],
+      "pin": {
+        "map": "governance-district",
+        "x": 0.42,
+        "y": 0.166
+      }
+    },
+    {
+      "id": "crownline-industrials--candidate-certification-gate",
+      "district": "crownline-industrials",
+      "name": "Certification Gate",
+      "type": "civic",
+      "blurb": "Access begins with paperwork.",
+      "canonStatus": "proposed",
+      "sources": [
+        "https://www.worldanvil.com/w/adyta-jeeperssheefers/a/adyta-settlement",
+        "https://www.worldanvil.com/w/adyta-jeeperssheefers/a/corporations-article"
+      ],
+      "pin": {
+        "map": "crownline-industrials",
+        "x": 0.179,
+        "y": 0.193
+      }
+    },
+    {
+      "id": "crownline-industrials--candidate-meter-house",
+      "district": "crownline-industrials",
+      "name": "Meter House",
+      "type": "corporate",
+      "blurb": "Remote service; local consequences.",
+      "canonStatus": "proposed",
+      "sources": [
+        "https://www.worldanvil.com/w/adyta-jeeperssheefers/a/adyta-settlement",
+        "https://www.worldanvil.com/w/adyta-jeeperssheefers/a/corporations-article"
+      ],
+      "pin": {
+        "map": "crownline-industrials",
+        "x": 0.684,
+        "y": 0.207
+      }
+    },
+    {
+      "id": "crownline-industrials--candidate-switchyard-twelve",
+      "district": "crownline-industrials",
+      "name": "Switchyard Twelve",
+      "type": "industrial",
+      "blurb": "Electrical distribution; restricted access.",
+      "canonStatus": "proposed",
+      "sources": [
+        "https://www.worldanvil.com/w/adyta-jeeperssheefers/a/adyta-settlement",
+        "https://www.worldanvil.com/w/adyta-jeeperssheefers/a/corporations-article"
+      ],
+      "pin": {
+        "map": "crownline-industrials",
+        "x": 0.249,
+        "y": 0.342
+      }
+    },
+    {
+      "id": "crownline-industrials--candidate-pump-ledger",
+      "district": "crownline-industrials",
+      "name": "Pump Ledger",
+      "type": "industrial",
+      "blurb": "Water machinery; service records.",
+      "canonStatus": "proposed",
+      "sources": [
+        "https://www.worldanvil.com/w/adyta-jeeperssheefers/a/adyta-settlement",
+        "https://www.worldanvil.com/w/adyta-jeeperssheefers/a/corporations-article"
+      ],
+      "pin": {
+        "map": "crownline-industrials",
+        "x": 0.728,
+        "y": 0.347
+      }
+    },
+    {
+      "id": "crownline-industrials--candidate-the-clean-front",
+      "district": "crownline-industrials",
+      "name": "The Clean Front",
+      "type": "corporate",
+      "blurb": "White and gold service counters.",
+      "canonStatus": "proposed",
+      "sources": [
+        "https://www.worldanvil.com/w/adyta-jeeperssheefers/a/adyta-settlement",
+        "https://www.worldanvil.com/w/adyta-jeeperssheefers/a/corporations-article"
+      ],
+      "pin": {
+        "map": "crownline-industrials",
+        "x": 0.236,
+        "y": 0.5
+      }
+    },
+    {
+      "id": "crownline-industrials--candidate-contractor-muster",
+      "district": "crownline-industrials",
+      "name": "Contractor Muster",
+      "type": "corporate",
+      "blurb": "Bastion personnel; paid enforcement.",
+      "canonStatus": "proposed",
+      "sources": [
+        "https://www.worldanvil.com/w/adyta-jeeperssheefers/a/adyta-settlement",
+        "https://www.worldanvil.com/w/adyta-jeeperssheefers/a/corporations-article"
+      ],
+      "pin": {
+        "map": "crownline-industrials",
+        "x": 0.64,
+        "y": 0.48
+      }
+    },
+    {
+      "id": "crownline-industrials--candidate-inspection-loop",
+      "district": "crownline-industrials",
+      "name": "Inspection Loop",
+      "type": "industrial",
+      "blurb": "Vans circle before work starts.",
+      "canonStatus": "proposed",
+      "sources": [
+        "https://www.worldanvil.com/w/adyta-jeeperssheefers/a/adyta-settlement",
+        "https://www.worldanvil.com/w/adyta-jeeperssheefers/a/corporations-article"
+      ],
+      "pin": {
+        "map": "crownline-industrials",
+        "x": 0.273,
+        "y": 0.63
+      }
+    },
+    {
+      "id": "crownline-industrials--candidate-the-overtime-canteen",
+      "district": "crownline-industrials",
+      "name": "The Overtime Canteen",
+      "type": "food",
+      "blurb": "Shift meals; no free minutes.",
+      "canonStatus": "proposed",
+      "sources": [
+        "https://www.worldanvil.com/w/adyta-jeeperssheefers/a/adyta-settlement",
+        "https://www.worldanvil.com/w/adyta-jeeperssheefers/a/corporations-article"
+      ],
+      "pin": {
+        "map": "crownline-industrials",
+        "x": 0.804,
+        "y": 0.656
+      }
+    },
+    {
+      "id": "crownline-industrials--candidate-disputed-connection",
+      "district": "crownline-industrials",
+      "name": "Disputed Connection",
+      "type": "industrial",
+      "blurb": "Older buildings await approval.",
+      "canonStatus": "proposed",
+      "sources": [
+        "https://www.worldanvil.com/w/adyta-jeeperssheefers/a/adyta-settlement",
+        "https://www.worldanvil.com/w/adyta-jeeperssheefers/a/corporations-article"
+      ],
+      "pin": {
+        "map": "crownline-industrials",
+        "x": 0.193,
+        "y": 0.776
+      }
+    },
+    {
+      "id": "crownline-industrials--candidate-maintenance-cut",
+      "district": "crownline-industrials",
+      "name": "Maintenance Cut",
+      "type": "industrial",
+      "blurb": "Service road; watch the cables.",
+      "canonStatus": "proposed",
+      "sources": [
+        "https://www.worldanvil.com/w/adyta-jeeperssheefers/a/adyta-settlement",
+        "https://www.worldanvil.com/w/adyta-jeeperssheefers/a/corporations-article"
+      ],
+      "pin": {
+        "map": "crownline-industrials",
+        "x": 0.626,
+        "y": 0.825
+      }
+    },
+    {
+      "id": "three-spires-monastery--candidate-three-spires",
+      "district": "three-spires-monastery",
+      "name": "Three Spires",
+      "type": "sacred",
+      "blurb": "Old stone; meanings remain disputed.",
+      "canonStatus": "proposed",
+      "sources": [
+        "https://www.worldanvil.com/w/adyta-jeeperssheefers/a/adyta-settlement"
+      ],
+      "pin": {
+        "map": "three-spires-monastery",
+        "x": 0.417,
+        "y": 0.213
+      }
+    },
+    {
+      "id": "three-spires-monastery--candidate-petition-steps",
+      "district": "three-spires-monastery",
+      "name": "Petition Steps",
+      "type": "sacred",
+      "blurb": "Visitors bring quiet requests.",
+      "canonStatus": "proposed",
+      "sources": [
+        "https://www.worldanvil.com/w/adyta-jeeperssheefers/a/adyta-settlement"
+      ],
+      "pin": {
+        "map": "three-spires-monastery",
+        "x": 0.648,
+        "y": 0.239
+      }
+    },
+    {
+      "id": "three-spires-monastery--candidate-the-unnamed-court",
+      "district": "three-spires-monastery",
+      "name": "The Unnamed Court",
+      "type": "sacred",
+      "blurb": "No public account of its rites.",
+      "canonStatus": "proposed",
+      "sources": [
+        "https://www.worldanvil.com/w/adyta-jeeperssheefers/a/adyta-settlement"
+      ],
+      "pin": {
+        "map": "three-spires-monastery",
+        "x": 0.335,
+        "y": 0.402
+      }
+    },
+    {
+      "id": "three-spires-monastery--candidate-guest-lantern",
+      "district": "three-spires-monastery",
+      "name": "Guest Lantern",
+      "type": "housing",
+      "blurb": "Beds for those admitted.",
+      "canonStatus": "proposed",
+      "sources": [
+        "https://www.worldanvil.com/w/adyta-jeeperssheefers/a/adyta-settlement"
+      ],
+      "pin": {
+        "map": "three-spires-monastery",
+        "x": 0.747,
+        "y": 0.396
+      }
+    },
+    {
+      "id": "three-spires-monastery--candidate-cloister-walk",
+      "district": "three-spires-monastery",
+      "name": "Cloister Walk",
+      "type": "sacred",
+      "blurb": "Footsteps carry around the walls.",
+      "canonStatus": "proposed",
+      "sources": [
+        "https://www.worldanvil.com/w/adyta-jeeperssheefers/a/adyta-settlement"
+      ],
+      "pin": {
+        "map": "three-spires-monastery",
+        "x": 0.161,
+        "y": 0.48
+      }
+    },
+    {
+      "id": "three-spires-monastery--candidate-the-mended-bell",
+      "district": "three-spires-monastery",
+      "name": "The Mended Bell",
+      "type": "sacred",
+      "blurb": "Repairs show through old metal.",
+      "canonStatus": "proposed",
+      "sources": [
+        "https://www.worldanvil.com/w/adyta-jeeperssheefers/a/adyta-settlement"
+      ],
+      "pin": {
+        "map": "three-spires-monastery",
+        "x": 0.576,
+        "y": 0.451
+      }
+    },
+    {
+      "id": "three-spires-monastery--candidate-keeper-rooms",
+      "district": "three-spires-monastery",
+      "name": "Keeper Rooms",
+      "type": "housing",
+      "blurb": "Daily work behind sacred frontage.",
+      "canonStatus": "proposed",
+      "sources": [
+        "https://www.worldanvil.com/w/adyta-jeeperssheefers/a/adyta-settlement"
+      ],
+      "pin": {
+        "map": "three-spires-monastery",
+        "x": 0.32,
+        "y": 0.63
+      }
+    },
+    {
+      "id": "three-spires-monastery--candidate-rain-cistern",
+      "district": "three-spires-monastery",
+      "name": "Rain Cistern",
+      "type": "landmark",
+      "blurb": "Water below the courtyard.",
+      "canonStatus": "proposed",
+      "sources": [
+        "https://www.worldanvil.com/w/adyta-jeeperssheefers/a/adyta-settlement"
+      ],
+      "pin": {
+        "map": "three-spires-monastery",
+        "x": 0.677,
+        "y": 0.63
+      }
+    },
+    {
+      "id": "three-spires-monastery--candidate-the-quiet-table",
+      "district": "three-spires-monastery",
+      "name": "The Quiet Table",
+      "type": "food",
+      "blurb": "Meals without many questions.",
+      "canonStatus": "proposed",
+      "sources": [
+        "https://www.worldanvil.com/w/adyta-jeeperssheefers/a/adyta-settlement"
+      ],
+      "pin": {
+        "map": "three-spires-monastery",
+        "x": 0.358,
+        "y": 0.776
+      }
+    },
+    {
+      "id": "three-spires-monastery--candidate-outer-service-gate",
+      "district": "three-spires-monastery",
+      "name": "Outer Service Gate",
+      "type": "industrial",
+      "blurb": "Deliveries enter beyond the steps.",
+      "canonStatus": "proposed",
+      "sources": [
+        "https://www.worldanvil.com/w/adyta-jeeperssheefers/a/adyta-settlement"
+      ],
+      "pin": {
+        "map": "three-spires-monastery",
+        "x": 0.628,
+        "y": 0.791
+      }
+    },
+    {
+      "id": "three-spires-monastery--candidate-north-gate",
+      "district": "three-spires-monastery",
+      "name": "North Gate",
+      "type": "transit",
+      "blurb": "Public entrance for visitors, residents and small vendors.",
+      "canonStatus": "proposed",
+      "sources": [
+        "https://www.worldanvil.com/w/adyta-jeeperssheefers/a/adyta-settlement"
+      ],
+      "pin": {
+        "map": "three-spires-monastery",
+        "x": 0.335,
+        "y": 0.146
+      }
+    },
+    {
+      "id": "three-spires-monastery--candidate-scriptoria-row",
+      "district": "three-spires-monastery",
+      "name": "Scriptoria Row",
+      "type": "shop",
+      "blurb": "Copying, records, clerical work and supplies.",
+      "canonStatus": "proposed",
+      "sources": [
+        "https://www.worldanvil.com/w/adyta-jeeperssheefers/a/adyta-settlement"
+      ],
+      "pin": {
+        "map": "three-spires-monastery",
+        "x": 0.641,
+        "y": 0.156
+      }
+    },
+    {
+      "id": "three-spires-monastery--candidate-maintenance-yard",
+      "district": "three-spires-monastery",
+      "name": "Maintenance Yard",
+      "type": "industrial",
+      "blurb": "Repairs, storage, vehicle service and patchwork parts.",
+      "canonStatus": "proposed",
+      "sources": [
+        "https://www.worldanvil.com/w/adyta-jeeperssheefers/a/adyta-settlement"
+      ],
+      "pin": {
+        "map": "three-spires-monastery",
+        "x": 0.928,
+        "y": 0.161
+      }
+    },
+    {
+      "id": "three-spires-monastery--candidate-monastery-market",
+      "district": "three-spires-monastery",
+      "name": "Monastery Market",
+      "type": "market",
+      "blurb": "Food, daily goods, repairs and household supplies.",
+      "canonStatus": "proposed",
+      "sources": [
+        "https://www.worldanvil.com/w/adyta-jeeperssheefers/a/adyta-settlement"
+      ],
+      "pin": {
+        "map": "three-spires-monastery",
+        "x": 0.065,
+        "y": 0.477
+      }
+    },
+    {
+      "id": "three-spires-monastery--candidate-infirmary",
+      "district": "three-spires-monastery",
+      "name": "Infirmary",
+      "type": "civic",
+      "blurb": "Rest, basic care, and long stays when allowed.",
+      "canonStatus": "proposed",
+      "sources": [
+        "https://www.worldanvil.com/w/adyta-jeeperssheefers/a/adyta-settlement"
+      ],
+      "pin": {
+        "map": "three-spires-monastery",
+        "x": 0.951,
+        "y": 0.327
+      }
+    },
+    {
+      "id": "three-spires-monastery--candidate-laundry-yard",
+      "district": "three-spires-monastery",
+      "name": "Laundry Yard",
+      "type": "industrial",
+      "blurb": "Washing, drying and linen repair.",
+      "canonStatus": "proposed",
+      "sources": [
+        "https://www.worldanvil.com/w/adyta-jeeperssheefers/a/adyta-settlement"
+      ],
+      "pin": {
+        "map": "three-spires-monastery",
+        "x": 0.93,
+        "y": 0.542
+      }
+    },
+    {
+      "id": "three-spires-monastery--candidate-freight-staging",
+      "district": "three-spires-monastery",
+      "name": "Freight Staging",
+      "type": "industrial",
+      "blurb": "Sorting, short-term storage and dispatch.",
+      "canonStatus": "proposed",
+      "sources": [
+        "https://www.worldanvil.com/w/adyta-jeeperssheefers/a/adyta-settlement"
+      ],
+      "pin": {
+        "map": "three-spires-monastery",
+        "x": 0.931,
+        "y": 0.752
+      }
+    },
+    {
+      "id": "three-spires-monastery--candidate-south-gate",
+      "district": "three-spires-monastery",
+      "name": "South Gate",
+      "type": "transit",
+      "blurb": "Residents, staff and approved visitors.",
+      "canonStatus": "proposed",
+      "sources": [
+        "https://www.worldanvil.com/w/adyta-jeeperssheefers/a/adyta-settlement"
+      ],
+      "pin": {
+        "map": "three-spires-monastery",
+        "x": 0.398,
+        "y": 0.913
+      }
+    },
+    {
+      "id": "elven-enclave--candidate-pale-brick-walk",
+      "district": "elven-enclave",
+      "name": "Pale Brick Walk",
+      "type": "street",
+      "blurb": "Generations of continuous repairs.",
+      "canonStatus": "proposed",
+      "sources": [
+        "https://www.worldanvil.com/w/adyta-jeeperssheefers/a/elves-species"
+      ],
+      "pin": {
+        "map": "elven-enclave",
+        "x": 0.36,
+        "y": 0.207
+      }
+    },
+    {
+      "id": "elven-enclave--candidate-the-kept-garden",
+      "district": "elven-enclave",
+      "name": "The Kept Garden",
+      "type": "landmark",
+      "blurb": "Shade maintained by paid labor.",
+      "canonStatus": "proposed",
+      "sources": [
+        "https://www.worldanvil.com/w/adyta-jeeperssheefers/a/elves-species"
+      ],
+      "pin": {
+        "map": "elven-enclave",
+        "x": 0.658,
+        "y": 0.213
+      }
+    },
+    {
+      "id": "elven-enclave--candidate-cistern-court",
+      "district": "elven-enclave",
+      "name": "Cistern Court",
+      "type": "landmark",
+      "blurb": "Water channels; pumps kept working.",
+      "canonStatus": "proposed",
+      "sources": [
+        "https://www.worldanvil.com/w/adyta-jeeperssheefers/a/elves-species"
+      ],
+      "pin": {
+        "map": "elven-enclave",
+        "x": 0.361,
+        "y": 0.373
+      }
+    },
+    {
+      "id": "elven-enclave--candidate-old-ward-house",
+      "district": "elven-enclave",
+      "name": "Old Ward House",
+      "type": "landmark",
+      "blurb": "Obsolete wards; access disputed.",
+      "canonStatus": "proposed",
+      "sources": [
+        "https://www.worldanvil.com/w/adyta-jeeperssheefers/a/elves-species"
+      ],
+      "pin": {
+        "map": "elven-enclave",
+        "x": 0.732,
+        "y": 0.337
+      }
+    },
+    {
+      "id": "elven-enclave--candidate-the-narrow-archive",
+      "district": "elven-enclave",
+      "name": "The Narrow Archive",
+      "type": "civic",
+      "blurb": "Household records behind locked doors.",
+      "canonStatus": "proposed",
+      "sources": [
+        "https://www.worldanvil.com/w/adyta-jeeperssheefers/a/elves-species"
+      ],
+      "pin": {
+        "map": "elven-enclave",
+        "x": 0.256,
+        "y": 0.474
+      }
+    },
+    {
+      "id": "elven-enclave--candidate-canopy-steps",
+      "district": "elven-enclave",
+      "name": "Canopy Steps",
+      "type": "street",
+      "blurb": "Quiet lanes under mature trees.",
+      "canonStatus": "proposed",
+      "sources": [
+        "https://www.worldanvil.com/w/adyta-jeeperssheefers/a/elves-species"
+      ],
+      "pin": {
+        "map": "elven-enclave",
+        "x": 0.667,
+        "y": 0.49
+      }
+    },
+    {
+      "id": "elven-enclave--candidate-shielded-service-yard",
+      "district": "elven-enclave",
+      "name": "Shielded Service Yard",
+      "type": "industrial",
+      "blurb": "Technical utilities; isolated from wards.",
+      "canonStatus": "proposed",
+      "sources": [
+        "https://www.worldanvil.com/w/adyta-jeeperssheefers/a/elves-species"
+      ],
+      "pin": {
+        "map": "elven-enclave",
+        "x": 0.283,
+        "y": 0.646
+      }
+    },
+    {
+      "id": "elven-enclave--candidate-the-long-lease",
+      "district": "elven-enclave",
+      "name": "The Long Lease",
+      "type": "housing",
+      "blurb": "Homes altered across generations.",
+      "canonStatus": "proposed",
+      "sources": [
+        "https://www.worldanvil.com/w/adyta-jeeperssheefers/a/elves-species"
+      ],
+      "pin": {
+        "map": "elven-enclave",
+        "x": 0.739,
+        "y": 0.63
+      }
+    },
+    {
+      "id": "elven-enclave--candidate-the-gardeners-table",
+      "district": "elven-enclave",
+      "name": "The Gardeners Table",
+      "type": "food",
+      "blurb": "Workers eat behind the frontage.",
+      "canonStatus": "proposed",
+      "sources": [
+        "https://www.worldanvil.com/w/adyta-jeeperssheefers/a/elves-species"
+      ],
+      "pin": {
+        "map": "elven-enclave",
+        "x": 0.294,
+        "y": 0.796
+      }
+    },
+    {
+      "id": "elven-enclave--candidate-west-maintenance-gate",
+      "district": "elven-enclave",
+      "name": "West Maintenance Gate",
+      "type": "industrial",
+      "blurb": "Delivery access; heritage has plumbing.",
+      "canonStatus": "proposed",
+      "sources": [
+        "https://www.worldanvil.com/w/adyta-jeeperssheefers/a/elves-species"
+      ],
+      "pin": {
+        "map": "elven-enclave",
+        "x": 0.73,
+        "y": 0.786
+      }
+    },
+    {
+      "id": "central-core--candidate-transfer-square",
+      "district": "central-core",
+      "name": "Transfer Square",
+      "type": "transit",
+      "blurb": "Surface tram interchange; proposed layout.",
+      "canonStatus": "proposed",
+      "sources": [
+        "https://www.worldanvil.com/w/adyta-jeeperssheefers/a/adyta-settlement",
+        "https://www.worldanvil.com/w/adyta-jeeperssheefers/a/civic-institutions-article"
+      ],
+      "pin": {
+        "map": "central-core",
+        "x": 0.327,
+        "y": 0.205
+      }
+    },
+    {
+      "id": "central-core--candidate-commerce-steps",
+      "district": "central-core",
+      "name": "Commerce Steps",
+      "type": "corporate",
+      "blurb": "Offices above the public crowd.",
+      "canonStatus": "proposed",
+      "sources": [
+        "https://www.worldanvil.com/w/adyta-jeeperssheefers/a/adyta-settlement",
+        "https://www.worldanvil.com/w/adyta-jeeperssheefers/a/civic-institutions-article"
+      ],
+      "pin": {
+        "map": "central-core",
+        "x": 0.68,
+        "y": 0.207
+      }
+    },
+    {
+      "id": "central-core--candidate-the-public-counter",
+      "district": "central-core",
+      "name": "The Public Counter",
+      "type": "civic",
+      "blurb": "Civic referrals; several queues.",
+      "canonStatus": "proposed",
+      "sources": [
+        "https://www.worldanvil.com/w/adyta-jeeperssheefers/a/adyta-settlement",
+        "https://www.worldanvil.com/w/adyta-jeeperssheefers/a/civic-institutions-article"
+      ],
+      "pin": {
+        "map": "central-core",
+        "x": 0.291,
+        "y": 0.359
+      }
+    },
+    {
+      "id": "central-core--candidate-ledger-arcade",
+      "district": "central-core",
+      "name": "Ledger Arcade",
+      "type": "shop",
+      "blurb": "Contracts, accounts and small traders.",
+      "canonStatus": "proposed",
+      "sources": [
+        "https://www.worldanvil.com/w/adyta-jeeperssheefers/a/adyta-settlement",
+        "https://www.worldanvil.com/w/adyta-jeeperssheefers/a/civic-institutions-article"
+      ],
+      "pin": {
+        "map": "central-core",
+        "x": 0.754,
+        "y": 0.361
+      }
+    },
+    {
+      "id": "central-core--candidate-shift-market",
+      "district": "central-core",
+      "name": "Shift Market",
+      "type": "market",
+      "blurb": "Food between working hours.",
+      "canonStatus": "proposed",
+      "sources": [
+        "https://www.worldanvil.com/w/adyta-jeeperssheefers/a/adyta-settlement",
+        "https://www.worldanvil.com/w/adyta-jeeperssheefers/a/civic-institutions-article"
+      ],
+      "pin": {
+        "map": "central-core",
+        "x": 0.262,
+        "y": 0.508
+      }
+    },
+    {
+      "id": "central-core--candidate-service-crossing",
+      "district": "central-core",
+      "name": "Service Crossing",
+      "type": "street",
+      "blurb": "Delivery carts meet public traffic.",
+      "canonStatus": "proposed",
+      "sources": [
+        "https://www.worldanvil.com/w/adyta-jeeperssheefers/a/adyta-settlement",
+        "https://www.worldanvil.com/w/adyta-jeeperssheefers/a/civic-institutions-article"
+      ],
+      "pin": {
+        "map": "central-core",
+        "x": 0.586,
+        "y": 0.508
+      }
+    },
+    {
+      "id": "central-core--candidate-the-last-bench",
+      "district": "central-core",
+      "name": "The Last Bench",
+      "type": "landmark",
+      "blurb": "A place to wait unpaid.",
+      "canonStatus": "proposed",
+      "sources": [
+        "https://www.worldanvil.com/w/adyta-jeeperssheefers/a/adyta-settlement",
+        "https://www.worldanvil.com/w/adyta-jeeperssheefers/a/civic-institutions-article"
+      ],
+      "pin": {
+        "map": "central-core",
+        "x": 0.346,
+        "y": 0.64
+      }
+    },
+    {
+      "id": "central-core--candidate-notice-wall",
+      "district": "central-core",
+      "name": "Notice Wall",
+      "type": "civic",
+      "blurb": "Official announcements; competing revisions.",
+      "canonStatus": "proposed",
+      "sources": [
+        "https://www.worldanvil.com/w/adyta-jeeperssheefers/a/adyta-settlement",
+        "https://www.worldanvil.com/w/adyta-jeeperssheefers/a/civic-institutions-article"
+      ],
+      "pin": {
+        "map": "central-core",
+        "x": 0.729,
+        "y": 0.649
+      }
+    },
+    {
+      "id": "central-core--candidate-roofline-cut",
+      "district": "central-core",
+      "name": "Roofline Cut",
+      "type": "street",
+      "blurb": "Foot access above service alleys.",
+      "canonStatus": "proposed",
+      "sources": [
+        "https://www.worldanvil.com/w/adyta-jeeperssheefers/a/adyta-settlement",
+        "https://www.worldanvil.com/w/adyta-jeeperssheefers/a/civic-institutions-article"
+      ],
+      "pin": {
+        "map": "central-core",
+        "x": 0.318,
+        "y": 0.757
+      }
+    },
+    {
+      "id": "central-core--candidate-the-street-spine",
+      "district": "central-core",
+      "name": "The Street Spine",
+      "type": "street",
+      "blurb": "Main road through the center.",
+      "canonStatus": "proposed",
+      "sources": [
+        "https://www.worldanvil.com/w/adyta-jeeperssheefers/a/adyta-settlement",
+        "https://www.worldanvil.com/w/adyta-jeeperssheefers/a/civic-institutions-article"
+      ],
+      "pin": {
+        "map": "central-core",
+        "x": 0.599,
+        "y": 0.801
+      }
+    },
+    {
+      "id": "the-ashrun--candidate-freight-reach",
+      "district": "the-ashrun",
+      "name": "Freight Reach",
+      "type": "transit",
+      "blurb": "Barges move through working water.",
+      "canonStatus": "proposed",
+      "sources": [
+        "https://www.worldanvil.com/w/adyta-jeeperssheefers/a/adyta-settlement",
+        "https://www.worldanvil.com/w/adyta-jeeperssheefers/a/corporations-article"
+      ],
+      "pin": {
+        "map": "the-ashrun",
+        "x": 0.316,
+        "y": 0.229
+      }
+    },
+    {
+      "id": "the-ashrun--candidate-manifest-quay",
+      "district": "the-ashrun",
+      "name": "Manifest Quay",
+      "type": "transit",
+      "blurb": "Meridian freight; papers meet cargo.",
+      "canonStatus": "proposed",
+      "sources": [
+        "https://www.worldanvil.com/w/adyta-jeeperssheefers/a/adyta-settlement",
+        "https://www.worldanvil.com/w/adyta-jeeperssheefers/a/corporations-article"
+      ],
+      "pin": {
+        "map": "the-ashrun",
+        "x": 0.669,
+        "y": 0.242
+      }
+    },
+    {
+      "id": "the-ashrun--candidate-the-brown-steps",
+      "district": "the-ashrun",
+      "name": "The Brown Steps",
+      "type": "landmark",
+      "blurb": "Public bank; water leaves marks.",
+      "canonStatus": "proposed",
+      "sources": [
+        "https://www.worldanvil.com/w/adyta-jeeperssheefers/a/adyta-settlement",
+        "https://www.worldanvil.com/w/adyta-jeeperssheefers/a/corporations-article"
+      ],
+      "pin": {
+        "map": "the-ashrun",
+        "x": 0.318,
+        "y": 0.405
+      }
+    },
+    {
+      "id": "the-ashrun--candidate-pump-margin",
+      "district": "the-ashrun",
+      "name": "Pump Margin",
+      "type": "industrial",
+      "blurb": "Service access above intake machinery.",
+      "canonStatus": "proposed",
+      "sources": [
+        "https://www.worldanvil.com/w/adyta-jeeperssheefers/a/adyta-settlement",
+        "https://www.worldanvil.com/w/adyta-jeeperssheefers/a/corporations-article"
+      ],
+      "pin": {
+        "map": "the-ashrun",
+        "x": 0.646,
+        "y": 0.381
+      }
+    },
+    {
+      "id": "the-ashrun--candidate-runoff-mouth",
+      "district": "the-ashrun",
+      "name": "Runoff Mouth",
+      "type": "landmark",
+      "blurb": "Keep clear of discharge.",
+      "canonStatus": "proposed",
+      "sources": [
+        "https://www.worldanvil.com/w/adyta-jeeperssheefers/a/adyta-settlement",
+        "https://www.worldanvil.com/w/adyta-jeeperssheefers/a/corporations-article"
+      ],
+      "pin": {
+        "map": "the-ashrun",
+        "x": 0.19,
+        "y": 0.545
+      }
+    },
+    {
+      "id": "the-ashrun--candidate-towline-walk",
+      "district": "the-ashrun",
+      "name": "Towline Walk",
+      "type": "street",
+      "blurb": "Foot traffic along the bank.",
+      "canonStatus": "proposed",
+      "sources": [
+        "https://www.worldanvil.com/w/adyta-jeeperssheefers/a/adyta-settlement",
+        "https://www.worldanvil.com/w/adyta-jeeperssheefers/a/corporations-article"
+      ],
+      "pin": {
+        "map": "the-ashrun",
+        "x": 0.641,
+        "y": 0.559
+      }
+    },
+    {
+      "id": "the-ashrun--candidate-the-bent-crossing",
+      "district": "the-ashrun",
+      "name": "The Bent Crossing",
+      "type": "transit",
+      "blurb": "Bridge; narrow service approach.",
+      "canonStatus": "proposed",
+      "sources": [
+        "https://www.worldanvil.com/w/adyta-jeeperssheefers/a/adyta-settlement",
+        "https://www.worldanvil.com/w/adyta-jeeperssheefers/a/corporations-article"
+      ],
+      "pin": {
+        "map": "the-ashrun",
+        "x": 0.294,
+        "y": 0.693
+      }
+    },
+    {
+      "id": "the-ashrun--candidate-tide-ledger",
+      "district": "the-ashrun",
+      "name": "Tide Ledger",
+      "type": "civic",
+      "blurb": "Shift board for water workers.",
+      "canonStatus": "proposed",
+      "sources": [
+        "https://www.worldanvil.com/w/adyta-jeeperssheefers/a/adyta-settlement",
+        "https://www.worldanvil.com/w/adyta-jeeperssheefers/a/corporations-article"
+      ],
+      "pin": {
+        "map": "the-ashrun",
+        "x": 0.779,
+        "y": 0.676
+      }
+    },
+    {
+      "id": "the-ashrun--candidate-debris-catch",
+      "district": "the-ashrun",
+      "name": "Debris Catch",
+      "type": "landmark",
+      "blurb": "What floats gathers here.",
+      "canonStatus": "proposed",
+      "sources": [
+        "https://www.worldanvil.com/w/adyta-jeeperssheefers/a/adyta-settlement",
+        "https://www.worldanvil.com/w/adyta-jeeperssheefers/a/corporations-article"
+      ],
+      "pin": {
+        "map": "the-ashrun",
+        "x": 0.347,
+        "y": 0.864
+      }
+    },
+    {
+      "id": "the-ashrun--candidate-harborward-channel",
+      "district": "the-ashrun",
+      "name": "Harborward Channel",
+      "type": "transit",
+      "blurb": "Toward the broader harbor.",
+      "canonStatus": "proposed",
+      "sources": [
+        "https://www.worldanvil.com/w/adyta-jeeperssheefers/a/adyta-settlement",
+        "https://www.worldanvil.com/w/adyta-jeeperssheefers/a/corporations-article"
+      ],
+      "pin": {
+        "map": "the-ashrun",
+        "x": 0.625,
+        "y": 0.884
+      }
+    },
+    {
+      "id": "far-shipyards--candidate-half-hull-dock",
+      "district": "far-shipyards",
+      "name": "Half-Hull Dock",
+      "type": "industrial",
+      "blurb": "A ship midway through becoming.",
+      "canonStatus": "proposed",
+      "sources": [
+        "https://www.worldanvil.com/w/adyta-jeeperssheefers/a/adyta-settlement",
+        "https://www.worldanvil.com/w/adyta-jeeperssheefers/a/corporations-article"
+      ],
+      "pin": {
+        "map": "far-shipyards",
+        "x": 0.212,
+        "y": 0.21
+      }
+    },
+    {
+      "id": "far-shipyards--candidate-second-sale-yard",
+      "district": "far-shipyards",
+      "name": "Second Sale Yard",
+      "type": "shop",
+      "blurb": "Recovered fittings; ask twice.",
+      "canonStatus": "proposed",
+      "sources": [
+        "https://www.worldanvil.com/w/adyta-jeeperssheefers/a/adyta-settlement",
+        "https://www.worldanvil.com/w/adyta-jeeperssheefers/a/corporations-article"
+      ],
+      "pin": {
+        "map": "far-shipyards",
+        "x": 0.622,
+        "y": 0.203
+      }
+    },
+    {
+      "id": "far-shipyards--candidate-plate-cutters",
+      "district": "far-shipyards",
+      "name": "Plate Cutters",
+      "type": "industrial",
+      "blurb": "Steel work; hearing protection advised.",
+      "canonStatus": "proposed",
+      "sources": [
+        "https://www.worldanvil.com/w/adyta-jeeperssheefers/a/adyta-settlement",
+        "https://www.worldanvil.com/w/adyta-jeeperssheefers/a/corporations-article"
+      ],
+      "pin": {
+        "map": "far-shipyards",
+        "x": 0.454,
+        "y": 0.342
+      }
+    },
+    {
+      "id": "far-shipyards--candidate-crane-alley",
+      "district": "far-shipyards",
+      "name": "Crane Alley",
+      "type": "industrial",
+      "blurb": "Loads move overhead.",
+      "canonStatus": "proposed",
+      "sources": [
+        "https://www.worldanvil.com/w/adyta-jeeperssheefers/a/adyta-settlement",
+        "https://www.worldanvil.com/w/adyta-jeeperssheefers/a/corporations-article"
+      ],
+      "pin": {
+        "map": "far-shipyards",
+        "x": 0.852,
+        "y": 0.332
+      }
+    },
+    {
+      "id": "far-shipyards--candidate-the-dry-berth",
+      "district": "far-shipyards",
+      "name": "The Dry Berth",
+      "type": "industrial",
+      "blurb": "Repairs below the waterline.",
+      "canonStatus": "proposed",
+      "sources": [
+        "https://www.worldanvil.com/w/adyta-jeeperssheefers/a/adyta-settlement",
+        "https://www.worldanvil.com/w/adyta-jeeperssheefers/a/corporations-article"
+      ],
+      "pin": {
+        "map": "far-shipyards",
+        "x": 0.146,
+        "y": 0.454
+      }
+    },
+    {
+      "id": "far-shipyards--candidate-rivet-canteen",
+      "district": "far-shipyards",
+      "name": "Rivet Canteen",
+      "type": "food",
+      "blurb": "Hot food between shifts.",
+      "canonStatus": "proposed",
+      "sources": [
+        "https://www.worldanvil.com/w/adyta-jeeperssheefers/a/adyta-settlement",
+        "https://www.worldanvil.com/w/adyta-jeeperssheefers/a/corporations-article"
+      ],
+      "pin": {
+        "map": "far-shipyards",
+        "x": 0.625,
+        "y": 0.467
+      }
+    },
+    {
+      "id": "far-shipyards--candidate-launch-slip",
+      "district": "far-shipyards",
+      "name": "Launch Slip",
+      "type": "industrial",
+      "blurb": "Keep the slope clear.",
+      "canonStatus": "proposed",
+      "sources": [
+        "https://www.worldanvil.com/w/adyta-jeeperssheefers/a/adyta-settlement",
+        "https://www.worldanvil.com/w/adyta-jeeperssheefers/a/corporations-article"
+      ],
+      "pin": {
+        "map": "far-shipyards",
+        "x": 0.283,
+        "y": 0.604
+      }
+    },
+    {
+      "id": "far-shipyards--candidate-manifest-shed",
+      "district": "far-shipyards",
+      "name": "Manifest Shed",
+      "type": "civic",
+      "blurb": "Freight paperwork before departure.",
+      "canonStatus": "proposed",
+      "sources": [
+        "https://www.worldanvil.com/w/adyta-jeeperssheefers/a/adyta-settlement",
+        "https://www.worldanvil.com/w/adyta-jeeperssheefers/a/corporations-article"
+      ],
+      "pin": {
+        "map": "far-shipyards",
+        "x": 0.739,
+        "y": 0.594
+      }
+    },
+    {
+      "id": "far-shipyards--candidate-crew-rooms",
+      "district": "far-shipyards",
+      "name": "Crew Rooms",
+      "type": "housing",
+      "blurb": "Beds above the working waterfront.",
+      "canonStatus": "proposed",
+      "sources": [
+        "https://www.worldanvil.com/w/adyta-jeeperssheefers/a/adyta-settlement",
+        "https://www.worldanvil.com/w/adyta-jeeperssheefers/a/corporations-article"
+      ],
+      "pin": {
+        "map": "far-shipyards",
+        "x": 0.197,
+        "y": 0.76
+      }
+    },
+    {
+      "id": "far-shipyards--candidate-breakers-gate",
+      "district": "far-shipyards",
+      "name": "Breakers Gate",
+      "type": "industrial",
+      "blurb": "Parts leave; whole ships rarely do.",
+      "canonStatus": "proposed",
+      "sources": [
+        "https://www.worldanvil.com/w/adyta-jeeperssheefers/a/adyta-settlement",
+        "https://www.worldanvil.com/w/adyta-jeeperssheefers/a/corporations-article"
+      ],
+      "pin": {
+        "map": "far-shipyards",
+        "x": 0.597,
+        "y": 0.789
+      }
+    },
+    {
+      "id": "greasewick-row--candidate-third-rattle-motors",
+      "district": "greasewick-row",
+      "name": "Third Rattle Motors",
+      "type": "shop",
+      "blurb": "Diagnosis before credentials.",
+      "canonStatus": "proposed",
+      "sources": [
+        "https://www.worldanvil.com/w/adyta-jeeperssheefers/a/greasewick-row-settlement",
+        "https://www.worldanvil.com/w/adyta-jeeperssheefers/a/low-halo-settlement"
+      ],
+      "pin": {
+        "map": "greasewick-row",
+        "x": 0.322,
+        "y": 0.223
+      }
+    },
+    {
+      "id": "greasewick-row--candidate-the-borrowed-spanner",
+      "district": "greasewick-row",
+      "name": "The Borrowed Spanner",
+      "type": "shop",
+      "blurb": "Tools return with a story.",
+      "canonStatus": "proposed",
+      "sources": [
+        "https://www.worldanvil.com/w/adyta-jeeperssheefers/a/greasewick-row-settlement",
+        "https://www.worldanvil.com/w/adyta-jeeperssheefers/a/low-halo-settlement"
+      ],
+      "pin": {
+        "map": "greasewick-row",
+        "x": 0.63,
+        "y": 0.223
+      }
+    },
+    {
+      "id": "greasewick-row--candidate-patch-parts",
+      "district": "greasewick-row",
+      "name": "Patch Parts",
+      "type": "shop",
+      "blurb": "Salvage assessed on the counter.",
+      "canonStatus": "proposed",
+      "sources": [
+        "https://www.worldanvil.com/w/adyta-jeeperssheefers/a/greasewick-row-settlement",
+        "https://www.worldanvil.com/w/adyta-jeeperssheefers/a/low-halo-settlement"
+      ],
+      "pin": {
+        "map": "greasewick-row",
+        "x": 0.366,
+        "y": 0.35
+      }
+    },
+    {
+      "id": "greasewick-row--candidate-aftershift-kitchen",
+      "district": "greasewick-row",
+      "name": "Aftershift Kitchen",
+      "type": "food",
+      "blurb": "Workers eat before going home.",
+      "canonStatus": "proposed",
+      "sources": [
+        "https://www.worldanvil.com/w/adyta-jeeperssheefers/a/greasewick-row-settlement",
+        "https://www.worldanvil.com/w/adyta-jeeperssheefers/a/low-halo-settlement"
+      ],
+      "pin": {
+        "map": "greasewick-row",
+        "x": 0.738,
+        "y": 0.349
+      }
+    },
+    {
+      "id": "greasewick-row--candidate-conduit-mouth",
+      "district": "greasewick-row",
+      "name": "Conduit Mouth",
+      "type": "industrial",
+      "blurb": "Small crews service tight spaces.",
+      "canonStatus": "proposed",
+      "sources": [
+        "https://www.worldanvil.com/w/adyta-jeeperssheefers/a/greasewick-row-settlement",
+        "https://www.worldanvil.com/w/adyta-jeeperssheefers/a/low-halo-settlement"
+      ],
+      "pin": {
+        "map": "greasewick-row",
+        "x": 0.321,
+        "y": 0.49
+      }
+    },
+    {
+      "id": "greasewick-row--candidate-the-hot-seam",
+      "district": "greasewick-row",
+      "name": "The Hot Seam",
+      "type": "shop",
+      "blurb": "Welding behind the shutters.",
+      "canonStatus": "proposed",
+      "sources": [
+        "https://www.worldanvil.com/w/adyta-jeeperssheefers/a/greasewick-row-settlement",
+        "https://www.worldanvil.com/w/adyta-jeeperssheefers/a/low-halo-settlement"
+      ],
+      "pin": {
+        "map": "greasewick-row",
+        "x": 0.666,
+        "y": 0.496
+      }
+    },
+    {
+      "id": "greasewick-row--candidate-no-receipt-devices",
+      "district": "greasewick-row",
+      "name": "No Receipt Devices",
+      "type": "shop",
+      "blurb": "Secondhand precision repairs.",
+      "canonStatus": "proposed",
+      "sources": [
+        "https://www.worldanvil.com/w/adyta-jeeperssheefers/a/greasewick-row-settlement",
+        "https://www.worldanvil.com/w/adyta-jeeperssheefers/a/low-halo-settlement"
+      ],
+      "pin": {
+        "map": "greasewick-row",
+        "x": 0.352,
+        "y": 0.615
+      }
+    },
+    {
+      "id": "greasewick-row--candidate-apprentice-yard",
+      "district": "greasewick-row",
+      "name": "Apprentice Yard",
+      "type": "civic",
+      "blurb": "Learning with somebody watching.",
+      "canonStatus": "proposed",
+      "sources": [
+        "https://www.worldanvil.com/w/adyta-jeeperssheefers/a/greasewick-row-settlement",
+        "https://www.worldanvil.com/w/adyta-jeeperssheefers/a/low-halo-settlement"
+      ],
+      "pin": {
+        "map": "greasewick-row",
+        "x": 0.739,
+        "y": 0.62
+      }
+    },
+    {
+      "id": "greasewick-row--candidate-generator-court",
+      "district": "greasewick-row",
+      "name": "Generator Court",
+      "type": "industrial",
+      "blurb": "Shared electrical repairs; no magic.",
+      "canonStatus": "proposed",
+      "sources": [
+        "https://www.worldanvil.com/w/adyta-jeeperssheefers/a/greasewick-row-settlement",
+        "https://www.worldanvil.com/w/adyta-jeeperssheefers/a/low-halo-settlement"
+      ],
+      "pin": {
+        "map": "greasewick-row",
+        "x": 0.337,
+        "y": 0.744
+      }
+    },
+    {
+      "id": "greasewick-row--candidate-south-repair-lane",
+      "district": "greasewick-row",
+      "name": "South Repair Lane",
+      "type": "street",
+      "blurb": "Toward older infrastructure.",
+      "canonStatus": "proposed",
+      "sources": [
+        "https://www.worldanvil.com/w/adyta-jeeperssheefers/a/greasewick-row-settlement",
+        "https://www.worldanvil.com/w/adyta-jeeperssheefers/a/low-halo-settlement"
+      ],
+      "pin": {
+        "map": "greasewick-row",
+        "x": 0.667,
+        "y": 0.762
+      }
+    },
+    {
+      "id": "greasewick-row--candidate-southern-repair-entrance",
+      "district": "greasewick-row",
+      "name": "Southern Repair Entrance",
+      "type": "transit",
+      "blurb": "The gate back into Low Halo.",
+      "canonStatus": "proposed",
+      "sources": [
+        "https://www.worldanvil.com/w/adyta-jeeperssheefers/a/greasewick-row-settlement",
+        "https://www.worldanvil.com/w/adyta-jeeperssheefers/a/low-halo-settlement"
+      ],
+      "pin": {
+        "map": "greasewick-row",
+        "x": 0.928,
+        "y": 0.811
+      }
+    },
+    {
+      "id": "old-city--candidate-foundation-mouth",
+      "district": "old-city",
+      "name": "Foundation Mouth",
+      "type": "transit",
+      "blurb": "Descent beneath newer buildings.",
+      "canonStatus": "proposed",
+      "sources": [
+        "https://www.worldanvil.com/w/adyta-jeeperssheefers/a/old-city-settlement"
+      ],
+      "pin": {
+        "map": "old-city",
+        "x": 0.202,
+        "y": 0.212
+      }
+    },
+    {
+      "id": "old-city--candidate-the-interrupted-street",
+      "district": "old-city",
+      "name": "The Interrupted Street",
+      "type": "street",
+      "blurb": "Old road meets a newer wall.",
+      "canonStatus": "proposed",
+      "sources": [
+        "https://www.worldanvil.com/w/adyta-jeeperssheefers/a/old-city-settlement"
+      ],
+      "pin": {
+        "map": "old-city",
+        "x": 0.633,
+        "y": 0.229
+      }
+    },
+    {
+      "id": "old-city--candidate-windowless-rooms",
+      "district": "old-city",
+      "name": "Windowless Rooms",
+      "type": "housing",
+      "blurb": "Former homes inside service works.",
+      "canonStatus": "proposed",
+      "sources": [
+        "https://www.worldanvil.com/w/adyta-jeeperssheefers/a/old-city-settlement"
+      ],
+      "pin": {
+        "map": "old-city",
+        "x": 0.252,
+        "y": 0.354
+      }
+    },
+    {
+      "id": "old-city--candidate-the-scavengers-rest",
+      "district": "old-city",
+      "name": "The Scavengers Rest",
+      "type": "housing",
+      "blurb": "Occupied pocket; ask before entering.",
+      "canonStatus": "proposed",
+      "sources": [
+        "https://www.worldanvil.com/w/adyta-jeeperssheefers/a/old-city-settlement"
+      ],
+      "pin": {
+        "map": "old-city",
+        "x": 0.708,
+        "y": 0.332
+      }
+    },
+    {
+      "id": "old-city--candidate-three-foundations",
+      "district": "old-city",
+      "name": "Three Foundations",
+      "type": "landmark",
+      "blurb": "Layers disagree about the floor.",
+      "canonStatus": "proposed",
+      "sources": [
+        "https://www.worldanvil.com/w/adyta-jeeperssheefers/a/old-city-settlement"
+      ],
+      "pin": {
+        "map": "old-city",
+        "x": 0.138,
+        "y": 0.508
+      }
+    },
+    {
+      "id": "old-city--candidate-utility-crosscut",
+      "district": "old-city",
+      "name": "Utility Crosscut",
+      "type": "industrial",
+      "blurb": "Modern pipes through old rooms.",
+      "canonStatus": "proposed",
+      "sources": [
+        "https://www.worldanvil.com/w/adyta-jeeperssheefers/a/old-city-settlement"
+      ],
+      "pin": {
+        "map": "old-city",
+        "x": 0.713,
+        "y": 0.501
+      }
+    },
+    {
+      "id": "old-city--candidate-the-sealed-door",
+      "district": "old-city",
+      "name": "The Sealed Door",
+      "type": "landmark",
+      "blurb": "No verified route beyond.",
+      "canonStatus": "proposed",
+      "sources": [
+        "https://www.worldanvil.com/w/adyta-jeeperssheefers/a/old-city-settlement"
+      ],
+      "pin": {
+        "map": "old-city",
+        "x": 0.202,
+        "y": 0.625
+      }
+    },
+    {
+      "id": "old-city--candidate-fallen-court",
+      "district": "old-city",
+      "name": "Fallen Court",
+      "type": "landmark",
+      "blurb": "Collapse; keep off loose edges.",
+      "canonStatus": "proposed",
+      "sources": [
+        "https://www.worldanvil.com/w/adyta-jeeperssheefers/a/old-city-settlement"
+      ],
+      "pin": {
+        "map": "old-city",
+        "x": 0.699,
+        "y": 0.659
+      }
+    },
+    {
+      "id": "old-city--candidate-last-legible-wall",
+      "district": "old-city",
+      "name": "Last Legible Wall",
+      "type": "landmark",
+      "blurb": "Old markings; meaning uncertain.",
+      "canonStatus": "proposed",
+      "sources": [
+        "https://www.worldanvil.com/w/adyta-jeeperssheefers/a/old-city-settlement"
+      ],
+      "pin": {
+        "map": "old-city",
+        "x": 0.34,
+        "y": 0.801
+      }
+    },
+    {
+      "id": "old-city--candidate-unsurveyed-continuation",
+      "district": "old-city",
+      "name": "Unsurveyed Continuation",
+      "type": "landmark",
+      "blurb": "Route ends in uncertainty.",
+      "canonStatus": "proposed",
+      "sources": [
+        "https://www.worldanvil.com/w/adyta-jeeperssheefers/a/old-city-settlement"
+      ],
+      "pin": {
+        "map": "old-city",
+        "x": 0.85,
+        "y": 0.854
+      }
+    },
+    {
+      "id": "old-city--candidate-settlement-row",
+      "district": "old-city",
+      "name": "Settlement Row",
+      "type": "housing",
+      "blurb": "Where people actually live down here.",
+      "canonStatus": "proposed",
+      "sources": [
+        "https://www.worldanvil.com/w/adyta-jeeperssheefers/a/old-city-settlement"
+      ],
+      "pin": {
+        "map": "old-city",
+        "x": 0.677,
+        "y": 0.418
+      }
+    },
+    {
+      "id": "old-city--candidate-workshop-alley",
+      "district": "old-city",
+      "name": "Workshop Alley",
+      "type": "shop",
+      "blurb": "Benches and sparks under the old foundations.",
+      "canonStatus": "proposed",
+      "sources": [
+        "https://www.worldanvil.com/w/adyta-jeeperssheefers/a/old-city-settlement"
+      ],
+      "pin": {
+        "map": "old-city",
+        "x": 0.055,
+        "y": 0.51
+      }
+    },
+    {
+      "id": "southport-slums--candidate-borrowed-roof-court",
+      "district": "southport-slums",
+      "name": "Borrowed Roof Court",
+      "type": "housing",
+      "blurb": "Shared repairs keep homes standing.",
+      "canonStatus": "proposed",
+      "sources": [
+        "https://www.worldanvil.com/w/adyta-jeeperssheefers/a/adyta-settlement"
+      ],
+      "pin": {
+        "map": "southport-slums",
+        "x": 0.189,
+        "y": 0.225
+      }
+    },
+    {
+      "id": "southport-slums--candidate-the-late-pot",
+      "district": "southport-slums",
+      "name": "The Late Pot",
+      "type": "food",
+      "blurb": "Food after the shift ends.",
+      "canonStatus": "proposed",
+      "sources": [
+        "https://www.worldanvil.com/w/adyta-jeeperssheefers/a/adyta-settlement"
+      ],
+      "pin": {
+        "map": "southport-slums",
+        "x": 0.645,
+        "y": 0.234
+      }
+    },
+    {
+      "id": "southport-slums--candidate-pump-queue",
+      "district": "southport-slums",
+      "name": "Pump Queue",
+      "type": "street",
+      "blurb": "Water before work.",
+      "canonStatus": "proposed",
+      "sources": [
+        "https://www.worldanvil.com/w/adyta-jeeperssheefers/a/adyta-settlement"
+      ],
+      "pin": {
+        "map": "southport-slums",
+        "x": 0.374,
+        "y": 0.332
+      }
+    },
+    {
+      "id": "southport-slums--candidate-mended-stair",
+      "district": "southport-slums",
+      "name": "Mended Stair",
+      "type": "housing",
+      "blurb": "Residents maintain the landing.",
+      "canonStatus": "proposed",
+      "sources": [
+        "https://www.worldanvil.com/w/adyta-jeeperssheefers/a/adyta-settlement"
+      ],
+      "pin": {
+        "map": "southport-slums",
+        "x": 0.882,
+        "y": 0.344
+      }
+    },
+    {
+      "id": "southport-slums--candidate-patchlight-rooms",
+      "district": "southport-slums",
+      "name": "Patchlight Rooms",
+      "type": "housing",
+      "blurb": "Homes above small shops.",
+      "canonStatus": "proposed",
+      "sources": [
+        "https://www.worldanvil.com/w/adyta-jeeperssheefers/a/adyta-settlement"
+      ],
+      "pin": {
+        "map": "southport-slums",
+        "x": 0.15,
+        "y": 0.451
+      }
+    },
+    {
+      "id": "southport-slums--candidate-the-dry-shelf",
+      "district": "southport-slums",
+      "name": "The Dry Shelf",
+      "type": "shop",
+      "blurb": "Goods kept above runoff.",
+      "canonStatus": "proposed",
+      "sources": [
+        "https://www.worldanvil.com/w/adyta-jeeperssheefers/a/adyta-settlement"
+      ],
+      "pin": {
+        "map": "southport-slums",
+        "x": 0.785,
+        "y": 0.469
+      }
+    },
+    {
+      "id": "southport-slums--candidate-neighbors-gate",
+      "district": "southport-slums",
+      "name": "Neighbors Gate",
+      "type": "civic",
+      "blurb": "Local watch; ask who knows you.",
+      "canonStatus": "proposed",
+      "sources": [
+        "https://www.worldanvil.com/w/adyta-jeeperssheefers/a/adyta-settlement"
+      ],
+      "pin": {
+        "map": "southport-slums",
+        "x": 0.346,
+        "y": 0.578
+      }
+    },
+    {
+      "id": "southport-slums--candidate-last-busk-corner",
+      "district": "southport-slums",
+      "name": "Last Busk Corner",
+      "type": "venue",
+      "blurb": "Music for whoever stays.",
+      "canonStatus": "proposed",
+      "sources": [
+        "https://www.worldanvil.com/w/adyta-jeeperssheefers/a/adyta-settlement"
+      ],
+      "pin": {
+        "map": "southport-slums",
+        "x": 0.835,
+        "y": 0.62
+      }
+    },
+    {
+      "id": "southport-slums--candidate-the-wash-lines",
+      "district": "southport-slums",
+      "name": "The Wash Lines",
+      "type": "street",
+      "blurb": "Courtyard work; shared space.",
+      "canonStatus": "proposed",
+      "sources": [
+        "https://www.worldanvil.com/w/adyta-jeeperssheefers/a/adyta-settlement"
+      ],
+      "pin": {
+        "map": "southport-slums",
+        "x": 0.301,
+        "y": 0.732
+      }
+    },
+    {
+      "id": "southport-slums--candidate-beltward-road",
+      "district": "southport-slums",
+      "name": "Beltward Road",
+      "type": "transit",
+      "blurb": "North toward the industrial belt.",
+      "canonStatus": "proposed",
+      "sources": [
+        "https://www.worldanvil.com/w/adyta-jeeperssheefers/a/adyta-settlement"
+      ],
+      "pin": {
+        "map": "southport-slums",
+        "x": 0.611,
+        "y": 0.734
+      }
+    },
+    {
+      "id": "scrapfields--candidate-second-life-yard",
+      "district": "scrapfields",
+      "name": "Second Life Yard",
+      "type": "market",
+      "blurb": "Parts sorted before disposal.",
+      "canonStatus": "proposed",
+      "sources": [
+        "https://www.worldanvil.com/w/adyta-jeeperssheefers/a/adyta-settlement"
+      ],
+      "pin": {
+        "map": "scrapfields",
+        "x": 0.199,
+        "y": 0.217
+      }
+    },
+    {
+      "id": "scrapfields--candidate-the-weighing-shade",
+      "district": "scrapfields",
+      "name": "The Weighing Shade",
+      "type": "market",
+      "blurb": "Trade measured under patched roofing.",
+      "canonStatus": "proposed",
+      "sources": [
+        "https://www.worldanvil.com/w/adyta-jeeperssheefers/a/adyta-settlement"
+      ],
+      "pin": {
+        "map": "scrapfields",
+        "x": 0.64,
+        "y": 0.223
+      }
+    },
+    {
+      "id": "scrapfields--candidate-patchkin-work-court",
+      "district": "scrapfields",
+      "name": "Patchkin Work Court",
+      "type": "industrial",
+      "blurb": "Salvage crews share the space.",
+      "canonStatus": "proposed",
+      "sources": [
+        "https://www.worldanvil.com/w/adyta-jeeperssheefers/a/adyta-settlement"
+      ],
+      "pin": {
+        "map": "scrapfields",
+        "x": 0.236,
+        "y": 0.342
+      }
+    },
+    {
+      "id": "scrapfields--candidate-copper-rain",
+      "district": "scrapfields",
+      "name": "Copper Rain",
+      "type": "industrial",
+      "blurb": "Wire stripped; sharp edges everywhere.",
+      "canonStatus": "proposed",
+      "sources": [
+        "https://www.worldanvil.com/w/adyta-jeeperssheefers/a/adyta-settlement"
+      ],
+      "pin": {
+        "map": "scrapfields",
+        "x": 0.712,
+        "y": 0.35
+      }
+    },
+    {
+      "id": "scrapfields--candidate-the-running-engine",
+      "district": "scrapfields",
+      "name": "The Running Engine",
+      "type": "industrial",
+      "blurb": "Recovered machines tested here.",
+      "canonStatus": "proposed",
+      "sources": [
+        "https://www.worldanvil.com/w/adyta-jeeperssheefers/a/adyta-settlement"
+      ],
+      "pin": {
+        "map": "scrapfields",
+        "x": 0.158,
+        "y": 0.503
+      }
+    },
+    {
+      "id": "scrapfields--candidate-meal-tin",
+      "district": "scrapfields",
+      "name": "Meal Tin",
+      "type": "food",
+      "blurb": "Hot food beside the sorting lanes.",
+      "canonStatus": "proposed",
+      "sources": [
+        "https://www.worldanvil.com/w/adyta-jeeperssheefers/a/adyta-settlement"
+      ],
+      "pin": {
+        "map": "scrapfields",
+        "x": 0.62,
+        "y": 0.508
+      }
+    },
+    {
+      "id": "scrapfields--candidate-tag-dispute",
+      "district": "scrapfields",
+      "name": "Tag Dispute",
+      "type": "landmark",
+      "blurb": "Ownership argued over chalk marks.",
+      "canonStatus": "proposed",
+      "sources": [
+        "https://www.worldanvil.com/w/adyta-jeeperssheefers/a/adyta-settlement"
+      ],
+      "pin": {
+        "map": "scrapfields",
+        "x": 0.257,
+        "y": 0.652
+      }
+    },
+    {
+      "id": "scrapfields--candidate-crane-shadow",
+      "district": "scrapfields",
+      "name": "Crane Shadow",
+      "type": "industrial",
+      "blurb": "Stay outside the swing.",
+      "canonStatus": "proposed",
+      "sources": [
+        "https://www.worldanvil.com/w/adyta-jeeperssheefers/a/adyta-settlement"
+      ],
+      "pin": {
+        "map": "scrapfields",
+        "x": 0.809,
+        "y": 0.661
+      }
+    },
+    {
+      "id": "scrapfields--candidate-the-kept-pieces",
+      "district": "scrapfields",
+      "name": "The Kept Pieces",
+      "type": "shop",
+      "blurb": "Small components; large possibilities.",
+      "canonStatus": "proposed",
+      "sources": [
+        "https://www.worldanvil.com/w/adyta-jeeperssheefers/a/adyta-settlement"
+      ],
+      "pin": {
+        "map": "scrapfields",
+        "x": 0.24,
+        "y": 0.822
+      }
+    },
+    {
+      "id": "scrapfields--candidate-repairward-track",
+      "district": "scrapfields",
+      "name": "Repairward Track",
+      "type": "transit",
+      "blurb": "Loads leave for repair markets.",
+      "canonStatus": "proposed",
+      "sources": [
+        "https://www.worldanvil.com/w/adyta-jeeperssheefers/a/adyta-settlement"
+      ],
+      "pin": {
+        "map": "scrapfields",
+        "x": 0.609,
+        "y": 0.82
+      }
+    },
+    {
+      "id": "scrapfields--candidate-scrap-ridge",
+      "district": "scrapfields",
+      "name": "Scrap Ridge",
+      "type": "landmark",
+      "blurb": "Tall piles, shifting often.",
+      "canonStatus": "proposed",
+      "sources": [
+        "https://www.worldanvil.com/w/adyta-jeeperssheefers/a/adyta-settlement"
+      ],
+      "pin": {
+        "map": "scrapfields",
+        "x": 0.459,
+        "y": 0.093
+      }
+    },
+    {
+      "id": "scrapfields--candidate-patchkin-row",
+      "district": "scrapfields",
+      "name": "Patchkin Row",
+      "type": "housing",
+      "blurb": "Homes, shops and crew rooms.",
+      "canonStatus": "proposed",
+      "sources": [
+        "https://www.worldanvil.com/w/adyta-jeeperssheefers/a/adyta-settlement"
+      ],
+      "pin": {
+        "map": "scrapfields",
+        "x": 0.871,
+        "y": 0.125
+      }
+    },
+    {
+      "id": "outer-farms--candidate-seamfield",
+      "district": "outer-farms",
+      "name": "Seamfield",
+      "type": "landmark",
+      "blurb": "Cultivated strips beside salvage.",
+      "canonStatus": "proposed",
+      "sources": [
+        "https://www.worldanvil.com/w/adyta-jeeperssheefers/a/adyta-settlement"
+      ],
+      "pin": {
+        "map": "outer-farms",
+        "x": 0.317,
+        "y": 0.244
+      }
+    },
+    {
+      "id": "outer-farms--candidate-dustwalker-camp",
+      "district": "outer-farms",
+      "name": "Dustwalker Camp",
+      "type": "housing",
+      "blurb": "Temporary resting place; ask first.",
+      "canonStatus": "proposed",
+      "sources": [
+        "https://www.worldanvil.com/w/adyta-jeeperssheefers/a/adyta-settlement"
+      ],
+      "pin": {
+        "map": "outer-farms",
+        "x": 0.826,
+        "y": 0.244
+      }
+    },
+    {
+      "id": "outer-farms--candidate-the-mended-pump",
+      "district": "outer-farms",
+      "name": "The Mended Pump",
+      "type": "industrial",
+      "blurb": "Irrigation kept alive by repairs.",
+      "canonStatus": "proposed",
+      "sources": [
+        "https://www.worldanvil.com/w/adyta-jeeperssheefers/a/adyta-settlement"
+      ],
+      "pin": {
+        "map": "outer-farms",
+        "x": 0.37,
+        "y": 0.366
+      }
+    },
+    {
+      "id": "outer-farms--candidate-seed-tin",
+      "district": "outer-farms",
+      "name": "Seed Tin",
+      "type": "shop",
+      "blurb": "Trade small; keep some back.",
+      "canonStatus": "proposed",
+      "sources": [
+        "https://www.worldanvil.com/w/adyta-jeeperssheefers/a/adyta-settlement"
+      ],
+      "pin": {
+        "map": "outer-farms",
+        "x": 0.712,
+        "y": 0.359
+      }
+    },
+    {
+      "id": "outer-farms--candidate-the-pickers-line",
+      "district": "outer-farms",
+      "name": "The Pickers Line",
+      "type": "industrial",
+      "blurb": "Scrap work along the city edge.",
+      "canonStatus": "proposed",
+      "sources": [
+        "https://www.worldanvil.com/w/adyta-jeeperssheefers/a/adyta-settlement"
+      ],
+      "pin": {
+        "map": "outer-farms",
+        "x": 0.143,
+        "y": 0.493
+      }
+    },
+    {
+      "id": "outer-farms--candidate-last-fence",
+      "district": "outer-farms",
+      "name": "Last Fence",
+      "type": "landmark",
+      "blurb": "Fields give way to rough country.",
+      "canonStatus": "proposed",
+      "sources": [
+        "https://www.worldanvil.com/w/adyta-jeeperssheefers/a/adyta-settlement"
+      ],
+      "pin": {
+        "map": "outer-farms",
+        "x": 0.83,
+        "y": 0.493
+      }
+    },
+    {
+      "id": "outer-farms--candidate-hunters-return",
+      "district": "outer-farms",
+      "name": "Hunters Return",
+      "type": "landmark",
+      "blurb": "Gear checked before heading out.",
+      "canonStatus": "proposed",
+      "sources": [
+        "https://www.worldanvil.com/w/adyta-jeeperssheefers/a/adyta-settlement"
+      ],
+      "pin": {
+        "map": "outer-farms",
+        "x": 0.378,
+        "y": 0.656
+      }
+    },
+    {
+      "id": "outer-farms--candidate-shared-store",
+      "district": "outer-farms",
+      "name": "Shared Store",
+      "type": "market",
+      "blurb": "Tools and harvest under patched roofing.",
+      "canonStatus": "proposed",
+      "sources": [
+        "https://www.worldanvil.com/w/adyta-jeeperssheefers/a/adyta-settlement"
+      ],
+      "pin": {
+        "map": "outer-farms",
+        "x": 0.693,
+        "y": 0.664
+      }
+    },
+    {
+      "id": "outer-farms--candidate-marketward-cart-track",
+      "district": "outer-farms",
+      "name": "Marketward Cart Track",
+      "type": "transit",
+      "blurb": "Food and salvage toward town.",
+      "canonStatus": "proposed",
+      "sources": [
+        "https://www.worldanvil.com/w/adyta-jeeperssheefers/a/adyta-settlement"
+      ],
+      "pin": {
+        "map": "outer-farms",
+        "x": 0.189,
+        "y": 0.803
+      }
+    },
+    {
+      "id": "outer-farms--candidate-hinterland-path",
+      "district": "outer-farms",
+      "name": "Hinterland Path",
+      "type": "street",
+      "blurb": "Beyond: geography remains open.",
+      "canonStatus": "proposed",
+      "sources": [
+        "https://www.worldanvil.com/w/adyta-jeeperssheefers/a/adyta-settlement"
+      ],
+      "pin": {
+        "map": "outer-farms",
+        "x": 0.841,
+        "y": 0.813
+      }
+    },
+    {
+      "id": "borderlands--candidate-the-fading-line",
+      "district": "borderlands",
+      "name": "The Fading Line",
+      "type": "landmark",
+      "blurb": "Nobody agrees where authority ends.",
+      "canonStatus": "proposed",
+      "sources": [
+        "https://www.worldanvil.com/w/adyta-jeeperssheefers/a/adyta-settlement"
+      ],
+      "pin": {
+        "map": "borderlands",
+        "x": 0.201,
+        "y": 0.247
+      }
+    },
+    {
+      "id": "borderlands--candidate-roadside-rest",
+      "district": "borderlands",
+      "name": "Roadside Rest",
+      "type": "housing",
+      "blurb": "Beds when there is room.",
+      "canonStatus": "proposed",
+      "sources": [
+        "https://www.worldanvil.com/w/adyta-jeeperssheefers/a/adyta-settlement"
+      ],
+      "pin": {
+        "map": "borderlands",
+        "x": 0.648,
+        "y": 0.239
+      }
+    },
+    {
+      "id": "borderlands--candidate-last-lit-post",
+      "district": "borderlands",
+      "name": "Last Lit Post",
+      "type": "landmark",
+      "blurb": "Beyond this, bring your own light.",
+      "canonStatus": "proposed",
+      "sources": [
+        "https://www.worldanvil.com/w/adyta-jeeperssheefers/a/adyta-settlement"
+      ],
+      "pin": {
+        "map": "borderlands",
+        "x": 0.254,
+        "y": 0.371
+      }
+    },
+    {
+      "id": "borderlands--candidate-the-spare-wheel",
+      "district": "borderlands",
+      "name": "The Spare Wheel",
+      "type": "shop",
+      "blurb": "Cart repairs; parts by barter.",
+      "canonStatus": "proposed",
+      "sources": [
+        "https://www.worldanvil.com/w/adyta-jeeperssheefers/a/adyta-settlement"
+      ],
+      "pin": {
+        "map": "borderlands",
+        "x": 0.706,
+        "y": 0.376
+      }
+    },
+    {
+      "id": "borderlands--candidate-crossing-shade",
+      "district": "borderlands",
+      "name": "Crossing Shade",
+      "type": "landmark",
+      "blurb": "Waiting without official shelter.",
+      "canonStatus": "proposed",
+      "sources": [
+        "https://www.worldanvil.com/w/adyta-jeeperssheefers/a/adyta-settlement"
+      ],
+      "pin": {
+        "map": "borderlands",
+        "x": 0.255,
+        "y": 0.518
+      }
+    },
+    {
+      "id": "borderlands--candidate-unclaimed-yard",
+      "district": "borderlands",
+      "name": "Unclaimed Yard",
+      "type": "landmark",
+      "blurb": "Temporary use; contested ownership.",
+      "canonStatus": "proposed",
+      "sources": [
+        "https://www.worldanvil.com/w/adyta-jeeperssheefers/a/adyta-settlement"
+      ],
+      "pin": {
+        "map": "borderlands",
+        "x": 0.635,
+        "y": 0.516
+      }
+    },
+    {
+      "id": "borderlands--candidate-dry-gully-path",
+      "district": "borderlands",
+      "name": "Dry Gully Path",
+      "type": "street",
+      "blurb": "Foot route; weather changes it.",
+      "canonStatus": "proposed",
+      "sources": [
+        "https://www.worldanvil.com/w/adyta-jeeperssheefers/a/adyta-settlement"
+      ],
+      "pin": {
+        "map": "borderlands",
+        "x": 0.314,
+        "y": 0.669
+      }
+    },
+    {
+      "id": "borderlands--candidate-the-return-marker",
+      "district": "borderlands",
+      "name": "The Return Marker",
+      "type": "landmark",
+      "blurb": "A point locals recognize.",
+      "canonStatus": "proposed",
+      "sources": [
+        "https://www.worldanvil.com/w/adyta-jeeperssheefers/a/adyta-settlement"
+      ],
+      "pin": {
+        "map": "borderlands",
+        "x": 0.627,
+        "y": 0.652
+      }
+    },
+    {
+      "id": "borderlands--candidate-open-country-track",
+      "district": "borderlands",
+      "name": "Open Country Track",
+      "type": "street",
+      "blurb": "No named nation beyond.",
+      "canonStatus": "proposed",
+      "sources": [
+        "https://www.worldanvil.com/w/adyta-jeeperssheefers/a/adyta-settlement"
+      ],
+      "pin": {
+        "map": "borderlands",
+        "x": 0.312,
+        "y": 0.803
+      }
+    },
+    {
+      "id": "borderlands--candidate-cityward-bend",
+      "district": "borderlands",
+      "name": "Cityward Bend",
+      "type": "transit",
+      "blurb": "Back toward the built streets.",
+      "canonStatus": "proposed",
+      "sources": [
+        "https://www.worldanvil.com/w/adyta-jeeperssheefers/a/adyta-settlement"
+      ],
+      "pin": {
+        "map": "borderlands",
+        "x": 0.661,
+        "y": 0.82
+      }
+    },
+    {
+      "id": "borderlands--candidate-fringe-market",
+      "district": "borderlands",
+      "name": "Fringe Market",
+      "type": "market",
+      "blurb": "Food, tools and surplus; prices change daily.",
+      "canonStatus": "proposed",
+      "sources": [
+        "https://www.worldanvil.com/w/adyta-jeeperssheefers/a/adyta-settlement"
+      ],
+      "pin": {
+        "map": "borderlands",
+        "x": 0.371,
+        "y": 0.137
+      }
+    },
+    {
+      "id": "borderlands--candidate-patched-gate",
+      "district": "borderlands",
+      "name": "Patched Gate",
+      "type": "transit",
+      "blurb": "Loose check; often open.",
+      "canonStatus": "proposed",
+      "sources": [
+        "https://www.worldanvil.com/w/adyta-jeeperssheefers/a/adyta-settlement"
+      ],
+      "pin": {
+        "map": "borderlands",
+        "x": 0.492,
+        "y": 0.148
+      }
+    },
+    {
+      "id": "borderlands--candidate-supply-shed",
+      "district": "borderlands",
+      "name": "Supply Shed",
+      "type": "shop",
+      "blurb": "Basics, fuel and parts; stock is uncertain.",
+      "canonStatus": "proposed",
+      "sources": [
+        "https://www.worldanvil.com/w/adyta-jeeperssheefers/a/adyta-settlement"
+      ],
+      "pin": {
+        "map": "borderlands",
+        "x": 0.902,
+        "y": 0.137
+      }
+    },
+    {
+      "id": "borderlands--candidate-mechanics-row",
+      "district": "borderlands",
+      "name": "Mechanics Row",
+      "type": "shop",
+      "blurb": "Welders, tuners and small jobs.",
+      "canonStatus": "proposed",
+      "sources": [
+        "https://www.worldanvil.com/w/adyta-jeeperssheefers/a/adyta-settlement"
+      ],
+      "pin": {
+        "map": "borderlands",
+        "x": 0.936,
+        "y": 0.317
+      }
+    },
+    {
+      "id": "southern-industrial-belt--candidate-shift-bell-court",
+      "district": "southern-industrial-belt",
+      "name": "Shift Bell Court",
+      "type": "industrial",
+      "blurb": "Workers change; the furnaces continue.",
+      "canonStatus": "proposed",
+      "sources": [
+        "https://www.worldanvil.com/w/adyta-jeeperssheefers/a/adyta-settlement"
+      ],
+      "pin": {
+        "map": "southern-industrial-belt",
+        "x": 0.346,
+        "y": 0.227
+      }
+    },
+    {
+      "id": "southern-industrial-belt--candidate-ashborn-workshop",
+      "district": "southern-industrial-belt",
+      "name": "Ashborn Workshop",
+      "type": "industrial",
+      "blurb": "Industrial repairs; crew reputation matters.",
+      "canonStatus": "proposed",
+      "sources": [
+        "https://www.worldanvil.com/w/adyta-jeeperssheefers/a/adyta-settlement"
+      ],
+      "pin": {
+        "map": "southern-industrial-belt",
+        "x": 0.651,
+        "y": 0.242
+      }
+    },
+    {
+      "id": "southern-industrial-belt--candidate-stonework-hall",
+      "district": "southern-industrial-belt",
+      "name": "Stonework Hall",
+      "type": "industrial",
+      "blurb": "Dwarven workshop and stronghold frontage.",
+      "canonStatus": "proposed",
+      "sources": [
+        "https://www.worldanvil.com/w/adyta-jeeperssheefers/a/adyta-settlement"
+      ],
+      "pin": {
+        "map": "southern-industrial-belt",
+        "x": 0.29,
+        "y": 0.397
+      }
+    },
+    {
+      "id": "southern-industrial-belt--candidate-the-long-pour",
+      "district": "southern-industrial-belt",
+      "name": "The Long Pour",
+      "type": "industrial",
+      "blurb": "Steel work behind guarded access.",
+      "canonStatus": "proposed",
+      "sources": [
+        "https://www.worldanvil.com/w/adyta-jeeperssheefers/a/adyta-settlement"
+      ],
+      "pin": {
+        "map": "southern-industrial-belt",
+        "x": 0.818,
+        "y": 0.396
+      }
+    },
+    {
+      "id": "southern-industrial-belt--candidate-hazard-pay-steps",
+      "district": "southern-industrial-belt",
+      "name": "Hazard Pay Steps",
+      "type": "civic",
+      "blurb": "Claims begin after the injury.",
+      "canonStatus": "proposed",
+      "sources": [
+        "https://www.worldanvil.com/w/adyta-jeeperssheefers/a/adyta-settlement"
+      ],
+      "pin": {
+        "map": "southern-industrial-belt",
+        "x": 0.169,
+        "y": 0.525
+      }
+    },
+    {
+      "id": "southern-industrial-belt--candidate-the-knuckle-corner",
+      "district": "southern-industrial-belt",
+      "name": "The Knuckle Corner",
+      "type": "venue",
+      "blurb": "Street pressure; affiliation unconfirmed.",
+      "canonStatus": "proposed",
+      "sources": [
+        "https://www.worldanvil.com/w/adyta-jeeperssheefers/a/adyta-settlement"
+      ],
+      "pin": {
+        "map": "southern-industrial-belt",
+        "x": 0.62,
+        "y": 0.542
+      }
+    },
+    {
+      "id": "southern-industrial-belt--candidate-canteen-six",
+      "district": "southern-industrial-belt",
+      "name": "Canteen Six",
+      "type": "food",
+      "blurb": "Meals between furnace shifts.",
+      "canonStatus": "proposed",
+      "sources": [
+        "https://www.worldanvil.com/w/adyta-jeeperssheefers/a/adyta-settlement"
+      ],
+      "pin": {
+        "map": "southern-industrial-belt",
+        "x": 0.369,
+        "y": 0.652
+      }
+    },
+    {
+      "id": "southern-industrial-belt--candidate-load-road",
+      "district": "southern-industrial-belt",
+      "name": "Load Road",
+      "type": "transit",
+      "blurb": "Freight takes the wide turn.",
+      "canonStatus": "proposed",
+      "sources": [
+        "https://www.worldanvil.com/w/adyta-jeeperssheefers/a/adyta-settlement"
+      ],
+      "pin": {
+        "map": "southern-industrial-belt",
+        "x": 0.677,
+        "y": 0.672
+      }
+    },
+    {
+      "id": "southern-industrial-belt--candidate-worker-rooms",
+      "district": "southern-industrial-belt",
+      "name": "Worker Rooms",
+      "type": "housing",
+      "blurb": "Homes within reach of the job.",
+      "canonStatus": "proposed",
+      "sources": [
+        "https://www.worldanvil.com/w/adyta-jeeperssheefers/a/adyta-settlement"
+      ],
+      "pin": {
+        "map": "southern-industrial-belt",
+        "x": 0.295,
+        "y": 0.803
+      }
+    },
+    {
+      "id": "southern-industrial-belt--candidate-south-exit",
+      "district": "southern-industrial-belt",
+      "name": "South Exit",
+      "type": "transit",
+      "blurb": "Toward Southport; smoke follows.",
+      "canonStatus": "proposed",
+      "sources": [
+        "https://www.worldanvil.com/w/adyta-jeeperssheefers/a/adyta-settlement"
+      ],
+      "pin": {
+        "map": "southern-industrial-belt",
+        "x": 0.688,
+        "y": 0.869
+      }
+    },
+    {
+      "id": "crownless-row--candidate-mending-court",
+      "district": "crownless-row",
+      "name": "Mending Court",
+      "type": "civic",
+      "blurb": "Shared repair; bring what you can.",
+      "canonStatus": "proposed",
+      "sources": [],
+      "pin": {
+        "map": "crownless-row",
+        "x": 0.376,
+        "y": 0.217
+      }
+    },
+    {
+      "id": "crownless-row--candidate-no-crown-workshop",
+      "district": "crownless-row",
+      "name": "No Crown Workshop",
+      "type": "shop",
+      "blurb": "Tools before titles.",
+      "canonStatus": "proposed",
+      "sources": [],
+      "pin": {
+        "map": "crownless-row",
+        "x": 0.702,
+        "y": 0.229
+      }
+    },
+    {
+      "id": "crownless-row--candidate-the-spare-chair",
+      "district": "crownless-row",
+      "name": "The Spare Chair",
+      "type": "venue",
+      "blurb": "Sit; nobody charges by the minute.",
+      "canonStatus": "proposed",
+      "sources": [],
+      "pin": {
+        "map": "crownless-row",
+        "x": 0.345,
+        "y": 0.354
+      }
+    },
+    {
+      "id": "crownless-row--candidate-open-pot",
+      "district": "crownless-row",
+      "name": "Open Pot",
+      "type": "food",
+      "blurb": "Food when there is enough.",
+      "canonStatus": "proposed",
+      "sources": [],
+      "pin": {
+        "map": "crownless-row",
+        "x": 0.751,
+        "y": 0.368
+      }
+    },
+    {
+      "id": "crownless-row--candidate-patch-roof-row",
+      "district": "crownless-row",
+      "name": "Patch Roof Row",
+      "type": "housing",
+      "blurb": "Homes maintained together.",
+      "canonStatus": "proposed",
+      "sources": [],
+      "pin": {
+        "map": "crownless-row",
+        "x": 0.243,
+        "y": 0.511
+      }
+    },
+    {
+      "id": "crownless-row--candidate-the-useful-shelf",
+      "district": "crownless-row",
+      "name": "The Useful Shelf",
+      "type": "shop",
+      "blurb": "Broken does not mean finished.",
+      "canonStatus": "proposed",
+      "sources": [],
+      "pin": {
+        "map": "crownless-row",
+        "x": 0.729,
+        "y": 0.53
+      }
+    },
+    {
+      "id": "crownless-row--candidate-neighbors-steps",
+      "district": "crownless-row",
+      "name": "Neighbors Steps",
+      "type": "street",
+      "blurb": "Ask before moving through.",
+      "canonStatus": "proposed",
+      "sources": [],
+      "pin": {
+        "map": "crownless-row",
+        "x": 0.387,
+        "y": 0.669
+      }
+    },
+    {
+      "id": "crownless-row--candidate-lightshare",
+      "district": "crownless-row",
+      "name": "Lightshare",
+      "type": "shop",
+      "blurb": "Repairs and shared electrical supply.",
+      "canonStatus": "proposed",
+      "sources": [],
+      "pin": {
+        "map": "crownless-row",
+        "x": 0.837,
+        "y": 0.701
+      }
+    },
+    {
+      "id": "crownless-row--candidate-the-small-stage",
+      "district": "crownless-row",
+      "name": "The Small Stage",
+      "type": "venue",
+      "blurb": "A voice without a permit.",
+      "canonStatus": "proposed",
+      "sources": [],
+      "pin": {
+        "map": "crownless-row",
+        "x": 0.306,
+        "y": 0.811
+      }
+    },
+    {
+      "id": "crownless-row--candidate-common-gate",
+      "district": "crownless-row",
+      "name": "Common Gate",
+      "type": "civic",
+      "blurb": "Entry by conversation, not a crown.",
+      "canonStatus": "proposed",
+      "sources": [],
+      "pin": {
+        "map": "crownless-row",
+        "x": 0.609,
+        "y": 0.854
+      }
+    },
+    {
+      "id": "ash-wastes--candidate-last-warning",
+      "district": "ash-wastes",
+      "name": "Last Warning",
+      "type": "landmark",
+      "blurb": "Beyond maintained ground.",
+      "canonStatus": "proposed",
+      "sources": [
+        "https://www.worldanvil.com/w/adyta-jeeperssheefers/a/adyta-settlement"
+      ],
+      "pin": {
+        "map": "ash-wastes",
+        "x": 0.164,
+        "y": 0.236
+      }
+    },
+    {
+      "id": "ash-wastes--candidate-dead-wind-reach",
+      "district": "ash-wastes",
+      "name": "Dead Wind Reach",
+      "type": "landmark",
+      "blurb": "Exposure; no shelter assured.",
+      "canonStatus": "proposed",
+      "sources": [
+        "https://www.worldanvil.com/w/adyta-jeeperssheefers/a/adyta-settlement"
+      ],
+      "pin": {
+        "map": "ash-wastes",
+        "x": 0.659,
+        "y": 0.188
+      }
+    },
+    {
+      "id": "ash-wastes--candidate-corroded-span",
+      "district": "ash-wastes",
+      "name": "Corroded Span",
+      "type": "landmark",
+      "blurb": "Bridge remnant; do not trust it.",
+      "canonStatus": "proposed",
+      "sources": [
+        "https://www.worldanvil.com/w/adyta-jeeperssheefers/a/adyta-settlement"
+      ],
+      "pin": {
+        "map": "ash-wastes",
+        "x": 0.426,
+        "y": 0.314
+      }
+    },
+    {
+      "id": "ash-wastes--candidate-the-black-pool",
+      "district": "ash-wastes",
+      "name": "The Black Pool",
+      "type": "landmark",
+      "blurb": "Unknown contamination; keep clear.",
+      "canonStatus": "proposed",
+      "sources": [
+        "https://www.worldanvil.com/w/adyta-jeeperssheefers/a/adyta-settlement"
+      ],
+      "pin": {
+        "map": "ash-wastes",
+        "x": 0.817,
+        "y": 0.354
+      }
+    },
+    {
+      "id": "ash-wastes--candidate-buried-service-road",
+      "district": "ash-wastes",
+      "name": "Buried Service Road",
+      "type": "landmark",
+      "blurb": "Broken alignment; no maintained access.",
+      "canonStatus": "proposed",
+      "sources": [
+        "https://www.worldanvil.com/w/adyta-jeeperssheefers/a/adyta-settlement"
+      ],
+      "pin": {
+        "map": "ash-wastes",
+        "x": 0.15,
+        "y": 0.467
+      }
+    },
+    {
+      "id": "ash-wastes--candidate-ashfall-hollow",
+      "district": "ash-wastes",
+      "name": "Ashfall Hollow",
+      "type": "landmark",
+      "blurb": "Loose ground conceals the floor.",
+      "canonStatus": "proposed",
+      "sources": [
+        "https://www.worldanvil.com/w/adyta-jeeperssheefers/a/adyta-settlement"
+      ],
+      "pin": {
+        "map": "ash-wastes",
+        "x": 0.602,
+        "y": 0.505
+      }
+    },
+    {
+      "id": "ash-wastes--candidate-silent-machinery",
+      "district": "ash-wastes",
+      "name": "Silent Machinery",
+      "type": "industrial",
+      "blurb": "No working plant confirmed.",
+      "canonStatus": "proposed",
+      "sources": [
+        "https://www.worldanvil.com/w/adyta-jeeperssheefers/a/adyta-settlement"
+      ],
+      "pin": {
+        "map": "ash-wastes",
+        "x": 0.381,
+        "y": 0.625
+      }
+    },
+    {
+      "id": "ash-wastes--candidate-the-missing-markers",
+      "district": "ash-wastes",
+      "name": "The Missing Markers",
+      "type": "landmark",
+      "blurb": "Survey trail breaks here.",
+      "canonStatus": "proposed",
+      "sources": [
+        "https://www.worldanvil.com/w/adyta-jeeperssheefers/a/adyta-settlement"
+      ],
+      "pin": {
+        "map": "ash-wastes",
+        "x": 0.704,
+        "y": 0.62
+      }
+    },
+    {
+      "id": "ash-wastes--candidate-exclusion-edge",
+      "district": "ash-wastes",
+      "name": "Exclusion Edge",
+      "type": "landmark",
+      "blurb": "Return before visibility fails.",
+      "canonStatus": "proposed",
+      "sources": [
+        "https://www.worldanvil.com/w/adyta-jeeperssheefers/a/adyta-settlement"
+      ],
+      "pin": {
+        "map": "ash-wastes",
+        "x": 0.254,
+        "y": 0.796
+      }
+    },
+    {
+      "id": "ash-wastes--candidate-unmapped-east",
+      "district": "ash-wastes",
+      "name": "Unmapped East",
+      "type": "landmark",
+      "blurb": "No verified onward route.",
+      "canonStatus": "proposed",
+      "sources": [
+        "https://www.worldanvil.com/w/adyta-jeeperssheefers/a/adyta-settlement"
+      ],
+      "pin": {
+        "map": "ash-wastes",
+        "x": 0.804,
+        "y": 0.806
+      }
+    },
+    {
+      "id": "forgotten-depths--candidate-last-known-landing",
+      "district": "forgotten-depths",
+      "name": "Last Known Landing",
+      "type": "transit",
+      "blurb": "Beyond: no verified survey.",
+      "canonStatus": "proposed",
+      "sources": [
+        "https://www.worldanvil.com/w/adyta-jeeperssheefers/a/adyta-settlement"
+      ],
+      "pin": {
+        "map": "forgotten-depths",
+        "x": 0.24,
+        "y": 0.192
+      }
+    },
+    {
+      "id": "forgotten-depths--candidate-broken-descent",
+      "district": "forgotten-depths",
+      "name": "Broken Descent",
+      "type": "transit",
+      "blurb": "Stairs stop before the floor.",
+      "canonStatus": "proposed",
+      "sources": [
+        "https://www.worldanvil.com/w/adyta-jeeperssheefers/a/adyta-settlement"
+      ],
+      "pin": {
+        "map": "forgotten-depths",
+        "x": 0.637,
+        "y": 0.212
+      }
+    },
+    {
+      "id": "forgotten-depths--candidate-chalk-return-mark",
+      "district": "forgotten-depths",
+      "name": "Chalk Return Mark",
+      "type": "landmark",
+      "blurb": "A reminder; not a guarantee.",
+      "canonStatus": "proposed",
+      "sources": [
+        "https://www.worldanvil.com/w/adyta-jeeperssheefers/a/adyta-settlement"
+      ],
+      "pin": {
+        "map": "forgotten-depths",
+        "x": 0.26,
+        "y": 0.332
+      }
+    },
+    {
+      "id": "forgotten-depths--candidate-sealed-margin",
+      "district": "forgotten-depths",
+      "name": "Sealed Margin",
+      "type": "landmark",
+      "blurb": "No confirmed room beyond.",
+      "canonStatus": "proposed",
+      "sources": [
+        "https://www.worldanvil.com/w/adyta-jeeperssheefers/a/adyta-settlement"
+      ],
+      "pin": {
+        "map": "forgotten-depths",
+        "x": 0.822,
+        "y": 0.329
+      }
+    },
+    {
+      "id": "forgotten-depths--candidate-pressure-door",
+      "district": "forgotten-depths",
+      "name": "Pressure Door",
+      "type": "landmark",
+      "blurb": "Condition unknown; do not force.",
+      "canonStatus": "proposed",
+      "sources": [
+        "https://www.worldanvil.com/w/adyta-jeeperssheefers/a/adyta-settlement"
+      ],
+      "pin": {
+        "map": "forgotten-depths",
+        "x": 0.177,
+        "y": 0.483
+      }
+    },
+    {
+      "id": "forgotten-depths--candidate-lost-floor",
+      "district": "forgotten-depths",
+      "name": "Lost Floor",
+      "type": "landmark",
+      "blurb": "Depth cannot be read here.",
+      "canonStatus": "proposed",
+      "sources": [
+        "https://www.worldanvil.com/w/adyta-jeeperssheefers/a/adyta-settlement"
+      ],
+      "pin": {
+        "map": "forgotten-depths",
+        "x": 0.625,
+        "y": 0.498
+      }
+    },
+    {
+      "id": "forgotten-depths--candidate-the-interrupted-pipe",
+      "district": "forgotten-depths",
+      "name": "The Interrupted Pipe",
+      "type": "industrial",
+      "blurb": "Infrastructure without a clear origin.",
+      "canonStatus": "proposed",
+      "sources": [
+        "https://www.worldanvil.com/w/adyta-jeeperssheefers/a/adyta-settlement"
+      ],
+      "pin": {
+        "map": "forgotten-depths",
+        "x": 0.342,
+        "y": 0.656
+      }
+    },
+    {
+      "id": "forgotten-depths--candidate-uncertain-crossing",
+      "district": "forgotten-depths",
+      "name": "Uncertain Crossing",
+      "type": "landmark",
+      "blurb": "Dashes mark a possible passage.",
+      "canonStatus": "proposed",
+      "sources": [
+        "https://www.worldanvil.com/w/adyta-jeeperssheefers/a/adyta-settlement"
+      ],
+      "pin": {
+        "map": "forgotten-depths",
+        "x": 0.7,
+        "y": 0.646
+      }
+    },
+    {
+      "id": "forgotten-depths--candidate-collapse-front",
+      "district": "forgotten-depths",
+      "name": "Collapse Front",
+      "type": "landmark",
+      "blurb": "Route ends at fallen material.",
+      "canonStatus": "proposed",
+      "sources": [
+        "https://www.worldanvil.com/w/adyta-jeeperssheefers/a/adyta-settlement"
+      ],
+      "pin": {
+        "map": "forgotten-depths",
+        "x": 0.282,
+        "y": 0.812
+      }
+    },
+    {
+      "id": "forgotten-depths--candidate-unknown-below",
+      "district": "forgotten-depths",
+      "name": "Unknown Below",
+      "type": "landmark",
+      "blurb": "Leave the map unfinished.",
+      "canonStatus": "proposed",
+      "sources": [
+        "https://www.worldanvil.com/w/adyta-jeeperssheefers/a/adyta-settlement"
+      ],
+      "pin": {
+        "map": "forgotten-depths",
+        "x": 0.615,
+        "y": 0.842
+      }
+    },
+    {
+      "id": "forgotten-depths--candidate-supply-depot",
+      "district": "forgotten-depths",
+      "name": "Supply Depot",
+      "type": "shop",
+      "blurb": "The last stocked counter before the drop.",
+      "canonStatus": "proposed",
+      "sources": [
+        "https://www.worldanvil.com/w/adyta-jeeperssheefers/a/adyta-settlement"
+      ],
+      "pin": {
+        "map": "forgotten-depths",
+        "x": 0.127,
+        "y": 0.332
+      }
+    },
+    {
+      "id": "forgotten-depths--candidate-rations-meals",
+      "district": "forgotten-depths",
+      "name": "Rations & Meals",
+      "type": "food",
+      "blurb": "Hot food on Depths Walk.",
+      "canonStatus": "proposed",
+      "sources": [
+        "https://www.worldanvil.com/w/adyta-jeeperssheefers/a/adyta-settlement"
+      ],
+      "pin": {
+        "map": "forgotten-depths",
+        "x": 0.371,
+        "y": 0.435
+      }
+    },
+    {
+      "id": "forgotten-depths--candidate-archive-alley",
+      "district": "forgotten-depths",
+      "name": "Archive Alley",
+      "type": "street",
+      "blurb": "Named for records nobody can find.",
+      "canonStatus": "proposed",
+      "sources": [
+        "https://www.worldanvil.com/w/adyta-jeeperssheefers/a/adyta-settlement"
+      ],
+      "pin": {
+        "map": "forgotten-depths",
+        "x": 0.563,
+        "y": 0.428
+      }
+    },
+    {
+      "id": "the-sewers--broken-wing-forge",
+      "district": "the-sewers",
+      "name": "Broken Wing Forge",
+      "type": "shop",
+      "blurb": "Vipero's smithy near the Commons edge.",
+      "canonStatus": "established name; proposed placement",
+      "sources": [
+        "https://www.worldanvil.com/w/adyta-jeeperssheefers/a/adyta-settlement"
+      ],
+      "pin": {
+        "map": "sewers-town",
+        "x": 0.098,
+        "y": 0.514,
         "approx": true
       }
     }

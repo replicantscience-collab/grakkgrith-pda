@@ -50,6 +50,14 @@
         "creditor": "",
         "status": "draft",
         "note": "Edge Dwellers and the like: off-registry, no rent, and anything needing a formal address is Hard."
+      },
+      {
+        "id": "authority",
+        "name": "Housing Authority emergency accommodation",
+        "credits": 0,
+        "creditor": "",
+        "status": "draft",
+        "note": "Where you land if you lose your home: a real address, a waitlist, no rent for now."
       }
     ],
     "gear": [

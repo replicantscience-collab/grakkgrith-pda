@@ -65,6 +65,28 @@ npm run smoke
 
 **Renaming something players may have saved** (a subclass, origin, or life): add the old name to an `aliases` list on the entry so existing characters keep working. See `LHL Courier` for an example.
 
+## The living city
+
+Every day in Adyta something changes, and everyone in the group sees the same thing. Explore's **Today** button lists each district's mood; a district's panel leads with today's mood and a scrawled line of Local Wisdom; a couple of shops, food spots, venues and markets per district put out a new sign; and one Sticker is pasted up somewhere in the city. The hint names the district. Find the place, travel there, and peel it: found stickers are saved in the character file (`world.stickers`), so **Backup** carries the collection.
+
+There is no server. `apps/cityday.js` builds the day from the Adyta date alone, so every PDA builds the same day. Lines rotate so a district never repeats a mood or a wisdom line on back-to-back days. The words are in `data/cityday.json` (drafts until they go to Nib); stickers come from the sticker sheets in `art/pda-v1/imports/manifest.json`. `node tools/cityday-test.mjs` checks both.
+
+## Landlords, Local Wisdom and businesses
+
+- `data/landlords.json`: who owns every housing place, their type and temperament, and the rent tier (the ids in `week.json`). Explore shows the landlord and the rent on each housing place. The Housing Authority is the floor for anyone who loses their home.
+- `data/notes.json`: Local Wisdom written on the city, shown as "Written here" on a place or district. Each note has an `author` and a `date` (never shown to players) so anything can be traced and taken out; `signed` is the in-world signature. Today only Eko and Nib write notes; agent NPCs will use `agent:<id>` and players `player:<name>`.
+- `data/businesses.json`: player businesses and their rules (Books, Rep, Exposure, Commons protection, the loss ladder). A business shows on everyone's map once it's listed here.
+
+**Renting.** Go to a housing place in Explore and tap **Rent here**: that place becomes your home, and Mail & bills sends rent to its landlord from next week. Missed rent climbs the landlord's ladder, one letter per unpaid week and never faster than one every five days (so coming back after a long break brings one letter, not an eviction): a reminder, a lease review, Bastion (flagged as a scene hook for the next session, with Public Advocacy's Eviction Interference job as the way to fight it), and finally losing the unit, which moves you to Housing Authority emergency accommodation with your items and debts. Family-run landlords and collectives stop at the review. Paying your landlord back resets the ladder. Picking a different housing tier in Mail means moving out.
+
+All three are drafts until they go to Nib. `node tools/check-rules.mjs` checks every place, tier, author and date in them, and fails if a housing place has no landlord.
+
+## Businesses
+
+If your character is listed as an owner in `data/businesses.json`, **Mail & bills** shows **Your business**: Books (the business's own money, separate from yours), Rep, Exposure, and whether the Commons is protecting it. Each Adyta week brings sales (fewer when Rep is low) and upkeep. Some weeks bring a **back-room offer**: saying no costs nothing; saying yes pays the books, adds Exposure to the building and ends Commons protection until you **make it even** (Exposure back to zero, plus a favor from your own pocket). Exposure fades by one each quiet week.
+
+Protection belongs to the building. It breaks if you take an offer, if the owner's Heat reaches 4, and never applies to corporate-funded places. Trouble climbs one step at a time, never faster than one step every five days: trouble, a notice, shuttered (the till freezes until you clear the books and reopen), and lost after four weeks shuttered or a Heat 6 crisis aimed at the building. **Close for the season** pauses everything while you're away. Logic: `apps/business.js`, tested by `node tools/business-test.mjs`. All numbers are drafts.
+
 ## The Explore map
 
 Explore puts your character somewhere in Adyta. Tap a place for its details, then travel there: on foot, or by tram while the trams run (the last one leaves at 12:17 AM). Travel takes Adyta time, and your character is in transit until they arrive, even if you close the app.
