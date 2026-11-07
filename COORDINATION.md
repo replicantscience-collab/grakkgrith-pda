@@ -35,9 +35,17 @@ apply #8 again. Night Out (#14) and Rentals (#24) remain separate feature work.
 
 ## Verification and remaining work
 
-Verification is in progress on the combined branch. Run `npm test` before
-promoting it. Keep the browser tests for cross-screen Undo and the original
-player-action checks alongside the city, map, character and offline tests.
+Verified locally on 2026-11-07: `npm test` passed the rules/catalog validators,
+273 deterministic checks (27 engine, 36 week, 49 make, 21 gigs, 19 radio,
+17 jobs, 76 cityday, 28 business), and 276 browser checks. Browser coverage
+includes desktop/phone, cross-screen Undo, the unified toolbar, character
+creation, maps/city systems, and offline play. Phone and desktop Now-panel
+screenshots were visually checked under `output/playwright/` (ignored artifacts).
+
+Keep the browser tests for cross-screen Undo and the original player-action
+checks alongside the city, map, character and offline tests. Re-run `npm test`
+after integrating any later feature branch. GitHub CI status is reported on the
+review PR; this note records local results, not a deployment or CI claim.
 
 The older [player-action handoff](docs/PLAYER_ACTIONS_HANDOFF.md) records the
 initial slice and its historical checks. This page supersedes its branch-status
