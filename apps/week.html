@@ -118,8 +118,9 @@ function render() {
   $('debts').innerHTML = w.debts.length ? w.debts.map(d => `<div class="debt"><b>${d.amount} cr</b> to ${esc(d.creditor)}<div class="note">${esc(d.why || '')}${d.standingHit ? ` · Standing -1 in ${esc(d.standingHit)}` : ''}</div><div class="actions"><button class="primary" data-debt="${d.id}">Pay it off</button>${d.amount > 50 ? `<button class="ghost" data-debt50="${d.id}">Pay 50</button>` : ''}</div></div>`).join('')
     + `<p class="note">${esc(W.week.debt)}</p>` : `<p class="muted">You don't owe anyone. Yet.</p>`;
   const opt = (list, cur) => list.map(x => `<option value="${esc(x.id)}" ${x.id === cur ? 'selected' : ''}>${esc(x.name)} · ${x.credits} cr</option>`).join('');
-  $('costs').innerHTML = `<div class="homeline" style="display:grid;gap:2px;margin:0 0 12px"><b style="font-size:12px;letter-spacing:.06em;text-transform:uppercase;opacity:.75">Home</b><span>${w.home ? `${esc(w.home.placeName)}, rent to ${esc(w.home.landlordName)}` : w.lastHome ? `Lost ${esc(w.lastHome.placeName)}` : 'Nowhere on the map yet'}</span></div>
-    ${w.home ? '' : '<p class="note">Rent a place in Explore: go there, open it, and tap Rent here.</p>'}
+  $('costs').innerHTML = `<div class="homeline" style="display:grid;gap:2px;margin:0 0 12px"><b style="font-size:12px;letter-spacing:.06em;text-transform:uppercase;opacity:.75">Home</b><span>${w.home ? `${w.home.unitName ? esc(w.home.unitName) + ', ' : ''}${esc(w.home.placeName)}: ${w.home.rent != null ? w.home.rent + ' cr a week' : 'rent'} to ${esc(w.home.landlordName)}` : w.housing === 'authority' ? 'Waitlist House, Housing Authority emergency accommodation' : w.lastHome ? `Lost ${esc(w.lastHome.placeName)}` : 'Nowhere on the map yet'}</span></div>
+    ${w.home && w.home.workOff ? `<button class="ghost" type="button" id="shiftBtn" aria-pressed="${w.home.shift ? 'true' : 'false'}" style="margin:0 0 12px">${w.home.shift ? 'Stop' : 'Take'} ${esc(w.home.workOff.for)} (${w.home.workOff.credits} off the rent)</button>` : ''}
+    ${w.home ? '' : '<p class="note">Rent a place in Explore: go there, open it, and pick a room.</p>'}
     <label for="cHousing">Housing</label><select id="cHousing">${opt(W.week.housing, w.housing)}</select>
     <label for="cGear">Equipment maintenance</label><select id="cGear">${opt(W.week.gear, w.gear)}</select>
     <label for="cChrome">Cybernetic upkeep</label><select id="cChrome">${opt(W.week.chrome, w.chrome)}</select>
@@ -144,6 +145,7 @@ document.addEventListener('click', e => {
   else if (b.dataset.bizreopen) { const r = act(s => GRAKK_BIZ.reopen(s, BIZ, BIZ.businesses.find(x => x.id === b.dataset.bizreopen), t)); r && toast(r.msg); }
   else if (b.dataset.bizin || b.dataset.bizout) { const id = b.dataset.bizin || b.dataset.bizout, r = act(s => { const c = s.business?.[id]; return GRAKK_BIZ.moveMoney(s, BIZ, BIZ.businesses.find(x => x.id === id), t, b.dataset.bizin ? 50 : -Math.min(50, c ? c.books : 0)); }); r && toast(r.msg); }
   else if (b.dataset.bizseason || b.dataset.bizopen) { const id = b.dataset.bizseason || b.dataset.bizopen, r = act(s => GRAKK_BIZ.setSeason(s, BIZ, BIZ.businesses.find(x => x.id === id), t, !!b.dataset.bizseason)); r && toast(r.msg); }
+  else if (b.id === 'shiftBtn') { const r = act(s => WK.setShift(s, !s.week.home.shift, t)); r && toast(r.msg); }
   else if (b.id === 'sessionBtn') { const r = act(s => WK.sessionStart(s, t)); r && toast(r.stress ? 'Debt pressure: Stress +1.' : 'Session started. No debt pressure.'); }
 });
 document.addEventListener('change', e => {

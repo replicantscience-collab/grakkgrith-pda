@@ -7965,6 +7965,97 @@
         "y": 0.514,
         "approx": true
       }
+    },
+    {
+      "id": "the-sewers--the-dry-stacks",
+      "district": "the-sewers",
+      "name": "The Dry Stacks",
+      "type": "housing",
+      "blurb": "Rooms cut into the old overflow chambers, above the waterline.",
+      "pin": {
+        "map": "sewers-town",
+        "x": 0.4,
+        "y": 0.115
+      },
+      "status": "draft"
+    },
+    {
+      "id": "three-wires--the-callback",
+      "district": "three-wires",
+      "name": "The Callback",
+      "type": "housing",
+      "blurb": "Rooms for people waiting on a job. Leave your name at the desk.",
+      "pin": {
+        "map": "three-wires-tangle",
+        "x": 0.07,
+        "y": 0.69
+      },
+      "status": "draft"
+    },
+    {
+      "id": "greasewick-row--coil-lane-walk-ups",
+      "district": "greasewick-row",
+      "name": "Coil Lane Walk-ups",
+      "type": "housing",
+      "blurb": "Homes above the shops on Coil Lane. Work starts downstairs at six.",
+      "pin": {
+        "map": "greasewick-row",
+        "x": 0.93,
+        "y": 0.28
+      },
+      "status": "draft"
+    },
+    {
+      "id": "central-core--clocktower-residences",
+      "district": "central-core",
+      "name": "Clocktower Residences",
+      "type": "housing",
+      "blurb": "Flats above the square, behind the clock face. Concierge on duty.",
+      "pin": {
+        "map": "central-core",
+        "x": 0.56,
+        "y": 0.045
+      },
+      "status": "draft"
+    },
+    {
+      "id": "the-ashrun--brown-steps-moorings",
+      "district": "the-ashrun",
+      "name": "Brown Steps Moorings",
+      "type": "housing",
+      "blurb": "Houseboats and barges tied up below the Brown Steps.",
+      "pin": {
+        "map": "the-ashrun",
+        "x": 0.47,
+        "y": 0.5
+      },
+      "status": "draft"
+    },
+    {
+      "id": "governance-district--waitlist-house",
+      "district": "governance-district",
+      "name": "Waitlist House",
+      "type": "housing",
+      "blurb": "Housing Authority emergency accommodation. You don't rent here; you're placed.",
+      "pin": {
+        "map": "governance-district",
+        "x": 0.88,
+        "y": 0.73
+      },
+      "status": "draft"
+    },
+    {
+      "id": "crownline-industrials--shift-dorms",
+      "district": "crownline-industrials",
+      "name": "Shift Dorms",
+      "type": "housing",
+      "blurb": "Contractor dorms by the Overtime Canteen. Lights out on the shift whistle.",
+      "pin": {
+        "map": "crownline-industrials",
+        "x": 0.07,
+        "y": 0.57
+      },
+      "status": "draft"
     }
   ],
   "routes": [

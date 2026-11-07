@@ -60,7 +60,15 @@
         "low-halo--saint-static-arms"
       ],
       "tier": "commons",
-      "hook": "The elevators are still under assessment. A tenant who fixes one gets a thank-you letter and a rent hike for the improved unit."
+      "hook": "The elevators are still under assessment. A tenant who fixes one gets a thank-you letter and a rent hike for the improved unit.",
+      "terms": {
+        "creep": {
+          "credits": 10,
+          "everyWeeks": 8,
+          "title": "Rent adjustment",
+          "text": "Following a review of comparable units, the rent at {place} is now {rent} credits a week. Halvard Mercy Holdings"
+        }
+      }
     },
     {
       "id": "ma-dresk",
@@ -72,16 +80,25 @@
         "low-halo--the-hive"
       ],
       "tier": "commons",
-      "graceWeeks": 1,
       "hook": "Gives a week's grace on late rent, then calls in a favor: fix her walk-in, run a parcel, scare off a debt collector.",
       "letters": {
         "missed": {
-          "title": "Rent, love",
-          "body": "Rent's late. You've got a week on me, because I like you. After that I'll want a favor: my walk-in's making the noise again. Ma Dresk"
+          "title": "That's Debt now, love",
+          "body": "You had your week and you didn't do me the favor. I don't call Bastion. I do tell the whole Fryer. Ma Dresk"
         },
         "review": {
-          "title": "Favor time",
-          "body": "Two weeks. Fix my walk-in, run a parcel, or scare off the collector who keeps coming round, and I'll forget the late fee. The rent still needs paying."
+          "title": "Come and see me",
+          "body": "Two weeks behind. Pay what you can and come down to the Fryer. We'll call it even when you do me a proper favor."
+        }
+      },
+      "terms": {
+        "grace": {
+          "weeks": 1,
+          "text": "Ma Dresk gives you one week's grace on this rent. After that, she calls in a favor."
+        },
+        "favor": {
+          "weeks": 1,
+          "text": "Ma Dresk is calling in a favor: fix her walk-in, run a parcel, or scare off a debt collector. Do it in Downtime before this is due, or pay. Ignore it and the rent becomes Debt."
         }
       }
     },
@@ -95,12 +112,21 @@
         "market-ring--north-market-neighborhood"
       ],
       "tier": "mixed",
-      "graceWeeks": 2,
       "hook": "Rent includes a shift at the family stall during festival week. Skipping it is allowed, and remembered.",
       "letters": {
         "missed": {
           "title": "From the stall",
           "body": "Rent was due Monday. Grandmother says don't worry, then worries out loud for an hour. Come by the stall. The Oduya-Venns"
+        }
+      },
+      "terms": {
+        "grace": {
+          "weeks": 2,
+          "text": "The Oduya-Venns give you two weeks, because you're family. Mostly."
+        },
+        "favor": {
+          "weeks": 1,
+          "text": "Grandmother Oduya-Venn would like a hand instead: mind the stall, chase a supplier, or settle a lane argument. Do it in Downtime, or pay. Ignore it and the rent becomes Debt."
         }
       }
     },
@@ -127,16 +153,21 @@
         "market-ring--south-market-neighborhood"
       ],
       "tier": "mixed",
-      "graceWeeks": 2,
-      "workOff": {
-        "credits": 20,
-        "for": "a weekly repair shift",
-        "classes": [
-          "Wrench",
-          "Runner"
-        ]
-      },
-      "hook": "Wrenches and Runners can work off part of the rent. House votes post to the tenants' mail."
+      "hook": "Wrenches and Runners can work off part of the rent. House votes post to the tenants' mail.",
+      "terms": {
+        "grace": {
+          "weeks": 2,
+          "text": "The Tenants' Table gives you two weeks. Come to Thursday's meeting."
+        },
+        "workOff": {
+          "credits": 20,
+          "for": "a weekly repair shift",
+          "classes": [
+            "Wrench",
+            "Runner"
+          ]
+        }
+      }
     },
     {
       "id": "widow-sallow",
@@ -175,7 +206,15 @@
         "name": "Meridian Logistics",
         "tier": "commons"
       },
-      "hook": "Housing tied to the job: crew pay Commons rent, and if the contract ends the lease reprices next Monday."
+      "hook": "Housing tied to the job: crew pay Commons rent, and if the contract ends the lease reprices next Monday.",
+      "terms": {
+        "creep": {
+          "credits": 5,
+          "everyWeeks": 4,
+          "title": "Your rent is changing",
+          "text": "Hi there! To keep improving your experience at {place}, your rent is now {rent} credits a week. Harbor Row Lets"
+        }
+      }
     },
     {
       "id": "the-tangle-roofs",
@@ -243,7 +282,15 @@
       ],
       "tier": "mixed",
       "corporateFunded": true,
-      "hook": "A buyout letter every month. Holdouts keep the old rent, until the next \"improvement\" puts it up."
+      "hook": "A buyout letter every month. Holdouts keep the old rent, until the next \"improvement\" puts it up.",
+      "terms": {
+        "creep": {
+          "credits": 10,
+          "everyWeeks": 4,
+          "title": "Improvement surcharge",
+          "text": "Following recent improvements at {place}, your rent is now {rent} credits a week. Our buyout offer still stands. Glassline Redevelopment"
+        }
+      }
     },
     {
       "id": "three-spires-keepers",
@@ -255,12 +302,17 @@
         "three-spires-monastery--candidate-guest-lantern"
       ],
       "tier": "commons",
-      "graceWeeks": 2,
-      "workOff": {
-        "credits": 20,
-        "for": "a kitchen or laundry shift"
-      },
-      "hook": "Beds for those admitted. Nobody explains the admission, and nobody admitted is asked to leave without a reason they're given in writing."
+      "hook": "Beds for those admitted. Nobody explains the admission, and nobody admitted is asked to leave without a reason they're given in writing.",
+      "terms": {
+        "grace": {
+          "weeks": 2,
+          "text": "The keepers give you two weeks, and a written reason if they ever ask you to leave."
+        },
+        "workOff": {
+          "credits": 20,
+          "for": "a kitchen or laundry shift"
+        }
+      }
     },
     {
       "id": "three-spires-keeper-rooms",
@@ -301,7 +353,15 @@
         "name": "Yard",
         "tier": "commons"
       },
-      "hook": "Bunks rented by the shift. Double-booked more often than not; whoever gets there first keeps the blanket."
+      "hook": "Bunks rented by the shift. Double-booked more often than not; whoever gets there first keeps the blanket.",
+      "terms": {
+        "creep": {
+          "credits": 5,
+          "everyWeeks": 4,
+          "title": "New rate",
+          "text": "Bunk rate at {place} is now {rent} a week. Take it up with the ledger. The Yard Bunk Office"
+        }
+      }
     },
     {
       "id": "old-city-first-come",
@@ -340,16 +400,21 @@
         "southport-slums--candidate-borrowed-roof-court"
       ],
       "tier": "commons",
-      "graceWeeks": 2,
-      "workOff": {
-        "credits": 20,
-        "for": "a weekly roof repair",
-        "classes": [
-          "Wrench",
-          "Runner"
-        ]
-      },
-      "hook": "Miss rent and you're asked onto the roof crew, not out the door."
+      "hook": "Miss rent and you're asked onto the roof crew, not out the door.",
+      "terms": {
+        "grace": {
+          "weeks": 2,
+          "text": "The court gives you two weeks, and a spot on the roof crew."
+        },
+        "workOff": {
+          "credits": 20,
+          "for": "a weekly roof repair",
+          "classes": [
+            "Wrench",
+            "Runner"
+          ]
+        }
+      }
     },
     {
       "id": "mended-stair",
@@ -361,8 +426,17 @@
         "southport-slums--candidate-mended-stair"
       ],
       "tier": "commons",
-      "graceWeeks": 2,
-      "hook": "Residents keep the landing swept and the rail mended. Do your part and she forgets the odd late week."
+      "hook": "Residents keep the landing swept and the rail mended. Do your part and she forgets the odd late week.",
+      "terms": {
+        "grace": {
+          "weeks": 2,
+          "text": "Auntie Pell gives you two weeks. Keep the landing swept in the meantime."
+        },
+        "favor": {
+          "weeks": 1,
+          "text": "Auntie Pell wants the stair seen to: mend the rail, sit with a sick tenant, or have a word with the shop that keeps dumping on her landing. Do it in Downtime, or pay. Ignore it and the rent becomes Debt."
+        }
+      }
     },
     {
       "id": "patchlight-lets",
@@ -374,7 +448,15 @@
         "southport-slums--candidate-patchlight-rooms"
       ],
       "tier": "commons",
-      "hook": "Rent goes up whenever the shop below has a bad week. Repairs are \"on the list\"."
+      "hook": "Rent goes up whenever the shop below has a bad week. Repairs are \"on the list\".",
+      "terms": {
+        "creep": {
+          "credits": 5,
+          "everyWeeks": 3,
+          "title": "Bad week downstairs",
+          "text": "The shop had a bad week. Rent at {place} is {rent} now. Patchlight Lets"
+        }
+      }
     },
     {
       "id": "patchkin-row-crews",
@@ -386,16 +468,21 @@
         "scrapfields--candidate-patchkin-row"
       ],
       "tier": "commons",
-      "graceWeeks": 2,
-      "workOff": {
-        "credits": 20,
-        "for": "a sorting shift in the yards",
-        "classes": [
-          "Wrench",
-          "Runner"
-        ]
-      },
-      "hook": "Crew rooms first, everyone else if there's space. A good find pays rent better than credits."
+      "hook": "Crew rooms first, everyone else if there's space. A good find pays rent better than credits.",
+      "terms": {
+        "grace": {
+          "weeks": 2,
+          "text": "The crews give you two weeks. Bring something good back from the fields."
+        },
+        "workOff": {
+          "credits": 20,
+          "for": "a sorting shift in the yards",
+          "classes": [
+            "Wrench",
+            "Runner"
+          ]
+        }
+      }
     },
     {
       "id": "dustwalker-camp",
@@ -420,8 +507,17 @@
         "borderlands--candidate-roadside-rest"
       ],
       "tier": "commons",
-      "graceWeeks": 1,
-      "hook": "Beds when there is room. Regulars get the room; everyone else gets the floor by the stove."
+      "hook": "Beds when there is room. Regulars get the room; everyone else gets the floor by the stove.",
+      "terms": {
+        "grace": {
+          "weeks": 1,
+          "text": "The Rest gives you a week. The stove's still yours."
+        },
+        "favor": {
+          "weeks": 1,
+          "text": "The family could use a hand: ride out to a stuck wagon, mind the bar on a busy night, or see off a troublemaker. Do it in Downtime, or pay. Ignore it and the rent becomes Debt."
+        }
+      }
     },
     {
       "id": "riverbend-worker-housing",
@@ -450,16 +546,181 @@
         "crownless-row--candidate-patch-roof-row"
       ],
       "tier": "commons",
-      "graceWeeks": 2,
-      "workOff": {
-        "credits": 20,
-        "for": "a repair shift on the row",
-        "classes": [
-          "Wrench",
-          "Runner"
-        ]
+      "hook": "No crown, no landlord's office. Rent goes into the shared repair tin, and the tin is counted in public.",
+      "terms": {
+        "grace": {
+          "weeks": 2,
+          "text": "The row gives you two weeks. The tin gets counted on Thursday either way."
+        },
+        "workOff": {
+          "credits": 20,
+          "for": "a repair shift on the row",
+          "classes": [
+            "Wrench",
+            "Runner"
+          ]
+        }
+      }
+    },
+    {
+      "id": "dry-stacks-hearth",
+      "name": "The Dry Stacks hearth",
+      "who": "Sewers Community households who keep the chambers dry and decide who gets one.",
+      "type": "collective",
+      "temperament": "decent",
+      "places": [
+        "the-sewers--the-dry-stacks"
+      ],
+      "tier": "commons",
+      "hook": "Keep the pumps running and you keep your chamber. Miss rent and you're asked to take a pump watch, not to leave.",
+      "terms": {
+        "grace": {
+          "weeks": 2,
+          "text": "The hearth gives you two weeks. Take a pump watch while you sort it out."
+        },
+        "workOff": {
+          "credits": 15,
+          "for": "a pump-watch shift"
+        }
+      }
+    },
+    {
+      "id": "juniper-vane",
+      "name": "Juniper Vane",
+      "who": "A fixer who rents rooms to the people she hires, and takes a cut of the jobs she finds them.",
+      "type": "slumlord",
+      "temperament": "squeezing",
+      "places": [
+        "three-wires--the-callback"
+      ],
+      "tier": "commons",
+      "hook": "Take one of her jobs a week and the rent comes down. Turn too many down and the rent remembers.",
+      "terms": {
+        "workOff": {
+          "credits": 10,
+          "for": "one of Vane's jobs a week"
+        },
+        "creep": {
+          "credits": 5,
+          "everyWeeks": 6,
+          "title": "About your room",
+          "text": "Room at {place} is {rent} now. You know how to bring it down. JV"
+        }
+      }
+    },
+    {
+      "id": "granny-tikka-rattle",
+      "name": "Granny Tikka Rattle",
+      "who": "An old goblin who owns Third Rattle Motors and the walk-ups above it.",
+      "type": "family",
+      "temperament": "decent",
+      "places": [
+        "greasewick-row--coil-lane-walk-ups"
+      ],
+      "tier": "commons",
+      "hook": "Late rent gets a week and a look. After that she wants a hand in the shop.",
+      "terms": {
+        "grace": {
+          "weeks": 1,
+          "text": "Granny Rattle gives you a week and a look."
+        },
+        "favor": {
+          "weeks": 1,
+          "text": "Granny Rattle wants a hand in the shop: strip an engine, chase a customer who won't pay, or find a part nobody stocks. Do it in Downtime, or pay. Ignore it and the rent becomes Debt."
+        },
+        "workOff": {
+          "credits": 20,
+          "for": "a shift at Third Rattle Motors",
+          "classes": [
+            "Wrench"
+          ]
+        }
       },
-      "hook": "No crown, no landlord's office. Rent goes into the shared repair tin, and the tin is counted in public."
+      "letters": {
+        "missed": {
+          "title": "The shop noticed",
+          "body": "Rent's gone to Debt. Come down to the shop and we'll talk. Bring your hands. Granny"
+        }
+      }
+    },
+    {
+      "id": "halcyon-tenancy",
+      "name": "Halcyon Tenancy Services",
+      "who": "A Crownline-certified manager with a concierge desk and very good stationery.",
+      "type": "certified",
+      "temperament": "squeezing",
+      "places": [
+        "central-core--clocktower-residences"
+      ],
+      "tier": "corporate",
+      "corporateFunded": true,
+      "hook": "A \"market adjustment\" every few weeks. The concierge can't discuss it, but is happy to log your complaint.",
+      "terms": {
+        "creep": {
+          "credits": 10,
+          "everyWeeks": 6,
+          "title": "Market adjustment",
+          "text": "In line with market conditions, your rent at {place} is now {rent} credits a week. The concierge is happy to log any feedback. Halcyon Tenancy Services"
+        }
+      }
+    },
+    {
+      "id": "wennick-boats",
+      "name": "The Wennick boats",
+      "who": "Captain Orra Wennick, an orc, and the family that has moored here for four generations.",
+      "type": "family",
+      "temperament": "decent",
+      "places": [
+        "the-ashrun--brown-steps-moorings"
+      ],
+      "tier": "commons",
+      "hook": "Late rent gets you a week's grace. After that, the captain wants a hand on the water.",
+      "terms": {
+        "grace": {
+          "weeks": 1,
+          "text": "Captain Wennick gives you a week. The river's patient. She's mostly patient."
+        },
+        "favor": {
+          "weeks": 1,
+          "text": "The captain wants a hand on the water: crew a night run, patch a hull, or find out who's been cutting mooring lines. Do it in Downtime, or pay. Ignore it and the rent becomes Debt."
+        }
+      },
+      "letters": {
+        "missed": {
+          "title": "Word from the captain",
+          "body": "That's Debt now. Come aboard and talk to me before the next berth move. O. Wennick"
+        }
+      }
+    },
+    {
+      "id": "housing-authority-waitlist",
+      "name": "Adyta Housing Authority",
+      "who": "Emergency accommodation for anyone who has lost their home.",
+      "type": "housing-authority",
+      "temperament": "indifferent",
+      "places": [
+        "governance-district--waitlist-house"
+      ],
+      "tier": "authority",
+      "floorOnly": true,
+      "hook": "The floor nobody falls through. Nobody rents a room here. You're placed in one."
+    },
+    {
+      "id": "tallow-grade-residential",
+      "name": "Tallow & Grade Residential",
+      "who": "Runs the contractor dorms under a Crownline service agreement. Crownline itself never owns or evicts.",
+      "type": "certified",
+      "temperament": "indifferent",
+      "places": [
+        "crownline-industrials--shift-dorms"
+      ],
+      "tier": "mixed",
+      "corporateFunded": true,
+      "employer": {
+        "name": "a Crownline contractor",
+        "tier": "commons"
+      },
+      "hook": "The rent is tied to the contract. The contract is tied to the whistle."
     }
   ],
   "floor": {
@@ -471,7 +732,8 @@
     "letter": {
       "title": "Emergency accommodation",
       "body": "You've been placed in emergency accommodation while your case is reviewed. You have an address again and no rent for now. Your debts are still yours. Waitlist position: assigned."
-    }
+    },
+    "place": "governance-district--waitlist-house"
   },
   "_ladder": "Missed rent climbs a ladder of letters, one step per unpaid week: 1 missed, 2 review, 3 bastion (a scene hook for the next session, and Public Advocacy's eviction-defense job), 4 lost (the unit goes and the character moves to Housing Authority emergency accommodation; items and debts come along). A type's ladder is how far it climbs: family-run and collectives stop at 2. Paying off the debt to your landlord resets it. {landlord} and {place} fill in.",
   "letters": {
@@ -568,5 +830,6 @@
       }
     },
     "off-registry": {}
-  }
+  },
+  "_terms": "Each landlord's own terms (none means none): grace = weeks of grace on a late bill, given only by landlords who would; favor = after the grace runs out, a favor done in Downtime settles the bill (the scene lives in data/downtime.json favors, keyed by the landlord's name); workOff = a standing weekly shift that takes credits off the rent (honor system: the PDA trusts you to turn up); creep = the rent rises by credits every everyWeeks weeks you live there, never past the tier's band in data/rentals.json. {place} and {rent} fill in."
 }

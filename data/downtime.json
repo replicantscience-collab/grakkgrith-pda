@@ -475,6 +475,436 @@
           }
         }
       }
+    },
+    "The Oduya-Venn family": {
+      "name": "The Oduya-Venns' favor",
+      "place": "market-ring--north-market-neighborhood",
+      "rule": "Settles your late rent in the North Market, whichever way the roll goes. The roll decides how the family talks about you afterwards.",
+      "situations": [
+        "Grandmother Oduya-Venn has your name on her list, and today it's next to a job.",
+        "The stall's short-handed and your rent's late. Tobin is already pretending he didn't see you."
+      ],
+      "options": {
+        "stall": {
+          "kicker": "Mind the stall",
+          "label": "Run the family stall through a market rush.",
+          "check": {
+            "attr": "savvy",
+            "skill": "negotiate",
+            "diff": 2
+          },
+          "win": {
+            "text": "Best takings of the month. Grandmother writes something next to your name.",
+            "effects": {
+              "standing": 1
+            }
+          },
+          "partial": {
+            "text": "Nothing stolen, nothing special.",
+            "effects": {}
+          },
+          "lose": {
+            "text": "Short-changed twice. Grandmother counts it in front of you.",
+            "effects": {
+              "stress": 1
+            }
+          }
+        },
+        "supplier": {
+          "kicker": "Chase a supplier",
+          "label": "A supplier promised spice by Tuesday. It's Friday.",
+          "check": {
+            "attr": "savvy",
+            "skill": "persuade",
+            "diff": 2
+          },
+          "win": {
+            "text": "The spice arrives with an apology and a discount.",
+            "effects": {
+              "standing": 1
+            }
+          },
+          "partial": {
+            "text": "Half the order, no apology.",
+            "effects": {}
+          },
+          "lose": {
+            "text": "The supplier now dislikes you personally.",
+            "effects": {
+              "stress": 1
+            }
+          }
+        },
+        "lane": {
+          "kicker": "Settle a lane argument",
+          "label": "Two neighbors, one shared wall, a lot of shouting.",
+          "check": {
+            "attr": "wit",
+            "skill": "network",
+            "diff": 2
+          },
+          "win": {
+            "text": "Both of them thank you, which hasn't happened before.",
+            "effects": {
+              "standing": 1
+            }
+          },
+          "partial": {
+            "text": "The shouting stops. The wall is still disputed.",
+            "effects": {}
+          },
+          "lose": {
+            "text": "Now they're both shouting at you.",
+            "effects": {
+              "stress": 1
+            }
+          }
+        }
+      }
+    },
+    "Auntie Pell": {
+      "name": "Auntie Pell's favor",
+      "place": "southport-slums--candidate-mended-stair",
+      "rule": "Settles your late rent at the Mended Stair, whichever way the roll goes. The roll decides what Auntie Pell says about you on the landing.",
+      "situations": [
+        "Auntie Pell is waiting at the top of the stair. Your rent is late. She has a list.",
+        "The rail's loose again, and Auntie Pell has decided it's your turn."
+      ],
+      "options": {
+        "rail": {
+          "kicker": "Mend the rail",
+          "label": "The landing rail is one bad night from coming off the wall.",
+          "check": {
+            "attr": "wit",
+            "skill": "repair",
+            "diff": 2
+          },
+          "win": {
+            "text": "Solid as the day it went up. Auntie Pell pats it, then you.",
+            "effects": {
+              "standing": 1
+            }
+          },
+          "partial": {
+            "text": "It holds. It creaks.",
+            "effects": {}
+          },
+          "lose": {
+            "text": "It holds, after two bloody knuckles and a lecture.",
+            "effects": {
+              "stress": 1
+            }
+          }
+        },
+        "sit": {
+          "kicker": "Sit with a sick tenant",
+          "label": "Old Moraine on the second floor shouldn't be alone tonight.",
+          "check": {
+            "attr": "wit",
+            "skill": "medic",
+            "diff": 2
+          },
+          "win": {
+            "text": "Moraine sleeps easy, and so does the stair.",
+            "effects": {
+              "standing": 1
+            }
+          },
+          "partial": {
+            "text": "A long night. Everyone's still here in the morning.",
+            "effects": {}
+          },
+          "lose": {
+            "text": "A long, bad night. Moraine pulls through. You barely sleep.",
+            "effects": {
+              "stress": 2
+            }
+          }
+        },
+        "shop": {
+          "kicker": "Have a word with the shop",
+          "label": "The shop next door keeps dumping its crates on her landing.",
+          "check": {
+            "attr": "muscle",
+            "skill": "intimidate",
+            "diff": 2
+          },
+          "win": {
+            "text": "The crates stop. The shopkeeper waves now, nervously.",
+            "effects": {
+              "standing": 1
+            }
+          },
+          "partial": {
+            "text": "The crates move to the next landing over.",
+            "effects": {}
+          },
+          "lose": {
+            "text": "The shopkeeper calls the Wardens on you.",
+            "effects": {
+              "heat": 1
+            }
+          }
+        }
+      }
+    },
+    "The Roadside Rest": {
+      "name": "The Roadside Rest's favor",
+      "place": "borderlands--candidate-roadside-rest",
+      "rule": "Settles your late rent at the Roadside Rest, whichever way the roll goes. The roll decides whether you get a room next time.",
+      "situations": [
+        "A wagon's stuck out on the east road, and the family is looking at you.",
+        "It's a busy night at the Rest, your rent is late, and somebody has to mind the bar."
+      ],
+      "options": {
+        "wagon": {
+          "kicker": "Ride out to a stuck wagon",
+          "label": "A supply wagon is axle-deep in mud, an hour out.",
+          "check": {
+            "attr": "muscle",
+            "skill": "haul",
+            "diff": 2
+          },
+          "win": {
+            "text": "The wagon is back by dark with everyone on it.",
+            "effects": {
+              "standing": 1
+            }
+          },
+          "partial": {
+            "text": "The wagon's back by morning.",
+            "effects": {}
+          },
+          "lose": {
+            "text": "The wagon comes back. You come back on foot.",
+            "effects": {
+              "stress": 1
+            }
+          }
+        },
+        "bar": {
+          "kicker": "Mind the bar",
+          "label": "Every bed is full, the stove's roaring and the bar is three deep.",
+          "check": {
+            "attr": "savvy",
+            "skill": "perform",
+            "diff": 2
+          },
+          "win": {
+            "text": "A good night. Someone buys you a drink for a change.",
+            "effects": {
+              "standing": 1
+            }
+          },
+          "partial": {
+            "text": "Nobody fights. That's a win out here.",
+            "effects": {}
+          },
+          "lose": {
+            "text": "Somebody fights. You lose a tooth's worth of pride.",
+            "effects": {
+              "stress": 1
+            }
+          }
+        },
+        "trouble": {
+          "kicker": "See off a troublemaker",
+          "label": "A drifter has been helping himself to the larder.",
+          "check": {
+            "attr": "muscle",
+            "skill": "intimidate",
+            "diff": 2
+          },
+          "win": {
+            "text": "He leaves, and he takes the hint to the next stop too.",
+            "effects": {
+              "standing": 1
+            }
+          },
+          "partial": {
+            "text": "He leaves. He might come back.",
+            "effects": {}
+          },
+          "lose": {
+            "text": "He leaves, and takes your boots.",
+            "effects": {
+              "stress": 1
+            }
+          }
+        }
+      }
+    },
+    "Granny Tikka Rattle": {
+      "name": "Granny Rattle's favor",
+      "place": "greasewick-row--coil-lane-walk-ups",
+      "rule": "Settles your late rent at the Coil Lane walk-ups, whichever way the roll goes. The roll decides whether Granny lets you near the good tools.",
+      "situations": [
+        "Granny Rattle is standing in the shop door with a wrench in one hand and your rent in the other.",
+        "Third Rattle Motors is behind on jobs, you're behind on rent, and Granny has noticed both."
+      ],
+      "options": {
+        "engine": {
+          "kicker": "Strip an engine",
+          "label": "A cargo hauler's engine has to come apart by morning.",
+          "check": {
+            "attr": "wit",
+            "skill": "repair",
+            "diff": 2
+          },
+          "win": {
+            "text": "Clean, labelled and done by dawn. Granny says nothing, which is high praise.",
+            "effects": {
+              "standing": 1
+            }
+          },
+          "partial": {
+            "text": "Done. One bolt left over.",
+            "effects": {}
+          },
+          "lose": {
+            "text": "Done, eventually, with a burn to show for it.",
+            "effects": {
+              "stress": 1
+            }
+          }
+        },
+        "customer": {
+          "kicker": "Chase a customer",
+          "label": "A courier took her bike back without paying for the rebuild.",
+          "check": {
+            "attr": "reflex",
+            "skill": "streetwise",
+            "diff": 2
+          },
+          "win": {
+            "text": "Paid in full, with an apology.",
+            "effects": {
+              "standing": 1
+            }
+          },
+          "partial": {
+            "text": "Half paid, and a promise.",
+            "effects": {}
+          },
+          "lose": {
+            "text": "Not paid, and now the courier's crew knows your face.",
+            "effects": {
+              "heat": 1
+            }
+          }
+        },
+        "part": {
+          "kicker": "Find a part nobody stocks",
+          "label": "A coil for a model that hasn't been made in thirty years.",
+          "check": {
+            "attr": "savvy",
+            "skill": "salvage",
+            "diff": 2
+          },
+          "win": {
+            "text": "Found it in the Scrapfields, and a spare.",
+            "effects": {
+              "standing": 1
+            }
+          },
+          "partial": {
+            "text": "Found something that'll do.",
+            "effects": {}
+          },
+          "lose": {
+            "text": "Three days of looking, and a lot of rust.",
+            "effects": {
+              "stress": 1
+            }
+          }
+        }
+      }
+    },
+    "The Wennick boats": {
+      "name": "Captain Wennick's favor",
+      "place": "the-ashrun--brown-steps-moorings",
+      "rule": "Settles your late rent at the Brown Steps Moorings, whichever way the roll goes. The roll decides whether the captain trusts you with the wheel.",
+      "situations": [
+        "Captain Wennick is waiting on the Brown Steps. Your rent is late, and the river is up.",
+        "Someone's been cutting mooring lines at night, and the captain wants it to stop."
+      ],
+      "options": {
+        "night-run": {
+          "kicker": "Crew a night run",
+          "label": "A barge needs to get down the Ashrun before the morning checks.",
+          "check": {
+            "attr": "reflex",
+            "skill": "navigate",
+            "diff": 2
+          },
+          "win": {
+            "text": "In and out before first light. The captain lets you steer on the way back.",
+            "effects": {
+              "standing": 1
+            }
+          },
+          "partial": {
+            "text": "Made it, a little late.",
+            "effects": {}
+          },
+          "lose": {
+            "text": "Made it, after a Meridian launch took a long look.",
+            "effects": {
+              "heat": 1
+            }
+          }
+        },
+        "hull": {
+          "kicker": "Patch a hull",
+          "label": "A houseboat is taking on water, slowly.",
+          "check": {
+            "attr": "wit",
+            "skill": "repair",
+            "diff": 2
+          },
+          "win": {
+            "text": "Dry by midnight.",
+            "effects": {
+              "standing": 1
+            }
+          },
+          "partial": {
+            "text": "Dry, if you keep the bucket handy.",
+            "effects": {}
+          },
+          "lose": {
+            "text": "Dry, eventually. You are not.",
+            "effects": {
+              "stress": 1
+            }
+          }
+        },
+        "lines": {
+          "kicker": "Find the line-cutter",
+          "label": "Three boats came loose last week.",
+          "check": {
+            "attr": "savvy",
+            "skill": "intel",
+            "diff": 2
+          },
+          "win": {
+            "text": "You know who, and why. The captain handles it.",
+            "effects": {
+              "standing": 1
+            }
+          },
+          "partial": {
+            "text": "You know why. Not who.",
+            "effects": {}
+          },
+          "lose": {
+            "text": "You get spotted watching, and the cutting stops for now.",
+            "effects": {
+              "stress": 1
+            }
+          }
+        }
+      }
     }
   }
 }

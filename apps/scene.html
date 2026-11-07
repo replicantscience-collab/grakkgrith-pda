@@ -50,6 +50,7 @@ body.pda-art .spot:hover,body.pda-art .spot:focus-visible{border-color:var(--art
 <div class="toast" id="toast" role="status" aria-live="polite"></div>
 <script src="./screen.js"></script>
 <script src="./week.js"></script>
+<script src="./homes.js"></script>
 <script src="./engine.js"></script>
 <script src="./talk.js"></script>
 <script>
@@ -63,7 +64,8 @@ const hasChar = s => !!(s && s.character && String(s.character.name || '').trim(
 const reduced = () => !!(window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches);
 function toast(msg) { const t = $('toast'); t.textContent = msg; t.classList.add('on'); clearTimeout(toast.t); toast.t = setTimeout(() => t.classList.remove('on'), 4200); }
 const Q = new URLSearchParams(location.search), PLACE = Q.get('place') || '';
-let SC = null, P = null, W = null, AREA = '', OUT = '';
+let SC = null, P = null, W = null, LL = null, RT = null, AREA = '', OUT = '';
+const HM = window.GRAKK_HOMES;
 const now = () => WK.adytaNow(P.clock, Date.now());
 
 /* Are you standing here? (Explore keeps your in-world location in the character file.) */
@@ -98,7 +100,11 @@ function elevator() {
 }
 /* Talking to someone (apps/talk.js). The NPC's lines are data; what they know and can do is decided here. */
 let CUR = null; const E = window.GRAKK_ENGINE.create(() => CUR);
-function rentBill(s) { const w = s.week || {}; return (w.mail || []).filter(m => m.kind === 'bill' && m.status === 'open' && m.creditor === 'Ma Dresk').sort((a, b) => a.due - b.due)[0] || null; }
+/* The landlord of the building this scene is in (Ma Dresk at The Hive), and the rent bill you owe them. */
+const sceneLandlord = () => HM.landlordOf(LL, PLACE);
+const livesHere = s => !!(s.week && s.week.home && s.week.home.place === PLACE);
+function rentBill(s) { const l = sceneLandlord(), w = s.week || {}; return l ? (w.mail || []).filter(m => m.kind === 'bill' && m.status === 'open' && m.creditor === l.name).sort((a, b) => a.due - b.due)[0] || null : null; }
+function sceneRent(s) { const H = s.week && s.week.home; if (livesHere(s) && H.rent != null) return H.rent; const u = (HM.listing(RT, PLACE).units || [])[0]; return u ? u.rent : 40; }
 function talk(id) {
   const npc = SC.npcs && SC.npcs[id]; if (!npc) return;
   let s = load();
@@ -110,12 +116,12 @@ function talk(id) {
   window.GRAKK_TALK.open(npc, {
     base: '../',
     credits,
-    vars: () => { const x = fresh(), b = rentBill(x), row = (W.week.housing || []).find(h => h.id === 'hive'); return { name: x.character.alias || x.character.name, total: b ? b.total : '', due: b ? WK.fmt(b.due) : '', rent: (row ? row.credits : 40) + ' credits', credits: credits() + ' cr' }; },
-    when: cond => { const x = fresh(), b = rentBill(x), tenant = x.week.housing === 'hive'; return cond === 'tenant' ? tenant : cond === 'favor' ? !!(b && b.favor) : cond === 'graced' ? !!(b && b.graced && !b.favor) : cond === 'due' ? !!(b && !b.graced) : false; },
+    vars: () => { const x = fresh(), b = rentBill(x); return { name: x.character.alias || x.character.name, total: b ? b.total : '', due: b ? WK.fmt(b.due) : '', rent: sceneRent(x) + ' credits', credits: credits() + ' cr' }; },
+    when: cond => { const x = fresh(), b = rentBill(x), tenant = livesHere(x); return cond === 'tenant' ? tenant : cond === 'favor' ? !!(b && b.favor) : cond === 'graced' ? !!(b && b.graced && !b.favor) : cond === 'due' ? !!(b && !b.graced) : false; },
     act: name => {
       const x = fresh();
       if (name === 'pay') { const b = rentBill(x); if (!b) return 'paid'; const r = WK.pay(x, b.id, now()); if (!r.ok) return 'short'; save(x); return 'paid'; }
-      if (name === 'movein') { WK.setCosts(x, { housing: 'hive' }); save(x); return 'movedIn'; }
+      if (name === 'movein') { const l = sceneLandlord(), place = (P.places || []).find(p => p.id === PLACE); if (!l || !place) return false; const r = WK.moveIn(x, W, HM.homeFor(LL, RT, place, l), now()); if (r.ok) save(x); return 'movedIn'; }
       if (name === 'favor') { afterClose = 'nightBtn'; return 'favorSent'; }
       return false;
     },
@@ -143,8 +149,8 @@ document.addEventListener('click', e => {
   if (b.dataset.do === 'elevator') return elevator();
 });
 
-Promise.all(['scenes', 'places', 'week'].map(n => fetch(`../data/${n}.json`).then(r => r.json()))).then(([scenes, places, week]) => {
-  P = places; W = week; SC = scenes[PLACE];
+Promise.all(['scenes', 'places', 'week', 'landlords', 'rentals'].map(n => fetch(`../data/${n}.json`).then(r => r.json()))).then(([scenes, places, week, landlords, rentals]) => {
+  P = places; W = week; LL = landlords; RT = rentals; SC = scenes[PLACE];
   if (!SC) { $('title').textContent = 'No scene here yet'; $('main').innerHTML = '<p>This place doesn\'t have a scene. <a href="./explore.html">Back to Explore</a>.</p>'; window.GRAKK_SCENE_READY = true; return; }
   document.title = SC.title; $('title').textContent = SC.title; AREA = SC.areas[Q.get('area')] ? Q.get('area') : SC.start;
   render(false);

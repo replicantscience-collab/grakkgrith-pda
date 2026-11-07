@@ -88,7 +88,7 @@ try {
     await step('Sewers redraw retains town pins and deep-route uncertainty', async () => {
       await f.evaluate(() => window.GRAKK_EXPLORE.showMap('sewers-town'));
       const pins = await f.$$eval('#world .pin', pins => pins.map(p => p.dataset.id));
-      if (pins.length !== 24 || !pins.includes('deep-tunnels--gate-4') || !pins.includes('the-sewers--broken-wing-forge')) return `${pins.length} pins or missing landmark`;
+      if (pins.length !== 25 || !pins.includes('the-sewers--the-dry-stacks') || !pins.includes('deep-tunnels--gate-4') || !pins.includes('the-sewers--broken-wing-forge')) return `${pins.length} pins or missing landmark`;
       await f.evaluate(() => window.GRAKK_EXPLORE.openPlace('the-sewers--radio-sewers'));
       const relay = await f.evaluate(() => /local relay/.test(document.getElementById('sheetBody').textContent) && /not a fixed headquarters/.test(document.getElementById('sheetBody').textContent));
       await f.evaluate(() => window.GRAKK_EXPLORE.openPlace('deep-tunnels--gate-4'));
@@ -255,6 +255,15 @@ try {
       const b = document.querySelector('#sheetBody [data-rent]'); if (!b) return 'no Rent button'; b.click();
       const h = JSON.parse(localStorage.getItem('grakkgrith_character_tool_v8_state')).week?.home; return (h && h.landlordName === 'Ma Dresk' && /Your home/.test(document.getElementById('sheetBody').innerText)) || JSON.stringify(h); });
       return r; });
+    await step('a place card lists units, quirks and neighbors', () => frame(page).evaluate(() => {
+      const X = window.GRAKK_EXPLORE; X.showMap('low-halo', 'low-halo--the-hive'); X.openPlace('low-halo--the-hive'); const t = document.getElementById('sheetBody').innerText;
+      return (document.querySelectorAll('#sheetBody .units li').length === 3 && /Courtyard flat/.test(t) && /Pip Arrowsmith/.test(t) && /grace, then a favor/.test(t) && /Snag/i.test(t)) || t.slice(0, 400); }));
+    await step('a new district home: rent at the Dry Stacks and take the pump watch', () => frame(page).evaluate(() => {
+      const X = window.GRAKK_EXPLORE, id = 'the-sewers--the-dry-stacks'; X.presence.transit = null; X.presence.location = { district: 'the-sewers', place: id }; X.showMap('sewers-town', id); X.openPlace(id);
+      const b = document.querySelector('#sheetBody [data-rent="dry-room"]'); if (!b) return 'no Rent button for the dry room'; b.click();
+      const sb = document.getElementById('shiftBtn'); if (!sb) return 'no shift button'; sb.click();
+      const h = JSON.parse(localStorage.getItem('grakkgrith_character_tool_v8_state')).week?.home;
+      return (h && h.unit === 'dry-room' && h.rent === 38 && h.shift === true && !!document.querySelector('.pin[data-id="' + id + '"], [data-place="' + id + '"], [data-pin="' + id + '"]')) || JSON.stringify({ h, pin: document.querySelectorAll('[data-id],[data-place],[data-pin]').length }); }));
     await step('Explore can send them somewhere', async () => { await page.evaluate(() => document.getElementById('exploreBtn').click()); await page.waitForTimeout(1500); return frame(page).evaluate(() => { const X = window.GRAKK_EXPLORE, t = { district: 'low-halo', place: 'low-halo--rust-market' }; X.startTrip(t, X.planTrip(t)[0]); return !!JSON.parse(localStorage.getItem('grakkgrith_character_tool_v8_state')).world.presence.transit; }); });
     // The Week: rent on the Adyta clock and Heat mail, from a fresh character.
     const ST = () => page.evaluate(() => JSON.parse(localStorage.getItem('grakkgrith_character_tool_v8_state')));
@@ -364,7 +373,7 @@ try {
       await page.evaluate(() => document.getElementById('sheetBtn').click()); await page.waitForTimeout(1800); g = frame(page); await g.waitForFunction(() => window.GRAKK_SHEET_READY);
       await g.selectOption('#nowUseSel', String(slot)); await g.locator('[data-now="use"]').click(); await g.locator('#actOk').click(); await page.waitForTimeout(300);
       s = await page.evaluate(K => JSON.parse(localStorage.getItem(K)), K);
-      return (away.note && !away.talk && /ma dresk/i.test(name) && s.week.housing === 'hive' && slot >= 0 && s.coins.credits === '42' && s.stats.stress === '1' && !(s.inventory[slot] && s.inventory[slot].name)) || JSON.stringify({ away, name, housing: s.week && s.week.housing, slot, credits: s.coins.credits, stress: s.stats.stress });
+      return (away.note && !away.talk && /ma dresk/i.test(name) && s.week.home && s.week.home.place === 'low-halo--the-hive' && slot >= 0 && s.coins.credits === '42' && s.stats.stress === '1' && !(s.inventory[slot] && s.inventory[slot].name)) || JSON.stringify({ away, name, home: s.week && s.week.home && s.week.home.place, slot, credits: s.coins.credits, stress: s.stats.stress });
     });
     await step('Edit sheet points to Downtime instead of a second downtime form', async () => {
       await page.evaluate(() => document.getElementById('fullSheetBtn').click()); await page.waitForTimeout(2000); const g = frame(page);

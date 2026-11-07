@@ -50,16 +50,31 @@
     return { v: 1, housing: /Corporate Agent|On the Books/.test(life) ? 'mixed' : /Edge Dweller/.test(life) ? 'none' : 'commons',
       gear: 'light', chrome: 'none', lastWeek: null, band: 'clean', mail: [], debts: [], log: [], sessionsStarted: 0, home: null };
   }
-  function ensure(s) { if (!s.week || typeof s.week !== 'object') s.week = defaults(s); const w = s.week; for (const [k, v] of Object.entries(defaults(s))) if (w[k] === undefined) w[k] = v; return w; }
+  function ensure(s) { if (!s.week || typeof s.week !== 'object') s.week = defaults(s); const w = s.week; for (const [k, v] of Object.entries(defaults(s))) if (w[k] === undefined) w[k] = v; if (w.housing === 'hive') migrateHive(w); return w; }
+  /* Saves from before landlords had terms rented The Hive as its own housing tier. They move into a courtyard flat there,
+     with Ma Dresk's grace week and favor, and Commons rent. */
+  const HIVE = { place: 'low-halo--the-hive', placeName: 'The Hive', landlordId: 'ma-dresk', landlordName: 'Ma Dresk', type: 'family', tier: 'commons',
+    unit: 'courtyard', unitName: 'Courtyard flat', rent: 40, cap: 50, ladder: 2, letters: {}, floor: null, workOff: null, creep: null,
+    rules: { graceDays: 7, favorDays: 7, grace: "Ma Dresk gives you one week's grace on this rent. After that, she calls in a favor.",
+      favor: 'Ma Dresk is calling in a favor: fix her walk-in, run a parcel, or scare off a debt collector. Do it in Downtime before this is due, or pay. Ignore it and the rent becomes Debt.' } };
+  function migrateHive(w) { w.housing = 'commons'; if (!w.home) w.home = { ...HIVE, rules: { ...HIVE.rules }, since: null, behind: 0 }; }
   function log(w, aMs, text) { w.log.unshift({ at: aMs, text }); w.log.length = Math.min(w.log.length, 60); }
   function costRow(list, id) { return list.find(x => x.id === id) || list[0]; }
+  /* Rent: the unit you rent (its own price inside the tier's band), or the rulebook tier price if you haven't moved in anywhere. */
+  function rentLine(W, w) {
+    const h = costRow(W.week.housing, w.housing), H = w.home;
+    if (H && H.rent != null && H.tier === w.housing) return { name: `${H.unitName ? H.unitName + ', ' : ''}${H.placeName}`, credits: H.rent };
+    return { name: h.name, credits: h.credits };
+  }
   function billLines(W, w) {
-    const h = costRow(W.week.housing, w.housing), g = costRow(W.week.gear, w.gear), c = costRow(W.week.chrome, w.chrome);
-    return [{ name: h.name, credits: h.credits }, { name: W.week.food.name, credits: W.week.food.credits }, { name: g.name, credits: g.credits }, { name: c.name, credits: c.credits }].filter(l => l.credits > 0);
+    const g = costRow(W.week.gear, w.gear), c = costRow(W.week.chrome, w.chrome), r = rentLine(W, w), H = w.home;
+    const lines = [r];
+    if (H && H.shift && H.workOff && r.credits > 0) lines.push({ name: `Worked off: ${H.workOff.for}`, credits: -Math.min(H.workOff.credits, r.credits) });
+    return lines.concat([{ name: W.week.food.name, credits: W.week.food.credits }, { name: g.name, credits: g.credits }, { name: c.name, credits: c.credits }]).filter(l => l.credits !== 0);
   }
   function weeklyTotal(W, w) { return billLines(W, w).reduce((a, l) => a + l.credits, 0); }
   /* Who the bills go to: the landlord of the place you rent, once you've moved in somewhere (and pay rent there). */
-  function creditorFor(W, w) { const h = costRow(W.week.housing, w.housing); return (w.home && w.home.landlordName && h.credits > 0) ? w.home.landlordName : (h.creditor || 'The city'); }
+  function creditorFor(W, w) { const h = costRow(W.week.housing, w.housing); return (w.home && w.home.landlordName && (w.home.rent != null ? w.home.rent : h.credits) > 0) ? w.home.landlordName : (h.creditor || 'The city'); }
 
   /* ---------- home: renting a place on the map ----------
      Explore calls moveIn with everything Mail needs (landlord name, tier, ladder length, letters), so this file
@@ -69,13 +84,32 @@
   function moveIn(s, W, home, aMs) {
     const w = ensure(s);
     if (!home || !home.place || !home.landlordName || !W.week.housing.some(h => h.id === home.tier)) return { ok: false, msg: 'That place is not for rent.' };
-    if (w.home && w.home.place === home.place && w.home.tier === home.tier) return { ok: false, msg: 'You already live here.' };
-    const was = w.home;
+    if (w.home && w.home.place === home.place && (w.home.unit || null) === (home.unit || null) && w.home.tier === home.tier) return { ok: false, msg: 'You already live here.' };
+    const was = w.home, moving = was && was.place === home.place;
     w.home = { place: home.place, placeName: home.placeName || home.place, landlordId: home.landlordId || null, landlordName: home.landlordName, type: home.type || null,
-      tier: home.tier, ladder: Math.max(0, Math.min(4, num(home.ladder, 4))), letters: home.letters || {}, floor: home.floor || null, since: aMs, behind: 0 };
+      tier: home.tier, unit: home.unit || null, unitName: home.unitName || null, rent: home.rent != null ? num(home.rent) : null, cap: home.cap != null ? num(home.cap) : null, pay: home.pay || null,
+      ladder: Math.max(0, Math.min(4, num(home.ladder, 4))), letters: home.letters || {}, floor: home.floor || null,
+      rules: home.rules || null, workOff: home.workOff || null, creep: home.creep || null, shift: false, since: aMs, behind: moving ? was.behind || 0 : 0 };
     w.housing = home.tier;
-    log(w, aMs, `${was ? `Moved out of ${was.placeName}. ` : ''}Moved into ${w.home.placeName}. Rent goes to ${w.home.landlordName} from next week's bill.`);
-    return { ok: true, msg: `You live at ${w.home.placeName} now.` };
+    const where = `${w.home.unitName ? w.home.unitName + ' at ' : ''}${w.home.placeName}`;
+    log(w, aMs, moving ? `Moved into the ${where}. Rent from next week's bill.` : `${was ? `Moved out of ${was.placeName}. ` : ''}Moved into ${where}. Rent goes to ${w.home.landlordName} from next week's bill.`);
+    return { ok: true, msg: `Moved in: ${where}.` };
+  }
+  /* Rent creep: a squeezing landlord puts the rent up every few weeks you live there, never past the tier's band. */
+  function creep(s, k, aMs, events) {
+    const w = s.week, H = w.home, c = H && H.creep; if (!c || H.rent == null || H.since == null) return;
+    const weeksIn = k - weekIndex(H.since); if (weeksIn <= 0 || weeksIn % c.everyWeeks || H.creptWeek === k) return;
+    const to = H.cap != null ? Math.min(H.cap, H.rent + c.credits) : H.rent + c.credits; H.creptWeek = k; if (to <= H.rent) return;
+    H.rent = to; events.push(inform(s, aMs, H.landlordName, fill(c.title, { place: H.placeName, rent: to }), fill(c.text, { place: H.placeName, rent: to })));
+    log(w, aMs, `${H.landlordName} put the rent up to ${to}.`);
+  }
+  /* Work-off: a standing weekly shift for the landlord. The PDA trusts you to turn up. */
+  function setShift(s, on, aMs) {
+    const w = ensure(s), H = w.home, t = H && H.workOff; if (!t) return { ok: false, msg: 'Your landlord doesn\'t take shifts.' };
+    const cls = s.character && s.character.class;
+    if (on && t.classes && t.classes.length && !t.classes.includes(cls)) return { ok: false, msg: `${H.landlordName} only takes ${t.classes.join(' or ')} work for this.` };
+    H.shift = !!on; log(w, aMs ?? Date.now(), on ? `Signed up for ${t.for}: ${t.credits} off the rent from the next bill.` : `Stopped working ${t.for}.`);
+    return { ok: true, msg: on ? `You're on for ${t.for}. ${t.credits} off from the next bill.` : `No more ${t.for}. Full rent from the next bill.` };
   }
   function letterFor(home, key) { const L = home.letters || {}; for (let i = LADDER.indexOf(key); i >= 0; i--) if (L[LADDER[i]]) return L[LADDER[i]]; return null; }
   function rentLadder(W, s, aMs, events) {
@@ -128,8 +162,9 @@
       const from = Math.max(w.lastWeek + 1, cur - W.week.maxCatchUpWeeks + 1);
       if (from > w.lastWeek + 1) { log(w, now, `You were away ${missed} weeks. The city billed the last ${W.week.maxCatchUpWeeks}.`); }
       for (let k = from; k <= cur; k++) {
-        const lines = billLines(W, w), total = lines.reduce((a, l) => a + l.credits, 0), start = fresh ? now : weekStart(k);
-        if (total > 0) { const b = { id: uid('b', start, k), kind: 'bill', week: k, from: 'Cost of living', title: `Week of ${fmt(weekStart(k)).split(' ').slice(0, 2).join(' ')}`, lines, total, issued: start, due: start + W.week.billDueDays * DAY, creditor: creditorFor(W, w), status: 'open' }; const L = costRow(W.week.housing, w.housing).landlord; if (L) b.landlord = L; w.mail.unshift(b); events.push(b); log(w, start, `Bills: ${total} credits due.`); }
+        const start = fresh ? now : weekStart(k); creep(s, k, start, events);
+        const lines = billLines(W, w), total = lines.reduce((a, l) => a + l.credits, 0);
+        if (total > 0) { const b = { id: uid('b', start, k), kind: 'bill', week: k, from: 'Cost of living', title: `Week of ${fmt(weekStart(k)).split(' ').slice(0, 2).join(' ')}`, lines, total, issued: start, due: start + W.week.billDueDays * DAY, creditor: creditorFor(W, w), status: 'open' }; const L = (w.home && w.home.tier === w.housing && w.home.rules) || costRow(W.week.housing, w.housing).landlord; if (L) b.landlord = L; w.mail.unshift(b); events.push(b); log(w, start, `Bills: ${total} credits due.`); }
         // Weekly Heat mail: the system keeps noticing you while Heat is 2+ (crisis is not reissued weekly)
         // (only once you were already in that band; rising into a band is handled below)
         const b2 = band(W, heat(s));
@@ -241,6 +276,6 @@
   function pending(s) { const w = s && s.week; if (!w) return 0; return w.mail.filter(m => m.status === 'open').length; }
   function owed(s) { const w = s && s.week; return w ? w.debts.reduce((a, d) => a + Math.max(0, d.amount), 0) : 0; }
 
-  const api = { DAY, WEEK, clockOffset, adytaNow, weekIndex, weekStart, fmt, untilText, band, heatCap, ensure, billLines, weeklyTotal, settle, pay, appeal, answer, payDebt, acknowledgeCrisis, inform, dismiss, sessionStart, setCosts, pending, owed, issueNotice, openDebt, creditorFor, moveIn, favors, favorDone };
+  const api = { DAY, WEEK, clockOffset, adytaNow, weekIndex, weekStart, fmt, untilText, band, heatCap, ensure, billLines, weeklyTotal, settle, pay, appeal, answer, payDebt, acknowledgeCrisis, inform, dismiss, sessionStart, setCosts, pending, owed, issueNotice, openDebt, creditorFor, moveIn, setShift, rentLine, favors, favorDone };
   if (typeof module !== 'undefined' && module.exports) module.exports = api; else root.GRAKK_WEEK = api;
 })(typeof window !== 'undefined' ? window : globalThis);

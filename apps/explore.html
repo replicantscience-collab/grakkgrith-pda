@@ -162,6 +162,23 @@ a.act.scene b{color:var(--sodium)}
 .walls .scrawl{margin:6px 0 0}
 .lease .home{color:var(--sodium);font-weight:700;margin-top:6px}
 .lease .act{margin-top:8px;width:100%}
+.lease .term{color:var(--chalk)}
+.units{list-style:none;margin:10px 0 0;padding:0;display:grid;gap:8px}
+.units li{display:flex;gap:10px;align-items:center;justify-content:space-between;padding:8px 10px;border-radius:8px;border:1px solid var(--kerb)}
+.units li.yours{border-color:var(--sodium)}
+.units li > div{min-width:0}
+.units b{display:block;font:600 16px/1.2 var(--display)}
+.units small{display:block;color:var(--ash);font-size:12px;margin-top:2px}
+.units .act{width:auto;margin:0;flex:none;padding:8px 12px}
+.quirks{list-style:none;margin:0 0 12px;padding:0;display:grid;gap:6px}
+.quirks li{font-size:14px;line-height:1.35}
+.quirks i{font-style:normal;font:600 11px/1 var(--display);letter-spacing:.08em;text-transform:uppercase;padding:2px 6px;border-radius:4px;margin-right:6px;border:1px solid var(--kerb);color:var(--ash)}
+.quirks .perk i{color:var(--teal);border-color:var(--teal)}
+.quirks .snag i{color:var(--brake);border-color:var(--brake)}
+.neighbors{margin:0 0 12px}
+.neighbors > b{display:block;font:600 13px/1.2 var(--display);letter-spacing:.06em;text-transform:uppercase;color:var(--ash);margin-bottom:2px}
+.neighbors p{margin:6px 0 0;font-size:14px;line-height:1.4}
+.neighbors em{color:var(--ash)}
 .walls small{display:block;color:var(--ash);font-size:12px;margin:2px 0 0 4px}
 </style>
 </head>
@@ -186,6 +203,7 @@ a.act.scene b{color:var(--sodium)}
 
 <script src="cityday.js"></script>
 <script src="week.js"></script>
+<script src="homes.js"></script>
 <script>
 'use strict';
 /* ---------- Storage ---------- */
@@ -455,42 +473,64 @@ function activeDeliveries() { const s = load(TOOL_KEY, null); return ((s && s.ma
    travel to and peel. Found stickers are saved in the character file (state.world.stickers). */
 const CD = window.GRAKK_CITYDAY;
 let CDD = null, STK = [], dayCache = null;
-let LANDLORDS = null, NOTES = [], BIZ = [], RENT = {}, WEEKDATA = null;   // data/landlords.json, notes.json, businesses.json; rent tiers from week.json
-/* Renting: you have to be standing there, with a character. Mail & bills does the rest. */
-function rentable(l) { return l && !l.notForRent && !l.invitationOnly && l.tier && RENT[l.tier]; }
-function leaseActions(p, l) {
-  const s = charState(), home = s?.week?.home;
-  if (home && home.place === p.id) return '<span class="home">Your home. Rent goes to ' + esc(l.name) + '.</span>';
-  if (!rentable(l) || !window.GRAKK_WEEK || !WEEKDATA) return '';
-  const here = !presence.transit && presence.location.place === p.id;
-  if (!s) return '<span>Make a character to rent here.</span>';
-  if (!here) return '<span>Go there to look at a room.</span>';
-  const opts = [[l.tier, l.findOnly ? 'Move in' : 'Rent here']];
-  if (l.employer) opts.push([l.employer.tier, `Rent as ${l.employer.name} crew`]);
-  return opts.map(([tier, label]) => `<button class="act go" type="button" data-rent="${esc(tier)}"><b>${esc(label)}</b><span>${RENT[tier].credits} credits a week</span></button>`).join('');
+let LANDLORDS = null, NOTES = [], BIZ = [], RENT = {}, WEEKDATA = null, RENTALS = null;   // data/landlords.json, notes.json, businesses.json, rentals.json; rent tiers from week.json
+const HM = window.GRAKK_HOMES;
+/* Renting: you have to be standing there, with a character, to take a unit. Mail & bills does the rest. */
+function rentable(l) { return HM.rentable(l) && RENT[l.tier]; }
+function unitsHtml(p, l) {
+  const units = HM.listing(RENTALS, p.id).units || [], s = charState(), home = s?.week?.home, mine = home && home.place === p.id;
+  if (!units.length) return '';
+  const here = !presence.transit && presence.location.place === p.id, can = rentable(l) && window.GRAKK_WEEK && WEEKDATA && s && here;
+  const price = u => u.pay ? `Paid in ${esc(u.pay)}` : `${u.rent} credits a week`;
+  let h = '<ul class="units">';
+  for (const u of units) {
+    const yours = mine && home.unit === u.id, full = !u.free && !yours;
+    h += `<li class="${yours ? 'yours' : ''}"><div><b>${esc(u.name)}</b><span>${esc(u.blurb)}</span><small>${price(u)}${u.staff ? ` · crew rate, for ${esc(u.staff)}` : ''} · ${yours ? 'yours' : full ? 'none free' : `${u.free} free`}</small></div>`;
+    if (can && !yours && !full) h += `<button class="act go" type="button" data-rent="${esc(u.id)}"><b>${mine ? 'Move here' : l.findOnly ? 'Move in' : 'Rent'}</b></button>`;
+    h += '</li>';
+  }
+  h += '</ul>';
+  if (rentable(l) && !mine) h += !s ? '<span>Make a character to rent here.</span>' : !here ? '<span>Go there to look at a room.</span>' : '';
+  return h;
 }
-function homeFor(p, l, tier) {
-  const L = {}; for (const k of ['missed', 'review', 'bastion', 'lost']) { const o = (l.letters || {})[k] || (LANDLORDS.letters?.[l.type] || {})[k]; if (o) L[k] = o; }
-  return { place: p.id, placeName: p.name, landlordId: l.id, landlordName: l.name, type: l.type, tier, ladder: LANDLORDS.types[l.type]?.ladder ?? 4, letters: L, floor: LANDLORDS.floor };
+function homeHtml(p, l) {
+  const s = charState(), H = s?.week?.home;
+  if (s?.week?.housing === 'authority' && l.floorOnly) return '<span class="home">You\'ve been placed here. No rent for now.</span>';
+  if (!H || H.place !== p.id) return '';
+  let h = `<span class="home">Your home${H.unitName ? `: ${esc(H.unitName)}` : ''}. ${H.rent != null ? `${H.rent} credits a week to ` : 'Rent goes to '}${esc(H.landlordName)}.</span>`;
+  if (H.workOff) h += `<button class="act" type="button" id="shiftBtn" aria-pressed="${H.shift ? 'true' : 'false'}"><b>${H.shift ? 'Stop the shift' : 'Take the shift'}</b><span>${esc(H.workOff.for)}: ${H.workOff.credits} off the rent${H.shift ? ', every week' : ''}</span></button>`;
+  return h;
 }
-function rentHere(tier) {
-  const p = byId[selected], l = p && LANDLORDS?.landlords.find(x => x.places.includes(p.id)), s = charState();
+function toggleShift() {
+  const s = charState(); if (!s) return;
+  const r = window.GRAKK_WEEK.setShift(s, !s.week.home.shift, adytaNow());
+  if (r.ok) save(TOOL_KEY, s); toast(r.msg); openPlace(selected);
+}
+function rentHere(unitId) {
+  const p = byId[selected], l = p && HM.landlordOf(LANDLORDS, p.id), s = charState();
   if (!p || !l || !s) return;
   s.world = { ...(s.world || {}), presence };
-  const r = window.GRAKK_WEEK.moveIn(s, WEEKDATA, homeFor(p, l, tier), adytaNow());
+  const r = window.GRAKK_WEEK.moveIn(s, WEEKDATA, HM.homeFor(LANDLORDS, RENTALS, p, l, unitId), adytaNow());
   if (r.ok) save(TOOL_KEY, s);
   toast(r.ok ? `${r.msg} Rent shows on next week's bill.` : r.msg); openPlace(p.id);
+}
+function livingHtml(p) {
+  const L = HM.listing(RENTALS, p.id); let h = '';
+  if (L.quirks?.length) h += `<ul class="quirks">${L.quirks.map(q => `<li class="${esc(q.kind)}"><i>${q.kind === 'perk' ? 'Perk' : q.kind === 'snag' ? 'Snag' : 'Odd'}</i>${esc(q.text)}</li>`).join('')}</ul>`;
+  if (L.neighbors?.length) h += `<div class="neighbors"><b>Neighbors</b>${L.neighbors.map(n => `<p><strong>${esc(n.name)}</strong>, ${esc(n.race)}. ${esc(n.who)} <em>${esc(n.hook)}</em></p>`).join('')}</div>`;
+  return h;
 }
 function groundHtml(p, did) {
   let h = '';
   const notes = NOTES.filter(n => p ? n.place === p.id : n.district === did && !n.place);
   if (notes.length) h += `<div class="walls"><b>Written here</b>${notes.map(n => `<p class="scrawl">${esc(n.text)}</p>${n.signed ? `<small>${esc(n.signed)}</small>` : ''}`).join('')}</div>`;
   if (!p) return h;
-  const l = LANDLORDS && LANDLORDS.landlords.find(x => x.places.includes(p.id));
+  const l = LANDLORDS && HM.landlordOf(LANDLORDS, p.id);
   if (l) {
-    const t = LANDLORDS.types[l.type], rent = RENT[l.tier];
-    const terms = l.notForRent ? 'Not for rent.' : l.findOnly ? 'No listings. Ask around, or explore.' : l.invitationOnly ? `By invitation only.${rent ? ` ${esc(rent.name)}, ${rent.credits}+ credits a week.` : ''}` : rent ? `${esc(rent.name)}: ${rent.credits} credits a week.` : '';
-    h += `<div class="lease"><b>Landlord</b><strong>${esc(l.name)}</strong> · ${esc(t ? t.name : l.type)}<span>${esc(l.who || '')}</span>${terms ? `<span>${terms}</span>` : ''}${l.employer ? `<span>${esc(l.employer.name)} crew pay ${esc(RENT[l.employer.tier]?.credits ?? "")} credits a week.</span>` : ''}${leaseActions(p, l)}</div>`;
+    const t = LANDLORDS.types[l.type];
+    const terms = l.notForRent ? 'Not for rent.' : l.floorOnly ? 'Nobody rents here. You\'re placed here if you lose your home.' : l.findOnly ? 'No listings. Ask around, or explore.' : l.invitationOnly ? 'By invitation only.' : '';
+    h += `<div class="lease"><b>Landlord</b><strong>${esc(l.name)}</strong> · ${esc(t ? t.name : l.type)}<span>${esc(l.who || '')}</span>${terms ? `<span>${terms}</span>` : ''}${HM.describe(l).map(x => `<span class="term">${esc(x)}</span>`).join('')}${homeHtml(p, l)}${unitsHtml(p, l)}</div>`;
+    h += livingHtml(p);
   }
   const b = BIZ.find(x => x.places.includes(p.id));
   if (b && !p.brand) h += `<p class="note">${esc(b.name)}, run by ${esc(b.owners.join(' and '))}.</p>`;
@@ -618,6 +658,7 @@ function openPlace(id) {
   $('turnBack') && ($('turnBack').onclick = turnBack);
   $('peel') && ($('peel').onclick = peel);
   $('sheetBody').querySelectorAll('[data-rent]').forEach(b => b.onclick = () => rentHere(b.dataset.rent));
+  $('shiftBtn') && ($('shiftBtn').onclick = toggleShift);
   $('openMap') && ($('openMap').onclick = () => { showMap(d.map); openPlace(id); });
   $('showOnMap') && ($('showOnMap').onclick = () => { showMap(p.pin.map, p.id); openPlace(p.id); });
   if (editing && p) wireEditForm(p);
@@ -762,8 +803,8 @@ function tick() { if (settleTransit()) { render(); if (selected) openPlace(selec
     CDD = cd; STK = CD ? CD.stickerList(art) : [];
   } catch (e) { CDD = null; }
   try {   // landlords, notes and businesses are extra too
-    const [ll, nt, bz, wk] = await Promise.all(['../data/landlords.json', '../data/notes.json', '../data/businesses.json', '../data/week.json'].map(u => fetch(u).then(r => { if (!r.ok) throw new Error(r.status); return r.json(); })));
-    LANDLORDS = ll; NOTES = nt.notes || []; BIZ = bz.businesses || []; WEEKDATA = wk; RENT = Object.fromEntries(wk.week.housing.map(h => [h.id, h]));
+    const [ll, nt, bz, wk, rt] = await Promise.all(['../data/landlords.json', '../data/notes.json', '../data/businesses.json', '../data/week.json', '../data/rentals.json'].map(u => fetch(u).then(r => { if (!r.ok) throw new Error(r.status); return r.json(); })));
+    LANDLORDS = ll; NOTES = nt.notes || []; BIZ = bz.businesses || []; WEEKDATA = wk; RENTALS = rt; RENT = Object.fromEntries(wk.week.housing.map(h => [h.id, h]));
   } catch (e) { LANDLORDS = null; }
   presence = loadPresence();
   if (!presence || !W.districts[presence.location?.district]) presence = { location: { ...W.start }, transit: null, log: [] };
