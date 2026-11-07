@@ -51,7 +51,13 @@ export async function checkPlayerActions(page, f, step, label) {
   await step('melee attack has no ammunition cost',async()=>{
     await f.evaluate(()=>document.getElementById('rollSecondaryBtn').click());const text=await f.locator('#playerActionDetails').innerText();await click('playerActionConfirm');return text.includes('No tracked ammo')&&(await read()).inventory[3].adds[6]==='0';
   });
-  await step('Now controls fit and have 44px touch targets',async()=>f.evaluate(()=>{const box=document.querySelector('.playerNow');return box.getBoundingClientRect().right<=innerWidth&&[...box.querySelectorAll('button')].every(b=>b.getBoundingClientRect().height>=44);}));
+  await step('Now controls fit and have 44px touch targets',async()=>f.evaluate(()=>{const box=document.querySelector('.playerNow');return box.getBoundingClientRect().right<=innerWidth&&[...box.querySelectorAll('button')].filter(b=>b.getClientRects().length).every(b=>b.getBoundingClientRect().height>=44);}));
+  await step('one play bar keeps trackers available without duplicate actions',async()=>{
+    const unified=await f.evaluate(()=>document.querySelectorAll('.playerNow').length===1&&!document.querySelector('.compactQuickBar')&&!document.querySelector('.playerNow [data-compact-click="rollCheckBtn"]'));
+    await f.locator('.playerNowDetails summary').click();
+    const tracker=await f.locator('.playerNow [data-compact-click="autoDamageBtn"]').isVisible();
+    await f.locator('.playerNowDetails summary').click();return unified&&tracker;
+  });
   await f.locator('.playerNow').scrollIntoViewIfNeeded();
   await mkdir('output/playwright',{recursive:true});
   await f.locator('.playerNow').screenshot({path:`output/playwright/player-now-${label}.png`});

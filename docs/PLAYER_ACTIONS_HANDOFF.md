@@ -1,5 +1,7 @@
 # Player actions — Codex / Claude coordination
 
+Current branch and integration status: see [root COORDINATION.md](../COORDINATION.md). The status below is historical.
+
 > **Update 2026-11-05: integrated.** PR #8's rules now live in `apps/engine.js`, the shared engine both
 > character screens run. Edit sheet keeps its Now panel; the one-page Sheet has its own Now box (Attack,
 > Reload, Use, Push, Undo, tap a skill to roll) on the same engine and the same save, so Undo works across

@@ -55,6 +55,23 @@ s.stats.stress = '2'; const p = E.payPush();
 check('Push adds 2 dice and 1 Stress', p.ok && p.dice.length === 2 && s.stats.stress === '3');
 check('Workshop mode keeps default card actions', create(() => ({ inventory: [] }), { shops: true }).getItemActions({ class: 'WEAPON' }).length > 0);
 
+s=fresh();s.inventory[0].actions=['fire'];
+const denied=JSON.stringify(s);
+check('both reload entry points enforce card permissions', !E.canReload('active')&&!E.canReloadSlot(0)&&!E.reloadEquipped('active').ok&&!E.reloadSlot(0).ok&&JSON.stringify(s)===denied);
+s=fresh();s.equipment.ammoSource=79;
+check('missing ammo card is refused without throwing', !E.canReload('active')&&!E.reloadSlot(0).ok);
+s=fresh();s.inventory[1].adds[2]='wrong type';
+check('selected and equipped reload reject mismatched ammo', !E.reloadSlot(0).ok&&!E.reloadEquipped('active').ok);
+s=fresh();E.reloadSlot(0);const viaSlot=JSON.stringify(s);
+s=fresh();E.reloadEquipped('active');
+check('selected and equipped reload produce identical saves', JSON.stringify(s)===viaSlot);
+s=fresh();s.inventory[0].adds[6]='1';s.inventory[0].noRefill=true;
+E.act('SPEND AMMO','',()=>{const r=E.spendAmmoSlot(0);return r.ok?r.message:false;});
+check('spending the last no-refill round removes and unequips the card', !s.inventory[0].name&&s.equipment.active===null);
+check('Undo restores the spent weapon and its equipment slot', E.undoLast().ok&&s.inventory[0].name==='Test pistol'&&s.inventory[0].adds[6]==='1'&&s.equipment.active===0);
+s=fresh();const beforeSpend=JSON.stringify(s);
+check('invalid ammo spends do not mutate state', !E.spendAmmoSlot(0,3).ok&&!E.spendAmmoSlot(0,-1).ok&&!E.spendAmmoSlot(0,0.5).ok&&JSON.stringify(s)===beforeSpend);
+
 for (const f of fails) console.log('  ✗ ' + f);
 console.log(`${passes.length} engine checks passed.`);
 if (fails.length) { console.log(`${fails.length} failed.`); process.exit(1); }

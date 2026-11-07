@@ -239,9 +239,36 @@ function create(getState, opts) {
   function useSlot(idx){ const s=S(), item=s.inventory[idx]; if(!canUse(item)) return {ok:false,message:'Selected card cannot be used right now.'}; const c=counts(item), a=item.adds||[],recovery=Math.max(0,Math.floor(toNum(a[4],0))),relief=Math.max(0,Math.floor(toNum(a[5],0))),oldW=toNum(s.stats.woundState,0),oldS=toNum(s.stats.stress,0); s.stats.woundState=String(clampInt(oldW-recovery,0,3)); s.stats.stress=String(clampInt(oldS-relief,0,stressCap(s.character.level))); setCur(item,c.cur-1); const removed=removeIfNoRefillZero(idx); return {ok:true,message:'Used '+(item.name||'selected item')+': -1 use, wound '+oldW+' → '+s.stats.woundState+', stress '+oldS+' → '+s.stats.stress+'.'+(removed?' Removed empty NO REFILL '+removed+'.':'')}; }
   function usePreview(idx){ const s=S(), item=s.inventory[idx]; if(!item) return {blocked:true,text:'No card.'}; const c=counts(item),a=item.adds||[],w=toNum(s.stats.woundState,0),st=toNum(s.stats.stress,0); return {blocked:!canUse(item),text:(item.name||'Item')+' · Uses '+c.cur+' → '+Math.max(0,c.cur-1)+'\nWounds '+w+' → '+Math.max(0,w-Math.max(0,Math.floor(toNum(a[4],0))))+'\nStress '+st+' → '+Math.max(0,st-Math.max(0,Math.floor(toNum(a[5],0))))+(itemNoRefill(item)&&c.cur===1?'\nThe empty card will be removed. Undo can restore it.':'')+(c.cur<1?'\nNo uses remain.':'')}; }
 
-  /* Reload an equipped weapon from the ammo source. -> {ok, message} */
-  function canReload(which){ const s=S(), w=equippedItem(which), ai=normalizeEquipIndex(s.equipment&&s.equipment.ammoSource), ammo=ai===null?null:s.inventory[ai]; if(!w||!isWeaponClass(w)||!itemAllows(w,'reload')||!ammo||!isAmmoClass(ammo)||!sameAmmoType(w,ammo)) return false; const wc=counts(w),ac=counts(ammo); return wc.max>0&&wc.cur<wc.max&&ac.cur>0; }
-  function reloadEquipped(which){ const s=S(), idx=normalizeEquipIndex((s.equipment||{})[which]); if(idx===null) return {ok:false,message:'No '+which+' weapon equipped.'}; const weapon=s.inventory[idx], ai=normalizeEquipIndex(s.equipment.ammoSource); if(!isWeaponClass(weapon)) return {ok:false,message:'Equipped '+which+' item is not a weapon.'}; if(ai===null) return {ok:false,message:'No ammo source selected.'}; const ammo=s.inventory[ai], wc=counts(weapon), ac=counts(ammo); if(!isAmmoClass(ammo)||!sameAmmoType(weapon,ammo)||wc.max<=0||wc.cur>=wc.max||ac.cur<=0) return {ok:false,message:'Reload blocked: check ammo source, matching type, weapon capacity, and available ammo.'}; const moved=Math.min(wc.max-wc.cur,ac.cur); setCur(weapon,wc.cur+moved); setCur(ammo,ac.cur-moved); const removed=removeIfNoRefillZero(ai); return {ok:true,message:'Reloaded '+(weapon.name||'weapon')+' with '+moved+' from '+(ammo.name||'ammo')+'.'+(removed?' Removed empty NO REFILL '+removed+'.':'')}; }
+  /* All inventory and equipped controls use the same validators and mutations. */
+  function reloadStatus(idx) {
+    const s=S(), slot=normalizeEquipIndex(idx), weapon=slot===null?null:s.inventory?.[slot];
+    if(!weapon||!isWeaponClass(weapon))return {ok:false,message:'Select a weapon first.'};
+    if(!itemAllows(weapon,'reload'))return {ok:false,message:'This weapon card does not allow Reload.'};
+    const ai=normalizeEquipIndex(s.equipment?.ammoSource), ammo=ai===null?null:s.inventory?.[ai];
+    if(!ammo||!isAmmoClass(ammo))return {ok:false,message:'Select an ammo source first.'};
+    if(!sameAmmoType(weapon,ammo))return {ok:false,message:'Reload blocked: ammo types do not match.'};
+    const wc=counts(weapon),ac=counts(ammo);
+    if(wc.max<=0||wc.cur>=wc.max||ac.cur<=0)return {ok:false,message:'Reload blocked: weapon is full, has no capacity, or the source is empty.'};
+    return {ok:true,weapon,ammo,ai,wc,ac};
+  }
+  function canReloadSlot(idx){return reloadStatus(idx).ok;}
+  function canReload(which){return canReloadSlot(S().equipment?.[which]);}
+  function reloadSlot(idx){
+    const r=reloadStatus(idx);if(!r.ok)return r;
+    const {weapon,ammo,ai,wc,ac}=r,moved=Math.min(wc.max-wc.cur,ac.cur);
+    setCur(weapon,wc.cur+moved);setCur(ammo,ac.cur-moved);
+    const removed=removeIfNoRefillZero(ai);
+    return {ok:true,message:'Reloaded '+(weapon.name||'weapon')+' with '+moved+' from '+(ammo.name||'ammo')+'.'+(removed?' Removed empty NO REFILL '+removed+'.':'')};
+  }
+  function reloadEquipped(which){return reloadSlot(S().equipment?.[which]);}
+  function spendAmmoSlot(idx,amount=1){
+    const slot=normalizeEquipIndex(idx),item=slot===null?null:S().inventory?.[slot];
+    if(!item||!isWeaponClass(item)||!itemAllows(item,'fire'))return {ok:false,message:'Select a weapon with Spend Ammo enabled.'};
+    const c=counts(item);
+    if(!Number.isInteger(amount)||amount<1||c.max<=0||c.cur<amount)return {ok:false,message:'Not enough loaded ammo, or no tracked ammo capacity.'};
+    setCur(item,c.cur-amount);const removed=removeIfNoRefillZero(slot);
+    return {ok:true,message:(item.name||'Weapon')+' ammo '+c.cur+' → '+(c.cur-amount)+'.'+(removed?' Removed empty NO REFILL '+removed+'.':'')};
+  }
 
   /* Push: after a roll, +2 dice for +1 Stress. Refused at full Stress. -> {ok, message} */
   function canPush(){ const s=S(); return toNum(s.stats.stress,0)<stressCap(s.character.level); }
@@ -257,7 +284,7 @@ function create(getState, opts) {
     rawAttackSteps, rollDicePool, countSuccesses, outcomeForCheck, woundRollPenalty, conditionRollEffects, buildPool,
     ensurePlayAutomationState, playSnapshot, actionChanges, actionValue, playTimeStamp, clearSlotByIndex, removeIfNoRefillZero,
     sameValue, deriveCore, resolveAttack, attackPool, pushRoll, recordAction, act, canUndo, undoLast, canUse, useSlot, usePreview,
-    canReload, reloadEquipped, canPush, payPush
+    canReload, canReloadSlot, reloadSlot, reloadEquipped, spendAmmoSlot, canPush, payPush
   };
 }
 window.GRAKK_ENGINE = { create, SLOT_COUNT, BASE_UNLOCKED_SLOTS, COUNT_LIMIT, EMPTY_ITEM };

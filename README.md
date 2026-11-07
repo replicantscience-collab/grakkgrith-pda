@@ -1,5 +1,7 @@
 # GRAKKGRITH PDA
 
+Concurrent development: read [COORDINATION.md](COORDINATION.md) for the current integration branch, ownership, and test status.
+
 The companion web app for GRAKKGRITH, the Adyta tabletop RPG: character setup, character sheet, inventory, rolls, downtime, campaign state, district dossiers, and the city and district maps. It installs on phones and desktops as a PWA and works offline after the first visit.
 
 ## Layout

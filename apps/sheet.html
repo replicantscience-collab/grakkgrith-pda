@@ -306,7 +306,7 @@ function attack(which) {
       const out = (dice, pushed) => { const n = E.countSuccesses(dice), hit = E.resolveAttack(n, v.def, a.category, v.soak, v.trait, a.ap); CUR.combatFlags = CUR.combatFlags || {}; CUR.combatFlags.grazeActive = hit.kind === 'Graze' || hit.kind === 'Armored Graze';
         showRoll({ title: name + ' Attack', kind: hit.kind, summary: hit.summary, dice, notes: [...(pushed ? ['Pushed: +1 Stress, two dice added.'] : []), ...hit.notes, ...a.pool.wound.notes, ...a.pool.cond.notes], breakdown: 'Pool ' + poolText(a.pool, a.profile.attr, a.profile.skill) + (pushed ? ' | Push +2' : '') + ' | Successes ' + n + ' vs Defense ' + v.def + ' | ' + String(a.category).toUpperCase() + ' / AP ' + a.ap + (n > v.def ? ' | Raw ' + hit.raw + ', trait ' + (hit.traitDelta >= 0 ? '+' : '') + hit.traitDelta + ', soak ' + hit.effectiveSoak + ' = ' + hit.finalSteps : ''), history: 'Successes ' + n + ' vs Defense ' + v.def + ' / ' + hit.summary + (pushed ? ' after Push' : '') }); };
       out(first, false); PENDING = extra => out(first.concat(extra), true);
-      if (a.spends) E.setCur(a.item, a.ammo.cur - 1);
+      if (a.spends) E.spendAmmoSlot(CUR.equipment[which]);
       return msg = name + ' attack rolled.' + (a.spends ? ' Ammo ' + a.ammo.cur + ' → ' + (a.ammo.cur - 1) + '.' : '');
     });
     if (msg) toast(msg);
