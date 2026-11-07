@@ -1,8 +1,6 @@
-// GRAKKGRITH Service Worker v84
-// Caches the app for offline use. Cache busts on version bump.
-// Maps are not downloaded up front: each one is saved the first time you open it (see fetch below).
-
-const CACHE_NAME = 'grakkgrith-v84';
+// GRAKKGRITH Service Worker: consolidated player actions and current main
+// Maps remain lazy-cached. Keep the combined asset list when integrating branches.
+const CACHE_NAME = 'grakkgrith-consolidation-20261107';
 const ASSETS = [
   './',
   './index.html',
@@ -25,6 +23,7 @@ const ASSETS = [
   './apps/radio.html',
   './apps/radio.js',
   './apps/intro.js',
+  './apps/engine.js',
   './apps/start.html',
   './apps/corps.html',
   './apps/jobs.html',

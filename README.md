@@ -1,5 +1,7 @@
 # GRAKKGRITH PDA
 
+Concurrent development: read [COORDINATION.md](COORDINATION.md) for the current integration branch, ownership, and test status.
+
 The companion web app for GRAKKGRITH, the Adyta tabletop RPG: character setup, character sheet, inventory, rolls, downtime, campaign state, district dossiers, and the city and district maps. It installs on phones and desktops as a PWA and works offline after the first visit.
 
 ## Layout
@@ -107,6 +109,23 @@ Changes stay in your browser until you do step 3.
 **Travel times** marked "estimate" aren't printed on any map. Edit `routes` in `places.json` (`walk` and `tram` are minutes) when the real numbers are known.
 
 ## Changing anything else
+
+### Player-sheet actions
+
+The sheet's **Now** panel offers skill rolls, equipped attacks, reloads, item use,
+and Undo. Skill and attack previews show the dice pool and accept situational
+modifiers. Attacks spend one round for weapons with tracked ammunition; Push
+adds dice and stress without spending another round. Use previews the selected
+card's recovery and remaining uses. Reload uses the selected matching ammo source.
+
+Undo preserves unrelated edits and refuses to overwrite changed values or
+replacement gear. Rolls remain in history. Old snapshot-only undo entries cannot
+be safely reversed by the new controls. Back up a character before moving between
+different development versions.
+
+For concurrent Claude/Codex work, read
+[`docs/PLAYER_ACTIONS_HANDOFF.md`](docs/PLAYER_ACTIONS_HANDOFF.md) for ownership,
+shared files, integration notes, and verification evidence.
 
 - **Bump the cache** whenever you change a file: edit `CACHE_NAME` in `sw.js` (`grakkgrith-v41` → `grakkgrith-v42`) so installed copies pick up the update.
 - **Adding a file** that should work offline: add it to the `ASSETS` list in `sw.js`. Maps and other big images stay off that list; they are saved the first time someone opens them, so a first visit stays small (about 2 MB).
