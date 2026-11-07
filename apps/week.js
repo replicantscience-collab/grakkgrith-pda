@@ -48,7 +48,7 @@
   function defaults(s) {
     const life = (s.character && s.character.life) || '';
     return { v: 1, housing: /Corporate Agent|On the Books/.test(life) ? 'mixed' : /Edge Dweller/.test(life) ? 'none' : 'commons',
-      gear: 'light', chrome: 'none', lastWeek: null, band: 'clean', mail: [], debts: [], log: [], sessionsStarted: 0 };
+      gear: 'light', chrome: 'none', lastWeek: null, band: 'clean', mail: [], debts: [], log: [], sessionsStarted: 0, home: null };
   }
   function ensure(s) { if (!s.week || typeof s.week !== 'object') s.week = defaults(s); const w = s.week; for (const [k, v] of Object.entries(defaults(s))) if (w[k] === undefined) w[k] = v; return w; }
   function log(w, aMs, text) { w.log.unshift({ at: aMs, text }); w.log.length = Math.min(w.log.length, 60); }
@@ -58,6 +58,44 @@
     return [{ name: h.name, credits: h.credits }, { name: W.week.food.name, credits: W.week.food.credits }, { name: g.name, credits: g.credits }, { name: c.name, credits: c.credits }].filter(l => l.credits > 0);
   }
   function weeklyTotal(W, w) { return billLines(W, w).reduce((a, l) => a + l.credits, 0); }
+  /* Who the bills go to: the landlord of the place you rent, once you've moved in somewhere (and pay rent there). */
+  function creditorFor(W, w) { const h = costRow(W.week.housing, w.housing); return (w.home && w.home.landlordName && h.credits > 0) ? w.home.landlordName : (h.creditor || 'The city'); }
+
+  /* ---------- home: renting a place on the map ----------
+     Explore calls moveIn with everything Mail needs (landlord name, tier, ladder length, letters), so this file
+     never needs data/landlords.json. Missed rent climbs the landlord's ladder one step per unpaid week:
+     missed, review, bastion (a scene hook), lost (moved to Housing Authority emergency accommodation). */
+  const LADDER = ['missed', 'review', 'bastion', 'lost'], STEP_GAP = 5 * DAY;
+  function moveIn(s, W, home, aMs) {
+    const w = ensure(s);
+    if (!home || !home.place || !home.landlordName || !W.week.housing.some(h => h.id === home.tier)) return { ok: false, msg: 'That place is not for rent.' };
+    if (w.home && w.home.place === home.place && w.home.tier === home.tier) return { ok: false, msg: 'You already live here.' };
+    const was = w.home;
+    w.home = { place: home.place, placeName: home.placeName || home.place, landlordId: home.landlordId || null, landlordName: home.landlordName, type: home.type || null,
+      tier: home.tier, ladder: Math.max(0, Math.min(4, num(home.ladder, 4))), letters: home.letters || {}, floor: home.floor || null, since: aMs, behind: 0 };
+    w.housing = home.tier;
+    log(w, aMs, `${was ? `Moved out of ${was.placeName}. ` : ''}Moved into ${w.home.placeName}. Rent goes to ${w.home.landlordName} from next week's bill.`);
+    return { ok: true, msg: `You live at ${w.home.placeName} now.` };
+  }
+  function letterFor(home, key) { const L = home.letters || {}; for (let i = LADDER.indexOf(key); i >= 0; i--) if (L[LADDER[i]]) return L[LADDER[i]]; return null; }
+  function rentLadder(W, s, aMs, events) {
+    const w = s.week, h = w.home; if (!h || !h.ladder) return;
+    // One step at a time, at least STEP_GAP apart: coming back after weeks away brings one letter, not an eviction.
+    if (h.lastStepAt != null && aMs - h.lastStepAt < STEP_GAP) return;
+    h.behind = (h.behind || 0) + 1; h.lastStepAt = aMs;
+    const key = LADDER[Math.min(h.behind, h.ladder) - 1], L = letterFor(h, key); if (!L) return;
+    const ctx = { landlord: h.landlordName, place: h.placeName };
+    if (key === 'bastion') {
+      const m = { id: uid('n', aMs, w.mail.length), kind: 'crisis', noticeId: 'rent-bastion', band: 'attention', from: `Bastion Dynamics, for ${h.landlordName}`, title: fill(L.title, ctx), body: fill(L.body, ctx), issued: aMs, due: null, fine: 0, appeal: false, status: 'open', why: `${h.behind} weeks behind on rent` };
+      w.mail.unshift(m); events.push(m); log(w, aMs, `Rent: ${h.landlordName} has called Bastion.`);
+    } else if (key === 'lost') {
+      events.push(inform(s, aMs, h.landlordName, fill(L.title, ctx), fill(L.body, ctx)));
+      const f = h.floor || {}; w.lastHome = { place: h.place, placeName: h.placeName, landlordName: h.landlordName, lost: aMs };
+      w.home = null; w.housing = W.week.housing.some(x => x.id === f.tier) ? f.tier : 'none';
+      if (f.letter) events.push(inform(s, aMs, f.name || 'Adyta Housing Authority', fill(f.letter.title, ctx), fill(f.letter.body, ctx)));
+      log(w, aMs, `Lost the unit at ${h.placeName}. Moved to ${f.name || 'emergency accommodation'}. Debts come along.`);
+    } else events.push(inform(s, aMs, h.landlordName, fill(L.title, ctx), fill(L.body, ctx)));
+  }
 
   /* ---------- notices ---------- */
   function pickNotice(W, s, bandId, aMs) {
@@ -69,7 +107,7 @@
   }
   function issueNotice(W, s, bandId, aMs, why) {
     const w = s.week, n = pickNotice(W, s, bandId, aMs); if (!n) return null;
-    const ctx = { investigator: W.investigators[hash((s.character && s.character.name) || 'x') % W.investigators.length], creditor: costRow(W.week.housing, w.housing).creditor || 'Your landlord' };
+    const ctx = { investigator: W.investigators[hash((s.character && s.character.name) || 'x') % W.investigators.length], creditor: (w.home && w.home.landlordName) || costRow(W.week.housing, w.housing).creditor || 'Your landlord' };
     const crisis = bandId === 'crisis';
     const m = { id: uid('n', aMs, w.mail.length), kind: crisis ? 'crisis' : 'notice', noticeId: n.id, band: bandId, from: fill(n.from, ctx), title: fill(n.title, ctx), body: fill(n.body, ctx),
       issued: aMs, due: crisis ? null : aMs + (n.days || 3) * DAY, fine: n.fine || 0, appeal: !!n.appeal, appealed: false,
@@ -91,7 +129,7 @@
       if (from > w.lastWeek + 1) { log(w, now, `You were away ${missed} weeks. The city billed the last ${W.week.maxCatchUpWeeks}.`); }
       for (let k = from; k <= cur; k++) {
         const lines = billLines(W, w), total = lines.reduce((a, l) => a + l.credits, 0), start = fresh ? now : weekStart(k);
-        if (total > 0) { const b = { id: uid('b', start, k), kind: 'bill', week: k, from: 'Cost of living', title: `Week of ${fmt(weekStart(k)).split(' ').slice(0, 2).join(' ')}`, lines, total, issued: start, due: start + W.week.billDueDays * DAY, creditor: costRow(W.week.housing, w.housing).creditor || 'The city', status: 'open' }; w.mail.unshift(b); events.push(b); log(w, start, `Bills: ${total} credits due.`); }
+        if (total > 0) { const b = { id: uid('b', start, k), kind: 'bill', week: k, from: 'Cost of living', title: `Week of ${fmt(weekStart(k)).split(' ').slice(0, 2).join(' ')}`, lines, total, issued: start, due: start + W.week.billDueDays * DAY, creditor: creditorFor(W, w), status: 'open' }; const L = costRow(W.week.housing, w.housing).landlord; if (L) b.landlord = L; w.mail.unshift(b); events.push(b); log(w, start, `Bills: ${total} credits due.`); }
         // Weekly Heat mail: the system keeps noticing you while Heat is 2+ (crisis is not reissued weekly)
         // (only once you were already in that band; rising into a band is handled below)
         const b2 = band(W, heat(s));
@@ -102,7 +140,14 @@
     // 2. Deadlines
     for (const m of [...w.mail]) {
       if (m.status !== 'open' || m.due == null || now < m.due) continue;
-      if (m.kind === 'bill') { m.status = 'unpaid'; openDebt(s, m.creditor, m.total, now, `Unpaid bills, ${m.title}`); events.push(m); }
+      if (m.kind === 'bill') {
+        // A landlord with a hook (The Hive: Ma Dresk) gives a grace week, then calls in a favor, before rent becomes Debt.
+        const L = m.landlord;
+        if (L && L.graceDays && !m.graced) { m.graced = now; m.due = now + L.graceDays * DAY; inform(s, now, m.creditor, 'A week\'s grace', L.grace); events.push(m); continue; }
+        if (L && L.favorDays && !m.favor) { m.favor = { asked: now }; m.due = now + L.favorDays * DAY; inform(s, now, m.creditor, 'Calling in a favor', L.favor); events.push(m); continue; }
+        m.status = 'unpaid'; openDebt(s, m.creditor, m.total, now, `Unpaid bills, ${m.title}`); events.push(m);
+        if (w.home && m.creditor === w.home.landlordName) rentLadder(W, s, now, events);
+      }
       else if (m.kind === 'notice') escalate(W, s, m, now, events);
     }
     // 3. Heat band changes: rising into a new band sends mail right away
@@ -168,7 +213,7 @@
     const amt = Math.min(d.amount, amount == null ? d.amount : Math.max(1, Math.round(amount)));
     if (credits(s) < amt) return { ok: false, msg: `You need ${amt} credits and have ${credits(s)}.` };
     setCredits(s, credits(s) - amt); d.amount -= amt;
-    if (d.amount <= 0) { d.cleared = aMs; log(w, aMs, `Debt to ${d.creditor} cleared.`); w.debts = w.debts.filter(x => x.amount > 0); return { ok: true, msg: `Debt to ${d.creditor} cleared.` }; }
+    if (d.amount <= 0) { d.cleared = aMs; if (w.home && d.creditor === w.home.landlordName && w.home.behind) { w.home.behind = 0; w.home.lastStepAt = null; log(w, aMs, `Square with ${d.creditor} again.`); } log(w, aMs, `Debt to ${d.creditor} cleared.`); w.debts = w.debts.filter(x => x.amount > 0); return { ok: true, msg: `Debt to ${d.creditor} cleared.` }; }
     log(w, aMs, `Paid ${amt} toward ${d.creditor}. ${d.amount} left.`); return { ok: true, msg: `${d.amount} credits still owed.` };
   }
   /* Plain information (a ward expired, something was found). Nothing to pay; just read it. */
@@ -183,10 +228,19 @@
     s.stats = s.stats || {}; const before = num(s.stats.stress); s.stats.stress = String(clamp(before + 1, 0, stressCap(s.character && s.character.level)));
     log(w, aMs, `Session started. Debt to ${owed.map(d => d.creditor).join(', ')}: Stress +1.`); return { stress: num(s.stats.stress) - before };
   }
-  function setCosts(s, patch) { const w = ensure(s); for (const k of ['housing', 'gear', 'chrome']) if (patch[k]) w[k] = patch[k]; }
+  function setCosts(s, patch, aMs) {
+    const w = ensure(s);
+    // Picking a different housing tier by hand means moving out of the place you rent.
+    if (patch.housing && w.home && patch.housing !== w.home.tier) { log(w, aMs ?? Date.now(), `Moved out of ${w.home.placeName}.`); w.home = null; }
+    for (const k of ['housing', 'gear', 'chrome']) if (patch[k]) w[k] = patch[k];
+  }
+  /* Bills whose landlord is waiting on a favor (see settle). */
+  function favors(s) { const w = s && s.week; return w ? w.mail.filter(m => m.kind === 'bill' && m.status === 'open' && m.favor && !m.favor.done) : []; }
+  /* A favor done in Downtime settles that bill: no credits change hands. */
+  function favorDone(s, id, aMs, how) { const m = find(s, id); if (!m || m.status !== 'open' || !m.favor) return { ok: false, msg: 'No favor owed on that.' }; m.favor.done = aMs; m.favor.how = how || ''; m.status = 'paid'; m.paidBy = 'favor'; m.closed = aMs; log(s.week, aMs, `${m.creditor}: favor done${how ? ' (' + how + ')' : ''}. ${m.title} settled.`); return { ok: true, msg: `${m.title} settled with a favor.` }; }
   function pending(s) { const w = s && s.week; if (!w) return 0; return w.mail.filter(m => m.status === 'open').length; }
   function owed(s) { const w = s && s.week; return w ? w.debts.reduce((a, d) => a + Math.max(0, d.amount), 0) : 0; }
 
-  const api = { DAY, WEEK, clockOffset, adytaNow, weekIndex, weekStart, fmt, untilText, band, heatCap, ensure, billLines, weeklyTotal, settle, pay, appeal, answer, payDebt, acknowledgeCrisis, inform, dismiss, sessionStart, setCosts, pending, owed, issueNotice };
+  const api = { DAY, WEEK, clockOffset, adytaNow, weekIndex, weekStart, fmt, untilText, band, heatCap, ensure, billLines, weeklyTotal, settle, pay, appeal, answer, payDebt, acknowledgeCrisis, inform, dismiss, sessionStart, setCosts, pending, owed, issueNotice, openDebt, creditorFor, moveIn, favors, favorDone };
   if (typeof module !== 'undefined' && module.exports) module.exports = api; else root.GRAKK_WEEK = api;
 })(typeof window !== 'undefined' ? window : globalThis);

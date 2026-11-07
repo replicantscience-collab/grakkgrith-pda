@@ -67,7 +67,7 @@ button.primary,.navPill.active{border-color:rgba(184,50,50,.75);background:linea
  <nav class="subNav" id="subNav" aria-label="Section pages" hidden></nav>
  <!-- Every screen still has its own button (and id) here; the section tabs and sub-tabs press them. -->
  <div id="legacyNav" hidden><button id="fullSheetBtn">Edit sheet</button><button id="itemsBtn">Item cards</button><button id="sheetBtn" data-help="">Character Sheet</button>
-  <button id="worldBtn">Start</button><button id="exploreBtn">Explore</button><button id="mailBtn">Mail</button><button id="makeBtn">Workshop</button>
+  <button id="worldBtn">Start</button><button id="exploreBtn">Explore</button><button id="mailBtn">Mail</button><button id="nightBtn">Downtime</button><button id="makeBtn">Workshop</button>
   <button id="gigsBtn">Pocket Change</button><button id="radioBtn">Radio Sewers</button><button id="guidesBtn">Guides</button><button id="cityBtn">City</button>
   <button id="missionsBtn">Missions</button><button id="factionsBtn">Factions</button><button id="loreBtn">Lore</button><button id="logsBtn">Logs</button><button id="stateBtn">State</button>
   <button id="quickstartBtn">Player Quickstart</button><button id="rulesBtn">Rules Reference</button><button id="fullRulesBtn">Full Rules</button><button id="buildBtn">Build Guide</button>
@@ -128,7 +128,7 @@ const SECTIONS=[
  {id:'missions',pages:[['jobs','Job Board','jobsBtn'],['gigs','Pocket Change','gigsBtn'],['radio','Radio Sewers','radioBtn']]},
  {id:'factions',pages:[['factions','Factions','factionsBtn'],['corps','Corporations','corpsBtn']]},
  {id:'lore',pages:[['lore','Lore','loreBtn'],['anchors','Anchors','anchorsBtn'],['cybernetics','Magic & tech','cyberneticsBtn'],['signalstickers','Stickers','signalStickersBtn']]},
- {id:'inventory',pages:[['player','Sheet','sheetBtn'],['make','Workshop','makeBtn'],['mail','Mail & bills','mailBtn'],['downtime','Logs','logsBtn']]}];
+ {id:'inventory',pages:[['player','Sheet','sheetBtn'],['night','Downtime','nightBtn'],['make','Workshop','makeBtn'],['mail','Mail & bills','mailBtn'],['downtime','Logs','logsBtn']]}];
 /* Pages reached from the character menu, not a sub-tab: they light up Inventory with no sub-tab picked. */
 const MENU_PAGES={character:'inventory',creator:'inventory',cityid:'inventory'};
 const MODE_ALIAS={fullsheet:'player',items:'make',world:'start',logs:'downtime',state:'downtime',city:'explore',missions:'jobs',fullrules:'rules',build:'quickstart'},LAST_PAGE={};
@@ -184,8 +184,14 @@ function enhanceCityAtlas(){
    'noble-heights':{title:'Noble Heights',tag:'estates / terraces / private grounds',src:new URL('./maps/official/noble-heights.jpg',location.href).href,read:'Old money, new fortunes, higher standards. Terraced estates climb toward the mountains: Northridge, Silverhallow, Vexley Manor, and the Fae houses of Moonspire and Arlencourt. Founder\'s Square, the Gilded Crescent and the Silver Arcade are where the district shows itself off.',wisdom:['Everything here is somebody\'s private grounds.','The Fae households keep court at Moonspire and Arlencourt.','The rail runs along the bottom wall.','Down the stairs: the Tangle, Three Wires, the rooftop routes.']},
    'market-ring':{title:'Market Ring',tag:'canals / covered passages / proposed tram',src:new URL('./maps/official/market-ring.jpg',location.href).href,read:'Everything legal. Everything negotiable. Everything has a price. The Covered Market Passages and Market Square are the heart; Broker Frontage handles agents, contracts and credit; Wholesale Receiving links to Dockside.',wisdom:['The tram alignment is proposed, not running.','Delivery Courts keep the customer streets clear.','Across the Ashrun: Central Core.']},
    'dockside':{title:'Dockside',tag:'piers / warehouses / freight roads',src:new URL('./maps/official/dockside.jpg',location.href).href,read:'Freight, smugglers, opportunity. Central Piers and the dock yards move the cargo; Meridian Dispatch keeps the manifests; Tidecrew pilots know the waterfront. Keeper\'s Noodles is a permanent location.',wisdom:['Service Yards: authorized crews only.','Shift change at the Worker Forecourt.','Toward Far Shipyards: build it, break it, sell it twice.']},
-   'sewers-town':{title:'Sewers Town Undercity Map',tag:'canals / walkways / pipe gates / deep tunnels',src:new URL('./maps/sewers-town-district-map-deeper.jpg',location.href).href,read:'Sewers Town now includes the unconfirmed lower inset: navigable infrastructure above, unreliable Deep Tunnels below, route lines that break into dashed survey uncertainty, collapsed and flooded zones, Pipe 37 access, and notes warning that maps disagree past Gate 4.',wisdom:['Watch the currents.','Bridges are crowded at peak hours.','Some paths are one-way.','Deep tunnels unstable.','Maps disagree past Gate 4.','Ask before you go below the lights.']}
+   'sewers-town':{title:'Sewers Town Undercity Map',tag:'canals / walkways / pipe gates / deep tunnels',src:new URL('./maps/candidates/sewers-town-v2.jpg',location.href).href,read:'A continuous cutaway of the inhabited upper Sewers and the uncertain deeper layer: canal walkways, workshops, community markets, a Radio Sewers relay, and the descent beyond Gate 4. Nobody has a reliable map of the lower routes.',wisdom:['Watch the currents.','Bridges are crowded at peak hours.','Some paths are one-way.','Deep tunnels unstable.','Maps disagree past Gate 4.','Ask before you go below the lights.']}
   };
+  // Additional atlas pages come from the shared map catalog; existing curated pages keep their notes.
+  for(const [id,m] of Object.entries(PLACES?.maps||{})){
+   if(m.kind==='city'||districtMaps[id])continue;
+   const d=PLACES.districts[m.district];
+   districtMaps[id]={title:m.title,tag:d?.tagline||m.short||'',src:new URL('./'+m.image,location.href).href,read:d?.atlas?.note||d?.tagline||m.title,wisdom:[]};
+  }
   const mount=doc.createElement('section');mount.id='expandedDistrictMaps';mount.className='districtMapStage';mount.innerHTML='<div class="cityMapHeader"><div><h2>District Map Pages</h2><p>Open a district, read the local notes, then use the full artwork as the briefing map.</p></div><div><span class="tag">CITY ATLAS</span></div></div><div class="districtMapToolbar" id="districtMapChoices"></div><div class="districtMapFrame"><div class="districtMapCanvas" id="districtMapCanvas"><img class="districtMapImg" id="districtMapImg" loading="eager" alt="Expanded district map"></div></div><div class="districtMapReadout" id="districtMapReadout"></div>';
   const after=doc.querySelector('.cityMapStage')||doc.querySelector('#routeMapMount')||doc.querySelector('#panel');after.insertAdjacentElement('afterend',mount);
   const nav=mount.querySelector('#districtMapChoices');nav.innerHTML=Object.keys(districtMaps).map(id=>'<button type="button" class="districtChoice" data-district-choice="'+id+'">'+h(districtMaps[id].title)+'</button>').join('');
@@ -227,6 +233,9 @@ document.getElementById('exploreBtn').onclick=()=>showExplore();
 // in the background (not while the sheet or Setup is open, so it never saves over their unsaved edits).
 function showMail(){if(currentUrl){URL.revokeObjectURL(currentUrl);currentUrl=''}mode='mail';frame.src='./apps/week.html';setActiveShell('mail');statusEl.textContent=''}
 document.getElementById('mailBtn').onclick=()=>showMail();
+// Downtime (apps/night.html): the two actions between sessions, played as a night in one district.
+function showNight(){if(currentUrl){URL.revokeObjectURL(currentUrl);currentUrl=''}mode='night';frame.src='./apps/night.html';setActiveShell('night');statusEl.textContent=''}
+document.getElementById('nightBtn').onclick=()=>showNight();
 function showMake(){if(currentUrl){URL.revokeObjectURL(currentUrl);currentUrl=''}mode='make';frame.src='./apps/make.html';setActiveShell('make');statusEl.textContent=''}
 document.getElementById('makeBtn').onclick=()=>showMake();
 document.getElementById('itemsBtn').onclick=()=>showItems();
@@ -239,7 +248,7 @@ const weekReady=Promise.all([fetch('./data/week.json').then(r=>r.json()),fetch('
 async function tickWeek(){await appsReady;await weekReady;const WK=window.GRAKK_WEEK,badge=document.getElementById('mailBadge');if(!WK||!WEEK_DATA||!PLACES)return;
  let s=null;try{s=JSON.parse(localStorage.getItem(TOOL_KEY))}catch(e){}
  const named=s&&s.character&&String(s.character.name||'').trim();
- if(named&&!['player','fullsheet','items','creator','mail','make','gigs','radio','start'].includes(mode)){const MK=window.GRAKK_MAKE,GG=window.GRAKK_GIGS,t=WK.adytaNow(PLACES.clock,Date.now()),a=WK.settle(s,WEEK_DATA,PLACES.clock,Date.now()).length,b=MK&&MAKE_DATA?MK.settle(s,MAKE_DATA,WEEK_DATA,t).length:0,c=GG&&GIGS_DATA?GG.settle(s,GIGS_DATA,t).length:0;if(a||b||c||!s.week)localStorage.setItem(TOOL_KEY,JSON.stringify(s))}
+ if(named&&!['player','fullsheet','items','creator','mail','make','gigs','radio','start','night'].includes(mode)){const MK=window.GRAKK_MAKE,GG=window.GRAKK_GIGS,t=WK.adytaNow(PLACES.clock,Date.now()),a=WK.settle(s,WEEK_DATA,PLACES.clock,Date.now()).length,b=MK&&MAKE_DATA?MK.settle(s,MAKE_DATA,WEEK_DATA,t).length:0,c=GG&&GIGS_DATA?GG.settle(s,GIGS_DATA,t).length:0;if(a||b||c||!s.week)localStorage.setItem(TOOL_KEY,JSON.stringify(s))}
  const n=named?WK.pending(s):0;badge.hidden=!n;badge.textContent=n?String(n):'';document.querySelectorAll('[data-mailcount]').forEach(x=>x.textContent=n?String(n):'')}
 tickWeek();setInterval(tickWeek,60000);
 function showGuides(){if(currentUrl){URL.revokeObjectURL(currentUrl);currentUrl=''}mode='guides';frame.src='./apps/guide.html';setActiveShell('guides');statusEl.textContent=''}

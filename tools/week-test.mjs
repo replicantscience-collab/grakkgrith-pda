@@ -80,5 +80,65 @@ WK.settle(s, W, clock, base + 70 * D, one);
 ok('a long absence bills at most 4 weeks', s.week.mail.filter(m => m.kind === 'bill').length === 5, s.week.mail.filter(m => m.kind === 'bill').length);
 ok('Heat never passes the level cap', (() => { const t = char(); t.stats.heat = '6'; WK.ensure(t); t.week.band = 'crisis'; const x = t.week; const nn = WK.issueNotice(W, t, 'scrutiny', 0, ''); nn.due = 0; WK.settle(t, W, clock, base, one); return Number(t.stats.heat) <= 6; })());
 
+// The Hive: Ma Dresk gives a week's grace, then calls in a favor, before rent becomes Debt
+{
+  let h = char(); WK.ensure(h); WK.setCosts(h, { housing: 'hive' }); h.coins = { credits: '0' };
+  WK.settle(h, W, clock, base, one);
+  const b = h.week.mail.find(m => m.kind === 'bill');
+  ok('a Hive bill names Ma Dresk', b.creditor === 'Ma Dresk' && b.landlord && b.landlord.graceDays === 7);
+  WK.settle(h, W, clock, base + 2 * D + H, one);
+  ok('late Hive rent gets a grace week, not Debt', b.status === 'open' && b.graced && h.week.debts.length === 0 && h.week.mail.some(m => m.title === 'A week\'s grace'), JSON.stringify(h.week.debts));
+  WK.settle(h, W, clock, base + 9 * D + 2 * H, one);
+  ok('after the grace week Ma Dresk calls in a favor', b.status === 'open' && b.favor && WK.favors(h).length === 1 && h.week.debts.length === 0);
+  const r = WK.favorDone(h, b.id, base, 'Fix her walk-in');
+  ok('a favor settles the bill with no credits', r.ok && b.status === 'paid' && b.paidBy === 'favor' && h.coins.credits === '0' && WK.favors(h).length === 0);
+  let h2 = char(); WK.ensure(h2); WK.setCosts(h2, { housing: 'hive' }); h2.coins = { credits: '0' };
+  WK.settle(h2, W, clock, base, one); const b2 = h2.week.mail.find(m => m.kind === 'bill');
+  WK.settle(h2, W, clock, base + 2 * D + H, one); WK.settle(h2, W, clock, base + 9 * D + 2 * H, one); WK.settle(h2, W, clock, base + 16 * D + 3 * H, one);
+  ok('an ignored favor becomes Debt to Ma Dresk', b2.status === 'unpaid' && h2.week.debts.some(d => d.creditor === 'Ma Dresk'), JSON.stringify(h2.week.debts));
+  let h3 = char(); WK.ensure(h3); WK.setCosts(h3, { housing: 'hive' }); h3.coins = { credits: '500' };
+  WK.settle(h3, W, clock, base, one); const b3 = h3.week.mail.find(m => m.kind === 'bill'); WK.settle(h3, W, clock, base + 2 * D + H, one);
+  ok('rent can still be paid in cash during the grace week', WK.pay(h3, b3.id, base).ok && b3.status === 'paid');
+  let c = char(); c.coins = { credits: '0' }; WK.settle(c, W, clock, base, one); WK.settle(c, W, clock, base + 2 * D + H, one);
+  ok('plain Commons rent still goes straight to Debt', c.week.debts.length === 1 && !c.week.mail.find(m => m.kind === 'bill').graced);
+}
+
+// Renting a home: bills go to the landlord, missed rent climbs their ladder one step at a time.
+const LL = JSON.parse(readFileSync(new URL('../data/landlords.json', import.meta.url)));
+const homeFor = id => { const l = LL.landlords.find(x => x.id === id), L = {}; for (const k of ['missed', 'review', 'bastion', 'lost']) { const o = (l.letters || {})[k] || (LL.letters[l.type] || {})[k]; if (o) L[k] = o; }
+  return { place: l.places[0], placeName: 'Test Place', landlordId: l.id, landlordName: l.name, type: l.type, tier: l.tier, ladder: LL.types[l.type].ladder, letters: L, floor: LL.floor }; };
+s = char({ coins: { credits: '0' } });
+WK.settle(s, W, clock, base, one);
+ok('moving in sets the rent tier and the landlord', WK.moveIn(s, W, homeFor('halvard-mercy-holdings'), base).ok && s.week.housing === 'commons' && s.week.home.landlordName === 'Halvard Mercy Holdings');
+ok('moving into the same place twice is refused', WK.moveIn(s, W, homeFor('halvard-mercy-holdings'), base).ok === false);
+const mon = k => WK.weekStart(WK.weekIndex(WK.adytaNow(clock, base)) + k) - WK.clockOffset(clock);   // real ms of the Monday k weeks on
+WK.settle(s, W, clock, mon(1) + H, one);
+ok("next week's bill goes to the landlord", s.week.mail.find(m => m.kind === 'bill' && m.status === 'open').creditor === 'Halvard Mercy Holdings');
+const letters = () => s.week.mail.filter(m => m.from === 'Halvard Mercy Holdings' || /^Bastion Dynamics, for/.test(m.from));
+WK.settle(s, W, clock, mon(1) + 3 * D, one);
+ok('unpaid rent: first letter is "missed"', letters().length >= 1 && /Payment not received/.test(letters()[0].title), letters().map(m => m.title).join('|'));
+WK.settle(s, W, clock, mon(2) + 3 * D, one);
+ok('second unpaid week: "review"', /under review/.test(letters()[0].title));
+WK.settle(s, W, clock, mon(3) + 3 * D, one);
+ok('third unpaid week: Bastion, as a scene hook for the session', letters()[0].kind === 'crisis' && /Bastion/.test(letters()[0].from) && /Eviction Interference/.test(letters()[0].body));
+WK.settle(s, W, clock, mon(4) + 3 * D, one);
+ok('fourth unpaid week: the unit is lost and the floor catches you', s.week.home === null && s.week.housing === 'authority' && s.week.mail.some(m => m.from === 'Adyta Housing Authority') && s.week.lastHome.placeName === 'Test Place');
+ok('debts come along', WK.owed(s) > 0);
+// Coming back after weeks away brings one letter, not an eviction.
+s = char({ coins: { credits: '0' } }); WK.settle(s, W, clock, base, one); WK.moveIn(s, W, homeFor('brightlane-residential'), base);
+WK.settle(s, W, clock, mon(5) + 3 * D, one);
+ok('a long absence climbs one step, not four', s.week.home && s.week.home.behind === 1 && s.week.mail.filter(m => m.from === 'Brightlane Residential').length === 1, JSON.stringify(s.week.home && s.week.home.behind));
+// Family-run landlords stop at "review".
+s = char({ coins: { credits: '0' } }); WK.settle(s, W, clock, base, one); WK.moveIn(s, W, homeFor('ma-dresk'), base);
+for (let k = 1; k <= 6; k++) WK.settle(s, W, clock, mon(k) + 3 * D, one);
+ok('Ma Dresk never calls Bastion', s.week.home && !s.week.mail.some(m => /Bastion/.test(m.from)) && s.week.mail.some(m => m.title === 'Favor time'));
+// Paying off the landlord resets the ladder.
+const debt = s.week.debts.find(d => d.creditor === 'Ma Dresk'); s.coins.credits = String(debt.amount);
+WK.payDebt(s, debt.id, mon(7));
+ok('paying the landlord back resets the ladder', s.week.home.behind === 0);
+// Choosing a different tier by hand means moving out.
+WK.setCosts(s, { housing: 'mixed' }, mon(7));
+ok('picking another housing tier moves you out', s.week.home === null && s.week.housing === 'mixed');
+
 console.log(fails ? `${passes} passed, ${fails} failed.` : `${passes} week checks passed.`);
 process.exit(fails ? 1 : 0);

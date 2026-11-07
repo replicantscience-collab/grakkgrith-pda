@@ -17,6 +17,21 @@
         "creditor": "Commons landlord"
       },
       {
+        "id": "hive",
+        "name": "The Hive, Low Halo (Commons)",
+        "credits": 40,
+        "creditor": "Ma Dresk",
+        "status": "draft",
+        "note": "Rulebook Commons price (40 cr). The landlord rule (a week's grace, then a favor) is from Eko's Hive notes; needs Nib's OK to count as canon.",
+        "place": "low-halo--the-hive",
+        "landlord": {
+          "graceDays": 7,
+          "favorDays": 7,
+          "grace": "Ma Dresk gives you one week's grace on this rent. After that, she calls in a favor.",
+          "favor": "Ma Dresk is calling in a favor: fix her walk-in, run a parcel, or scare off a debt collector. Do it in Downtime before this is due, or pay. Ignore it and the rent becomes Debt."
+        }
+      },
+      {
         "id": "mixed",
         "name": "Decent housing, mixed district",
         "credits": 80,
@@ -35,6 +50,14 @@
         "creditor": "",
         "status": "draft",
         "note": "Edge Dwellers and the like: off-registry, no rent, and anything needing a formal address is Hard."
+      },
+      {
+        "id": "authority",
+        "name": "Housing Authority emergency accommodation",
+        "credits": 0,
+        "creditor": "",
+        "status": "draft",
+        "note": "Where you land if you lose your home: a real address, a waitlist, no rent for now."
       }
     ],
     "gear": [
