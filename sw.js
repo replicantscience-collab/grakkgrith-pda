@@ -1,8 +1,8 @@
-// GRAKKGRITH Service Worker v88
+// GRAKKGRITH Service Worker v89
 // Caches the app for offline use. Cache busts on version bump.
 // Maps are not downloaded up front: each one is saved the first time you open it (see fetch below).
 
-const CACHE_NAME = 'grakkgrith-v88';
+const CACHE_NAME = 'grakkgrith-v89';
 const ASSETS = [
   './',
   './index.html',
@@ -15,6 +15,7 @@ const ASSETS = [
   './apps/week.html',
   './apps/week.js',
   './apps/homes.js',
+  './apps/codes.js',
   './apps/make.html',
   './apps/sheet.html',
   './apps/cityid.html',

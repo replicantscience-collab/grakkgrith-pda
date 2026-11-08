@@ -436,6 +436,206 @@
       ],
       "effect": "The first threat against them this week meets you first. Lawful work: Heat only comes from what happens if it turns violent.",
       "adjudication": "auto"
+    },
+    {
+      "id": "code-scrub-ghost",
+      "class": "Ghost",
+      "kind": "item",
+      "name": "Code scrub kit",
+      "summary": "A one-use kit that gives an item a fresh code and kills the old one. Rewrites the item's code in the registry.",
+      "roll": {
+        "attribute": "wit",
+        "skill": "hack",
+        "difficulty": 2
+      },
+      "costs": {
+        "credits": 20
+      },
+      "options": [
+        "Connected",
+        "Restricted",
+        "Corporate / Military"
+      ],
+      "optionLabel": "Kit grade (cleans items up to)",
+      "tiers": {
+        "Connected": {
+          "grade": "connected",
+          "difficulty": 2,
+          "credits": 20,
+          "stress": 0,
+          "legality": "lawful"
+        },
+        "Restricted": {
+          "grade": "restricted",
+          "difficulty": 3,
+          "credits": 60,
+          "stress": 0,
+          "legality": "restricted"
+        },
+        "Corporate / Military": {
+          "grade": "corporate",
+          "difficulty": 4,
+          "credits": 150,
+          "stress": 1,
+          "legality": "restricted"
+        }
+      },
+      "kit": true,
+      "legality": "lawful",
+      "value": 0,
+      "effect": "Use it on one of your own items: the item gets a new code that only you see, its old code dies, and any trail on it ends. Trade the kit by its own code.",
+      "notes": "A partial success (one short) makes a kit one grade lower than you tried for.",
+      "adjudication": "auto"
+    },
+    {
+      "id": "code-scrub-wrench",
+      "class": "Wrench",
+      "kind": "item",
+      "name": "Code scrub kit",
+      "summary": "A one-use kit that gives an item a fresh code and kills the old one. Re-stamps the item itself.",
+      "roll": {
+        "attribute": "wit",
+        "skill": "forge",
+        "difficulty": 2
+      },
+      "costs": {
+        "credits": 20
+      },
+      "options": [
+        "Connected",
+        "Restricted",
+        "Corporate / Military"
+      ],
+      "optionLabel": "Kit grade (cleans items up to)",
+      "tiers": {
+        "Connected": {
+          "grade": "connected",
+          "difficulty": 2,
+          "credits": 20,
+          "stress": 0,
+          "legality": "lawful"
+        },
+        "Restricted": {
+          "grade": "restricted",
+          "difficulty": 3,
+          "credits": 60,
+          "stress": 0,
+          "legality": "restricted"
+        },
+        "Corporate / Military": {
+          "grade": "corporate",
+          "difficulty": 4,
+          "credits": 150,
+          "stress": 1,
+          "legality": "restricted"
+        }
+      },
+      "kit": true,
+      "legality": "lawful",
+      "value": 0,
+      "effect": "Use it on one of your own items: the item gets a new code that only you see, its old code dies, and any trail on it ends. Trade the kit by its own code.",
+      "notes": "A partial success (one short) makes a kit one grade lower than you tried for.",
+      "adjudication": "auto"
+    },
+    {
+      "id": "code-scrub-signal",
+      "class": "Signal",
+      "kind": "item",
+      "name": "Code scrub kit",
+      "summary": "A one-use kit that gives an item a fresh code and kills the old one. Re-broadcasts the item under a new code through the relays.",
+      "roll": {
+        "attribute": "savvy",
+        "skill": "network",
+        "difficulty": 2
+      },
+      "costs": {
+        "credits": 20
+      },
+      "options": [
+        "Connected",
+        "Restricted",
+        "Corporate / Military"
+      ],
+      "optionLabel": "Kit grade (cleans items up to)",
+      "tiers": {
+        "Connected": {
+          "grade": "connected",
+          "difficulty": 2,
+          "credits": 20,
+          "stress": 0,
+          "legality": "lawful"
+        },
+        "Restricted": {
+          "grade": "restricted",
+          "difficulty": 3,
+          "credits": 60,
+          "stress": 0,
+          "legality": "restricted"
+        },
+        "Corporate / Military": {
+          "grade": "corporate",
+          "difficulty": 4,
+          "credits": 150,
+          "stress": 1,
+          "legality": "restricted"
+        }
+      },
+      "kit": true,
+      "legality": "lawful",
+      "value": 0,
+      "effect": "Use it on one of your own items: the item gets a new code that only you see, its old code dies, and any trail on it ends. Trade the kit by its own code.",
+      "notes": "A partial success (one short) makes a kit one grade lower than you tried for.",
+      "adjudication": "auto"
+    },
+    {
+      "id": "code-scrub-broker",
+      "class": "Broker",
+      "kind": "item",
+      "name": "Code scrub kit",
+      "summary": "A one-use kit that gives an item a fresh code and kills the old one. Launders the item through a listing.",
+      "roll": {
+        "attribute": "savvy",
+        "skill": "negotiate",
+        "difficulty": 2
+      },
+      "costs": {
+        "credits": 20
+      },
+      "options": [
+        "Connected",
+        "Restricted",
+        "Corporate / Military"
+      ],
+      "optionLabel": "Kit grade (cleans items up to)",
+      "tiers": {
+        "Connected": {
+          "grade": "connected",
+          "difficulty": 2,
+          "credits": 20,
+          "stress": 0,
+          "legality": "lawful"
+        },
+        "Restricted": {
+          "grade": "restricted",
+          "difficulty": 3,
+          "credits": 60,
+          "stress": 0,
+          "legality": "restricted"
+        },
+        "Corporate / Military": {
+          "grade": "corporate",
+          "difficulty": 4,
+          "credits": 150,
+          "stress": 1,
+          "legality": "restricted"
+        }
+      },
+      "kit": true,
+      "legality": "lawful",
+      "value": 0,
+      "effect": "Use it on one of your own items: the item gets a new code that only you see, its old code dies, and any trail on it ends. Trade the kit by its own code.",
+      "notes": "A partial success (one short) makes a kit one grade lower than you tried for.",
+      "adjudication": "auto"
     }
   ],
   "deliveries": {
@@ -486,5 +686,52 @@
     ],
     "failHeat": 1,
     "blurb": "Take a run off the board, walk or tram it in Explore, and get paid when you arrive. Each run takes a downtime action."
+  },
+  "codes": {
+    "_about": "Item codes (design doc: Item Codes: Trading, Theft and Scrubbing). api is the item-code server's address; empty means trading isn't live yet.",
+    "api": "",
+    "grades": {
+      "connectedValue": 100
+    },
+    "cover": [
+      {
+        "id": "lift",
+        "label": "Lifted a code card",
+        "attribute": "reflex",
+        "skill": "pickpocket"
+      },
+      {
+        "id": "pull",
+        "label": "Pulled it off their comms",
+        "attribute": "wit",
+        "skill": "hack"
+      },
+      {
+        "id": "trick",
+        "label": "Bought it or tricked them",
+        "attribute": "savvy",
+        "skill": "deceive"
+      }
+    ],
+    "trace": [
+      {
+        "id": "intel",
+        "label": "Dig through records",
+        "attribute": "wit",
+        "skill": "intel"
+      },
+      {
+        "id": "hack",
+        "label": "Follow it through the network",
+        "attribute": "wit",
+        "skill": "hack"
+      },
+      {
+        "id": "street",
+        "label": "Ask around",
+        "attribute": "savvy",
+        "skill": "streetwise"
+      }
+    ]
   }
 }

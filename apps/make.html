@@ -10,6 +10,16 @@
 <style>
 input[type=text],input[type=number]{min-height:44px;width:100%;padding:8px 10px;border:1px solid rgba(118,80,45,.9);border-radius:6px;background:#0b0c16;color:var(--art-cream);font:16px var(--art-body)}
 input:focus,select:focus{outline:none;border-color:var(--art-cyan);box-shadow:0 0 0 3px rgba(34,218,228,.25)}
+.codes{margin:0 0 14px;padding:12px;border:1px solid var(--art-cyan);border-radius:8px;background:rgba(10,11,22,.82)}
+.codes > b{display:block;color:var(--art-cyan);font:700 13px var(--art-ui);letter-spacing:.1em;text-transform:uppercase}
+.codes .claim{display:flex;gap:8px;margin-top:8px}.codes .claim input{flex:1;min-width:0;font-family:ui-monospace,monospace;letter-spacing:.06em}
+.codes .take{margin-top:10px;padding:10px;border:1px solid var(--art-magenta);border-radius:8px;background:#2a1230;color:var(--art-cream)}
+.codes .take label{display:block;margin:8px 0 4px;font:700 12px var(--art-ui);letter-spacing:.08em;text-transform:uppercase}
+.code{display:flex;flex-wrap:wrap;align-items:center;gap:6px;margin:8px 0}
+.code code{padding:4px 8px;border-radius:4px;background:#0b0c16;color:#7ff6ff;font:700 15px ui-monospace,monospace;letter-spacing:.08em}
+.code .grade{font:700 11px var(--art-ui);letter-spacing:.1em;text-transform:uppercase;color:#7a2f6a}
+.code .scrub{display:flex;flex-wrap:wrap;gap:6px;align-items:center;width:100%}
+.code .note{width:100%;margin:0}
 .recipes{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:10px}
 .recipe{display:block;width:100%;text-align:left;text-transform:none;letter-spacing:.02em;padding:12px 14px;border:1px solid rgba(118,80,45,.85);border-left:4px solid var(--art-brass);border-radius:8px;background:rgba(10,11,22,.78);color:var(--art-cream);box-shadow:none}
 .recipe b{display:block;color:#ffe2a8;font:700 18px/1.2 var(--art-ui)}
@@ -62,10 +72,11 @@ input:focus,select:focus{outline:none;border-color:var(--art-cyan);box-shadow:0 
 <script>document.getElementById('toItems').onclick = () => parent.postMessage({ type: 'grakkgrith-nav', to: 'itemsBtn' }, '*');</script>
 <script src="./week.js"></script>
 <script src="./make.js"></script>
+<script src="./codes.js"></script>
 <script>
 'use strict';
 const KEY = 'grakkgrith_character_tool_v8_state';
-const WK = window.GRAKK_WEEK, MK = window.GRAKK_MAKE, $ = id => document.getElementById(id);
+const WK = window.GRAKK_WEEK, MK = window.GRAKK_MAKE, CO = window.GRAKK_CODES, $ = id => document.getElementById(id);
 const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
 let W = null, CLOCK = null, M = null, PLACES = null;
 const form = { recipe: '', name: '', target: '', option: '', district: '', visibility: '', permission: 'own' };
@@ -77,6 +88,39 @@ const diceHtml = d => d.map(x => `<span class="die ${x >= 5 ? 'hit' : ''}">${x}<
 function toast(msg, dice) { const t = $('toast'); t.innerHTML = esc(msg) + (dice ? `<div style="margin-top:6px">${diceHtml(dice)}</div>` : ''); t.classList.add('on'); clearTimeout(toast.t); toast.t = setTimeout(() => t.classList.remove('on'), 4600); }
 function settleAll(s) { return WK.settle(s, W, CLOCK, Date.now()).length + MK.settle(s, M, W, now()).length; }
 function act(fn) { const s = load(); if (!hasChar(s)) return; settleAll(s); const r = fn(s); save(s); render(); return r; }
+/* Item codes talk to the server, so their actions wait for an answer, then save a fresh copy. */
+let BUSY = false, PENDING_TAKE = null, QUEUE = Promise.resolve();
+/* One at a time, in order: each waits for the last, then works on a fresh copy of the save. */
+function actAsync(fn) { const run = async () => { BUSY = true; try { const s = load(); if (!hasChar(s)) return; settleAll(s); const r = await fn(s); save(s); return r; } finally { BUSY = false; render(); } }; const p = QUEUE.then(run, run); QUEUE = p.catch(() => {}); return p; }
+const here = s => { const pr = s.world && s.world.presence, d = pr && pr.location && pr.location.district; return d ? dName(d) : ''; };
+async function syncCodes(quiet) { if (!M || !CO.live(M)) return; const r = await actAsync(s => { const c = CO.ensure(s); if (!c.liveSince) c.liveSince = now(); return CO.sync(s, M, now()); }); if (r && r.lines && r.lines.length && !quiet) toast(r.lines.join(' ')); }
+function codesHtml(s) {
+  if (!CO.live(M)) return `<div class="codes"><b>Item codes</b><p class="note">Trading by code opens once the city's ledger (the code server) is live. Items you make from then on get a code you can hand over.</p></div>`;
+  let h = `<div class="codes"><b>Item codes</b><p class="note">Got a code? Claim it. If it was offered, it's a gift. If it wasn't, taking it is theft.${CO.staysOut(s, now()) ? ' You stay out of crime right now, so your Street and Connected gear can\'t be taken.' : ' You\'re in the crime game right now: any of your gear can be taken.'}</p>
+    <div class="claim"><input type="text" id="claimCode" placeholder="GRK-XXXX-XXXX-XX" aria-label="Item code" autocomplete="off" spellcheck="false"><button class="primary" id="claimBtn" ${BUSY ? 'disabled' : ''}>Claim</button></div>`;
+  if (PENDING_TAKE) {
+    const pt = PENDING_TAKE;
+    h += pt.protected ? `<p class="blockers">${esc(pt.name)} isn't being offered, and it's ${esc(CO.GRADE_NAMES[pt.grade] || pt.grade)} gear held by someone who stays out of crime. It can't be taken. <button class="ghost" id="takeCancel">OK</button></p>`
+      : `<div class="take"><p><b>${esc(pt.name)}</b> isn't being offered. Claiming it anyway is theft: you roll to cover your tracks, the owner only learns it's gone, and using it costs Heat until it's scrubbed.</p>
+        <label for="takeHow">How you got the code</label><select id="takeHow">${M.codes.cover.map(c => `<option value="${c.id}">${esc(c.label)} (${c.attribute[0].toUpperCase() + c.attribute.slice(1)} + ${c.skill[0].toUpperCase() + c.skill.slice(1)})</option>`).join('')}</select>
+        <div class="actions"><button class="primary" id="takeBtn">Take it</button><button class="ghost" id="takeCancel">Leave it</button></div></div>`;
+  }
+  return h + '</div>';
+}
+function codeLine(s, a) {
+  if (!CO.live(M) || a.kind !== 'item') return '';
+  const c = CO.ensure(s);
+  if (a.status === 'taken' && a.itemId) return `<div class="code"><b>Taken.</b> Trace it (one downtime action): <select id="traceHow-${a.id}">${M.codes.trace.map(t => `<option value="${t.id}">${esc(t.label)} (${t.attribute[0].toUpperCase() + t.attribute.slice(1)} + ${t.skill[0].toUpperCase() + t.skill.slice(1)})</option>`).join('')}</select><button data-trace="${a.id}" ${MK.downtimeLeft(s) ? '' : 'disabled'}>Trace</button></div>`;
+  if (a.status !== 'active') return '';
+  if (!a.code) return c.liveSince && a.created < c.liveSince ? '' : `<div class="code"><button data-mint="${a.id}">Get its code</button></div>`;
+  let h = `<div class="code"><span class="grade">${esc(CO.GRADE_NAMES[a.grade] || a.grade)}</span>${a.stolen ? '<span class="tag2">stolen</span>' : ''}${a.offered ? '<span class="tag2">offered</span>' : ''}
+    <code>${esc(a.code)}</code><button class="ghost" data-copy="${esc(a.code)}">Copy</button><button data-offer="${a.id}" data-on="${a.offered ? '' : '1'}">${a.offered ? 'Stop offering' : 'Offer it'}</button>`;
+  if (a.kit) {
+    const targets = MK.ensure(s).artifacts.filter(x => x.status === 'active' && x.code && !x.kit && CO.GRADES.indexOf(x.grade) <= CO.GRADES.indexOf(a.kitGrade));
+    h += targets.length ? `<span class="scrub">Cleans up to ${esc(CO.GRADE_NAMES[a.kitGrade])}: <select id="scrubTarget-${a.id}">${targets.map(x => `<option value="${x.id}">${esc(x.name)}${x.stolen ? ' (stolen)' : ''}</option>`).join('')}</select><button class="primary" data-scrub="${a.id}">Scrub it</button></span>` : `<span class="note">Cleans up to ${esc(CO.GRADE_NAMES[a.kitGrade])}. Nothing of yours to scrub yet.</span>`;
+  }
+  return h + `${a.offered ? '<p class="note">The next person to claim this code gets it.</p>' : CO.stealable(s, a, M, now()) ? '<p class="note">Anyone who gets this code can take it.</p>' : ''}</div>`;
+}
 const districts = () => Object.entries(PLACES.districts).map(([id, d]) => ({ id, name: d.name })).sort((a, b) => a.name.localeCompare(b.name));
 const dName = id => (PLACES.districts[id] || {}).name || '';
 
@@ -127,14 +171,14 @@ function boardHtml(s) {
 }
 
 function workHtml(s) {
-  const list = MK.ensure(s).artifacts; if (!list.length) return '<p class="muted">Nothing made yet. What you make lives here: where it is, who owns it, how long it lasts, and what happened to it.</p>';
+  const list = MK.ensure(s).artifacts; if (!list.length) return codesHtml(s) + '<p class="muted">Nothing made yet. What you make lives here: where it is, who owns it, how long it lasts, and what happened to it.</p>';
   const t = now(), live = list.filter(a => ['active', 'pending'].includes(a.status)), done = list.filter(a => !['active', 'pending'].includes(a.status)).slice(0, 20);
   const card = a => {
     const r = MK.recipe(M, a.recipe) || {}, open = ['active', 'pending'].includes(a.status);
     const tags = [a.kind, a.location && dName(a.location.district), a.visibility && M.visibility[a.visibility].name, a.permission === 'none' && 'unauthorized', a.legality === 'restricted' && 'restricted'].filter(Boolean).map(x => `<span class="tag2">${esc(x)}</span>`).join('');
     let btns = '';
     if (a.status === 'active') {
-      if (a.uses != null) btns += a.recipe === 'cover-papers' ? `<button data-use="${a.id}">Casual check</button><button class="ghost" data-lookup="${a.id}">ACR lookup</button>` : `<button data-use="${a.id}">Use one (${a.uses} left)</button>`;
+      if (a.uses != null && !a.kit) btns += a.recipe === 'cover-papers' ? `<button data-use="${a.id}">Casual check</button><button class="ghost" data-lookup="${a.id}">ACR lookup</button>` : `<button data-use="${a.id}">Use one (${a.uses} left)</button>`;
       if (r.maintain) btns += `<button data-maintain="${a.id}">Maintain</button>`;
       if (a.value && a.permissions.transfer) { const st = MK.salePrice(s, M, a, 'street').price, fe = MK.salePrice(s, M, a, 'fence').price; btns += `<button class="primary" data-sell="${a.id}" data-how="street">Sell ${st} cr</button><button class="ghost" data-sell="${a.id}" data-how="fence">Fence ${fe} cr</button>`; }
       if (r.pay) btns += `<input type="number" id="pay-${a.id}" min="${r.pay[0]}" max="${r.pay[1]}" value="${r.pay[0]}" aria-label="What it paid" style="width:110px"><button class="primary" data-complete="${a.id}">Done, got paid</button>`;
@@ -146,12 +190,13 @@ function workHtml(s) {
       ${a.status === 'pending' ? `<p><b>Waiting for a ruling.</b> ${esc(a.ruling.note)}</p>` : `<p>${esc(a.effect)}${a.option ? ` <b>${esc(a.option)}</b>.` : ''}</p>`}
       ${a.delivery && a.status === 'active' ? `<p><b>${a.delivery.stage === 'pickup' ? `Pick up at ${esc(a.delivery.from.name)} (${esc(a.delivery.from.districtName)})` : `Carrying it to ${esc(a.delivery.to.name)} (${esc(a.delivery.to.districtName)})`}</b> · ${a.delivery.pay} cr</p><span class="due ${a.delivery.due - t < 3600000 ? 'late' : ''}">${esc(WK.untilText(a.delivery.due - t))}</span>` : ''}
       ${a.status === 'active' && a.expires != null ? `<span class="due ${a.expires - t < 86400000 ? 'late' : ''}">${esc(WK.untilText(a.expires - t))}</span>` : ''}
+      ${codeLine(s, a)}
       ${a.roll ? `<div class="roll">${diceHtml(a.roll.dice)} ${a.roll.hits} success${a.roll.hits === 1 ? '' : 'es'}, needed ${a.roll.need}</div>` : ''}
       ${a.ruling && a.ruling.result ? `<p><b>Ruling:</b> ${esc(a.ruling.result)}</p>` : ''}
       <details class="events"><summary>Record (${a.events.length})</summary><ul>${a.events.map(e => `<li><b>${esc(WK.fmt(e.at))}</b> ${esc(e.text)}</li>`).join('')}</ul><p class="note" style="color:#5b4630">ID ${esc(a.id)} · made by ${esc(a.creator.name)} · ${esc(WK.fmt(a.created))}</p></details>
       ${btns ? `<div class="actions">${btns}</div>` : ''}</article>`;
   };
-  return (live.length ? live.map(card).join('') : '<p class="muted">Nothing active.</p>') + (done.length ? `<details class="filed"><summary>Finished (${done.length})</summary>${done.map(card).join('')}</details>` : '');
+  return codesHtml(s) + (live.length ? live.map(card).join('') : '<p class="muted">Nothing active.</p>') + (done.length ? `<details class="filed"><summary>Finished (${done.length})</summary>${done.map(card).join('')}</details>` : '');
 }
 
 function render() {
@@ -175,13 +220,21 @@ document.addEventListener('click', e => {
   if (b.dataset.take) { const r = act(s => MK.take(s, M, PLACES, b.dataset.take, t)); r && toast(r.msg); }
   else if (b.dataset.go) { parent.postMessage({ type: 'grakkgrith-open-explore', place: b.dataset.go }, '*'); }
   else if (b.dataset.recipe) { form.recipe = b.dataset.recipe; form.option = ''; form.visibility = ''; render(); }
-  else if (b.id === 'doMake') { const r = act(s => MK.make(s, M, form.recipe, { ...form, districtName: dName(form.district) }, t)); if (r) { toast(r.msg, r.dice); if (r.ok) { form.name = ''; form.target = ''; } } }
+  else if (b.id === 'doMake') { const r = act(s => MK.make(s, M, form.recipe, { ...form, districtName: dName(form.district) }, t)); if (r) { toast(r.msg, r.dice); if (r.ok) { form.name = ''; form.target = ''; if (CO.live(M) && r.artifact.kind === 'item' && r.artifact.status === 'active') actAsync(s => { const a = s.make.artifacts.find(x => x.id === r.artifact.id); return a && CO.mint(s, M, a, now()); }); } } }
   else if (b.dataset.use) { const r = act(s => MK.use(s, b.dataset.use, t)); r && toast(r.msg); }
   else if (b.dataset.lookup) { const r = act(s => MK.use(s, b.dataset.lookup, t, 'lookup')); r && toast(r.msg); }
   else if (b.dataset.maintain) { const r = act(s => MK.maintain(s, M, b.dataset.maintain, t)); r && toast(r.msg); }
-  else if (b.dataset.sell) { const r = act(s => MK.sell(s, M, b.dataset.sell, b.dataset.how, t)); r && toast(r.msg); }
+  else if (b.dataset.sell) { const r = act(s => MK.sell(s, M, b.dataset.sell, b.dataset.how, t)); r && toast(r.msg); if (r && r.ok) actAsync(s => { const a = s.make.artifacts.find(x => x.id === b.dataset.sell); return a && CO.retire(s, M, a); }); }
   else if (b.dataset.complete) { const amt = ($('pay-' + b.dataset.complete) || {}).value; const r = act(s => MK.complete(s, M, b.dataset.complete, amt, t)); r && toast(r.msg); }
-  else if (b.dataset.retire) { const r = act(s => MK.retire(s, b.dataset.retire, t)); r && toast(r.msg || 'Retired.'); }
+  else if (b.dataset.retire) { const r = act(s => MK.retire(s, b.dataset.retire, t)); r && toast(r.msg || 'Retired.'); if (r && r.ok) actAsync(s => { const a = s.make.artifacts.find(x => x.id === b.dataset.retire); return a && CO.retire(s, M, a); }); }
+  else if (b.dataset.mint) { actAsync(s => { const a = s.make.artifacts.find(x => x.id === b.dataset.mint); return a && CO.mint(s, M, a, t); }).then(r => r && toast(r.ok ? 'It has a code now. Only you can see it.' : r.msg)); }
+  else if (b.dataset.copy) { navigator.clipboard?.writeText(b.dataset.copy).then(() => toast('Code copied. Whoever claims it first gets it.'), () => toast(b.dataset.copy)); }
+  else if (b.dataset.offer) { const on = !!b.dataset.on; actAsync(s => { const a = s.make.artifacts.find(x => x.id === b.dataset.offer); return a && CO.offer(s, M, a, on, t); }).then(r => r && toast(r.ok ? (on ? 'Offered. Hand over the code; whoever claims it gets it.' : 'No longer offered.') : r.msg)); }
+  else if (b.dataset.scrub) { const tgt = ($('scrubTarget-' + b.dataset.scrub) || {}).value; actAsync(s => { const k = s.make.artifacts.find(x => x.id === b.dataset.scrub), a = s.make.artifacts.find(x => x.id === tgt); return k && a && CO.scrub(s, M, k, a, t); }).then(r => r && toast(r.ok ? 'Scrubbed. New code, old one dead, trail gone.' : r.msg)); }
+  else if (b.dataset.trace) { const how = M.codes.trace.find(x => x.id === ($('traceHow-' + b.dataset.trace) || {}).value) || M.codes.trace[0]; actAsync(s => { const a = s.make.artifacts.find(x => x.id === b.dataset.trace); return a && CO.trace(s, M, a, how, t); }).then(r => r && toast(r.msg, r.roll && r.roll.dice)); }
+  else if (b.id === 'claimBtn') { const code = ($('claimCode') || {}).value || ''; actAsync(s => CO.claim(s, M, code, t, { district: here(s) })).then(r => { if (!r) return; if (r.notOffered) { PENDING_TAKE = { code, name: r.name, grade: r.grade, protected: r.protected }; render(); return; } PENDING_TAKE = null; toast(r.ok ? (r.already ? 'That one is already yours.' : `${r.artifact.name} is yours now.`) : r.msg); }); }
+  else if (b.id === 'takeBtn') { const pt = PENDING_TAKE, how = M.codes.cover.find(x => x.id === ($('takeHow') || {}).value) || M.codes.cover[0]; PENDING_TAKE = null; actAsync(s => CO.claim(s, M, pt.code, t, { take: how, district: here(s) })).then(r => r && toast(r.ok ? `Taken. You covered your tracks with ${r.coverRoll.hits} success${r.coverRoll.hits === 1 ? '' : 'es'}.` : r.msg, r.coverRoll && r.coverRoll.dice)); }
+  else if (b.id === 'takeCancel') { PENDING_TAKE = null; render(); }
 });
 document.addEventListener('input', e => { const map = { fName: 'name', fTarget: 'target' }; if (map[e.target.id]) { form[map[e.target.id]] = e.target.value; render(); } });
 document.addEventListener('change', e => {
@@ -194,8 +247,8 @@ fetch('../art/pda-v1/imports/manifest.json').then(r => r.json()).then(a => { win
 Promise.all(['week', 'places', 'make'].map(n => fetch(`../data/${n}.json`).then(r => r.json()))).then(([w, p, m]) => {
   W = w; CLOCK = p.clock; M = m; PLACES = p;
   const s = load(); if (hasChar(s)) { settleAll(s); save(s); }
-  render(); window.GRAKK_MAKE_READY = true;
-  setInterval(() => { const s = load(); if (hasChar(s) && settleAll(s)) { save(s); render(); } }, 60000);
+  render(); window.GRAKK_MAKE_READY = true; syncCodes(false);
+  setInterval(() => { const s = load(); if (hasChar(s) && settleAll(s)) { save(s); render(); } syncCodes(false); }, 60000);
 });
 </script>
 </body>
