@@ -1,0 +1,14 @@
+# The item-code server. Deployed by .github/workflows/codes-server.yml when server/ changes on main.
+name = "grakkgrith-codes"
+main = "src/index.js"
+compatibility_date = "2026-06-01"
+
+[vars]
+# Pages allowed to call the server (comma-separated).
+ALLOWED_ORIGINS = "https://replicantscience-collab.github.io"
+
+[[d1_databases]]
+binding = "DB"
+database_name = "REPLACE_WITH_DATABASE_NAME"
+database_id = "REPLACE_WITH_DATABASE_ID"
+migrations_dir = "migrations"

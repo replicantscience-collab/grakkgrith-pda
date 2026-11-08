@@ -31,8 +31,10 @@
   function discoveryChance(M, vis, district) { return clamp((M.visibility[vis] || M.visibility.discreet).discovery + (M.watchers.watchedBonus.includes(district) ? M.watchers.watchedBonusChance : 0), 0, 0.95); }
 
   /* ---------- preview: what pressing Make would do, and why ---------- */
+  /* A recipe with tiers (scrub kits): the chosen option sets the difficulty, cost and legality. */
+  function tiered(r, option) { const t = r && r.tiers && r.tiers[option]; return t ? { ...r, roll: { ...r.roll, difficulty: t.difficulty }, costs: { credits: t.credits || 0, stress: t.stress || 0 }, legality: t.legality || r.legality, tier: t } : r; }
   function preview(s, M, id, o = {}) {
-    const r = recipe(M, id); if (!r) return { ok: false, blockers: ['Unknown Make.'] };
+    const r = tiered(recipe(M, id), o.option); if (!r) return { ok: false, blockers: ['Unknown Make.'] };
     const cls = s.character && s.character.class, blockers = [], heat = [], c = r.costs || {};
     if (r.class !== cls) blockers.push(`${r.name} is ${r.class} work.`);
     if (downtimeLeft(s) < M.downtimeCost) blockers.push('No downtime actions left this gap.');
@@ -71,13 +73,17 @@
       permissions: { use: r.kind === 'service' || r.kind === 'filing' ? 'target' : 'owner', transfer: r.kind === 'item' || r.kind === 'filing' },
       effect: r.effect, status: 'active', roll: null, ruling: { needed: r.adjudication === 'ruling', note: r.rulingNote || '', status: r.adjudication === 'ruling' ? 'pending' : 'none' },
       lastCheckedWeek: null, events: [] };
+    if (r.kit) a.kit = true;
     const ev = t => a.events.unshift({ at: aMs, text: t });
     ev(`Made by ${who} (${r.class}). Spent ${[`1 downtime action`, p.costs.credits && `${p.costs.credits} cr`, p.costs.stress && `${p.costs.stress} Stress`].filter(Boolean).join(', ')}.`);
     let msg = '';
     if (r.adjudication === 'ruling') { a.status = 'pending'; ev('Proposed. Waiting for a ruling.'); msg = 'Proposed. It waits for a ruling from whoever runs the session.'; }
     else if (r.roll) {
       const dice = rollDice(p.roll.pool, rng), hits = dice.filter(d => d >= 5).length; a.roll = { dice, hits, need: r.roll.difficulty };
-      if (hits >= r.roll.difficulty) { ev(`Rolled ${hits} success${hits === 1 ? '' : 'es'} (needed ${r.roll.difficulty}). It works.`); msg = `${a.name}: done. ${hits} success${hits === 1 ? '' : 'es'}, needed ${r.roll.difficulty}.`;
+      const tierNames = r.options || [], ti = tierNames.indexOf(o.option), partialKit = r.kit && hits === r.roll.difficulty - 1 && ti > 0;
+      if (r.kit && hits >= r.roll.difficulty) a.kitGrade = r.tier.grade;
+      if (partialKit) { const lower = tierNames[ti - 1]; a.kitGrade = r.tiers[lower].grade; a.option = lower; ev(`Rolled ${hits} of ${r.roll.difficulty}: one short, so it only cleans up to ${lower}.`); msg = `One short: a ${lower} kit instead.`; }
+      else if (hits >= r.roll.difficulty) { ev(`Rolled ${hits} success${hits === 1 ? '' : 'es'} (needed ${r.roll.difficulty}). It works.`); msg = `${a.name}: done. ${hits} success${hits === 1 ? '' : 'es'}, needed ${r.roll.difficulty}.`;
         if (r.id === 'market-listing') a.bonus = hits * M.market.brokerBonusPerSuccess; }
       else {
         a.status = 'failed'; ev(`Rolled ${hits} of ${r.roll.difficulty} successes. Materials wasted.`); msg = `It didn't come together: ${hits} of ${r.roll.difficulty} successes. Materials are gone.`;
@@ -118,6 +124,7 @@
   function use(s, id, aMs, how) {
     const a = find(s, id); if (!a || a.status !== 'active' || a.uses == null) return { ok: false, msg: 'Nothing to use.' };
     a.uses--; let msg = `Used ${a.name}. ${a.effect}`;
+    if (a.stolen) { const sess = (s.week && s.week.sessionsStarted) || 0; if (a.heatSession !== sess) { a.heatSession = sess; addHeat(s, 1); a.events.unshift({ at: aMs, text: 'Used while it\'s still traceable to a theft: Heat +1.' }); msg += ' It\'s stolen and not scrubbed: Heat +1.'; } }
     if (a.recipe === 'cover-papers' && how === 'lookup') { addHeat(s, 1); msg = 'The ACR lookup saw through it. Heat +1.'; }
     a.events.unshift({ at: aMs, text: how === 'lookup' ? 'Used against an ACR lookup: failed. Heat +1.' : 'Used.' });
     if (a.uses <= 0) { a.status = 'used'; a.events.unshift({ at: aMs, text: 'Used up.' }); }
