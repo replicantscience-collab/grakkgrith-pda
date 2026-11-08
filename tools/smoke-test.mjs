@@ -3,6 +3,7 @@
 // Fails if a screen comes up empty, a script throws, or a key feature is missing.
 //   npm install        (once)
 //   npm run smoke      (or: node tools/smoke-test.mjs)
+import { checkMapIcons } from './map-icons-checks.mjs';
 import { checkPlayerActions } from './player-actions-checks.mjs';
 import { checkSheetNow } from './sheet-now-checks.mjs';
 import { checkPlayerOffline } from './player-actions-offline.mjs';
@@ -72,6 +73,7 @@ try {
     let f = await open('exploreBtn', 1500);
     await step('Explore map image loads', () => f.evaluate(() => { const i = document.getElementById('mapImg'); return i.complete && i.naturalWidth > 0; }));
     await step('Explore shows the Adyta clock', async () => /\d:\d\d [AP]M/.test(await f.evaluate(() => document.getElementById('clock').textContent)));
+    await checkMapIcons(page,f,step,label);
     const catalog = JSON.parse(await readFile(join(ROOT, 'data/places.json'), 'utf8'));
     await step('Explore has every catalog map and coverage for every district', async () => {
       const n = await f.locator('#mapTabs button').count();

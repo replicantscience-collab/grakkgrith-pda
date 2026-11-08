@@ -10,6 +10,7 @@ window.GRAKK_RULES = window.GRAKK_RULES || (function () {
   return JSON.parse(x.responseText);
 })();
 </script>
+<script src="./icons.js"></script>
 <script src="./engine.js"></script>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -110,6 +111,7 @@ body.compactSheetBody #modeNotice{margin:0}
 #downtimeApplyBtn{border-color:var(--green);background:rgba(117,255,138,.09)}#downtimeApplyBtn:disabled{border-color:rgba(255,255,255,.2)}
 @media(max-width:700px){.downtimeGrid{grid-template-columns:1fr}.downtimeTop{grid-template-columns:1fr auto}.downtimeCounter{min-width:78px}.downtimeShell{padding:8px}}
 
+.playerNowActions .pdaIcon{width:18px;height:18px;vertical-align:middle;margin-right:6px;pointer-events:none}
 </style>
 </head>
 <body data-page-mode="player">
@@ -1374,7 +1376,7 @@ function renderPlayerNow() {
   box.textContent=woundName()+' · Stress '+state.stats.stress+'/'+stressCap(state.character.level)+' · '+(weapon?weapon.name+(c.max>0?' · Ammo '+c.cur+'/'+c.max:''):'No active weapon');
   $('playerNowAttack').disabled=!weapon||!isWeaponClass(weapon);
   $('playerNowReload').disabled=!E.canReload('active');
-  const item=getCurrentItem();$('playerNowUse').textContent='Use '+(item.name||'selected item');
+  const item=getCurrentItem();$('playerNowUse').replaceChildren();$('playerNowUse').insertAdjacentHTML('afterbegin',PDA_ICONS.svg('use'));$('playerNowUse').append(document.createTextNode('Use '+(item.name||'selected item')));
   $('playerNowUse').disabled=isWeaponClass(item)||isAmmoClass(item)||!itemAllows(item,'use')||counts(item).cur<1;
   $('playerNowUndo').disabled=!state.playAutomation?.undo?.length;
 }
@@ -1401,6 +1403,7 @@ function initPlayerActions() {
   const dialog=document.createElement('dialog');dialog.id='playerActionDialog';dialog.className='playerActionDialog';dialog.setAttribute('aria-labelledby','playerActionTitle');
   dialog.innerHTML='<h2 id="playerActionTitle"></h2><label id="playerActionModifierField">Situational dice <input id="playerActionModifier" type="number" step="1"></label><p id="playerActionDetails"></p><div class="playerNowActions"><button id="playerActionCancel">Cancel</button><button id="playerActionConfirm">Confirm action</button></div>';
   document.body.appendChild(dialog);$('playerActionCancel').onclick=()=>dialog.close();
+  for(const [id,icon] of Object.entries({playerNowRoll:'roll',playerNowAttack:'weapon',playerNowReload:'reload',playerNowGear:'bag',playerNowUndo:'undo'}))$(id).insertAdjacentHTML('afterbegin',PDA_ICONS.svg(icon));
   $('playerNowRoll').onclick=()=>compactOpenAndScroll('skills');$('playerNowGear').onclick=()=>compactOpenAndScroll('inventory');
   $('playerNowAttack').onclick=()=>previewAttack('active');$('playerNowReload').onclick=()=>reloadAction('active');$('playerNowUse').onclick=previewUse;$('playerNowUndo').onclick=undoPlayAutomation;
   $('rollCheckBtn').onclick=previewCheck;$('rollActiveBtn').onclick=()=>previewAttack('active');$('rollSecondaryBtn').onclick=()=>previewAttack('secondary');

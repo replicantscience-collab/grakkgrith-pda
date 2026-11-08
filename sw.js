@@ -1,6 +1,6 @@
 // GRAKKGRITH Service Worker: consolidated player actions and current main
 // Maps remain lazy-cached. Keep the combined asset list when integrating branches.
-const CACHE_NAME = 'grakkgrith-consolidation-20261107';
+const CACHE_NAME = 'grakkgrith-map-icons-20261107';
 const ASSETS = [
   './',
   './index.html',
@@ -8,6 +8,7 @@ const ASSETS = [
   './apps/player.html',
   './data/rules.json',
   './apps/explore.html',
+  './apps/icons.js',
   './apps/cityday.js',
   './apps/business.js',
   './apps/week.html',

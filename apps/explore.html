@@ -4,6 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <title>Explore Adyta</title>
+<script src="./icons.js"></script>
 <link rel="stylesheet" href="../fonts/fonts.css">
 <style>
 :root{
@@ -159,6 +160,18 @@ button:focus-visible,[tabindex]:focus-visible{outline:2px solid var(--sodium);ou
 .lease .home{color:var(--sodium);font-weight:700;margin-top:6px}
 .lease .act{margin-top:8px;width:100%}
 .walls small{display:block;color:var(--ash);font-size:12px;margin:2px 0 0 4px}
+/* Field symbols stay readable while the map zooms beneath them. */
+.pin,.pin.district,.pin.you{width:32px;height:32px;display:grid;place-items:center;padding:3px;border-radius:8px;transform:translate(-50%,-50%) scale(var(--pin-scale,1));transform-origin:center;opacity:1;background:#0e1114;color:var(--chalk)}
+.pin::after{display:none}.pin.you{background:var(--sodium);color:var(--asphalt)}
+.pin.selected,.pin:focus-visible,.pin:hover{z-index:3}.pin .pdaIcon{width:22px;height:22px;pointer-events:none}
+.pinLabel{display:none;position:absolute;top:36px;left:50%;transform:translateX(-50%);padding:4px 8px;border:1px solid var(--ash);border-radius:4px;background:#0e1114;color:var(--chalk);font:13px var(--body);white-space:nowrap;pointer-events:none}
+.pin:focus-visible .pinLabel,.pin:hover .pinLabel{display:block}
+.toolbar{flex-wrap:wrap;max-width:calc(100% - 90px)}.toolbar button{min-height:44px}
+.mapKey{background:var(--asphalt2);color:var(--chalk);border:1px solid var(--sodium);border-radius:12px;width:min(620px,calc(100vw - 24px));max-height:85vh;padding:18px}
+.mapKey::backdrop{background:rgba(0,0,0,.72)}.mapKey h2{margin:0;font:700 25px var(--display);color:var(--sodium)}
+.keyHead{display:flex;justify-content:space-between;gap:12px}.mapKey button{min-height:44px;border:1px solid var(--ash);border-radius:8px;padding:8px 12px;text-align:left}
+.keyFilters{display:flex;flex-wrap:wrap;gap:6px;margin:14px 0}.keyFilters button{display:flex;align-items:center;gap:6px}.keyFilters button[aria-pressed=true]{background:var(--sodium);color:var(--asphalt);border-color:var(--sodium)}
+.keyPlaces{display:grid;gap:6px}.keyPlaces button{display:flex;gap:10px;align-items:center}.keyPlaces .pdaIcon{flex-shrink:0}.keyPlaces small{display:block;color:var(--ash)}
 </style>
 </head>
 <body>
@@ -172,7 +185,7 @@ button:focus-visible,[tabindex]:focus-visible{outline:2px solid var(--sodium);ou
   <nav class="maps" id="mapTabs" aria-label="Maps"></nav>
   <main class="stage" id="stage">
     <div class="world" id="world"><img id="mapImg" alt=""></div>
-    <div class="toolbar"><button id="todayBtn" type="button">Today</button><button id="youBtn" type="button">Find me</button><button id="editBtn" type="button" aria-pressed="false">Edit pins</button><button id="shareBtn" type="button" hidden>Share pins</button></div>
+    <div class="toolbar"><button id="mapKeyBtn" type="button" aria-haspopup="dialog">Map key</button><button id="placesLayerBtn" type="button" aria-pressed="true">Places on</button><button id="todayBtn" type="button">Today</button><button id="youBtn" type="button">Find me</button><button id="editBtn" type="button" aria-pressed="false">Edit pins</button><button id="shareBtn" type="button" hidden>Share pins</button></div>
     <div class="zoom"><button id="zin" type="button" aria-label="Zoom in">+</button><button id="zout" type="button" aria-label="Zoom out">−</button><button id="zfit" type="button" aria-label="Fit map">⤢</button></div>
     <div class="hint" id="hint"></div>
   </main>
@@ -182,6 +195,12 @@ button:focus-visible,[tabindex]:focus-visible{outline:2px solid var(--sodium);ou
 
 <script src="cityday.js"></script>
 <script src="week.js"></script>
+<dialog id="mapKey" class="mapKey" aria-labelledby="mapKeyTitle">
+  <div class="keyHead"><h2 id="mapKeyTitle">Map key</h2><button id="mapKeyClose" type="button">Close</button></div>
+  <p>Choose a category to thin out the map, or open a place from the list. Your location and destination stay visible. Dashed borders mark approximate locations.</p>
+  <div id="keyFilters" class="keyFilters" role="group" aria-label="Place categories"></div>
+  <p id="keyCount" role="status"></p><div id="keyPlaces" class="keyPlaces"></div>
+</dialog>
 <script>
 'use strict';
 /* ---------- Storage ---------- */
@@ -215,6 +234,8 @@ let W, places, byId, edits;           // world data, merged places, lookup, loca
 let presence;                          // where your in-world self is
 let view = { map: 'adyta-city', scale: 1, x: 0, y: 0 };
 let selected = null, editing = false;
+let placeFilter = 'all', showPlaces = true;
+const ICONS = window.PDA_ICONS;
 
 /* ---------- Adyta clock ----------
    Adyta time runs at the same speed as real time, offset from it. Internally an Adyta moment is a
@@ -357,7 +378,7 @@ function renderTabs() {
 
 /* ---------- Map viewer ---------- */
 const stage = $('stage'), world = $('world'), img = $('mapImg');
-function applyView() { world.style.transform = `translate(${view.x}px,${view.y}px) scale(${view.scale})`; }
+function applyView() { world.style.setProperty('--pin-scale', String(1 / view.scale)); world.style.transform = `translate(${view.x}px,${view.y}px) scale(${view.scale})`; }
 function fit() {
   const m = W.maps[view.map], sw = stage.clientWidth, sh = stage.clientHeight;
   view.scale = Math.min(sw / m.width, sh / m.height); view.x = (sw - m.width * view.scale) / 2; view.y = (sh - m.height * view.scale) / 2; applyView();
@@ -372,6 +393,7 @@ function centerOn(x, y, scale) {
   view.x = stage.clientWidth / 2 - x * m.width * view.scale; view.y = stage.clientHeight / 2 - y * m.height * view.scale; applyView();
 }
 function showMap(mapId, focus) {
+  if(view.map!==mapId)placeFilter='all';
   view.map = mapId; const m = W.maps[mapId];
   img.src = '../' + m.image; img.width = m.width; img.height = m.height; img.alt = m.title;
   world.style.width = m.width + 'px'; world.style.height = m.height + 'px';
@@ -392,16 +414,41 @@ function renderPins() {
        ...placesOn('adyta-city').map(p => ({ id: p.id, name: p.name, pin: p.pin, cls: 'place-on-city' + (p.pin.approx ? ' unpinned' : ''), you: here.place === p.id && !presence.transit, dest: dest?.place === p.id }))]
     : placesOn(view.map).map(p => ({ id: p.id, name: p.name, pin: p.pin, cls: p.pin.approx ? 'unpinned' : '', you: here.place === p.id && !presence.transit, dest: dest?.place === p.id }));
   for (const it of items) {
+    const type=it.cls.includes('district')?'district':(byId[it.id]?.type||'landmark');
+    if(!editing&&!it.you&&!it.dest&&selected!==it.id&&(!showPlaces||(placeFilter!=='all'&&type!==placeFilter)))continue;
     const b = document.createElement('button'); b.type = 'button';
     b.className = `pin ${it.cls} ${it.you ? 'you' : ''} ${it.dest ? 'dest' : ''} ${selected === it.id ? 'selected' : ''}`;
     b.style.left = it.pin.x * m.width + 'px'; b.style.top = it.pin.y * m.height + 'px';
     b.title = it.name; b.setAttribute('aria-label', it.name + (it.you ? ' (you are here)' : ''));
-    b.dataset.id = it.id;
+    b.dataset.id = it.id;b.dataset.type=type;b.setAttribute('aria-pressed',String(selected===it.id));
+    b.innerHTML=ICONS.svg(type)+'<span class="pinLabel">'+esc(it.name)+'</span>';
     b.addEventListener('click', e => { e.stopPropagation(); if (dragMoved) return; openPlace(it.id); });
     if (editing) b.addEventListener('pointerdown', startPinDrag);
     world.appendChild(b);
   }
+  renderMapKey();
 }
+
+/* Overlay controls only filter presentation; saved pins and travel data stay untouched. */
+function mapKeyItems(){
+  const list=placesOn(view.map).map(p=>({id:p.id,name:p.name,type:p.type||'landmark'}));
+  if(W.maps[view.map].kind==='city')list.unshift(...Object.entries(W.districts).filter(([,d])=>d.cityPin).map(([id,d])=>({id,name:d.name,type:'district'})));
+  return list;
+}
+function renderMapKey(){
+  const items=mapKeyItems(),types=[...new Set(items.map(p=>p.type))].sort();
+  const active=document.activeElement?.dataset?.filter;
+  $('keyFilters').innerHTML=['all',...types].map(type=>'<button type="button" data-filter="'+esc(type)+'" aria-pressed="'+(type===placeFilter)+'">'+(type==='all'?'':ICONS.svg(type))+esc(type==='all'?'All places':TYPE_LABEL[type]||type)+'</button>').join('');
+  const shown=items.filter(p=>placeFilter==='all'||p.type===placeFilter).sort((a,b)=>a.name.localeCompare(b.name));
+  $('keyCount').textContent=shown.length+' of '+items.length+' places on '+W.maps[view.map].short+(showPlaces?'':' · map icons hidden');
+  $('keyPlaces').innerHTML=shown.map(p=>'<button type="button" data-key-place="'+esc(p.id)+'">'+ICONS.svg(p.type)+'<span>'+esc(p.name)+'<small>'+esc(TYPE_LABEL[p.type]||p.type)+'</small></span></button>').join('')||'<p>No places in this category on this map.</p>';
+  if(active)$('keyFilters').querySelector('[data-filter="'+active+'"]')?.focus();
+}
+$('mapKeyBtn').onclick=()=>{renderMapKey();$('mapKey').showModal();$('mapKeyClose').focus();};
+$('mapKeyClose').onclick=()=>$('mapKey').close();
+$('keyFilters').onclick=e=>{const b=e.target.closest('[data-filter]');if(!b)return;placeFilter=b.dataset.filter;showPlaces=true;$('placesLayerBtn').textContent='Places on';$('placesLayerBtn').setAttribute('aria-pressed','true');renderPins();};
+$('keyPlaces').onclick=e=>{const b=e.target.closest('[data-key-place]');if(!b)return;$('mapKey').close();showPlaces=true;$('placesLayerBtn').textContent='Places on';$('placesLayerBtn').setAttribute('aria-pressed','true');const p=pinFor(b.dataset.keyPlace);if(p)centerOn(p.x,p.y);openPlace(b.dataset.keyPlace);};
+$('placesLayerBtn').onclick=()=>{showPlaces=!showPlaces;$('placesLayerBtn').textContent=showPlaces?'Places on':'Places off';$('placesLayerBtn').setAttribute('aria-pressed',String(showPlaces));renderPins();};
 
 /* Pan / zoom with mouse, touch and wheel */
 let pointers = new Map(), panStart = null, pinchStart = null, dragMoved = false;
@@ -633,7 +680,7 @@ document.addEventListener('keydown', e => { if (e.key === 'Escape') $('sheetClos
 
 /* ---------- Pin editor ---------- */
 $('editBtn').onclick = () => {
-  editing = !editing; $('editBtn').setAttribute('aria-pressed', editing); $('app').classList.toggle('editing', editing);
+  editing = !editing; $('mapKeyBtn').disabled=editing;$('placesLayerBtn').disabled=editing; $('editBtn').setAttribute('aria-pressed', editing); $('app').classList.toggle('editing', editing);
   $('editBtn').textContent = editing ? 'Done editing' : 'Edit pins';
   $('shareBtn').hidden = !editing;
   showMap(view.map);
