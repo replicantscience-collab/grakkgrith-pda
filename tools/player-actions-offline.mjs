@@ -7,6 +7,13 @@ export async function checkPlayerOffline(browser, base, check) {
     await page.evaluate(async()=>{await Promise.race([navigator.serviceWorker.ready,new Promise((_,reject)=>setTimeout(()=>reject(new Error('Service worker did not activate')),15000))]);});
     await page.reload();
     await page.waitForFunction(()=>!!navigator.serviceWorker.controller);
+    await page.evaluate(()=>document.getElementById('exploreBtn').click());
+    const explore=page.frameLocator('#frame');
+    await explore.locator('#world .pin svg').first().waitFor();
+    await explore.locator('#mapImg').evaluate(async img=>{
+      if(!img.complete)await new Promise((resolve,reject)=>{img.onload=resolve;img.onerror=reject;});
+      if(!img.naturalWidth)throw new Error('Map image did not load before offline check');
+    });
     await ctx.setOffline(true);
     await page.reload();
     await page.evaluate(()=>document.getElementById('fullSheetBtn').click());
@@ -23,6 +30,10 @@ export async function checkPlayerOffline(browser, base, check) {
     await f.locator('#playerActionConfirm').click();
     await page.waitForFunction(()=>JSON.parse(localStorage.getItem('adyta_offline_inventory_v44_shared'))?.rollHistory?.length>0);
     check('offline: skill roll produces a saved result',await page.evaluate(()=>JSON.parse(localStorage.getItem('adyta_offline_inventory_v44_shared')).rollHistory.length>0));
+    await page.evaluate(()=>document.getElementById('exploreBtn').click());
+    await f.locator('#world .pin svg').first().waitFor();
+    await f.locator('#mapKeyBtn').click();
+    check('offline: map symbols and place list are available',await f.locator('#keyPlaces button').count()>0);
   } catch(e) {
     check('offline: action flow',false,e.message.split('\n')[0]);
   } finally {await ctx.close();}

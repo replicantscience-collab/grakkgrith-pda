@@ -2,6 +2,15 @@
 
 Updated 2026-11-07. This is the shared entry point for concurrent work.
 
+## Map and sheet icon follow-up
+
+`codex/map-icon-overlays` is stacked on `codex/player-consolidation` (PR #25).
+It owns the shared `apps/icons.js` kit, Explore category overlays/key, and
+small action-symbol additions to both sheet Now bars. No rules, save format,
+map images or authoritative coordinates change. Keep Claude's feature branches
+separate; use [the overlay handoff](docs/MAP_ICON_OVERLAYS.md) when integrating.
+The follow-up cache is `grakkgrith-map-icons-20261107` and includes `apps/icons.js`.
+
 ## Current review branch
 
 `codex/player-consolidation` combines:

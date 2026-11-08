@@ -1,0 +1,6 @@
+<!doctype html>
+<html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>PDA field symbols</title><script src="../../apps/icons.js"></script>
+<style>body{background:#0e1114;color:#e9e2d3;font:16px system-ui;margin:24px auto;max-width:1000px;padding:0 16px}h1{color:#f2a93b}.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:12px}.card{border:1px solid #58616a;border-radius:10px;padding:20px;text-align:center;background:#161a1f}.sizes{display:flex;align-items:center;justify-content:center;gap:12px;color:#f2a93b;min-height:56px}.sizes svg:last-child{width:48px;height:48px}p{line-height:1.6}small{color:#b6b4af}</style>
+<h1>PDA field symbols</h1><p>Map overlays and player-kit symbols. One stroke family, shown at 24px and 48px. Map meanings come from each saved place's type. These symbols do not add locations or game effects.</p><div class="grid" id="icons"></div>
+<script>document.getElementById('icons').innerHTML=PDA_ICONS.names.map(n=>'<div class="card"><div class="sizes">'+PDA_ICONS.svg(n)+PDA_ICONS.svg(n)+'</div><p>'+PDA_ICONS.labels[n]+'</p><small>'+n+'</small></div>').join('');</script></html>

@@ -124,6 +124,7 @@ dialog.act pre{margin:0 0 10px;white-space:pre-wrap;font:600 14px/1.5 var(--art-
 @media (max-width:700px){.row1{grid-template-columns:1fr}.portrait{grid-column:auto;grid-row:auto}.portrait img{min-height:0;max-height:none;aspect-ratio:4/5}.ident{grid-template-columns:1fr}.skills{grid-template-columns:1fr 1fr}.turn{grid-template-columns:1fr}.wpn .hideS{display:none}}
 @media (max-width:700px){.portrait{max-width:240px;justify-self:center;width:100%}}
 @media (max-width:340px){.skills{grid-template-columns:1fr}}
+.nowBar .pdaIcon{width:18px;height:18px;vertical-align:middle;margin-right:6px;pointer-events:none}
 </style>
 </head>
 <body class="pda-art">
@@ -147,6 +148,7 @@ dialog.act pre{margin:0 0 10px;white-space:pre-wrap;font:600 14px/1.5 var(--art-
   </div>
   <div class="actBar"><button type="button" id="actCancel">Cancel</button><button type="button" class="primary" id="actOk">Roll</button></div>
 </form></dialog>
+<script src="./icons.js"></script>
 <script src="./engine.js"></script>
 <script src="./screen.js"></script>
 <script>
@@ -259,12 +261,12 @@ function nowHtml(s, lvl) {
   return `<section class="box pinkbox now" id="nowBox" aria-label="Now"><h2><span class="n">▶</span> Now <small>Tap a skill name below to roll it</small></h2>
     <p class="nowStatus" id="nowStatus">${status}</p>
     <div class="nowBar">
-      <button type="button" data-now="attack" data-which="active" ${wpn(act) ? '' : 'disabled'}>${wpn(act) ? 'Attack · ' + esc(act.name) : 'Attack'}</button>
-      ${wpn(sec) ? `<button type="button" data-now="attack" data-which="secondary">Attack · ${esc(sec.name)}</button>` : ''}
-      <button type="button" data-now="reload" ${reloadable ? '' : 'disabled'}>Reload</button>
-      <span class="nowUse"><select id="nowUseSel" aria-label="Item to use" ${usable.length ? '' : 'disabled'}>${usable.length ? usable.map(x => `<option value="${x.i}">${esc(x.it.name)} (${E.counts(x.it).cur})</option>`).join('') : '<option>No usable items</option>'}</select><button type="button" data-now="use" ${usable.length ? '' : 'disabled'}>Use</button></span>
+      <button type="button" data-now="attack" data-which="active" ${wpn(act) ? '' : 'disabled'}>${PDA_ICONS.svg('weapon')}${wpn(act) ? 'Attack · ' + esc(act.name) : 'Attack'}</button>
+      ${wpn(sec) ? `<button type="button" data-now="attack" data-which="secondary">${PDA_ICONS.svg('weapon')}Attack · ${esc(sec.name)}</button>` : ''}
+      <button type="button" data-now="reload" ${reloadable ? '' : 'disabled'}>${PDA_ICONS.svg('reload')}Reload</button>
+      <span class="nowUse"><select id="nowUseSel" aria-label="Item to use" ${usable.length ? '' : 'disabled'}>${usable.length ? usable.map(x => `<option value="${x.i}">${esc(x.it.name)} (${E.counts(x.it).cur})</option>`).join('') : '<option>No usable items</option>'}</select><button type="button" data-now="use" ${usable.length ? '' : 'disabled'}>${PDA_ICONS.svg('use')}Use</button></span>
       <button type="button" data-now="push" class="${PENDING ? 'hot' : ''}" ${PENDING ? '' : 'disabled'} title="After a roll: +2 dice for 1 Stress">Push +2</button>
-      <button type="button" data-now="undo" ${E.canUndo() ? '' : 'disabled'}>Undo</button>
+      <button type="button" data-now="undo" ${E.canUndo() ? '' : 'disabled'}>${PDA_ICONS.svg('undo')}Undo</button>
     </div>${res}</section>`;
 }
 const poolText = (p, attr, skill) => `${p.total} dice = ${label(attr)} ${p.attrVal} + ${label(skill)} ${p.skillValue}` + (p.situational ? ` + situation ${p.situational}` : '') + (p.extra ? ` + gear ${p.extra}` : '') + (p.wound.mod ? ` ${p.wound.mod} wounds` : '') + (p.cond.mod ? ` ${p.cond.mod} conditions` : '') + (p.totalRaw !== p.total ? ' (capped at 10)' : '');

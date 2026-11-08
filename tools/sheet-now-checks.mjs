@@ -13,6 +13,10 @@ const seed = () => ({
 
 export async function checkSheetNow(page, open, step) {
   const read = () => page.evaluate(K => JSON.parse(localStorage.getItem(K)), KEY);
+  // Detach the previous editor before replacing its save: pending messages
+  // from that live editor can otherwise overwrite this independent fixture.
+  await page.goto(new URL('/', page.url()).href);
+  await page.locator('#sheetBtn').waitFor({state:'attached'});
   await page.evaluate(([K, s]) => localStorage.setItem(K, JSON.stringify(s)), [KEY, seed()]);
   let f = await open('sheetBtn', 1800);
   await f.waitForFunction(() => window.GRAKK_SHEET_READY && document.getElementById('nowBox'));
