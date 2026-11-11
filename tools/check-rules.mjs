@@ -168,7 +168,9 @@ for (const r of MAKE.recipes) {
   if (!rules.classes[r.class]) bad(w, `unknown class ${r.class}`);
   if (!MAKE.kinds[r.kind]) bad(w, `unknown kind ${r.kind}`);
   if (!['auto', 'ruling'].includes(r.adjudication)) bad(w, 'adjudication must be auto or ruling');
-  if (r.adjudication === 'auto' && !r.roll && !['contract', 'job'].includes(r.kind)) bad(w, 'auto work needs a roll (only contracts and jobs skip it)');
+  if (r.adjudication === 'auto' && !r.roll && !r.action && !['contract', 'job'].includes(r.kind)) bad(w, 'auto work needs a roll (only contracts, jobs and actions skip it)');
+  for (const c of r.classes || []) if (!rules.classes[c]) bad(w, `unknown class ${c}`);
+  if (r.action && !['scrub'].includes(r.action)) bad(w, `unknown action ${r.action}`);
 if (MAKE.recipes.some(r => r.board) && !MAKE.deliveries) bad('make.deliveries', 'the delivery board needs its settings');
   if (r.adjudication === 'ruling' && !r.rulingNote) bad(w, 'a ruling needs a note saying who decides');
   if (r.roll && (!ref.attributes.includes(r.roll.attribute) || !Object.values(rules.skillKeys).includes(r.roll.skill))) bad(w, 'unknown attribute or skill');

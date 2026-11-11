@@ -7,6 +7,7 @@ The companion web app for GRAKKGRITH, the Adyta tabletop RPG: character setup, c
 | Path | What it is |
 | --- | --- |
 | `index.html` | The shell: top nav, World pages (Start, City, Missions, Factions, Lore, Logs), campaign State, district dossiers, map viewer |
+| `apps/trade.js` | Trade codes: how items move between players (see below) |
 | `apps/creator.html` | Character Setup: races, classes, subclasses, origins, lives, gear, attribute points |
 | `apps/explore.html` | Explore: the city and district maps, places, travel, and where your character is right now |
 | `apps/guide.html` | Guides: Sideways Shops' guide to the races (card wall, tap a card for the full entry) |
@@ -86,6 +87,18 @@ All three are drafts until they go to Nib. `node tools/check-rules.mjs` checks e
 If your character is listed as an owner in `data/businesses.json`, **Mail & bills** shows **Your business**: Books (the business's own money, separate from yours), Rep, Exposure, and whether the Commons is protecting it. Each Adyta week brings sales (fewer when Rep is low) and upkeep. Some weeks bring a **back-room offer**: saying no costs nothing; saying yes pays the books, adds Exposure to the building and ends Commons protection until you **make it even** (Exposure back to zero, plus a favor from your own pocket). Exposure fades by one each quiet week.
 
 Protection belongs to the building. It breaks if you take an offer, if the owner's Heat reaches 4, and never applies to corporate-funded places. Trouble climbs one step at a time, never faster than one step every five days: trouble, a notice, shuttered (the till freezes until you clear the books and reopen), and lost after four weeks shuttered or a Heat 6 crisis aimed at the building. **Close for the season** pauses everything while you're away. Logic: `apps/business.js`, tested by `node tools/business-test.mjs`. All numbers are drafts.
+
+## Trade codes
+
+Every item card made since v85 carries a **trade code**. The code *is* the item: a compressed record (`GRK1-…`) short enough to paste in Discord. Workshop › Item cards shows it on the card.
+
+- **Show code**: anyone who has this code can claim the item, so it's a thing to guard, not to post.
+- **Pass to someone**: writes their name into the code. Give them the code, then Throw / Delete the card on your side; it's theirs once they claim it.
+- **Claim a code**: pastes a code into the first empty slot. A code written for you (or one you made yourself) comes in clean. Any other code comes in **taken**: it works, but the first time you use or fire it, Heat +1, and the card says so.
+- **Scrub a Code** (Workshop, one downtime action): Ghost, Wrench, Signal and Broker rewrite the code so the item is clean again. 20 cr at tier 1, doubling per tier (tier 4: 160). Ghosts also strip the maker mark. It's a service you can sell: the client passes you the item by code, you scrub it, you pass it back, and only the new code reaches them.
+- Cards made before v85 have no code; the **Give it a code** button adds one.
+
+**Real limit: there is no server**, so nothing can revoke an old code. If two people both claim the same code, both have the item; the PDA only refuses a duplicate on one sheet and records the chain of hands on every claim. Honest play covers the rest for now. `apps/trade.js` has a `registry` slot where a shared registry plugs in later so that claiming, passing and scrubbing kill the old code for everyone; the records won't need to change. Images over ~12 KB are left out of a code (use the PNG card for art). Logic: `apps/trade.js`, tested by `node tools/trade-test.mjs`; the smoke test clicks through issue, pass and claim.
 
 ## The Explore map
 

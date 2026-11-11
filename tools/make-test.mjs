@@ -1,8 +1,8 @@
 // Unit tests for apps/make.js: the Make -> Use -> Sell -> Consequence loop. Run: node tools/make-test.mjs
 import { readFileSync } from 'node:fs';
 import vm from 'node:vm';
-const sandbox = { window: {} };
-for (const f of ['week.js', 'make.js']) vm.runInNewContext(readFileSync(new URL('../apps/' + f, import.meta.url), 'utf8'), sandbox);
+const sandbox = { window: {}, crypto, TextEncoder, TextDecoder, Buffer };
+for (const f of ['week.js', 'trade.js', 'make.js']) vm.runInNewContext(readFileSync(new URL('../apps/' + f, import.meta.url), 'utf8'), sandbox);
 const WK = sandbox.window.GRAKK_WEEK, MK = sandbox.window.GRAKK_MAKE;
 const json = p => JSON.parse(readFileSync(new URL('../data/' + p, import.meta.url)));
 const W = json('week.json'), M = json('make.json');
@@ -107,6 +107,21 @@ s = runner(); A = forced(s, 'sealed'); arriveT(s, A.delivery.from.place, T0 + H)
 ok('sealed cargo never delivered: Heat +1', A.status === 'failed' && s.stats.heat === '1');
 s = runner(); A = forced(s, 'sealed'); MK.settle(s, M, W, A.delivery.due + 13 * H, never);
 ok('never picked up: no Heat for cargo you never held', A.status === 'failed' && s.stats.heat === '0');
+
+// Scrub a Code: Ghost, Wrench, Signal and Broker work; the item picker drives the price.
+const TR = sandbox.window.GRAKK_TRADE;
+const hot = { name: 'Hot pistol', class: 'WEAPON', pattern: { tier: 3 }, shopName: 'Rust Market', trade: { id: 'it-x', secret: 'old', by: 'Someone', issued: T0, holder: 'Maker', taken: true, hot: true, scrubbed: 0, passed: null, chain: [] } };
+s = char('Ghost'); s.inventory = [JSON.parse(JSON.stringify(hot))];
+ok('Scrub is on a Ghost\'s list', MK.recipesFor(M, 'Ghost').some(x => x.id === 'scrub'));
+ok('and a Broker\'s, but not a Runner\'s', MK.recipesFor(M, 'Broker').some(x => x.id === 'scrub') && !MK.recipesFor(M, 'Runner').some(x => x.id === 'scrub'));
+ok('Scrub needs an item', MK.preview(s, M, 'scrub', {}).blockers.some(b => /trade code/.test(b)));
+let pv = MK.preview(s, M, 'scrub', { itemIndex: 0 });
+ok('the price follows the tier', pv.ok && pv.costs.credits === 80, JSON.stringify(pv.blockers));
+r = MK.make(s, M, 'scrub', { itemIndex: 0 }, T0);
+ok('a Ghost scrubs it: clean, new secret, no maker mark, paid, one downtime', r.ok && !s.inventory[0].trade.taken && s.inventory[0].trade.secret !== 'old' && s.inventory[0].shopName === '' && s.coins.credits === '120' && s.downtime.actionsRemaining === 1);
+ok('the scrub leaves a receipt in the Workshop', r.artifact && r.artifact.status === 'completed' && /Scrubbed/.test(r.artifact.name));
+s = char('Wrench'); s.inventory = [JSON.parse(JSON.stringify(hot))]; s.coins.credits = '50';
+ok('too poor to scrub a tier 3', MK.preview(s, M, 'scrub', { itemIndex: 0 }).blockers.some(b => /costs 80/.test(b)));
 
 console.log(fails ? `${passes} passed, ${fails} failed.` : `${passes} make checks passed.`);
 process.exit(fails ? 1 : 0);

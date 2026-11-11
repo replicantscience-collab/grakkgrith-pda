@@ -61,6 +61,7 @@ input:focus,select:focus{outline:none;border-color:var(--art-cyan);box-shadow:0 
 <script src="./screen.js"></script>
 <script>document.getElementById('toItems').onclick = () => parent.postMessage({ type: 'grakkgrith-nav', to: 'itemsBtn' }, '*');</script>
 <script src="./week.js"></script>
+<script src="./trade.js"></script>
 <script src="./make.js"></script>
 <script>
 'use strict';
@@ -68,7 +69,7 @@ const KEY = 'grakkgrith_character_tool_v8_state';
 const WK = window.GRAKK_WEEK, MK = window.GRAKK_MAKE, $ = id => document.getElementById(id);
 const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
 let W = null, CLOCK = null, M = null, PLACES = null;
-const form = { recipe: '', name: '', target: '', option: '', district: '', visibility: '', permission: 'own' };
+const form = { recipe: '', name: '', target: '', option: '', district: '', visibility: '', permission: 'own', itemIndex: '' };
 const load = () => { try { return JSON.parse(localStorage.getItem(KEY)); } catch (e) { return null; } };
 const save = s => { try { localStorage.setItem(KEY, JSON.stringify(s)); } catch (e) {} try { parent.postMessage({ type: 'grakkgrith-week-changed' }, '*'); } catch (e) {} };
 const now = () => WK.adytaNow(CLOCK, Date.now());
@@ -87,8 +88,9 @@ function makerHtml(s) {
   const r = MK.recipe(M, form.recipe);
   let h = `<div class="recipes" role="group" aria-label="What to make">${mine.map(x => `<button class="recipe" data-recipe="${x.id}" aria-pressed="${x.id === form.recipe}"><b>${esc(x.name)}</b><span>${esc(x.summary)}</span><span class="kind">${esc(x.kind)}${x.adjudication === 'ruling' ? ' · needs a ruling' : ''}</span></button>`).join('')}</div>`;
   if (r.board) return h + boardHtml(s) + othersHtml(cls);
-  h += `<div class="form"><div class="full"><label for="fName">Call it</label><input type="text" id="fName" maxlength="60" placeholder="${esc(r.name)}" value="${esc(form.name)}"></div>`;
+  h += `<div class="form">${r.itemTarget ? '' : `<div class="full"><label for="fName">Call it</label><input type="text" id="fName" maxlength="60" placeholder="${esc(r.name)}" value="${esc(form.name)}"></div>`}`;
   if (r.target) h += `<div class="full"><label for="fTarget">For whom</label><input type="text" id="fTarget" maxlength="60" placeholder="A character, a crew, a client" value="${esc(form.target)}"></div>`;
+  if (r.itemTarget) { const items = (s.inventory || []).map((it, i) => ({ it, i })).filter(x => x.it && x.it.trade); h += `<div class="full"><label for="fItem">Which item</label><select id="fItem"><option value="">Choose…</option>${items.map(x => `<option value="${x.i}" ${String(x.i) === String(form.itemIndex) ? 'selected' : ''}>${esc(x.it.name || 'Unnamed')} · tier ${GRAKK_TRADE.tier(x.it)}${x.it.trade.taken ? ' · taken' : ''} · ${GRAKK_TRADE.scrubCost(x.it)} cr</option>`).join('')}</select>${items.length ? '' : '<p class="note">No items with trade codes in your inventory. Claim one first (Item cards).</p>'}</div>`; }
   if (r.options) h += `<div class="full"><label for="fOption">Improvement</label><select id="fOption"><option value="">Choose…</option>${r.options.map(o => `<option ${o === form.option ? 'selected' : ''}>${esc(o)}</option>`).join('')}</select></div>`;
   if (r.placement) h += `<div class="full"><label for="fDistrict">${esc(r.placementLabel || 'Where it goes')}</label><select id="fDistrict"><option value="">Choose a district…</option>${districts().map(d => `<option value="${d.id}" ${d.id === form.district ? 'selected' : ''}>${esc(d.name)}</option>`).join('')}</select></div>`;
   if (r.kind === 'placed') {
@@ -185,7 +187,7 @@ document.addEventListener('click', e => {
 });
 document.addEventListener('input', e => { const map = { fName: 'name', fTarget: 'target' }; if (map[e.target.id]) { form[map[e.target.id]] = e.target.value; render(); } });
 document.addEventListener('change', e => {
-  if (e.target.id === 'fOption') form.option = e.target.value; else if (e.target.id === 'fDistrict') form.district = e.target.value;
+  if (e.target.id === 'fOption') form.option = e.target.value; else if (e.target.id === 'fDistrict') form.district = e.target.value; else if (e.target.id === 'fItem') form.itemIndex = e.target.value;
   else if (e.target.name === 'vis') form.visibility = e.target.value; else if (e.target.name === 'perm') form.permission = e.target.value; else return;
   render();
 });

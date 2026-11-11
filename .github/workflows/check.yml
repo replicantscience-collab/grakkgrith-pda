@@ -21,6 +21,7 @@ jobs:
       - run: node tools/jobs-test.mjs
       - run: node tools/cityday-test.mjs
       - run: node tools/business-test.mjs
+      - run: node tools/trade-test.mjs
 
   smoke:
     name: Every screen opens

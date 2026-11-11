@@ -22,7 +22,10 @@
 
   function ensure(s) { if (!s.make || typeof s.make !== 'object') s.make = { v: 1, artifacts: [] }; s.make.artifacts = s.make.artifacts || []; return s.make; }
   const recipe = (M, id) => M.recipes.find(r => r.id === id) || null;
-  const recipesFor = (M, cls) => M.recipes.filter(r => r.class === cls);
+  const forClass = (r, cls) => r.class === cls || (r.classes || []).includes(cls);
+  const recipesFor = (M, cls) => M.recipes.filter(r => forClass(r, cls));
+  const TR = () => root.GRAKK_TRADE;
+  const invItem = (s, i) => (s.inventory || [])[Number(i)] || null;
   /* Downtime actions come from the sheet's counter (2 per gap, rulebook). Missing counter = a fresh gap. */
   function downtimeLeft(s) { const d = s.downtime; return d && d.actionsRemaining != null ? num(d.actionsRemaining) : 2; }
   function spendDowntime(s, n) { s.downtime = s.downtime || {}; s.downtime.actionsRemaining = Math.max(0, downtimeLeft(s) - n); }
@@ -34,7 +37,9 @@
   function preview(s, M, id, o = {}) {
     const r = recipe(M, id); if (!r) return { ok: false, blockers: ['Unknown Make.'] };
     const cls = s.character && s.character.class, blockers = [], heat = [], c = r.costs || {};
-    if (r.class !== cls) blockers.push(`${r.name} is ${r.class} work.`);
+    if (!forClass(r, cls)) blockers.push(`${r.name} is ${(r.classes || [r.class]).join(', ')} work.`);
+    let scrubCost = 0;
+    if (r.action === 'scrub') { const it = invItem(s, o.itemIndex), tr = TR(); if (!it || !it.trade) blockers.push('Pick an item that has a trade code.'); else if (tr) { scrubCost = tr.scrubCost(it); if (credits(s) < scrubCost) blockers.push(`Scrubbing a tier ${tr.tier(it)} item costs ${scrubCost} cr; you have ${credits(s)}.`); } }
     if (downtimeLeft(s) < M.downtimeCost) blockers.push('No downtime actions left this gap.');
     if (c.credits && credits(s) < c.credits) blockers.push(`Needs ${c.credits} credits for materials; you have ${credits(s)}.`);
     if (r.target && !String(o.target || '').trim()) blockers.push('Say who it is for.');
@@ -52,7 +57,7 @@
     if (r.adjudication === 'ruling') heat.push({ when: 'Ruling', amount: null, why: 'Any Heat is part of the ruling.' });
     if (!heat.length) heat.push({ when: '—', amount: 0, why: 'Lawful work. Heat only comes from what you do with it.' });
     const life = r.lifeDays == null ? 'Lasts until used or retired' : `Lasts ${r.lifeDays} Adyta day${r.lifeDays === 1 ? '' : 's'}${r.maintain ? ', can be maintained' : ''}`;
-    return { ok: !blockers.length, blockers, recipe: r, costs: { downtime: M.downtimeCost, credits: c.credits || 0, stress: c.stress || 0 },
+    return { ok: !blockers.length, blockers, recipe: r, costs: { downtime: M.downtimeCost, credits: scrubCost || c.credits || 0, stress: c.stress || 0 },
       roll: r.adjudication === 'auto' && r.roll ? { pool: pool(s, r), difficulty: r.roll.difficulty, label: `${cap(r.roll.attribute)} + ${cap(r.roll.skill)}` } : null,
       adjudication: r.adjudication, rulingNote: r.rulingNote || '', life, heat, visibility: vis, permission: perm };
   }
@@ -62,6 +67,14 @@
   function make(s, M, id, o, aMs, rng = Math.random) {
     const p = preview(s, M, id, o); if (!p.ok) return { ok: false, msg: p.blockers[0] };
     const r = p.recipe, m = ensure(s), who = (s.character && s.character.name) || 'Someone';
+    if (r.action === 'scrub') {
+      const it = invItem(s, o.itemIndex), res = TR().scrub(s, Number(o.itemIndex), aMs); if (!res.ok) return res;
+      spendDowntime(s, M.downtimeCost);
+      const a = { id: `a-${aMs.toString(36)}-${m.artifacts.length}`, recipe: r.id, name: `Scrubbed: ${it.name || 'an item'}`, kind: r.kind, class: r.class, creator: { name: who, class: s.character.class }, owner: who, target: it.trade.by || '', option: '',
+        costs: { downtime: M.downtimeCost, credits: res.cost, stress: 0 }, location: null, visibility: null, permission: null, created: aMs, expires: null, uses: null, value: 0, legality: r.legality,
+        permissions: { use: 'owner', transfer: false }, effect: r.effect, status: 'completed', roll: null, ruling: { needed: false, status: 'none' }, lastCheckedWeek: null, events: [{ at: aMs, text: `${who} (${s.character.class}) scrubbed ${it.name || 'an item'} for ${res.cost} cr. New code ${it.trade.id}.` }] };
+      m.artifacts.unshift(a); return { ok: true, artifact: a, msg: res.msg };
+    }
     spendDowntime(s, M.downtimeCost); if (p.costs.credits) setCredits(s, credits(s) - p.costs.credits); if (p.costs.stress) addStress(s, p.costs.stress);
     const a = { id: `a-${aMs.toString(36)}-${m.artifacts.length}`, recipe: r.id, name: String(o.name || '').trim() || r.name, kind: r.kind, class: r.class,
       creator: { name: who, class: r.class }, owner: who, target: String(o.target || '').trim(), option: o.option || '',

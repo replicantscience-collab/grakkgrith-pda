@@ -314,6 +314,40 @@
       "adjudication": "auto"
     },
     {
+      "id": "scrub",
+      "classes": [
+        "Ghost",
+        "Wrench",
+        "Signal",
+        "Broker"
+      ],
+      "class": "Ghost",
+      "kind": "service",
+      "name": "Scrub a Code",
+      "summary": "Wipe an item's trade code and write a fresh one: clean hands again. Ghosts also strip the maker mark.",
+      "action": "scrub",
+      "itemTarget": true,
+      "costs": {
+        "credits": 0,
+        "stress": 0
+      },
+      "costsByTier": [
+        0,
+        20,
+        40,
+        80,
+        160,
+        320
+      ],
+      "lifeDays": null,
+      "placement": false,
+      "legality": "restricted",
+      "value": 0,
+      "effect": "The item carries a new code with no history. If it was taken, it isn't any more. Price climbs with the item's tier.",
+      "notes": "Tradeable: a client passes you the item by code, you scrub it, you pass it back. Only the new code works for the client.",
+      "adjudication": "auto"
+    },
+    {
       "id": "registry-change",
       "class": "Ghost",
       "kind": "filing",
