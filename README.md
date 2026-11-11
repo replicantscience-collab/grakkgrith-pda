@@ -8,6 +8,7 @@ The companion web app for GRAKKGRITH, the Adyta tabletop RPG: character setup, c
 | --- | --- |
 | `index.html` | The shell: top nav, World pages (Start, City, Missions, Factions, Lore, Logs), campaign State, district dossiers, map viewer |
 | `apps/trade.js` | Trade codes: how items move between players (see below) |
+| `apps/patterns.js` | Patterns: player-made items, Sketch → Prototype → Proven (see below) |
 | `apps/creator.html` | Character Setup: races, classes, subclasses, origins, lives, gear, attribute points |
 | `apps/explore.html` | Explore: the city and district maps, places, travel, and where your character is right now |
 | `apps/guide.html` | Guides: Sideways Shops' guide to the races (card wall, tap a card for the full entry) |
@@ -99,6 +100,18 @@ Every item card made since v85 carries a **trade code**. The code *is* the item:
 - Cards made before v85 have no code; the **Give it a code** button adds one.
 
 **Real limit: there is no server**, so nothing can revoke an old code. If two people both claim the same code, both have the item; the PDA only refuses a duplicate on one sheet and records the chain of hands on every claim. Honest play covers the rest for now. `apps/trade.js` has a `registry` slot where a shared registry plugs in later so that claiming, passing and scrubbing kill the old code for everyone; the records won't need to change. Images over ~12 KB are left out of a code (use the PNG card for art). Logic: `apps/trade.js`, tested by `node tools/trade-test.mjs`; the smoke test clicks through issue, pass and claim.
+
+## Patterns: player-made items
+
+Workshop › **Design**. Most of Adyta's street tech is meant to be made by players. Spec: `claude/CRAFTING_PATTERNS.md` (cleared with Nib); numbers in `data/patterns.json`.
+
+- **Sketch** (free): name it, pick a **frame** (what it is: light/standard/heavy weapon, light/medium/heavy armor, tool, consumable, charm, drone, bag, media, papers; each frame belongs to a class), pick a book item it's based on, pick a **tier 1–4** (tier 5 is corp gear, never player-made), tick improvements and quirks. The editor greys out anything that doesn't fit the frame and refuses anything over the caps (armor value 3 max, AP 1 max, one item die, 3 uses, one bought slot). A quirk buys one slot; Reliable on a tier 1–2 item removes its built-in Backfire/Unreliable.
+- **Parts**: Scrap, Wire, Chem, Ink (15 cr), Chrome (40), Ember (30). Buy them at Rust Market (you have to be there on the Explore map) or **Salvage** in the right district, once per district per Adyta day. Runners get one free part per Delivery Run through Greasewick, the Scrapfields or the Sewers.
+- **Prototype** (one downtime action): choose the parts, roll your class skill (Wrench Wit + Repair, Shade Spark + Ward, Signal Wit + Hack, Ghost Wit + Forge) at the tier's difficulty. Success: the item card appears in your inventory, stats filled in from the frame and tier, with a trade code and your maker mark. One short: it works but picks up an extra quirk. Worse: half the parts are gone. 1 in 6 Prototypes carries a **hidden quirk**, sealed on the card until it's Proven.
+- **Proven**: press *Used in a scene* after the item sees real play, or a Striker *Field-tests* it (one downtime action, no roll). The hidden quirk, if any, is revealed. The design becomes a Pattern: copies are one difficulty step easier and one part cheaper, and come out Proven.
+- **Class roles**: Shade *Reads* a Pattern (Spark + Ward) to learn hidden quirks; Wrench *Gear Mods* an item up one tier; Broker writes a **license code** (N copies, 20% of each copy's value owed to the maker, settled by hand); Warden certification and Signal talk-up land with the Information Network. Proven Patterns can be shared outright by **Pattern code**.
+- **Selling**: street at full value (book price × tier multiplier, +25% per improvement) or fence at 60%. Restricted frames (standard/heavy weapons, heavy armor, papers) sold on the street add Heat +1 unless certified. Sales are logged with the district; the Information Network reads that log.
+- Tests: `node tools/patterns-test.mjs` (63 checks); the smoke test sketches, builds and lands a Prototype in the inventory through the UI.
 
 ## The Explore map
 

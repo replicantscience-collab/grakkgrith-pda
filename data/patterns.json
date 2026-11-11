@@ -1,0 +1,128 @@
+{
+  "_about": "Patterns: player-made items. Pick a frame, pick a tier, fill the slots. Sketch (free) -> Prototype (one downtime action, a roll) -> Proven (used in a scene, or a Striker field-tests it). Numbers follow First Edition v1.52 Weapon & Armor Quality, Properties, Armor profiles and Gear prices; the caps are what keep it from going OP. Spec: claude/CRAFTING_PATTERNS.md v0.2, cleared with Nib. Prices marked draft are not in the book.",
+  "status": "draft",
+  "downtimeCost": 1,
+  "hiddenQuirkChance": 0.1667,
+  "tiers": {
+    "1": { "name": "Handyman", "slots": 0, "builtIn": "backfire", "difficulty": 1, "difficultyName": "Routine", "parts": 1, "credits": 0, "minLevel": 1, "special": null, "multiplier": 0.25, "text": "Homemade, sewer-built. Cheap and available. Backfire on a complete failure." },
+    "2": { "name": "Crafted", "slots": 0, "builtIn": "unreliable", "difficulty": 1, "difficultyName": "Routine", "parts": 2, "credits": 0, "minLevel": 1, "special": null, "multiplier": 0.5, "text": "Competent work from poor parts. Jams on a complete failure." },
+    "3": { "name": "Common", "slots": 0, "builtIn": null, "difficulty": 2, "difficultyName": "Challenging", "parts": 2, "credits": 20, "minLevel": 1, "special": null, "multiplier": 1, "text": "Proper factory grade. No bonus, no penalty." },
+    "4": { "name": "Specialized", "slots": 1, "builtIn": null, "difficulty": 3, "difficultyName": "Hard", "parts": 3, "credits": 60, "minLevel": 6, "special": ["chrome", "ember"], "multiplier": 1.5, "text": "Custom work. One improvement built in. One of the parts must be Chrome or Ember." },
+    "5": { "name": "New Halo", "slots": 2, "builtIn": "reliable", "difficulty": null, "difficultyName": null, "parts": null, "credits": null, "minLevel": null, "special": null, "multiplier": 3, "text": "Corp and deep-pockets gear. Not player-made: bought, stolen or issued. A player can Gear Mod one, never build one." }
+  },
+  "rules": {
+    "boughtSlotsMax": 1,
+    "provenDifficultyStep": 1,
+    "provenPartsStep": 1,
+    "improvementValue": 0.25,
+    "copyOfTier5MakesTier": 4
+  },
+  "frames": {
+    "light-weapon": { "name": "Light weapon", "group": "weapon", "class": "Wrench", "cardClass": "WEAPON", "category": "light", "attribute": "reflex", "skill": "melee", "legality": "street", "penalty": null, "text": "Max one step per hit. Concealable, Quick Draw, attack without spending Move.",
+      "variants": [ { "id": "knife", "name": "Knife", "damage": "Piercing", "price": 15 }, { "id": "baton", "name": "Baton", "damage": "Bludgeoning", "price": 20 }, { "id": "holdout-pistol", "name": "Holdout pistol", "damage": "Piercing", "price": 120, "ranged": true, "capacity": 6 }, { "id": "dart-pistol", "name": "Dart pistol", "damage": "Piercing + Chemical", "price": 80, "ranged": true, "capacity": 4 } ] },
+    "standard-weapon": { "name": "Standard weapon", "group": "weapon", "class": "Wrench", "cardClass": "WEAPON", "category": "standard", "attribute": "muscle", "skill": "melee", "legality": "restricted", "penalty": null, "text": "One step per excess success. Reliable, Versatile.",
+      "variants": [ { "id": "pipe", "name": "Pipe", "damage": "Bludgeoning", "price": 10 }, { "id": "short-blade", "name": "Short blade", "damage": "Slashing", "price": 40 }, { "id": "sidearm", "name": "Sidearm", "damage": "Piercing", "price": 200, "ranged": true, "capacity": 12 }, { "id": "sawn-off", "name": "Sawn-off shotgun", "damage": "Piercing", "price": 180, "ranged": true, "capacity": 2 }, { "id": "combat-axe", "name": "Combat axe", "damage": "Slashing", "price": 160 }, { "id": "stun-rod", "name": "Stun rod", "damage": "Electrical", "price": 140 } ] },
+    "heavy-weapon": { "name": "Heavy weapon", "group": "weapon", "class": "Wrench", "cardClass": "WEAPON", "category": "heavy", "attribute": "muscle", "skill": "melee", "legality": "restricted", "penalty": "Presence: drawing it forces Root checks", "text": "Min one step on hit; excess pushes two. Suppressing, Presence.",
+      "variants": [ { "id": "rifle", "name": "Rifle", "damage": "Piercing", "price": 400, "ranged": true, "capacity": 10 }, { "id": "sledgehammer", "name": "Sledgehammer", "damage": "Bludgeoning", "price": 80 }, { "id": "industrial-tool", "name": "Modified industrial tool", "damage": "Bludgeoning", "price": 300 } ] },
+    "light-armor": { "name": "Light armor", "group": "armor", "class": "Wrench", "cardClass": "ARMOR", "legality": "street", "penalty": null, "totalCap": 4, "text": "Concealable, no movement penalty.",
+      "variants": [ { "id": "padded-jacket", "name": "Padded jacket", "price": 40, "armor": { "ballistic": 0, "blade": 1, "impact": 1 } }, { "id": "blade-coat", "name": "Blade coat", "price": 60, "armor": { "ballistic": 0, "blade": 2, "impact": 1 } } ] },
+    "medium-armor": { "name": "Medium armor", "group": "armor", "class": "Wrench", "cardClass": "ARMOR", "legality": "street", "penalty": "-1 die Dash/Dodge", "totalCap": 6, "text": "Visible. -1 die Dash/Dodge.",
+      "variants": [ { "id": "ballistic-vest", "name": "Ballistic vest", "price": 150, "armor": { "ballistic": 2, "blade": 0, "impact": 1 } }, { "id": "patchwork-plate", "name": "Patchwork plate", "price": 100, "armor": { "ballistic": 1, "blade": 2, "impact": 2 } } ] },
+    "heavy-armor": { "name": "Heavy armor", "group": "armor", "class": "Wrench", "cardClass": "ARMOR", "legality": "restricted", "penalty": "-2 dice Motion", "totalCap": 8, "text": "Obvious. -2 dice Motion.",
+      "variants": [ { "id": "riot-armor", "name": "Riot armor", "price": 300, "armor": { "ballistic": 1, "blade": 2, "impact": 3 } }, { "id": "tactical-plate", "name": "Tactical plate", "price": 450, "armor": { "ballistic": 2, "blade": 2, "impact": 2 } } ] },
+    "tool": { "name": "Tool", "group": "tool", "class": ["Wrench", "Runner"], "cardClass": "TOOL", "legality": "street", "penalty": null, "text": "+1 die on one named skill, or makes a roll possible. Item dice never stack.",
+      "variants": [ { "id": "tool-kit", "name": "Tool kit", "price": 150, "boosts": "Repair" }, { "id": "hacking-deck", "name": "Hacking deck", "price": 300, "boosts": "Hack" }, { "id": "climbing-kit", "name": "Climbing kit", "price": 60, "boosts": "Climb" }, { "id": "route-gear", "name": "Route gear", "price": 80, "boosts": "Navigate" }, { "id": "signal-jammer", "name": "Signal jammer", "price": 400, "boosts": null, "enables": "Blocks electronic communication in Close range for one scene" } ] },
+    "consumable": { "name": "Consumable", "group": "consumable", "class": "Wrench", "cardClass": "CONSUMABLE", "legality": "street", "penalty": null, "usesCap": 3, "text": "One effect per use, 1-3 uses. Heals at most one Wound step per use.",
+      "variants": [ { "id": "medkit", "name": "Medkit", "price": 60, "uses": 1, "wound": 1, "stress": 0 }, { "id": "stimpack", "name": "Stimpack", "price": 80, "uses": 1, "wound": 0, "stress": 1, "effectText": "Ignore Wound penalties for one scene; crash afterward" }, { "id": "ammo-pack", "name": "Ammo pack", "price": 30, "uses": 1, "wound": 0, "stress": 0, "effectText": "Reloads one matching weapon" } ] },
+    "charm": { "name": "Charm", "group": "charm", "class": "Shade", "cardClass": "ITEM", "legality": "street", "penalty": null, "usesCap": 3, "text": "A minor working stored in an object. Does what the working says, nothing more.",
+      "variants": [ { "id": "alarm-charm", "name": "Alarm charm", "price": 50, "uses": 1, "effectText": "You know when something crosses it" }, { "id": "ward-token", "name": "Ward token", "price": 80, "uses": 1, "effectText": "One Minor warding for one scene" }, { "id": "veil-knot", "name": "Veil knot", "price": 80, "uses": 1, "effectText": "Muddles one casual search" } ] },
+    "drone": { "name": "Drone", "group": "drone", "class": "Wrench", "cardClass": "TOOL", "legality": "street", "penalty": null, "text": "One job: scout, carry, distract or record. Fragile.",
+      "variants": [ { "id": "scout-drone", "name": "Scout drone", "price": 200, "job": "scout" }, { "id": "carry-drone", "name": "Carry drone", "price": 200, "job": "carry" }, { "id": "distract-drone", "name": "Distraction drone", "price": 200, "job": "distract" }, { "id": "record-drone", "name": "Recording drone", "price": 200, "job": "record" } ] },
+    "bag": { "name": "Bag", "group": "bag", "class": "Runner", "cardClass": "BACK", "legality": "street", "penalty": null, "text": "Inventory slots, using the sheet's Back slot rules.",
+      "variants": [ { "id": "pouch", "name": "Pouch", "price": 15, "slots": 5 }, { "id": "courier-bag", "name": "Courier bag", "price": 40, "slots": 10 }, { "id": "pack", "name": "Pack", "price": 70, "slots": 20 } ] },
+    "media": { "name": "Media", "group": "media", "class": "Signal", "cardClass": "TOOL", "legality": "street", "penalty": null, "text": "Records, plays or transmits.",
+      "variants": [ { "id": "recorder", "name": "Recorder", "price": 100, "boosts": null, "enables": "Records a scene" }, { "id": "broadcast-kit", "name": "Broadcast kit", "price": 250, "boosts": "Perform", "enables": "Transmits to a channel you can reach" }, { "id": "sticker-press", "name": "Sticker press", "price": 60, "boosts": null, "enables": "Runs off a sticker sheet" } ] },
+    "papers": { "name": "Papers", "group": "papers", "class": "Ghost", "cardClass": "ITEM", "legality": "restricted", "penalty": null, "usesCap": 3, "text": "Passes a check of a stated depth.",
+      "variants": [ { "id": "cover-papers", "name": "Cover papers", "price": 120, "uses": 1, "effectText": "Passes a casual check" }, { "id": "deep-papers", "name": "Deep papers", "price": 300, "uses": 1, "effectText": "Passes an ACR lookup once" } ] }
+  },
+  "rolls": {
+    "Wrench": { "attribute": "wit", "skill": "repair" },
+    "Shade": { "attribute": "spark", "skill": "ward" },
+    "Signal": { "attribute": "wit", "skill": "hack" },
+    "Ghost": { "attribute": "wit", "skill": "forge" },
+    "Runner": { "attribute": "wit", "skill": "repair" }
+  },
+  "improvements": {
+    "absorb-ballistic": { "name": "+1 Ballistic", "groups": ["armor"], "text": "+1 absorption against bullets." },
+    "absorb-blade": { "name": "+1 Blade", "groups": ["armor"], "text": "+1 absorption against blades." },
+    "absorb-impact": { "name": "+1 Impact", "groups": ["armor"], "text": "+1 absorption against impact." },
+    "ap1": { "name": "AP 1", "groups": ["weapon"], "text": "Armor-piercing 1. The cap on player-made gear." },
+    "reliable": { "name": "Reliable", "groups": ["weapon", "tool", "drone"], "text": "Never Backfire or Unreliable; ignores the failure table. Removes a built-in Backfire or Unreliable." },
+    "concealable": { "name": "Concealable", "frames": ["light-weapon", "standard-weapon", "light-armor", "tool", "charm"], "text": "Passes a casual search; drawn without telegraphing." },
+    "quick-draw": { "name": "Quick Draw", "frames": ["light-weapon", "standard-weapon"], "text": "Drawing it costs no Move." },
+    "versatile": { "name": "Versatile", "groups": ["weapon"], "text": "Works in more than one mode or range band." },
+    "remove-penalty": { "name": "Remove a penalty", "frames": ["medium-armor", "heavy-armor", "heavy-weapon"], "text": "Removes the frame's book penalty tag." },
+    "quiet": { "name": "Quiet", "groups": ["weapon", "drone", "media"], "text": "Not Loud; can't be heard past Close range." },
+    "extra-use": { "name": "+1 use", "groups": ["consumable", "charm", "papers"], "text": "One more use, up to the cap of 3." },
+    "second-skill": { "name": "Second skill", "groups": ["tool"], "text": "The +1 die also applies to a second, related skill." },
+    "sturdy": { "name": "Sturdy", "groups": ["weapon", "armor", "tool", "consumable", "charm", "drone", "bag", "media", "papers"], "text": "Survives the first Break; repairable instead of lost." },
+    "signal-proof": { "name": "Signal-proof", "groups": ["tool", "drone", "media"], "text": "Ignores jamming for one scene per session." }
+  },
+  "majorImprovements": {
+    "ap2": { "name": "AP 2", "text": "Tier 5 corp gear only." },
+    "suppressing": { "name": "Suppressing", "text": "Tier 5 corp gear only." },
+    "heavy-impact": { "name": "Heavy Impact", "text": "Tier 5 corp gear only." },
+    "energy1": { "name": "Energy 1", "text": "Tier 5 corp gear only (or heavy armor by ruling)." },
+    "two-dice": { "name": "+2 dice", "text": "Tier 5 corp gear only." },
+    "two-steps": { "name": "Two steps", "text": "Tier 5 corp gear only." }
+  },
+  "quirks": {
+    "loud": { "name": "Loud", "text": "Using it generates Heat or attention." },
+    "traceable": { "name": "Traceable", "text": "Use can be tied back to you." },
+    "unreliable": { "name": "Unreliable", "text": "Jams on a complete failure; an Action to clear." },
+    "backfire": { "name": "Backfire", "text": "Handyman Failure table on a complete failure." },
+    "fragile": { "name": "Fragile", "text": "Breaks on any failed roll, not just a complete failure." },
+    "ugly": { "name": "Ugly", "text": "Reads as Scrapfields work. -1 die on Persuade in corporate or high-status spaces while it's visible." },
+    "hungry": { "name": "Hungry", "text": "1 part or 20 cr a week, or it stops working until fed." },
+    "sizzle": { "name": "Sizzle", "text": "Near chrome or live tech, 1-in-6 something malfunctions." },
+    "weather-bit": { "name": "Weather-bit", "text": "Stops working in rain, cold or deep tunnels (pick one)." },
+    "tell": { "name": "Tell", "text": "Anyone who knows the Pattern recognizes it on sight." }
+  },
+  "caps": {
+    "armorSingle": 3,
+    "energy": 0,
+    "ap": 1,
+    "itemDice": 1,
+    "healingSteps": 1,
+    "uses": 3,
+    "text": [
+      "No item ever removes a roll or guarantees a success.",
+      "No item does what a class Owns: no invisibility, no mid-scene ally repair beyond medkit rules, no real casting at scale.",
+      "Item dice never stack: on any roll only the best single item counts.",
+      "The sheet's slot rules hold: one active, one secondary, one armor, one back."
+    ]
+  },
+  "parts": {
+    "scrap": { "name": "Scrap", "price": 15, "districts": ["scrapfields", "greasewick-row", "southport-slums", "ash-wastes"], "text": "Salvage in the Scrapfields, Greasewick Row, anywhere broken." },
+    "wire": { "name": "Wire", "price": 15, "districts": ["the-tangle", "three-wires", "the-sewers", "deep-tunnels"], "text": "Salvage in the Tangle, Three Wires, the Sewers." },
+    "chem": { "name": "Chem", "price": 15, "districts": ["dockside", "old-city", "the-ashrun"], "text": "Dockside, Old City, The Ashrun; Slimefolk contacts." },
+    "ink": { "name": "Ink", "price": 15, "districts": ["low-halo", "market-ring"], "text": "Low Halo, Market Ring; anyone with paper." },
+    "chrome": { "name": "Chrome", "price": 40, "districts": ["scrapfields", "crownline-industrials", "southern-industrial-belt"], "text": "Salvage chrome off dead tech; Rust Market; Helix leftovers (careful)." },
+    "ember": { "name": "Ember", "price": 30, "districts": ["ember-court"], "text": "Ember Court; ward components." },
+    "corp": { "name": "Corp-grade", "price": null, "districts": [], "text": "Not salvage. Bought at Restricted acquisition, stolen, or earned from a corp job. Worth a lot to a fence." }
+  },
+  "salvage": { "attribute": "wit", "skill": "salvage", "difficulty": 1, "extraPerSuccess": 1, "text": "A Salvage roll in the right district: Routine for one part, each extra success one more. One try per district per Adyta day." },
+  "market": { "place": "low-halo--rust-market", "placeName": "Rust Market", "district": "low-halo", "text": "Rust Market, Low Halo. Parts at list price; you have to be there." },
+  "runnerSourcing": { "districts": ["greasewick-row", "scrapfields", "the-sewers"], "text": "Runners: one free part per Delivery Run that touches Greasewick Row, the Scrapfields or the Sewers." },
+  "classRoles": {
+    "Wrench": "Designs weapons, armor, tools, drones and consumables. Gear Mod upgrades an item one tier.",
+    "Shade": "Designs charms. Reads a Pattern: learns its quirks, hidden ones included.",
+    "Signal": "Designs media. Talks a Pattern up or down on the air (Word).",
+    "Ghost": "Designs papers. Scrubs maker marks and trade codes.",
+    "Runner": "Designs bags and route gear. Sources one free part per run through the salvage districts.",
+    "Striker": "Field-tests a Prototype into Proven: one downtime action, no roll.",
+    "Broker": "Licenses a Pattern: sells someone the right to make copies; the maker gets a cut.",
+    "Warden": "Certifies a Pattern: it becomes Documented, and street sales of it in watched districts cost no Heat."
+  },
+  "license": { "copiesMax": 10, "makerCut": 0.2, "text": "A license code lets its holder (with the right class) prototype a Proven Pattern. Each copy made under license sends the maker's cut back by the honor of the books: the PDA records it; the credits move by hand." }
+}

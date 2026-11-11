@@ -294,6 +294,26 @@ try {
       const s = await ST(), a = (s.make && s.make.artifacts || [])[0];
       return (a && a.recipe === 'route-sheet' && a.creator.name === 'Smoke Runner' && a.location.district === 'low-halo' && s.downtime.actionsRemaining === 1 && await f.evaluate(() => document.querySelectorAll('.work .letter').length) === 1) || JSON.stringify(a).slice(0, 120);
     });
+    // Design: a Runner sketches a courier bag, gets parts, builds a Prototype that lands in the inventory with a trade code.
+    await step('Design tab opens with the Runner frames', async () => {
+      await f.click('#toDesign'); await page.waitForTimeout(300);
+      const opts = await f.$$eval('#dFrame option', o => o.map(x => x.textContent)); return (opts.join('|') === 'Tool|Bag' || opts.join('|') === 'Bag|Tool') || opts.join('|');
+    });
+    await step('a sketch over the caps is refused, a legal one saves', async () => {
+      await f.selectOption('#dFrame', 'bag'); await f.fill('#dName', 'Smoke Sack'); await f.click('input[data-imp="sturdy"]'); await page.waitForTimeout(200);
+      const blocked = await f.evaluate(() => document.getElementById('dSave').disabled);
+      await f.click('input[data-quirk="ugly"]'); await page.waitForTimeout(200); await f.click('#dSave'); await page.waitForTimeout(400);
+      const sk = ((await ST()).patterns || {}).sketches || []; return (blocked && sk.length === 1 && sk[0].name === 'Smoke Sack' && sk[0].improvements[0] === 'sturdy') || JSON.stringify(sk).slice(0, 120);
+    });
+    await step('building the Prototype puts a card in the inventory with a trade code', async () => {
+      await page.evaluate(() => { const s = JSON.parse(localStorage.getItem('grakkgrith_character_tool_v8_state')); s.patterns.parts = { scrap: 3 }; localStorage.setItem('grakkgrith_character_tool_v8_state', JSON.stringify(s)); });
+      await f.evaluate(() => { Math.random = () => 0.99; }); await f.click('[data-proto]'); await page.waitForTimeout(300); await f.fill('input[data-part="scrap"]', '1'); await page.waitForTimeout(300); await f.click('#dBuild'); await page.waitForTimeout(500);
+      const s = await ST(), it = (s.inventory || []).find(x => x && x.pattern), log = (s.patterns.log || [])[0];
+      if (!it) return 'no item: ' + (log ? log.text : 'no log') + ' parts=' + JSON.stringify(s.patterns.parts) + ' dt=' + s.downtime.actionsRemaining;
+      return (it.class === 'BACK' && it.trade && it.pattern.frame === 'bag' && s.downtime.actionsRemaining === 0) || JSON.stringify(it).slice(0, 160);
+    });
+    await step('back on Make the Runner list is still there', async () => { await f.click('#toMake'); await page.waitForTimeout(300); const names = await f.$$eval('.recipe b', bs => bs.map(b => b.textContent)); return names.includes('Delivery Slot') || names.join(','); });
+    await page.evaluate(() => { const s = JSON.parse(localStorage.getItem('grakkgrith_character_tool_v8_state')); s.downtime.actionsRemaining = 1; localStorage.setItem('grakkgrith_character_tool_v8_state', JSON.stringify(s)); }); await page.evaluate(() => document.getElementById('makeBtn').click()); await page.waitForTimeout(800); f = frame(page);
     await step('a Runner takes a delivery and Explore shows the pickup', async () => {
       await f.click('.recipe[data-recipe="delivery-run"]'); const n = await f.$$eval('[data-take]', b => b.length);
       await f.click('[data-take] >> nth=0'); await page.waitForTimeout(400);

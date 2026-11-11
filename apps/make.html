@@ -42,6 +42,18 @@ input:focus,select:focus{outline:none;border-color:var(--art-cyan);box-shadow:0 
 .sheets a{display:block;color:var(--art-cream);text-decoration:none;font:700 13px var(--art-ui);letter-spacing:.04em}
 .sheets img{display:block;width:100%;height:auto;border:1px solid rgba(215,172,97,.4);border-radius:8px;background:#05070d}
 .sheets span{display:block;margin-top:4px}
+.checks{display:flex;flex-wrap:wrap;gap:6px}
+.checks label{display:flex;align-items:center;gap:6px;min-height:36px;margin:0;padding:4px 10px;border:1px solid rgba(118,80,45,.85);border-radius:6px;background:rgba(10,11,22,.7);color:var(--art-cream);font:600 13px var(--art-ui);letter-spacing:.02em;text-transform:none;cursor:pointer}
+.checks label.off{opacity:.4}
+.checks input{accent-color:var(--art-cyan);width:16px;height:16px}
+.checks small{color:var(--art-muted);font-weight:400}
+.parts{display:grid;grid-template-columns:repeat(auto-fill,minmax(120px,1fr));gap:8px;margin:8px 0}
+.part{padding:8px 10px;border:1px solid rgba(118,80,45,.85);border-radius:6px;background:rgba(10,11,22,.7)}
+.part b{display:block;color:#ffe2a8;font:700 15px var(--art-ui)}
+.part span{color:var(--art-muted);font-size:13px}
+.part input{width:60px;min-height:34px;margin-top:4px;padding:4px 6px;font-size:15px}
+.sk{margin-bottom:10px}
+.sk .st{color:var(--art-cyan);font:700 11px var(--art-ui);letter-spacing:.1em;text-transform:uppercase}
 @media (max-width:860px){.form{grid-template-columns:1fr}}
 </style>
 </head>
@@ -49,7 +61,7 @@ input:focus,select:focus{outline:none;border-color:var(--art-cyan);box-shadow:0 
 <div class="wrap">
   <div class="kicker">ADYTA PDA / WORKSHOP</div>
   <h1>Your Workshop</h1>
-  <nav class="wsSwitch" aria-label="Workshop"><button type="button" aria-current="page">Make</button><button type="button" id="toItems">Item cards</button></nav>
+  <nav class="wsSwitch" aria-label="Workshop"><button type="button" id="toMake" aria-current="page">Make</button><button type="button" id="toDesign">Design</button><button type="button" id="toItems">Item cards</button></nav>
   <p class="muted" id="who">Make things the city has to deal with.</p>
   <div class="strip" id="strip"></div>
   <div class="cols">
@@ -62,14 +74,17 @@ input:focus,select:focus{outline:none;border-color:var(--art-cyan);box-shadow:0 
 <script>document.getElementById('toItems').onclick = () => parent.postMessage({ type: 'grakkgrith-nav', to: 'itemsBtn' }, '*');</script>
 <script src="./week.js"></script>
 <script src="./trade.js"></script>
+<script src="./patterns.js"></script>
 <script src="./make.js"></script>
 <script>
 'use strict';
 const KEY = 'grakkgrith_character_tool_v8_state';
-const WK = window.GRAKK_WEEK, MK = window.GRAKK_MAKE, $ = id => document.getElementById(id);
+const WK = window.GRAKK_WEEK, MK = window.GRAKK_MAKE, PT = window.GRAKK_PATTERNS, $ = id => document.getElementById(id);
 const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
-let W = null, CLOCK = null, M = null, PLACES = null;
+let W = null, CLOCK = null, M = null, PLACES = null, P = null, mode = 'make';
 const form = { recipe: '', name: '', target: '', option: '', district: '', visibility: '', permission: 'own', itemIndex: '' };
+/* Design tab state: the sketch being edited, the parts chosen for the next prototype, and the item picked for Pattern actions. */
+const D = { id: '', name: '', frame: '', variant: '', tier: 1, improvements: [], quirks: [], makerMark: '', notes: '', parts: {}, sel: '', modParts: {}, modImp: '', buy: 'scrap', buyN: 1, code: '', lic: 3, licTo: '' };
 const load = () => { try { return JSON.parse(localStorage.getItem(KEY)); } catch (e) { return null; } };
 const save = s => { try { localStorage.setItem(KEY, JSON.stringify(s)); } catch (e) {} try { parent.postMessage({ type: 'grakkgrith-week-changed' }, '*'); } catch (e) {} };
 const now = () => WK.adytaNow(CLOCK, Date.now());
@@ -156,6 +171,118 @@ function workHtml(s) {
   return (live.length ? live.map(card).join('') : '<p class="muted">Nothing active.</p>') + (done.length ? `<details class="filed"><summary>Finished (${done.length})</summary>${done.map(card).join('')}</details>` : '');
 }
 
+
+/* ===== Design: Patterns (apps/patterns.js, data/patterns.json). Sketch -> Prototype -> Proven. ===== */
+const fr = id => P.frames[id], tr = t => P.tiers[String(t)];
+function designHtml(s) {
+  const cls = s.character.class, frames = PT.framesFor(P, cls), role = P.classRoles[cls] || '';
+  let h = `<p class="note">${esc(role)}</p>`;
+  if (!frames.length) h += `<div class="empty">${esc(cls)}s don't design gear. ${esc(role)} Parts, Patterns and licenses still live here.</div>`;
+  else {
+    if (!frames.includes(D.frame)) { D.frame = frames[0]; D.variant = ''; D.improvements = []; }
+    const f = fr(D.frame), v = f.variants.find(x => x.id === D.variant) || f.variants[0]; D.variant = v.id;
+    const allowed = PT.allowedImprovements(P, D.frame), t = tr(D.tier), sk = { ...D, tier: D.tier }, val = PT.validate(P, s, sk), slots = val.slots;
+    h += `<div class="form"><div class="full"><label for="dName">Call it</label><input type="text" id="dName" maxlength="60" placeholder="Zip gun, Blade coat, Alarm charm…" value="${esc(D.name)}"></div>
+      <div><label for="dFrame">Frame</label><select id="dFrame">${frames.map(x => `<option value="${x}" ${x === D.frame ? 'selected' : ''}>${esc(fr(x).name)}</option>`).join('')}</select></div>
+      <div><label for="dVariant">Based on</label><select id="dVariant">${f.variants.map(x => `<option value="${x.id}" ${x.id === v.id ? 'selected' : ''}>${esc(x.name)} · ${x.price} cr book</option>`).join('')}</select></div>
+      <div class="full"><label id="tierL">Quality tier</label><div class="radios" role="radiogroup" aria-labelledby="tierL">${[1, 2, 3, 4].map(n => `<label><input type="radio" name="tier" value="${n}" ${n === D.tier ? 'checked' : ''}>${n} · ${esc(tr(n).name)}</label>`).join('')}</div><p class="note">${esc(t.text)} ${t.difficultyName} roll, ${t.parts} part${t.parts > 1 ? 's' : ''}${t.credits ? ` + ${t.credits} cr` : ''}${t.minLevel > 1 ? `, level ${t.minLevel}+` : ''}. ${t.slots} built-in slot${t.slots === 1 ? '' : 's'}; a quirk buys one more.</p></div>
+      <div class="full"><label>Improvements <small style="color:var(--art-muted)">(${val.used} of ${slots} slot${slots === 1 ? '' : 's'})</small></label><div class="checks">${Object.entries(P.improvements).map(([id, im]) => { const ok = allowed.includes(id); return `<label class="${ok ? '' : 'off'}" title="${esc(im.text)}"><input type="checkbox" data-imp="${id}" ${D.improvements.includes(id) ? 'checked' : ''} ${ok ? '' : 'disabled'}>${esc(im.name)}</label>`; }).join('')}</div></div>
+      <div class="full"><label>Quirks <small style="color:var(--art-muted)">(one buys a slot${t.builtIn ? `; ${esc(P.quirks[t.builtIn].name)} is built in at this tier` : ''})</small></label><div class="checks">${Object.entries(P.quirks).map(([id, q]) => `<label class="${t.builtIn === id ? 'off' : ''}" title="${esc(q.text)}"><input type="checkbox" data-quirk="${id}" ${D.quirks.includes(id) ? 'checked' : ''} ${t.builtIn === id ? 'disabled' : ''}>${esc(q.name)}</label>`).join('')}</div></div>
+      <div><label for="dMark">Maker mark</label><input type="text" id="dMark" maxlength="40" placeholder="Your shop or sign, or blank" value="${esc(D.makerMark)}"></div>
+      <div><label for="dNotes">Notes on the card</label><input type="text" id="dNotes" maxlength="200" placeholder="Flavor, warnings" value="${esc(D.notes)}"></div></div>`;
+    h += `<article class="letter order" aria-label="Sketch"><div class="from">Sketch · ${D.id ? 'editing' : 'new'}</div><h3>${esc(D.name || 'Unnamed')}</h3>
+      <dl><dt>Is</dt><dd>${esc(PT.summary(P, { ...sk, improvements: D.improvements, quirks: D.quirks }))}</dd><dt>Worth</dt><dd>about ${PT.value(P, sk)} cr on the street</dd><dt>Legal</dt><dd>${f.legality === 'restricted' ? 'Restricted: street sales add Heat unless a Warden certifies it' : 'Street'}</dd></dl>
+      ${val.problems.length ? `<ul class="blockers">${val.problems.map(b => `<li>${esc(b)}</li>`).join('')}</ul>` : ''}
+      <div class="actions"><button class="primary" id="dSave" ${val.ok ? '' : 'disabled'}>${D.id ? 'Save changes' : 'Save sketch'}</button>${D.id ? '<button class="ghost" id="dNew">New sketch</button>' : ''}</div><p class="note">A sketch is free and exists only on paper. Prototyping it is a downtime action, a roll and the parts.</p></article>`;
+  }
+  // Parts
+  const pts = PT.ensure(s).parts, loc = PT.here(s, now()), atMarket = loc && loc.place === P.market.place, opts = loc ? PT.salvageOptions(P, loc.district) : [];
+  h += `<h2 style="margin-top:18px">Parts</h2><div class="parts">${Object.entries(P.parts).filter(([k]) => k !== 'corp').map(([k, pt]) => `<div class="part" title="${esc(pt.text)}"><b>${PT.partCount(s, k)} ${esc(pt.name)}</b><span>${pt.price} cr at Rust Market</span></div>`).join('')}</div>
+    <div class="actions">${atMarket ? `<select id="dBuy" style="min-height:44px">${Object.entries(P.parts).filter(([, pt]) => pt.price != null).map(([k, pt]) => `<option value="${k}" ${k === D.buy ? 'selected' : ''}>${esc(pt.name)} · ${pt.price} cr</option>`).join('')}</select><input type="number" id="dBuyN" min="1" max="20" value="${D.buyN}" style="width:80px" aria-label="How many"><button class="primary" id="dBuyBtn">Buy</button>` : `<button class="ghost" data-go="${P.market.place}">Rust Market sells parts</button>`}
+    ${opts.length ? opts.map(k => `<button data-salvage="${k}">Salvage ${esc(P.parts[k].name)} here</button>`).join('') : `<span class="note">${loc ? 'Nothing to salvage in this district.' : 'Open Explore to be somewhere.'}</span>`}</div>
+    <p class="note">${esc(P.salvage.text)} ${cls === 'Runner' ? esc(P.runnerSourcing.text) : ''}</p>`;
+  return h;
+}
+function sketchesHtml(s) {
+  const p = PT.ensure(s), list = p.sketches, items = (s.inventory || []).map((it, i) => ({ it, i })).filter(x => x.it && x.it.pattern);
+  let h = '';
+  if (!list.length && !items.length) return '<p class="muted">No Patterns yet. Sketch one on the left; what you build shows up here and in your Item cards.</p>';
+  for (const sk of list) {
+    const m = PT.materials(P, s, sk), spent = Object.values(D.parts).reduce((a, b) => a + Number(b || 0), 0), pv = PT.previewPrototype(s, P, sk.id, { parts: D.parts }), open = D.sel === 'sk:' + sk.id;
+    h += `<article class="letter bill sk"><span class="st">${sk.status === 'proven' ? 'Proven Pattern' : 'Sketch'}${sk.license ? ` · licensed, ${sk.license.copies} left` : ''}${sk.heldFrom ? ` · from ${esc(sk.heldFrom)}` : ''}</span><h3>${esc(sk.name)}</h3><p>${esc(PT.summary(P, sk, sk.status === 'proven'))} ${sk.copies ? `Made ${sk.copies}×.` : ''}</p>
+      <div class="actions">${open ? '' : `<button class="primary" data-proto="${sk.id}">Prototype</button>`}${sk.status !== 'proven' ? `<button class="ghost" data-edit="${sk.id}">Edit</button>` : `<button class="ghost" data-pcode="${sk.id}">Pattern code</button>${s.character.class === 'Broker' ? `<button class="ghost" data-lic="${sk.id}">License</button>` : ''}`}${sk.license ? '' : `<button class="ghost" data-tear="${sk.id}">Tear up</button>`}</div>`;
+    if (open) {
+      h += `<div class="form" style="margin-top:8px"><div class="full"><label>Parts for this build: ${m.parts} needed${m.special ? ` (one must be ${m.special.map(k => P.parts[k].name).join(' or ')})` : ''}${m.credits ? `, plus ${m.credits} cr` : ''}${m.proven ? '. Proven: one step easier, one part fewer' : ''}</label><div class="parts">${Object.entries(P.parts).filter(([k]) => k !== 'corp').map(([k, pt]) => `<div class="part"><b>${esc(pt.name)}</b><span>${PT.partCount(s, k)} on hand</span><input type="number" min="0" max="${PT.partCount(s, k)}" data-part="${k}" value="${D.parts[k] || 0}" aria-label="${esc(pt.name)} to use"></div>`).join('')}</div></div></div>
+        <dl class="order" style="display:grid;grid-template-columns:auto 1fr;gap:4px 14px"><dt>Roll</dt><dd>${pv.roll ? `${esc(pv.roll.label)}: ${pv.roll.pool} dice, need ${pv.roll.difficulty}` : ''}. One short: it works with an extra quirk. Worse: half the parts are gone.</dd><dt>Odds</dt><dd>1 in 6 Prototypes carries a hidden quirk nobody sees until it's Proven.</dd></dl>
+        ${pv.blockers.length ? `<ul class="blockers">${pv.blockers.map(b => `<li>${esc(b)}</li>`).join('')}</ul>` : ''}
+        <div class="actions"><button class="primary" id="dBuild" data-id="${sk.id}" ${pv.ok ? '' : 'disabled'}>Build it (1 downtime)</button><button class="ghost" data-cancel="1">Cancel</button></div>`;
+    }
+    if (D.sel === 'lic:' + sk.id) h += `<div class="form" style="margin-top:8px"><div><label for="dLicTo">Licensee</label><input type="text" id="dLicTo" maxlength="40" value="${esc(D.licTo)}" placeholder="Their character name"></div><div><label for="dLicN">Copies (max ${P.license.copiesMax})</label><input type="number" id="dLicN" min="1" max="${P.license.copiesMax}" value="${D.lic}"></div></div><p class="note">The licensee needs the frame's class. ${Math.round(P.license.makerCut * 100)}% of each copy's value is owed to the maker, by hand.</p><div class="actions"><button class="primary" id="dLicGo" data-id="${sk.id}">Write the license</button><button class="ghost" data-cancel="1">Cancel</button></div>`;
+    h += '</article>';
+  }
+  if (items.length) {
+    h += `<h3 style="margin:14px 0 6px;color:var(--art-brass);font:700 15px var(--art-ui);letter-spacing:.06em;text-transform:uppercase">Pattern items you hold</h3>`;
+    for (const { it, i } of items) {
+      const pt = it.pattern, cls = s.character.class, open = D.sel === 'mod:' + i;
+      let btns = '';
+      if (pt.status !== 'proven') { btns += `<button data-prove="${i}">Used in a scene</button>`; if (cls === 'Striker') btns += `<button class="primary" data-ftest="${i}">Field-test (1 downtime)</button>`; }
+      if (cls === 'Shade' && !pt.read) btns += `<button data-read="${i}">Read it</button>`;
+      if (cls === 'Wrench' && pt.tier < 4 && !open) btns += `<button data-mod="${i}">Gear Mod → tier ${pt.tier + 1}</button>`;
+      btns += `<button data-psell="${i}" data-how="street">Sell ${PT.salePrice(s, P, M, it, 'street')} cr</button><button class="ghost" data-psell="${i}" data-how="fence">Fence ${PT.salePrice(s, P, M, it, 'fence')} cr</button>`;
+      h += `<article class="letter ${pt.status === 'proven' ? 'bill' : 'notice'} sk"><span class="st">${esc(pt.status)} · tier ${pt.tier} · copy ${pt.copy}${it.trade && it.trade.taken ? ' · taken' : ''}</span><h3>${esc(it.name)}</h3><p>${esc(it.desc)}</p><div class="actions">${btns}</div>`;
+      if (open) { const t = tr(pt.tier + 1), pv = PT.previewGearMod(s, P, i, { parts: D.modParts, improvement: D.modImp }), needImp = t.slots > 0;
+        h += `<div class="form" style="margin-top:8px"><div class="full"><label>Parts: ${t.parts}${t.special ? ` (one must be ${t.special.map(k => P.parts[k].name).join(' or ')})` : ''}${t.credits ? `, plus ${t.credits} cr` : ''}. ${t.difficultyName} roll.</label><div class="parts">${Object.entries(P.parts).filter(([k]) => k !== 'corp').map(([k, p2]) => `<div class="part"><b>${esc(p2.name)}</b><span>${PT.partCount(s, k)} on hand</span><input type="number" min="0" max="${PT.partCount(s, k)}" data-mpart="${k}" value="${D.modParts[k] || 0}"></div>`).join('')}</div></div>
+          ${needImp ? `<div class="full"><label for="dModImp">New improvement</label><select id="dModImp"><option value="">Choose…</option>${PT.allowedImprovements(P, pt.frame).filter(x => !pt.improvements.includes(x)).map(x => `<option value="${x}" ${x === D.modImp ? 'selected' : ''}>${esc(P.improvements[x].name)}</option>`).join('')}</select></div>` : ''}</div>
+          ${pv.blockers.length ? `<ul class="blockers">${pv.blockers.map(b => `<li>${esc(b)}</li>`).join('')}</ul>` : ''}<div class="actions"><button class="primary" id="dModGo" data-id="${i}" ${pv.ok ? '' : 'disabled'}>Mod it (1 downtime)</button><button class="ghost" data-cancel="1">Cancel</button></div>`; }
+      h += '</article>';
+    }
+  }
+  h += `<details class="others" style="margin-top:10px"><summary>Claim a Pattern or license code</summary><textarea id="dCode" rows="3" spellcheck="false" placeholder="Paste a GRK1- Pattern or license code" style="width:100%;font-size:11px;margin-top:6px">${esc(D.code)}</textarea><div class="actions"><button class="primary" id="dClaim">Claim it</button></div></details>`;
+  if (p.log.length) h += `<details class="events"><summary>Workshop log (${p.log.length})</summary><ul>${p.log.slice(0, 30).map(e => `<li><b>${esc(WK.fmt(e.at))}</b> ${esc(e.text)}</li>`).join('')}</ul></details>`;
+  if (D.code && D.codeOut) h += `<article class="letter order"><div class="from">Code</div><textarea rows="3" readonly spellcheck="false" style="width:100%;font-size:11px" onclick="this.select()">${esc(D.codeOut)}</textarea><p class="note">${esc(D.codeNote || '')}</p></article>`;
+  return h;
+}
+function loadSketch(sk) { Object.assign(D, { id: sk.id, name: sk.name, frame: sk.frame, variant: sk.variant, tier: sk.tier, improvements: [...sk.improvements], quirks: [...sk.quirks], makerMark: sk.makerMark || '', notes: sk.notes || '' }); }
+function clearSketch() { Object.assign(D, { id: '', name: '', improvements: [], quirks: [], makerMark: D.makerMark, notes: '' }); }
+function setMode(m) { mode = m; $('toMake').toggleAttribute('aria-current', m === 'make'); $('toDesign').toggleAttribute('aria-current', m === 'design'); $('makeH').textContent = m === 'design' ? 'Design' : 'Make'; $('workH').textContent = m === 'design' ? 'Patterns' : 'Your work'; render(); }
+$('toMake').onclick = () => setMode('make'); $('toDesign').onclick = () => setMode('design');
+document.addEventListener('click', async e => {
+  const b = e.target.closest('button'); if (!b || mode !== 'design') return; const t = now();
+  const refresh = r => { if (r) toast(r.msg, r.dice); };
+  if (b.id === 'dSave') { refresh(act(s => { const r = PT.saveSketch(s, P, { ...D, tier: D.tier }, t); if (r.ok) clearSketch(); return r; })); }
+  else if (b.id === 'dNew') { clearSketch(); render(); }
+  else if (b.dataset.edit) { const s = load(); const sk = PT.ensure(s).sketches.find(x => x.id === b.dataset.edit); if (sk) loadSketch(sk); render(); }
+  else if (b.dataset.tear) { if (!confirm('Tear up this sketch?')) return; refresh(act(s => PT.deleteSketch(s, b.dataset.tear))); if (D.id === b.dataset.tear) clearSketch(); render(); }
+  else if (b.dataset.proto) { D.sel = 'sk:' + b.dataset.proto; D.parts = {}; render(); }
+  else if (b.dataset.cancel) { D.sel = ''; render(); }
+  else if (b.id === 'dBuild') { const r = act(s => PT.prototype(s, P, b.dataset.id, { parts: D.parts }, t)); refresh(r); if (r && r.ok) { D.sel = ''; D.parts = {}; render(); } }
+  else if (b.id === 'dBuyBtn') { refresh(act(s => PT.buyParts(s, P, D.buy, D.buyN, t))); }
+  else if (b.dataset.salvage) { refresh(act(s => PT.salvage(s, P, b.dataset.salvage, t))); }
+  else if (b.dataset.prove) { refresh(act(s => PT.prove(s, P, Number(b.dataset.prove), t, 'scene'))); }
+  else if (b.dataset.ftest) { refresh(act(s => PT.prove(s, P, Number(b.dataset.ftest), t, 'field-test'))); }
+  else if (b.dataset.read) { refresh(act(s => PT.read(s, P, Number(b.dataset.read), t))); }
+  else if (b.dataset.psell) { if (!confirm(`Sell ${load().inventory[Number(b.dataset.psell)].name}? The card is gone once it's sold.`)) return; refresh(act(s => PT.sell(s, P, M, Number(b.dataset.psell), b.dataset.how, t))); }
+  else if (b.dataset.mod) { D.sel = 'mod:' + b.dataset.mod; D.modParts = {}; D.modImp = ''; render(); }
+  else if (b.id === 'dModGo') { const r = act(s => PT.gearMod(s, P, Number(b.dataset.id), { parts: D.modParts, improvement: D.modImp }, t)); refresh(r); if (r && r.ok) { D.sel = ''; render(); } }
+  else if (b.dataset.pcode) { try { D.codeOut = await PT.patternCode(load(), P, b.dataset.pcode, t); D.code = ' '; D.codeNote = 'Anyone who claims this holds the Pattern outright and can make it. Share it on purpose.'; } catch (err) { toast(err.message); } render(); }
+  else if (b.dataset.lic) { D.sel = 'lic:' + b.dataset.lic; render(); }
+  else if (b.id === 'dLicGo') { const s2 = load(); if (!hasChar(s2)) return; try { D.codeOut = await PT.licenseCode(s2, P, b.dataset.id, D.lic, D.licTo, t); save(s2); D.code = ' '; D.codeNote = `Written for ${D.licTo}. Only they can claim it.`; D.sel = ''; } catch (err) { toast(err.message); } render(); }
+  else if (b.id === 'dClaim') { const code = ($('dCode') || {}).value || ''; const s = load(); if (!hasChar(s)) return; const r = await PT.claimCode(s, P, code.trim(), t); if (r.ok) { save(s); D.code = ''; D.codeOut = ''; } toast(r.msg); render(); }
+});
+document.addEventListener('input', e => {
+  if (mode !== 'design') return; const el = e.target;
+  if (el.id === 'dName') D.name = el.value; else if (el.id === 'dMark') D.makerMark = el.value; else if (el.id === 'dNotes') D.notes = el.value; else if (el.id === 'dBuyN') D.buyN = Number(el.value) || 1; else if (el.id === 'dLicTo') D.licTo = el.value; else if (el.id === 'dLicN') D.lic = Number(el.value) || 1; else if (el.id === 'dCode') { D.code = el.value; return; }
+  else if (el.dataset.part) { D.parts[el.dataset.part] = Number(el.value) || 0; } else if (el.dataset.mpart) { D.modParts[el.dataset.mpart] = Number(el.value) || 0; } else return;
+  render();
+});
+document.addEventListener('change', e => {
+  if (mode !== 'design') return; const el = e.target;
+  if (el.id === 'dFrame') { D.frame = el.value; D.variant = ''; D.improvements = []; } else if (el.id === 'dVariant') D.variant = el.value; else if (el.name === 'tier') D.tier = Number(el.value); else if (el.id === 'dBuy') D.buy = el.value; else if (el.id === 'dModImp') D.modImp = el.value;
+  else if (el.dataset.imp) { D.improvements = el.checked ? [...D.improvements, el.dataset.imp] : D.improvements.filter(x => x !== el.dataset.imp); }
+  else if (el.dataset.quirk) { D.quirks = el.checked ? [...D.quirks, el.dataset.quirk] : D.quirks.filter(x => x !== el.dataset.quirk); } else return;
+  render();
+});
+
 function render() {
   const s = load();
   GRAKK_SCREEN.noChar(!hasChar(s), 'Your Workshop is where you make and sell things from your class. Make a character to open it.'); if (!hasChar(s)) { ['strip', 'maker', 'work'].forEach(id => $(id).innerHTML = ''); return; }
@@ -168,12 +295,14 @@ function render() {
     <div class="stat"><b>Stress</b><span>${esc(s.stats?.stress || 0)}</span><small>some work costs it</small></div>
     <div class="stat"><b>Active</b><span>${MK.ensure(s).artifacts.filter(a => a.status === 'active').length}</span><small>things you've made</small></div>`;
   const keep = document.activeElement && document.activeElement.id;
-  $('maker').innerHTML = makerHtml(s); $('work').innerHTML = workHtml(s);
+  if (mode === 'design') { $('maker').innerHTML = designHtml(s); $('work').innerHTML = sketchesHtml(s); } else { $('maker').innerHTML = makerHtml(s); $('work').innerHTML = workHtml(s); }
   if (keep && $(keep)) { const el = $(keep); el.focus(); if (el.setSelectionRange && el.value) el.setSelectionRange(el.value.length, el.value.length); }
 }
 
 document.addEventListener('click', e => {
   const b = e.target.closest('button'); if (!b) return; const t = now();
+  if (b.dataset.go) { parent.postMessage({ type: 'grakkgrith-open-explore', place: b.dataset.go }, '*'); return; }
+  if (mode !== 'make') return;
   if (b.dataset.take) { const r = act(s => MK.take(s, M, PLACES, b.dataset.take, t)); r && toast(r.msg); }
   else if (b.dataset.go) { parent.postMessage({ type: 'grakkgrith-open-explore', place: b.dataset.go }, '*'); }
   else if (b.dataset.recipe) { form.recipe = b.dataset.recipe; form.option = ''; form.visibility = ''; render(); }
@@ -185,16 +314,17 @@ document.addEventListener('click', e => {
   else if (b.dataset.complete) { const amt = ($('pay-' + b.dataset.complete) || {}).value; const r = act(s => MK.complete(s, M, b.dataset.complete, amt, t)); r && toast(r.msg); }
   else if (b.dataset.retire) { const r = act(s => MK.retire(s, b.dataset.retire, t)); r && toast(r.msg || 'Retired.'); }
 });
-document.addEventListener('input', e => { const map = { fName: 'name', fTarget: 'target' }; if (map[e.target.id]) { form[map[e.target.id]] = e.target.value; render(); } });
+document.addEventListener('input', e => { if (mode !== 'make') return; const map = { fName: 'name', fTarget: 'target' }; if (map[e.target.id]) { form[map[e.target.id]] = e.target.value; render(); } });
 document.addEventListener('change', e => {
+  if (mode !== 'make') return;
   if (e.target.id === 'fOption') form.option = e.target.value; else if (e.target.id === 'fDistrict') form.district = e.target.value; else if (e.target.id === 'fItem') form.itemIndex = e.target.value;
   else if (e.target.name === 'vis') form.visibility = e.target.value; else if (e.target.name === 'perm') form.permission = e.target.value; else return;
   render();
 });
 
 fetch('../art/pda-v1/imports/manifest.json').then(r => r.json()).then(a => { window.ART = a; if (M) render(); }).catch(() => {});
-Promise.all(['week', 'places', 'make'].map(n => fetch(`../data/${n}.json`).then(r => r.json()))).then(([w, p, m]) => {
-  W = w; CLOCK = p.clock; M = m; PLACES = p;
+Promise.all(['week', 'places', 'make', 'patterns'].map(n => fetch(`../data/${n}.json`).then(r => r.json()))).then(([w, p, m, pt]) => {
+  W = w; CLOCK = p.clock; M = m; PLACES = p; P = pt;
   const s = load(); if (hasChar(s)) { settleAll(s); save(s); }
   render(); window.GRAKK_MAKE_READY = true;
   setInterval(() => { const s = load(); if (hasChar(s) && settleAll(s)) { save(s); render(); } }, 60000);
